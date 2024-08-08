@@ -2,6 +2,21 @@
 
 /// Generic Components ///
 
+function HeaderCell({ content, type }) {
+  return (
+    <div
+      style={{
+        minHeight: '10vh',
+        fontSize: '1.5em',
+        alignContent: 'center',
+        textAlign: 'center'
+      }}
+    >
+    { content }
+    </div>
+  )
+}
+
 function Card ({ label, type, key }) {
   return (
     <div
@@ -10,18 +25,23 @@ function Card ({ label, type, key }) {
         border: '1px solid black',
         borderRadius: '10px',
         backgroundColor: 'lightgreen',
-        padding: '20px',
-        marginBottom: '5px'
+        padding: '25px',
+        marginBottom: '5px',
+        verticalAlign: 'top',
+        fontSize: '1em',
+        textAlign: type === 'community' ? 'left' : 'center',
+        // keep row alignment on small screens
+        maxHeight: '1vh'
       }}
     >
     { type === 'community' ? label : PractMatchSymbol({ label }) }</div>
   )
 }
 
-function CatSection ({ header='', type, cards }) {
+function CatSection ({ header='', type, cards, key }) {
   const cardComps = cards.map((label, index) => Card({ label, type, key: index }))
   return (
-    <div>
+    <div key={ key }>
       <h4
         style={{
           minHeight: '20px'
@@ -42,7 +62,12 @@ function SectionList ({ sections, width }) {
         width: width
       }} 
     >
-    { sections.map(section => CatSection(section)) }
+    {
+      sections.map((section, index) => {
+        section.key=index;
+        return CatSection(section)
+      })
+    }
     </div>
   )
 }
@@ -50,22 +75,11 @@ function SectionList ({ sections, width }) {
 
 /// Practitioner ///
 
-function MatchSection({ commCats, practCats }) {
-
-  return (
-    <CatSection
-      type='practitioner'
-      cards={ commCats.map(commCat => practCats.includes(commCat)) }
-    ></CatSection>
-  )
-
-}
-
 function matchVals (commCats, practCats) {
   return commCats.map(commCat => practCats.includes(commCat))
 }
 
-export function PractMatchList ({ community, practitioner, width }) {
+export function PractMatchList ({ community, practitioner, width, headerMinHeight }) {
 
   const sections = [
     [ [community.State], practitioner.State ],
@@ -88,6 +102,11 @@ export function PractMatchList ({ community, practitioner, width }) {
         width: width
       }}
     >
+      <HeaderCell
+        minHeight={ headerMinHeight }
+        content={ practitioner.Name }
+        type='practitioner'
+      ></HeaderCell>
       <SectionList
         sections= { sections }
       ></SectionList>
@@ -97,16 +116,34 @@ export function PractMatchList ({ community, practitioner, width }) {
 }
 
 function PractMatchSymbol({ label }) {
-  // TODO use label as a boolean switch and display image represending match or no match
+  // label is a boolean
   return (
-    <>{ String(label) }</>
+    <>{ label ?  '✓' : 'X' }</>
   )
 }
 
+export function PractitionerPanel({ community, practitioners, listWidth, headerMinHeight }) {
+  const practMatchLists = practitioners.map(pract => {
+    return <PractMatchList
+      community={ community }
+      practitioner={ pract }
+      width={ listWidth }
+      headerMinHeight={ headerMinHeight }
+      style={{
+        flex: 1
+      }}
+    ></PractMatchList>
+  })
+  return (
+    <>
+      { practMatchLists }
+    </>
+  )
+}
 
 /// Community Panel ///
 
-export function CommunityCategoryList({ community, width }) {
+function CommunityCategoryList({ community }) {
   const sections = [
     {
       header: 'State',
@@ -129,11 +166,32 @@ export function CommunityCategoryList({ community, width }) {
       cards: [ community.Size ]
     }
   ]
+    .map(section => {
+      section.type = 'community'
+      return section
+    })
 
   return (
     <SectionList
       sections={ sections }
-      width={ width }
     ></SectionList>
+  )
+}
+
+
+
+export function CommunityPanel({ community, width, headerMinHeight }) {
+  return (
+    <div
+      width={ width }
+      style={{
+        flex: 1
+      }}
+    >
+      <HeaderCell content={ community.Name } type='community'></HeaderCell>
+      <CommunityCategoryList
+        community={ community } 
+      ></CommunityCategoryList>
+    </div>
   )
 }

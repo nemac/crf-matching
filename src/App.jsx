@@ -1,9 +1,10 @@
-import { CommunityCategoryList, PractMatchList } from './components/MatchPage';
+import { CommunityPanel, PractitionerPanel } from './components/MatchPage';
 
 /// dummy data ///
 
 const practitioners = [
   {
+    Name: 'Matthew',
     State: [ 'California' ],
     Size: [ 'Under 5,000' ],
     Activities: [ 'Adaptation Planning' ],
@@ -12,14 +13,16 @@ const practitioners = [
     StrTrained: false
   },
   {
+    Name: 'Dave',
     State: [ 'Arizona' ],
     Size: [ 'Under 5,000' ],
     Activities: [ 'Communicating and engaging' ],
     Sectors: [ 'Water' ],
     Hazards: [ 'Water quality'],
-    StrTrained: false
+    StrTrained: true
   },
   {
+    Name: 'Jeff',
     State: [ 'Arizona' ],
     Size: [ 'Under 5,000' ],
     Activities: [ 'Communicating and engaging' ],
@@ -30,7 +33,7 @@ const practitioners = [
 ]
 
 const community = {
-  Name: 'Community Name',
+  Name: 'Ian\'s Place',
   State: 'California',
   Activities: [ 'Adaptation Planning', 'Communicating and engaging', 'Integrating equity', 'Integrating equity', 'Taking action', 'Vulnerability assessment' ],
   Sectors: [ 'Emergency preparedness', 'Public health', 'Water' ],
@@ -41,16 +44,11 @@ const community = {
 
 function App() {
 
-  const practMatchLists = practitioners.map(pract => {
-    return <PractMatchList
-      community={ community }
-      practitioner={ pract }
-      width='15vw'
-      style={{
-        flex: 1
-      }}
-    ></PractMatchList>
-  })
+  const commCatListWidthRaw = 35
+  const practMatchListWidthRaw = parseInt((100 - commCatListWidthRaw) / practitioners.length)
+  const commCatListWidth = `${commCatListWidthRaw}vw`
+  const practMatchListWidth = `${practMatchListWidthRaw}vw`
+  const headerMinHeight = '5vh'
 
   return (
     <div
@@ -59,15 +57,19 @@ function App() {
         display: 'flex'
       }}
     >
-      <CommunityCategoryList
-        community={ community } 
-        width='35vw'
-        style={{
-          flex: 1
-        }}
-      ></CommunityCategoryList>
 
-      { practMatchLists }
+      <CommunityPanel
+        community={ community } 
+        width={ commCatListWidth }
+        headerMinHeight={ headerMinHeight }
+      ></CommunityPanel>
+
+      <PractitionerPanel
+        community={ community }
+        practitioners={ practitioners }
+        listWidth={ practMatchListWidth }
+        headerMinHeight={ headerMinHeight }
+      ></PractitionerPanel>
 
     </div>
   )
