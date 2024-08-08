@@ -1,5 +1,4 @@
 
-
 /// Generic Components ///
 
 function HeaderCell({ content, type }) {
@@ -12,23 +11,40 @@ function HeaderCell({ content, type }) {
         textAlign: 'center'
       }}
     >
-    { content }
+    { type === 'community' ? content : HeaderCellPractBadge({ content }) }
     </div>
   )
 }
 
-function Card ({ label, type, key }) {
+function HeaderCellPractBadge({ content }) {
+  return (
+    <>
+    { /*
+      <svg width="189" height="189" viewBox="0 0 189 189" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M110.475 119.673C106.275 117.523 100.825 115.773 94.5 115.773C88.175 115.773 82.725 117.523 78.525 119.673C76.025 120.948 74.5 123.523 74.5 126.323V133.273H114.5V126.323C114.5 123.523 112.975 120.948 110.475 119.673ZM88.95 113.273H100.05C103.075 113.273 105.4 110.623 105 107.623L104.2 101.498C103.425 96.7477 99.3 93.2727 94.5 93.2727C89.7 93.2727 85.575 96.7477 84.8 101.498L84 107.623C83.6 110.623 85.925 113.273 88.95 113.273Z"
+        fill="#D1E9FF"
+      />
+      </svg>
+    </>
+    */ }
+    { content }
+    </>
+  )
+}
+
+
+function Cell ({ label, type, key }) {
   return (
     <div
       key={ key }
       style={{
-        border: '1px solid black',
         borderRadius: '10px',
-        backgroundColor: 'lightgreen',
+        backgroundColor: '#FFEED2',
         padding: '25px',
         marginBottom: '5px',
         verticalAlign: 'top',
-        fontSize: '1em',
+        fontSize: '.9em',
         textAlign: type === 'community' ? 'left' : 'center',
         // keep row alignment on small screens
         maxHeight: '1vh'
@@ -38,14 +54,14 @@ function Card ({ label, type, key }) {
   )
 }
 
-function CatSection ({ header='', type, cards, key }) {
-  const cardComps = cards.map((label, index) => Card({ label, type, key: index }))
+function Section ({ header='', type, cards, key }) {
+  const cardComps = cards.map((label, index) => Cell({ label, type, key: index }))
   return (
     <div key={ key }>
       <h4
         style={{
           minHeight: '20px'
-        }} 
+        }}
       >{ header }</h4>
       { cardComps }
     </div>
@@ -56,16 +72,17 @@ function SectionList ({ sections, width }) {
   return (
     <div
       style={{
-        padding: '10px',
-        border: '2px solid black',
+        padding: '.5vw',
+        border: '1px solid #D9D9D9',
         borderRadius: '10px',
-        width: width
+        width: width,
+        marginRight: '0.5vw',
       }} 
     >
     {
       sections.map((section, index) => {
         section.key=index;
-        return CatSection(section)
+        return Section(section)
       })
     }
     </div>
@@ -75,11 +92,11 @@ function SectionList ({ sections, width }) {
 
 /// Practitioner ///
 
-function matchVals (commCats, practCats) {
+const matchVals = (commCats, practCats) => {
   return commCats.map(commCat => practCats.includes(commCat))
 }
-
-export function PractMatchList ({ community, practitioner, width, headerMinHeight }) {
+ 
+function PractMatchList ({ community, practitioner, width }) {
 
   const sections = [
     [ [community.State], practitioner.State ],
@@ -103,7 +120,6 @@ export function PractMatchList ({ community, practitioner, width, headerMinHeigh
       }}
     >
       <HeaderCell
-        minHeight={ headerMinHeight }
         content={ practitioner.Name }
         type='practitioner'
       ></HeaderCell>
@@ -112,23 +128,44 @@ export function PractMatchList ({ community, practitioner, width, headerMinHeigh
       ></SectionList>
     </div>
   )
-
 }
 
 function PractMatchSymbol({ label }) {
   // label is a boolean
   return (
-    <>{ label ?  '✓' : 'X' }</>
+    <>
+    {
+      label
+        ? <PractMatchSvg></PractMatchSvg>
+        : <PractNoMatchSvg></PractNoMatchSvg>
+    }
+    </>
   )
 }
 
-export function PractitionerPanel({ community, practitioners, listWidth, headerMinHeight }) {
+function PractMatchSvg() {
+  return (
+    <svg width="25" height="25" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M14 0C6.272 0 0 6.272 0 14C0 21.728 6.272 28 14 28C21.728 28 28 21.728 28 14C28 6.272 21.728 0 14 0ZM21 15.4H7V12.6H21V15.4Z" fill="#FC8A79"/>
+    </svg>
+  )
+}
+
+function PractNoMatchSvg({ length }) {
+  return (
+    <svg
+      width="25" height="25" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18 0C8.064 0 0 8.064 0 18C0 27.936 8.064 36 18 36C27.936 36 36 27.936 36 18C36 8.064 27.936 0 18 0ZM14.4 27L5.4 18L7.938 15.462L14.4 21.906L28.062 8.244L30.6 10.8L14.4 27Z" fill="#677D66" />
+    </svg>
+  )
+}
+
+export function PractitionerPanel({ community, practitioners, listWidth }) {
   const practMatchLists = practitioners.map(pract => {
     return <PractMatchList
       community={ community }
       practitioner={ pract }
       width={ listWidth }
-      headerMinHeight={ headerMinHeight }
       style={{
         flex: 1
       }}
@@ -140,6 +177,7 @@ export function PractitionerPanel({ community, practitioners, listWidth, headerM
     </>
   )
 }
+
 
 /// Community Panel ///
 
@@ -178,9 +216,7 @@ function CommunityCategoryList({ community }) {
   )
 }
 
-
-
-export function CommunityPanel({ community, width, headerMinHeight }) {
+export function CommunityPanel({ community, width }) {
   return (
     <div
       width={ width }
