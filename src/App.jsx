@@ -1,6 +1,18 @@
-import { useState, useLayoutEffect, useEffect } from 'react'
+
+// React
+import { useState, useEffect } from 'react'
+
+// Material UI
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
+import Select from '@mui/material/Select'
+import Divider from '@mui/material/Divider'
+
+// Airtable
 import Airtable from 'airtable'
 
+// Components
 import { CommunityPanel, PractitionerPanel } from './components/MatchPage';
 
 Airtable.configure({
@@ -10,12 +22,12 @@ Airtable.configure({
 
 const base = Airtable.base(__AIRTABLE_BASE__)
 
-const fetchCommunity = (airtableRecord, setCommunity) => {
+const fetchAllCommunities = (base, setAllCommunities, setCommunity) => {
+  const communities = []
   base('Community').select({
-    maxRecords: 1,
     view: "Grid view",
-    filterByFormula: `IF(RECORD_ID() = '${airtableRecord}', TRUE(), FALSE())`,
     fields: [
+      'Airtable Record ID',
       'Name',
       'State',
       'Size',
@@ -23,28 +35,42 @@ const fetchCommunity = (airtableRecord, setCommunity) => {
       'Sectors',
       'Hazards',
     ]
-  }).firstPage(function(err, records) {
-    if (err) {
-      console.error(err)
-    }
-    const result = records[0].fields
-    result.Name = result.Name || ''
-    result.State = result.State || ''
-    result.Size = result.Size || ''
-    result.Activities = result.Activities || []
-    result.Sectors = result.Sectors || []
-    result.Hazards = result.Hazards || []
-    console.log('Setting community to')
-    console.log(result)
-    setCommunity(result)
-  })
+  }).eachPage(function page(records, fetchNextPage) {
+    const recs = records.map(rec => {
+      const result = rec.fields
+      result.Name = result.Name || ''
+      result.State = result.State || ''
+      result.Size = result.Size || ''
+      result.Activities = result.Activities || []
+      result.Sectors = result.Sectors || []
+      result.Hazards = result.Hazards || []
+      return result
+    })
+    communities.push(...recs)
+    fetchNextPage();
+}, function done(err) {
+    if (err) { console.error(err); return; }
+    setAllCommunities(communities)
+
+    // for testing
+    //const commRecId = 'recyglyS9GKhGWm6G'
+    //const community = communities.filter(rec => rec['Airtable Record ID'] === commRecId)[0]
+    const community = communities[0]
+    setCommunity(community)
+});
 }
 
-const fetchPractitioners = (airtableRecordCommunity, setPractitioners) => {
+
+const fetchPractitionersForCommunity = (base, airtableRecordCommunity, setPractitioners) => {
   base('Matches').select({
     maxRecords: 5,
     view: "Grid view",
-    filterByFormula: `AND({Community: Airtable Record ID} = '${airtableRecordCommunity}', {Curated})`,
+
+    // Curated only
+    //filterByFormula: `AND({Community: Airtable Record ID} = '${airtableRecordCommunity}', {Curated})`,
+
+    // For testing - get all even if not curated
+    filterByFormula: `AND({Community: Airtable Record ID} = '${airtableRecordCommunity}', TRUE())`,
     fields: [
       'Practitioner: Airtable Record ID',
     ]
@@ -75,7 +101,7 @@ const fetchPractitioners = (airtableRecordCommunity, setPractitioners) => {
         console.error(err)
       }
       console.log('Setting practitioners to')
-      const result = records
+      const recs = records
         .map(rec => rec.fields)
         .map(rec => {
           rec.Name = rec.Name || '',
@@ -86,7 +112,10 @@ const fetchPractitioners = (airtableRecordCommunity, setPractitioners) => {
           rec.Hazards = rec.Hazards || []
           return rec
         })
-      console.log(result)
+      console.log(recs)
+
+      // for testing - limit to three when testing with non-curated
+      const result = recs.slice(0, 3)
       setPractitioners(result)
     })
   })
@@ -95,6 +124,7 @@ const fetchPractitioners = (airtableRecordCommunity, setPractitioners) => {
 
 function MatchPage({ community, practitioners }) {
 
+  // styling stuff
   const commCatListWidthRaw = 35
   const practMatchListWidthRaw = parseInt((100 - commCatListWidthRaw) / practitioners.length)
   const commCatListWidth = `${commCatListWidthRaw}vw`
@@ -124,23 +154,73 @@ function MatchPage({ community, practitioners }) {
   )
 }
 
+function PageHeader({ selectedCommunity, communities, setCommunity }) {
+
+  function handleChange(e) {
+    console.log(e)
+    const newSelected = communities.filter(comm => comm.Name === e.target.value)[0]
+    setCommunity(newSelected)
+  }
+
+  const items = communities.map(comm => {
+    return (
+      <MenuItem value={comm.Name}>{ comm.Name }</MenuItem>
+    )
+  })
+
+  return (
+    <>
+      <h2>CRF Matching Tool</h2>
+      <FormControl fullWidth>
+        <InputLabel id="communities-select-label">Community</InputLabel>
+        <Select
+          labelId="communities-select-label"
+          id="communities-select"
+          value={ selectedCommunity.Name }
+          label="Community"
+          onChange={handleChange}
+        >
+          { items }
+        </Select>
+      </FormControl>
+      <Divider
+        style={{
+          margin: '2vh'
+        }} 
+      ></Divider>
+    </>
+  )
+}
+
 function App() {
 
+  const [ allCommunities, setAllCommunities ] = useState([])
   const [ community, setCommunity ] = useState(false)
   const [ practitioners, setPractitioners ] = useState([])
 
   useEffect(() => {
-    fetchCommunity('recyglyS9GKhGWm6G', setCommunity)
-    fetchPractitioners('recyglyS9GKhGWm6G', setPractitioners)
+    fetchAllCommunities(base, setAllCommunities, setCommunity)
   }, [])
 
-  if (community && practitioners.length) {
+  useEffect(() => {
+    if (allCommunities.length) {
+      fetchPractitionersForCommunity(base, community['Airtable Record ID'], setPractitioners)
+    }
+  }, [community])
+
+  if (community && allCommunities.length && practitioners.length) {
     console.log('Rendering...')
     return (
-      <MatchPage
-        community={ community }
-        practitioners={ practitioners }
-      ></MatchPage>
+      <>
+        <PageHeader
+          communities={ allCommunities }
+          selectedCommunity={ community }
+          setCommunity={ setCommunity }></PageHeader>
+        <MatchPage
+          community={ community }
+          practitioners={ practitioners }
+        ></MatchPage>
+      </>
     )
   } else {
     console.log('Loading...')
