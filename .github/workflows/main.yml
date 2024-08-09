@@ -21,7 +21,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Single deploy job since we're just deploying
   deploy:
     environment:
       name: github-pages
@@ -39,6 +38,9 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+        env:
+          AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
+          AIRTABLE_BASE: ${{ secrets.AIRTABLE_BASE }}
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
