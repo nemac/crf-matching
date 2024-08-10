@@ -1,9 +1,26 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.jsx'
+import * as React from "react";
+import * as ReactDOM from "react-dom/client";
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
+import MatchPage from './components/MatchPage.jsx'
+import PractitionerPage from "./components/PractitionerPage.jsx";
+
+const router = createBrowserRouter([
+  {
+    path: "/crf-matching",
+    element: <MatchPage />
+  },
+  {
+    path: "/crf-matching/:practitionerId",
+    element: <PractitionerPage />
+  }
+])
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
 )

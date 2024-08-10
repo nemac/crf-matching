@@ -1,3 +1,19 @@
+// styles
+import styles from '../styles'
+
+// React
+import { useState, useEffect } from 'react'
+
+// API
+import { fetchAllCommunities, fetchPractitionersForCommunity } from '../util/api'
+
+// Material UI
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
+import Select from '@mui/material/Select'
+import Divider from '@mui/material/Divider'
+
 
 /// Generic Components ///
 
@@ -32,7 +48,6 @@ function HeaderCellPractBadge({ content }) {
     </>
   )
 }
-
 
 function Cell ({ label, type, key }) {
   return (
@@ -160,7 +175,7 @@ function PractNoMatchSvg({ length }) {
   )
 }
 
-export function PractitionerPanel({ community, practitioners, listWidth }) {
+function PractitionerPanel({ community, practitioners, listWidth }) {
   const practMatchLists = practitioners.map(pract => {
     return <PractMatchList
       community={ community }
@@ -216,7 +231,7 @@ function CommunityCategoryList({ community }) {
   )
 }
 
-export function CommunityPanel({ community, width }) {
+function CommunityPanel({ community, width }) {
   return (
     <div
       width={ width }
@@ -231,3 +246,135 @@ export function CommunityPanel({ community, width }) {
     </div>
   )
 }
+
+function PageHeader({ selectedCommunity, communities, setCommunity }) {
+
+  function handleChange(e) {
+    console.log(e)
+    const newSelected = communities.filter(comm => comm.Name === e.target.value)[0]
+    setCommunity(newSelected)
+  }
+
+  const items = communities.map(comm => {
+    return (
+      <MenuItem value={comm.Name}>{ comm.Name }</MenuItem>
+    )
+  })
+
+  return (
+    <>
+      <h2>CRF Matching Tool</h2>
+      <FormControl fullWidth>
+        <InputLabel id="communities-select-label">Community</InputLabel>
+        <Select
+          labelId="communities-select-label"
+          id="communities-select"
+          value={ selectedCommunity.Name }
+          label="Community"
+          onChange={handleChange}
+        >
+          { items }
+        </Select>
+      </FormControl>
+      <Divider
+        style={{
+          margin: '2vh'
+        }} 
+      ></Divider>
+    </>
+  )
+}
+
+/// Match Page (Loaded) ///
+
+function MatchPageLoaded({ community, practitioners, selectedCommunity, communities, setCommunity }) {
+  
+  // styling stuff
+  const commCatListWidthRaw = 35
+  const practMatchListWidthRaw = parseInt((100 - commCatListWidthRaw) / practitioners.length)
+  const commCatListWidth = `${commCatListWidthRaw}vw`
+  const practMatchListWidth = `${practMatchListWidthRaw}vw`
+  const headerMinHeight = '5vh'
+
+  return (
+    <>
+      <PageHeader
+        selectedCommunity={ selectedCommunity }
+        communities={ communities }
+        setCommunity={ setCommunity }
+      >
+      </PageHeader>
+      <div
+        style={{
+          display: 'flex'
+        }}
+      >
+          <CommunityPanel
+            community={ community } 
+            width={ commCatListWidth }
+            headerMinHeight={ headerMinHeight }
+          ></CommunityPanel>
+
+          <PractitionerPanel
+            community={ community }
+            practitioners={ practitioners }
+            listWidth={ practMatchListWidth }
+            headerMinHeight={ headerMinHeight }
+          ></PractitionerPanel>
+      </div>
+    </>
+  )
+}
+
+
+/// Match Page ///
+
+function MatchPage() {
+
+  const [ allCommunities, setAllCommunities ] = useState([])
+  const [ community, setCommunity ] = useState(false)
+  const [ practitioners, setPractitioners ] = useState([])
+
+  useEffect(() => {
+    fetchAllCommunities(setAllCommunities, setCommunity)
+  }, [])
+
+  useEffect(() => {
+    if (allCommunities.length) {
+      fetchPractitionersForCommunity(community['Airtable Record ID'], setPractitioners)
+    }
+  }, [community])
+
+  if (community && allCommunities.length && practitioners.length) {
+    console.log('Rendering...')
+    return (
+      <div
+        style={{
+          ...styles.global,
+        }}
+      >
+        <MatchPageLoaded
+          community={ community }
+          practitioners={ practitioners }
+          communities={ allCommunities }
+          selectedCommunity={ community }
+          setCommunity={ setCommunity }
+        ></MatchPageLoaded>
+      </div>
+    )
+  } else {
+    console.log('Loading...')
+    return (
+      <div
+        style={{
+          ...styles.global
+        }}
+      >
+        <h3>Loading...</h3>
+      </div>
+    )
+  }
+
+}
+
+export default MatchPage
