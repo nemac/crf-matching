@@ -21,6 +21,8 @@ export const fetchPractitioner = (practitionerId, setPractitioner) => {
       'Activities',
       'Sectors',
       'Hazards',
+      'Name',
+      'Organization Name'
     ]
   }).firstPage(function(err, records) {
     if (err) {
@@ -36,6 +38,7 @@ export const fetchPractitioner = (practitionerId, setPractitioner) => {
         rec.Activities = rec.Activities || [],
         rec.Sectors = rec.Sectors || [],
         rec.Hazards = rec.Hazards || []
+        rec['Organization Name'] || ''
         return rec
       })[0]
     console.log(rec)
