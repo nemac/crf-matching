@@ -20,29 +20,73 @@ function shuffle(array) {
   }
 }
 
+// set up airtable
 Airtable.configure({
   endpointUrl: 'https://api.airtable.com',
   apiKey: __AIRTABLE_TOKEN__
 })
-
 const base = Airtable.base(__AIRTABLE_BASE__)
 
-// practitioner ID is the "ID" field in airtable
+
+/// configuration ///
+
+const normalizeValue = val => {
+  if (Array.isArray(val)) {
+    return val || []
+  }
+  return val || ''
+}
+
+const normalizeRecGeneric = (rec, fieldMap) => {
+  const result = {}
+  Object.keys(fieldMap).forEach(fieldName => {
+    result[fieldName] = normalizeValue(rec[fieldMap[fieldName]])
+  })
+  return result
+}
+
+const getFetchFields = fields => Object.values(fields)
+
+const confGenerator = fieldMap => {
+  return {
+    fetchFields: getFetchFields(fieldMap),
+    normalizeRec: rec => normalizeRecGeneric(rec, fieldMap)
+  }
+}
+
+const practitionerFieldMap = {
+  state: 'State',
+  size: 'Size',
+  activities: 'Activities',
+  sectors: 'Sectors',
+  hazards: 'Hazards',
+  name: 'Name',
+  org: 'Organization Name',
+  id: 'Id',
+}
+
+const communityFieldMap = {
+  airtableRecId: 'Airtable Record ID',
+  name: 'Name',
+  state: 'State',
+  size: 'Size',
+  activities: 'Activities',
+  sectors: 'Sectors',
+  hazards: 'Hazards',
+}
+
+const practitionerConf = confGenerator(practitionerFieldMap)
+const communityConf = confGenerator(communityFieldMap)
+
+
+/// api ///
+
 export const fetchPractitioner = (practitionerId, setPractitioner) => {
   base('Practitioner').select({
     maxRecords: 1,
     view: "Grid view",
     filterByFormula: `{Id} = '${practitionerId}'`,
-    fields: [
-      'State',
-      'Size',
-      'Activities',
-      'Sectors',
-      'Hazards',
-      'Name',
-      'Organization Name',
-      'Id',
-    ]
+    fields: practitionerConf.fetchFields
   }).firstPage(function(err, records) {
     if (err) {
       console.error(err)
@@ -50,46 +94,21 @@ export const fetchPractitioner = (practitionerId, setPractitioner) => {
     console.log('Setting practitioner to')
     const rec = records
       .map(rec => rec.fields)
-      .map(rec => {
-        rec.Name = rec.Name || '',
-        rec.State = rec.State || [],
-        rec.Size = rec.Size || [],
-        rec.Activities = rec.Activities || [],
-        rec.Sectors = rec.Sectors || [],
-        rec.Hazards = rec.Hazards || []
-        rec['Organization Name'] || ''
-        rec.Id = rec.Id || ''
-        return rec
-      })[0]
+      .map(practitionerConf.normalizeRec)[0]
     console.log(rec)
     setPractitioner(rec)
-  }) 
+  })
 }
 
 export const fetchAllCommunities = (setAllCommunities, setCommunity) => {
   const communities = []
   base('Community').select({
     view: "Grid view",
-    fields: [
-      'Airtable Record ID',
-      'Name',
-      'State',
-      'Size',
-      'Activities',
-      'Sectors',
-      'Hazards',
-    ]
+    fields: communityConf.fetchFields
   }).eachPage(function page(records, fetchNextPage) {
-    const recs = records.map(rec => {
-      const result = rec.fields
-      result.Name = result.Name || ''
-      result.State = result.State || ''
-      result.Size = result.Size || ''
-      result.Activities = result.Activities || []
-      result.Sectors = result.Sectors || []
-      result.Hazards = result.Hazards || []
-      return result
-    })
+    const recs = records
+      .map(rec => rec.fields)
+      .map(communityConf.normalizeRec)
     communities.push(...recs)
     fetchNextPage();
   }, function done(err) {
@@ -126,46 +145,30 @@ export const fetchPractitionersForCommunity = (airtableRecordCommunity, setPract
       .map(rec => rec.fields['Practitioner: Airtable Record ID'])
       .map(recId => `{Airtable Record ID} = '${recId}'`)
       .join(',')
-
     const formula = `OR(${practIdFormulaSegments})`
+
     base('Practitioner').select({
       maxRecords: 5,
       view: "Grid view",
       filterByFormula: formula,
-      fields: [
-        'Name',
-        'Organization Name',
-        'State',
-        'Size',
-        'Activities',
-        'Sectors',
-        'Hazards',
-        'Id',
-      ]
+      fields: practitionerConf.fetchFields
     }).firstPage(function(err, records) {
       if (err) {
         console.error(err)
       }
+
       console.log('Setting practitioners to')
       const recs = records
         .map(rec => rec.fields)
-        .map(rec => {
-          rec.Name = rec.Name || ''
-          rec.State = rec.State || []
-          rec.Size = rec.Size || []
-          rec.Activities = rec.Activities || []
-          rec.Sectors = rec.Sectors || []
-          rec.Hazards = rec.Hazards || []
-          rec['Organization Name'] || ''
-          rec.Id || ''
-          return rec
-        })
+        .map(practitionerConf.normalizeRec)
+
       console.log(recs)
 
       // for testing - shuffle result
       shuffle(recs)
       // for testing - limit to three when testing with non-curated
       const result = recs.slice(0, 3)
+
       setPractitioners(result)
     })
   })

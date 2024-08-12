@@ -25,7 +25,7 @@ function Header ({ practitioner }) {
           paddingLeft: '1vw',
           borderRadius: '10px',
           backgroundColor: '#FFEED2',
-        }}>{ practitioner['Organization Name'] }</h3>
+        }}>{ practitioner.org }</h3>
     </div>
   )
 }
@@ -174,27 +174,27 @@ function PractitionerPageLoaded({ practitioner }) {
     <MatchSection
       practitioner={ practitioner }
       title="Where we work"
-      objKey="State"
+      objKey="state"
     ></MatchSection>
     <MatchSection
       practitioner={ practitioner }
       title="Activities we have expertise with"
-      objKey="Activities"
+      objKey="activities"
     ></MatchSection>
     <MatchSection
       practitioner={ practitioner }
       title="Sectors we have expertise with"
-      objKey="Sectors"
+      objKey="sectors"
     ></MatchSection>
     <MatchSection
       practitioner={ practitioner }
       title="Hazards we have expertise with"
-      objKey="Hazards"
+      objKey="hazards"
     ></MatchSection>
     <MatchSection
       practitioner={ practitioner }
       title="Size of communities we have expertise with"
-      objKey="Size"
+      objKey="size"
     ></MatchSection>
     <ContactSection
       practitioner={ practitioner }

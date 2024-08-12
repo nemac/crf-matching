@@ -116,11 +116,11 @@ const matchVals = (commCats, practCats) => {
 function PractMatchList ({ community, practitioner, width }) {
 
   const sections = [
-    [ [community.State], practitioner.State ],
-    [ community.Activities, practitioner.Activities ],
-    [ community.Sectors, practitioner.Sectors ],
-    [ community.Hazards, practitioner.Hazards ],
-    [ [community.Size], practitioner.Size ],
+    [ [community.state], practitioner.state ],
+    [ community.activities, practitioner.activities ],
+    [ community.sectors, practitioner.sectors ],
+    [ community.hazards, practitioner.hazards ],
+    [ [community.size], practitioner.size ],
   ]
     .map(([ commCats, practCats ]) => matchVals(commCats, practCats))
     .map(matches => {
@@ -137,9 +137,9 @@ function PractMatchList ({ community, practitioner, width }) {
       }}
     >
       <HeaderCell
-        content={ practitioner['Organization Name'] }
+        content={ practitioner.org || practitioner.name }
         type='practitioner'
-        linkPath={ `#/${practitioner.Id}`}
+        linkPath={ `#/${practitioner.id}`}
       ></HeaderCell>
       <SectionList
         sections= { sections }
@@ -152,11 +152,11 @@ function PractMatchSymbol({ label }) {
   // label is a boolean
   return (
     <>
-    {
-      label
-        ? <PractMatchSvg></PractMatchSvg>
-        : <PractNoMatchSvg></PractNoMatchSvg>
-    }
+      {
+        label
+          ? <PractMatchSvg></PractMatchSvg>
+          : <PractNoMatchSvg></PractNoMatchSvg>
+      }
     </>
   )
 }
@@ -203,23 +203,23 @@ function CommunityCategoryList({ community }) {
   const sections = [
     {
       header: 'State',
-      cards: [ community.State ]
+      cards: [ community.state ]
     },
     {
       header: 'Activities',
-      cards: community.Activities
+      cards: community.activities
     },
     {
       header: 'Sectors',
-      cards: community.Sectors
+      cards: community.sectors
     },
     {
       header: 'Hazards',
-      cards: community.Hazards
+      cards: community.hazards
     },
     {
       header: 'Size',
-      cards: [ community.Size ]
+      cards: [ community.size ]
     }
   ]
     .map(section => {
@@ -243,7 +243,7 @@ function CommunityPanel({ community, width }) {
       }}
     >
       <HeaderCell
-        content={ community.Name }
+        content={ community.name }
         type='community'
       ></HeaderCell>
       <CommunityCategoryList
@@ -257,13 +257,13 @@ function PageHeader({ selectedCommunity, communities, setCommunity }) {
 
   function handleChange(e) {
     console.log(e)
-    const newSelected = communities.filter(comm => comm.Name === e.target.value)[0]
+    const newSelected = communities.filter(comm => comm.name === e.target.value)[0]
     setCommunity(newSelected)
   }
 
   const items = communities.map(comm => {
     return (
-      <MenuItem value={comm.Name}>{ comm.Name }</MenuItem>
+      <MenuItem value={comm.name}>{ comm.name }</MenuItem>
     )
   })
 
@@ -275,7 +275,7 @@ function PageHeader({ selectedCommunity, communities, setCommunity }) {
         <Select
           labelId="communities-select-label"
           id="communities-select"
-          value={ selectedCommunity.Name }
+          value={ selectedCommunity.name }
           label="Community"
           onChange={handleChange}
         >
@@ -347,7 +347,7 @@ function MatchPage() {
 
   useEffect(() => {
     if (allCommunities.length) {
-      fetchPractitionersForCommunity(community['Airtable Record ID'], setPractitioners)
+      fetchPractitionersForCommunity(community.airtableRecId, setPractitioners)
     }
   }, [community])
 
