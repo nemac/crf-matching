@@ -17,7 +17,7 @@ import Divider from '@mui/material/Divider'
 
 /// Generic Components ///
 
-function HeaderCell({ content, type }) {
+function HeaderCell({ content, type, linkPath }) {
   return (
     <div
       style={{
@@ -27,12 +27,12 @@ function HeaderCell({ content, type }) {
         textAlign: 'center'
       }}
     >
-    { type === 'community' ? content : HeaderCellPractBadge({ content }) }
+    { type === 'community' ? content : HeaderCellPractBadge({ content, linkPath }) }
     </div>
   )
 }
 
-function HeaderCellPractBadge({ content }) {
+function HeaderCellPractBadge({ content, linkPath }) {
   return (
     <>
     { /*
@@ -44,7 +44,9 @@ function HeaderCellPractBadge({ content }) {
       </svg>
     </>
     */ }
-    { content }
+    <a
+      href={ linkPath }
+    >{ content || '(Org Name Not Found)' }</a>
     </>
   )
 }
@@ -135,8 +137,9 @@ function PractMatchList ({ community, practitioner, width }) {
       }}
     >
       <HeaderCell
-        content={ practitioner.Name }
+        content={ practitioner['Organization Name'] }
         type='practitioner'
+        linkPath={ `${practitioner.Id}`}
       ></HeaderCell>
       <SectionList
         sections= { sections }
@@ -239,7 +242,10 @@ function CommunityPanel({ community, width }) {
         flex: 1
       }}
     >
-      <HeaderCell content={ community.Name } type='community'></HeaderCell>
+      <HeaderCell
+        content={ community.Name }
+        type='community'
+      ></HeaderCell>
       <CommunityCategoryList
         community={ community } 
       ></CommunityCategoryList>

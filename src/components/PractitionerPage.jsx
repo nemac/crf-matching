@@ -1,5 +1,5 @@
 
-// router stuff
+// router
 import { useParams } from 'react-router-dom'
 
 // react
@@ -80,7 +80,7 @@ function Training ({ practitioner }) {
         aria-hidden="true"
       ></Divider>
       <div>
-        No certifications
+        This section isn't set up yet
       </div>
     </div>
   )
@@ -147,7 +147,10 @@ function MatchSection({ practitioner, title, objKey }) {
           backgroundColor: '#F1ECE4',
           borderRadius: '10px',
           minHeight: '5vh',
-          padding: '15px',
+          paddingLeft: '1vw',
+          paddingRight: '1vw',
+          paddingTop: '1vh',
+          paddingBottom: '1vh',
           marginBottom: '2.5vh',
         }}
       >

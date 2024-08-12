@@ -1,6 +1,24 @@
 // Airtable
 import Airtable from 'airtable'
 
+// for testing
+// shuffle practitioners
+// https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+function shuffle(array) {
+  let currentIndex = array.length;
+
+  // While there remain elements to shuffle...
+  while (currentIndex != 0) {
+
+    // Pick a remaining element...
+    let randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+}
 
 Airtable.configure({
   endpointUrl: 'https://api.airtable.com',
@@ -22,7 +40,8 @@ export const fetchPractitioner = (practitionerId, setPractitioner) => {
       'Sectors',
       'Hazards',
       'Name',
-      'Organization Name'
+      'Organization Name',
+      'Id',
     ]
   }).firstPage(function(err, records) {
     if (err) {
@@ -39,6 +58,7 @@ export const fetchPractitioner = (practitionerId, setPractitioner) => {
         rec.Sectors = rec.Sectors || [],
         rec.Hazards = rec.Hazards || []
         rec['Organization Name'] || ''
+        rec.Id = rec.Id || ''
         return rec
       })[0]
     console.log(rec)
@@ -114,11 +134,13 @@ export const fetchPractitionersForCommunity = (airtableRecordCommunity, setPract
       filterByFormula: formula,
       fields: [
         'Name',
+        'Organization Name',
         'State',
         'Size',
         'Activities',
         'Sectors',
         'Hazards',
+        'Id',
       ]
     }).firstPage(function(err, records) {
       if (err) {
@@ -128,16 +150,20 @@ export const fetchPractitionersForCommunity = (airtableRecordCommunity, setPract
       const recs = records
         .map(rec => rec.fields)
         .map(rec => {
-          rec.Name = rec.Name || '',
-          rec.State = rec.State || [],
-          rec.Size = rec.Size || [],
-          rec.Activities = rec.Activities || [],
-          rec.Sectors = rec.Sectors || [],
+          rec.Name = rec.Name || ''
+          rec.State = rec.State || []
+          rec.Size = rec.Size || []
+          rec.Activities = rec.Activities || []
+          rec.Sectors = rec.Sectors || []
           rec.Hazards = rec.Hazards || []
+          rec['Organization Name'] || ''
+          rec.Id || ''
           return rec
         })
       console.log(recs)
 
+      // for testing - shuffle result
+      shuffle(recs)
       // for testing - limit to three when testing with non-curated
       const result = recs.slice(0, 3)
       setPractitioners(result)
