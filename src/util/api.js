@@ -62,6 +62,10 @@ const practitionerFieldMap = {
   hazards: 'Hazards',
   name: 'Name',
   org: 'Organization Name',
+  website: 'Organization Website',
+  linkedIn: 'Review: LinkedIn',
+  email: 'Email',
+  phone: 'Phone Number',
   strTrained: 'Have You Completed The N O A A Steps To Resilience Training?',
   id: 'Id',
 }
