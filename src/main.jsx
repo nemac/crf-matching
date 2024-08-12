@@ -1,14 +1,14 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import {
-  createBrowserRouter,
+  createHashRouter,
   RouterProvider,
 } from "react-router-dom";
 
 import MatchPage from './components/MatchPage.jsx'
 import PractitionerPage from "./components/PractitionerPage.jsx";
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/crf-matching",
     element: <MatchPage />
