@@ -10,11 +10,11 @@ import PractitionerPage from "./components/PractitionerPage.jsx";
 
 const router = createHashRouter([
   {
-    path: "/crf-matching",
+    path: "/",
     element: <MatchPage />
   },
   {
-    path: "/crf-matching/:practitionerId",
+    path: "/:practitionerId",
     element: <PractitionerPage />
   }
 ])
