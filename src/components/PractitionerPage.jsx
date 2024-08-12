@@ -167,9 +167,16 @@ function ContactRow({ type, practitioner }) {
         minHeight: '3vh',
       }} 
     >
-      { icon }
       <span
         style={{
+          verticalAlign: 'middle'
+        }} 
+      >
+        { icon }
+      </span>
+      <span
+        style={{
+          verticalAlign: 'baseline',
           marginLeft: '1vw',
         }}
       >
