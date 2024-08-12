@@ -52,7 +52,10 @@ function SectionHeader({ title }) {
 }
 
 function StrTrainedRow ( { isTrained }) {
-  return(
+  if (!isTrained) {
+    return 'No certifications'
+  }
+  return (
     <div>
       <svg
         verticalAlign='middle'
@@ -67,7 +70,7 @@ function StrTrainedRow ( { isTrained }) {
           marginLeft: '15px',
           verticalAlign: 'baseline'
         }}
-      >{ isTrained ? 'STR Training Class Completed' : 'Not STR Trained' }</span>
+      >STR Training Class Completed</span>
     </div>
   )
 }
