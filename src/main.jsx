@@ -5,16 +5,21 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import MatchPage from './components/MatchPage.jsx'
+import CommunityListPage from "./components/CommunityListPage.jsx";
+import CommunityPage from './components/CommunityPage.jsx'
 import PractitionerPage from "./components/PractitionerPage.jsx";
 
 const router = createHashRouter([
   {
     path: "/",
-    element: <MatchPage />
+    element: <CommunityListPage />
   },
   {
-    path: "/:practitionerId",
+    path: "/community/:communityId",
+    element: <CommunityPage />
+  },
+  {
+    path: "/practitioner/:practitionerId",
     element: <PractitionerPage />
   }
 ])

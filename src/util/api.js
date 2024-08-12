@@ -62,6 +62,7 @@ const practitionerFieldMap = {
   hazards: 'Hazards',
   name: 'Name',
   org: 'Organization Name',
+  strTrained: 'Have You Completed The N O A A Steps To Resilience Training?',
   id: 'Id',
 }
 
@@ -73,6 +74,7 @@ const communityFieldMap = {
   activities: 'Activities',
   sectors: 'Sectors',
   hazards: 'Hazards',
+  id: 'Id'
 }
 
 const practitionerConf = confGenerator(practitionerFieldMap)
@@ -100,7 +102,26 @@ export const fetchPractitioner = (practitionerId, setPractitioner) => {
   })
 }
 
-export const fetchAllCommunities = (setAllCommunities, setCommunity) => {
+export const fetchCommunity = (communityId, setCommunity) => {
+  base('Community').select({
+    maxRecords: 1,
+    view: "Grid view",
+    filterByFormula: `{Id} = '${communityId}'`,
+    fields: communityConf.fetchFields
+  }).firstPage(function(err, records) {
+    if (err) {
+      console.error(err)
+    }
+    console.log('Setting community to')
+    const rec = records
+      .map(rec => rec.fields)
+      .map(communityConf.normalizeRec)[0]
+    console.log(rec)
+    setCommunity(rec)
+  })
+}
+
+export const fetchAllCommunities = (setAllCommunities) => {
   const communities = []
   base('Community').select({
     view: "Grid view",
@@ -114,17 +135,11 @@ export const fetchAllCommunities = (setAllCommunities, setCommunity) => {
   }, function done(err) {
       if (err) { console.error(err); return; }
       setAllCommunities(communities)
-
-      // for testing
-      //const commRecId = 'recyglyS9GKhGWm6G'
-      //const community = communities.filter(rec => rec['Airtable Record ID'] === commRecId)[0]
-      const community = communities[0]
-      setCommunity(community)
   });
 }
 
 
-export const fetchPractitionersForCommunity = (airtableRecordCommunity, setPractitioners) => {
+export const fetchPractitionersForCommunity = (communityId, setPractitioners) => {
   base('Matches').select({
     maxRecords: 5,
     view: "Grid view",
@@ -133,7 +148,7 @@ export const fetchPractitionersForCommunity = (airtableRecordCommunity, setPract
     //filterByFormula: `AND({Community: Airtable Record ID} = '${airtableRecordCommunity}', {Curated})`,
 
     // For testing - get all even if not curated
-    filterByFormula: `AND({Community: Airtable Record ID} = '${airtableRecordCommunity}', TRUE())`,
+    filterByFormula: `{Community: Id} = '${communityId}'`,
     fields: [
       'Practitioner: Airtable Record ID',
     ]

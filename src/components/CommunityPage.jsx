@@ -2,17 +2,13 @@
 import styles from '../styles'
 
 // React
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useLayoutEffect } from 'react'
+
+// router
+import { useParams } from 'react-router-dom'
 
 // API
-import { fetchAllCommunities, fetchPractitionersForCommunity } from '../util/api'
-
-// Material UI
-import MenuItem from '@mui/material/MenuItem'
-import FormControl from '@mui/material/FormControl'
-import InputLabel from '@mui/material/InputLabel'
-import Select from '@mui/material/Select'
-import Divider from '@mui/material/Divider'
+import { fetchCommunity, fetchPractitionersForCommunity } from '../util/api'
 
 
 /// Generic Components ///
@@ -139,7 +135,7 @@ function PractMatchList ({ community, practitioner, width }) {
       <HeaderCell
         content={ practitioner.org || practitioner.name }
         type='practitioner'
-        linkPath={ `#/${practitioner.id}`}
+        linkPath={ `#/practitioner/${practitioner.id}`}
       ></HeaderCell>
       <SectionList
         sections= { sections }
@@ -253,47 +249,9 @@ function CommunityPanel({ community, width }) {
   )
 }
 
-function PageHeader({ selectedCommunity, communities, setCommunity }) {
-
-  function handleChange(e) {
-    console.log(e)
-    const newSelected = communities.filter(comm => comm.name === e.target.value)[0]
-    setCommunity(newSelected)
-  }
-
-  const items = communities.map(comm => {
-    return (
-      <MenuItem value={comm.name}>{ comm.name }</MenuItem>
-    )
-  })
-
-  return (
-    <>
-      <h2>CRF Matching Tool</h2>
-      <FormControl fullWidth>
-        <InputLabel id="communities-select-label">Community</InputLabel>
-        <Select
-          labelId="communities-select-label"
-          id="communities-select"
-          value={ selectedCommunity.name }
-          label="Community"
-          onChange={handleChange}
-        >
-          { items }
-        </Select>
-      </FormControl>
-      <Divider
-        style={{
-          margin: '2vh'
-        }} 
-      ></Divider>
-    </>
-  )
-}
-
 /// Match Page (Loaded) ///
 
-function MatchPageLoaded({ community, practitioners, selectedCommunity, communities, setCommunity }) {
+function MatchPageLoaded({ community, practitioners }) {
   
   // styling stuff
   const commCatListWidthRaw = 35
@@ -304,12 +262,6 @@ function MatchPageLoaded({ community, practitioners, selectedCommunity, communit
 
   return (
     <>
-      <PageHeader
-        selectedCommunity={ selectedCommunity }
-        communities={ communities }
-        setCommunity={ setCommunity }
-      >
-      </PageHeader>
       <div
         style={{
           display: 'flex'
@@ -335,23 +287,19 @@ function MatchPageLoaded({ community, practitioners, selectedCommunity, communit
 
 /// Match Page ///
 
-function MatchPage() {
+function CommunityPage() {
 
-  const [ allCommunities, setAllCommunities ] = useState([])
   const [ community, setCommunity ] = useState(false)
   const [ practitioners, setPractitioners ] = useState([])
 
-  useEffect(() => {
-    fetchAllCommunities(setAllCommunities, setCommunity)
+  const { communityId } = useParams()
+
+  useLayoutEffect(() => {
+    fetchPractitionersForCommunity(communityId, setPractitioners)
+    fetchCommunity(communityId, setCommunity)
   }, [])
 
-  useEffect(() => {
-    if (allCommunities.length) {
-      fetchPractitionersForCommunity(community.airtableRecId, setPractitioners)
-    }
-  }, [community])
-
-  if (community && allCommunities.length && practitioners.length) {
+  if (community && practitioners.length) {
     console.log('Rendering...')
     return (
       <div
@@ -362,9 +310,6 @@ function MatchPage() {
         <MatchPageLoaded
           community={ community }
           practitioners={ practitioners }
-          communities={ allCommunities }
-          selectedCommunity={ community }
-          setCommunity={ setCommunity }
         ></MatchPageLoaded>
       </div>
     )
@@ -383,4 +328,4 @@ function MatchPage() {
 
 }
 
-export default MatchPage
+export default CommunityPage
