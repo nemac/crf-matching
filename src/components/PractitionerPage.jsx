@@ -155,6 +155,8 @@ function ContactRow({ type, practitioner }) {
   } else if (type === 'website') {
     if (!practitioner[type].startsWith('https://')) {
       hrefPrefix = 'https://'
+    } else {
+      hrefPrefix = ''
     }
   } else {
     hrefPrefix = ''
@@ -162,7 +164,13 @@ function ContactRow({ type, practitioner }) {
 
   let href = `${hrefPrefix}${practitioner[type]}`
 
-  let content = <a target="_blank" href={ href }>{ practitioner[type] }</a>
+  let content
+  if (type === 'website') {
+    content = <a target="_blank" href={ href }>{ practitioner[type] }</a>
+  } else {
+    content = <a href={ href }>{ practitioner[type] }</a>
+  }
+
   return (
     <div
       style={{
