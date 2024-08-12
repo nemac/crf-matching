@@ -139,7 +139,7 @@ function PractMatchList ({ community, practitioner, width }) {
       <HeaderCell
         content={ practitioner['Organization Name'] }
         type='practitioner'
-        linkPath={ `${practitioner.Id}`}
+        linkPath={ `/#/${practitioner.Id}`}
       ></HeaderCell>
       <SectionList
         sections= { sections }
