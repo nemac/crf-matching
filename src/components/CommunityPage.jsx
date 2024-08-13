@@ -255,7 +255,10 @@ function MatchPageLoaded({ community, practitioners }) {
   
   // styling stuff
   const commCatListWidthRaw = 35
+
+  // fit all practititioners on the page
   const practMatchListWidthRaw = parseInt((100 - commCatListWidthRaw) / practitioners.length)
+
   const commCatListWidth = `${commCatListWidthRaw}vw`
   const practMatchListWidth = `${practMatchListWidthRaw}vw`
   const headerMinHeight = '5vh'

@@ -60,7 +60,7 @@ const practitionerFieldMap = {
   activities: 'Activities',
   sectors: 'Sectors',
   hazards: 'Hazards',
-  name: 'Name',
+  name: 'Linked Form - Name',
   org: 'Organization Name',
   website: 'Organization Website',
   linkedIn: 'Review: LinkedIn',
@@ -149,10 +149,10 @@ export const fetchPractitionersForCommunity = (communityId, setPractitioners) =>
     view: "Grid view",
 
     // Curated only
-    //filterByFormula: `AND({Community: Airtable Record ID} = '${airtableRecordCommunity}', {Curated})`,
+    filterByFormula: `AND({Community: Id} = '${communityId}', {Curated})`,
 
     // For testing - get all even if not curated
-    filterByFormula: `{Community: Id} = '${communityId}'`,
+    //  filterByFormula: `{Community: Id} = '${communityId}'`,
     fields: [
       'Practitioner: Airtable Record ID',
     ]
@@ -167,7 +167,7 @@ export const fetchPractitionersForCommunity = (communityId, setPractitioners) =>
     const formula = `OR(${practIdFormulaSegments})`
 
     base('Practitioner').select({
-      maxRecords: 5,
+      // maxRecords: 5,
       view: "Grid view",
       filterByFormula: formula,
       fields: practitionerConf.fetchFields
@@ -184,9 +184,10 @@ export const fetchPractitionersForCommunity = (communityId, setPractitioners) =>
       console.log(recs)
 
       // for testing - shuffle result
-      shuffle(recs)
+      // shuffle(recs)
       // for testing - limit to three when testing with non-curated
-      const result = recs.slice(0, 3)
+      // const result = recs.slice(0, 3)
+      const result = recs
 
       setPractitioners(result)
     })
