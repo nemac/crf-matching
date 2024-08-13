@@ -20,10 +20,11 @@ function HeaderCell({ content, type, linkPath }) {
   return (
     <div
       style={{
-        minHeight: '10vh',
+        minHeight: '22vh',
         fontSize: '1.5em',
         alignContent: 'center',
-        textAlign: 'center'
+        textAlign: 'center',
+        marginBottom: '2vh',
       }}
     >
     { type === 'community' ? content : HeaderCellPractBadge({ content, linkPath }) }
@@ -33,20 +34,47 @@ function HeaderCell({ content, type, linkPath }) {
 
 function HeaderCellPractBadge({ content, linkPath }) {
   return (
-    <>
-    { /*
-      <svg width="189" height="189" viewBox="0 0 189 189" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M110.475 119.673C106.275 117.523 100.825 115.773 94.5 115.773C88.175 115.773 82.725 117.523 78.525 119.673C76.025 120.948 74.5 123.523 74.5 126.323V133.273H114.5V126.323C114.5 123.523 112.975 120.948 110.475 119.673ZM88.95 113.273H100.05C103.075 113.273 105.4 110.623 105 107.623L104.2 101.498C103.425 96.7477 99.3 93.2727 94.5 93.2727C89.7 93.2727 85.575 96.7477 84.8 101.498L84 107.623C83.6 110.623 85.925 113.273 88.95 113.273Z"
-        fill="#D1E9FF"
-      />
-      </svg>
-    </>
-    */ }
     <a
+      style={{
+        display: 'block',
+        margin: 'auto',
+        height: '22vh',
+        width: '22vh',
+        textAlign: 'center',
+        justifyContent: 'center',
+        verticalAlign: 'middle',
+        color: 'white',
+        textDecoration: 'none',
+      }}
       href={ linkPath }
-    >{ content || '(Org Name Not Found)' }</a>
-    </>
+    >
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          backgroundColor: '#2D3F5D',
+          borderRadius: '50%',
+          border: '1px solid #D1E9FF',
+        }} 
+      >
+        { /* STR trained */ }
+        
+        <div
+          style={{
+            marginTop: '25%',
+            marginBottom: '10%',
+          }}
+          >{ content }</div>
+          { /* simplified person icon */ }
+          <svg width="25%" height="25%" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M36.475 26.6727C32.275 24.5227 26.825 22.7727 20.5 22.7727C14.175 22.7727 8.725 24.5227 4.525 26.6727C2.025 27.9477 0.5 30.5227 0.5 33.3227V40.2727H40.5V33.3227C40.5 30.5227 38.975 27.9477 36.475 26.6727ZM14.95 20.2727H26.05C29.075 20.2727 31.4 17.6227 31 14.6227L30.2 8.49771C29.425 3.7477 25.3 0.272705 20.5 0.272705C15.7 0.272705 11.575 3.7477 10.8 8.49771L10 14.6227C9.6 17.6227 11.925 20.2727 14.95 20.2727Z"
+              fill="#D1E9FF"
+            />
+          </svg>
+
+      </div>
+    </a>
   )
 }
 
@@ -139,6 +167,7 @@ function PractMatchList ({ community, practitioner, width }) {
         content={ practitioner.org || practitioner.name }
         type='practitioner'
         linkPath={ `#/practitioner/${practitioner.id}`}
+        strTrained={ practitioner.strTrained }
       ></HeaderCell>
       <SectionList
         sections= { sections }
