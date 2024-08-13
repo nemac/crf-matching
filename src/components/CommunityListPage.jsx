@@ -16,6 +16,9 @@ import Paper from '@mui/material/Paper';
 // API 
 import { fetchAllCommunities } from '../util/api'
 
+// components
+import FullPageSpinner from './FullPageSpinner';
+
 
 function CommunitiesPageLoaded({ communities }) {
   return (
@@ -64,7 +67,6 @@ function CommunityListPage() {
   }, [])
 
   if (allCommunities.length) {
-    console.log('Rendering...')
     return (
       <div
         style={{
@@ -77,15 +79,8 @@ function CommunityListPage() {
       </div>
     )
   } else {
-    console.log('Loading...')
     return (
-      <div
-        style={{
-          ...styles.global
-        }}
-      >
-        <h3>Loading...</h3>
-      </div>
+      <FullPageSpinner></FullPageSpinner>
     )
   }
 

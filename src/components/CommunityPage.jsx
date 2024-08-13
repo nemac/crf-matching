@@ -2,13 +2,16 @@
 import styles from '../styles'
 
 // React
-import { useState, useEffect, useLayoutEffect } from 'react'
+import { useState, useLayoutEffect } from 'react'
 
 // router
 import { useParams } from 'react-router-dom'
 
 // API
 import { fetchCommunity, fetchPractitionersForCommunity } from '../util/api'
+
+// components
+import FullPageSpinner from './FullPageSpinner';
 
 
 /// Generic Components ///
@@ -158,6 +161,7 @@ function PractMatchSymbol({ label }) {
 }
 
 function PractMatchSvg() {
+  // check mark in a circle
   return (
     <svg width="25" height="25" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M14 0C6.272 0 0 6.272 0 14C0 21.728 6.272 28 14 28C21.728 28 28 21.728 28 14C28 6.272 21.728 0 14 0ZM21 15.4H7V12.6H21V15.4Z" fill="#FC8A79"/>
@@ -166,6 +170,7 @@ function PractMatchSvg() {
 }
 
 function PractNoMatchSvg({ length }) {
+  // red circle with a hollow dash in the middle
   return (
     <svg
       width="25" height="25" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -303,7 +308,6 @@ function CommunityPage() {
   }, [])
 
   if (community && practitioners.length) {
-    console.log('Rendering...')
     return (
       <div
         style={{
@@ -317,15 +321,8 @@ function CommunityPage() {
       </div>
     )
   } else {
-    console.log('Loading...')
     return (
-      <div
-        style={{
-          ...styles.global
-        }}
-      >
-        <h3>Loading...</h3>
-      </div>
+      <FullPageSpinner></FullPageSpinner>
     )
   }
 

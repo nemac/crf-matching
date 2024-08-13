@@ -3,7 +3,7 @@
 import { useParams } from 'react-router-dom'
 
 // react
-import { useState, useEffect } from 'react'
+import { useState, useLayoutEffect } from 'react'
 
 // API
 import { fetchPractitioner } from '../util/api'
@@ -13,6 +13,9 @@ import Divider from '@mui/material/Divider'
 
 // styles
 import styles from '../styles'
+
+// components
+import FullPageSpinner from './FullPageSpinner';
 
 
 function Header ({ practitioner }) {
@@ -330,12 +333,11 @@ function PractitionerPage() {
 
   const [ practitioner, setPractitioner ] = useState(null)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     fetchPractitioner(practitionerId, setPractitioner)
   }, [])
 
   if (practitioner) {
-    console.log('Rendering...')
     return (
       <div
         style={{
@@ -348,15 +350,8 @@ function PractitionerPage() {
       </div>
     )
   } else {
-    console.log('Loading...')
     return (
-      <div
-        style={{
-          ...styles.global
-        }}
-      >
-        <h3>Loading...</h3>
-      </div>
+      <FullPageSpinner></FullPageSpinner>
     )
   }
 
