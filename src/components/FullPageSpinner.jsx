@@ -7,9 +7,9 @@ function FullPageSpinner () {
     <div
       style={{
         height: '100vh',
-        marginTop: '48vh',
+        width: '100vw',
         justifyContent: 'center',
-        verticalAlign: 'middle',
+        alignItems: 'center',
         display: 'flex',
       }} 
     >

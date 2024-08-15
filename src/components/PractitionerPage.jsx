@@ -287,42 +287,62 @@ function MatchSection({ practitioner, title, objKey }) {
 /// Practitioner Page (Loaded) ///
 
 function PractitionerPageLoaded({ practitioner }) {
-  return <div>
-    <Header
-      practitioner={ practitioner }
-    ></Header>
-    <Training
-      practitioner={ practitioner } 
-    ></Training>
-    <MatchSection
-      practitioner={ practitioner }
-      title="Where we work"
-      objKey="state"
-    ></MatchSection>
-    <MatchSection
-      practitioner={ practitioner }
-      title="Activities we have expertise with"
-      objKey="activities"
-    ></MatchSection>
-    <MatchSection
-      practitioner={ practitioner }
-      title="Sectors we have expertise with"
-      objKey="sectors"
-    ></MatchSection>
-    <MatchSection
-      practitioner={ practitioner }
-      title="Hazards we have expertise with"
-      objKey="hazards"
-    ></MatchSection>
-    <MatchSection
-      practitioner={ practitioner }
-      title="Size of communities we have expertise with"
-      objKey="size"
-    ></MatchSection>
-    <ContactSection
-      practitioner={ practitioner }
-    ></ContactSection>
-  </div>
+  return (
+    <div>
+      <Header
+        practitioner={ practitioner }
+      ></Header>
+      <div
+        style={{
+          display: 'flex',
+        }} 
+      >
+        <div
+          style={{
+            flex: 1,
+          }}
+        >
+         <ContactSection
+          practitioner={ practitioner }
+          ></ContactSection>
+        </div>
+        <div
+          style={{
+            flex: 1,
+          }}
+        >
+          <Training
+            practitioner={ practitioner}
+          ></Training>
+        </div>
+      </div>
+      <MatchSection
+        practitioner={ practitioner }
+        title="Where we work"
+        objKey="state"
+      ></MatchSection>
+      <MatchSection
+        practitioner={ practitioner }
+        title="Activities we have expertise with"
+        objKey="activities"
+      ></MatchSection>
+      <MatchSection
+        practitioner={ practitioner }
+        title="Sectors we have expertise with"
+        objKey="sectors"
+      ></MatchSection>
+      <MatchSection
+        practitioner={ practitioner }
+        title="Hazards we have expertise with"
+        objKey="hazards"
+      ></MatchSection>
+      <MatchSection
+        practitioner={ practitioner }
+        title="Size of communities we have expertise with"
+        objKey="size"
+      ></MatchSection>
+    </div>
+  )
 }
 
 /// Practitioner Page ///
