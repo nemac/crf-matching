@@ -8,9 +8,6 @@ import { useState, useLayoutEffect } from 'react'
 // API
 import { fetchPractitioner } from '../util/api'
 
-// Material UI
-import Divider from '@mui/material/Divider'
-
 // styles
 import styles from '../styles'
 
@@ -23,34 +20,30 @@ function Header ({ practitioner }) {
     <div>
       <h1
         style={{
-          paddingTop: '8vh',
-          paddingBottom: '2vh',
-          paddingLeft: '1vw',
-          borderRadius: '10px',
-          backgroundColor: '#FFEED2',
-        }}>{ practitioner.org }</h1>
+          paddingTop: '20px',
+          paddingBottom: '20px',
+          marginTop: '0px',
+          marginLeft: '0px',
+          marginRight: '0px',
+          marginBottom: '15px',
+        }}>{ practitioner.org }
+      </h1>
     </div>
   )
 }
 
-function SectionHeader({ title }) {
+function SectionHeader({ title, style }) {
   return (
     <div>
-      <h2
+      <h3
         style={{
           color: '#2D3F5D',
-          margin: '0px',
+          marginTop: '0px',
+          marginBottom: '15px',
+          ...style,
         }}
-      >{ title }</h2>
-      <Divider
-        style={{
-          backgroundColor: '#2D3F5D',
-          marginTop: '1vh',
-          marginBottom: '1vh',
-        }}
-      >
-      </Divider>
-    </div>
+      >{ title }</h3>
+   </div>
   )
 }
 
@@ -80,32 +73,13 @@ function StrTrainedRow ( { isTrained }) {
 
 function Training ({ practitioner }) {
   return (
-    <div
-      style={{
-        backgroundColor: '#2D3F5D',
-        border: '1px solid #D1E9FF',
-        color: '#FAFAFA',
-        borderRadius: '10px',
-        paddingLeft: '.5vw',
-        paddingRight: '.5vw',
-        paddingBottom: '2vh',
-        paddingTop: '1vh',
-        marginBottom: '3vh',
-      }}
-    >
-      <h2
+    <div>
+      <SectionHeader
+        title='Certifications & Training'
         style={{
-          marginBtop: '0px',
-          marginBottom: '0px',
-        }} 
-      >Certifications & Training</h2>
-      <Divider
-        style={{
-          backgroundColor: '#FAFAFA',
-          marginBottom: '2vh'
-        }} 
-        aria-hidden="true"
-      ></Divider>
+          color: '#FAFAFA',
+        }}
+      ></SectionHeader>
       <StrTrainedRow
         isTrained={ practitioner.strTrained === 'Yes' ? true : false }>
       </StrTrainedRow>
@@ -167,51 +141,53 @@ function ContactRow({ type, practitioner }) {
 
   let href = `${hrefPrefix}${practitioner[type]}`
 
+
+  const linkStyle = {
+    textDecoration: 'none',
+    color: '#2D3F5D'
+  }
   let content
   if (type === 'website') {
-    content = <a target="_blank" href={ href }>{ practitioner[type] }</a>
+    content = <a style={ linkStyle } target="_blank" href={ href }>{ practitioner[type] }</a>
   } else {
-    content = <a href={ href }>{ practitioner[type] }</a>
+    content = <a style={ linkStyle } href={ href }>{ practitioner[type] }</a>
   }
 
   return (
     <div
       style={{
-        width: '100%',
-        minHeight: '3vh',
+        display: 'flex',
+        minHeight: '30px',
+        flexDirection: 'row',
+        justifyContent: 'start',
       }} 
     >
-      <span
+      <div
         style={{
+          flex: '0 1 20px',
+          marginRight: '15px',
           verticalAlign: 'middle'
         }} 
       >
         { icon }
-      </span>
-      <span
+      </div>
+      <div
         style={{
+          flex: '1 1 auto',
           verticalAlign: 'baseline',
-          marginLeft: '1vw',
         }}
       >
         { content }
-      </span>
+      </div>
     </div>
   )
 }
 
-function ContactSection({ practitioner }) {
+function ContactSection({ practitioner, style }) {
   return (
     <div
       style={{
-        border: '1px solid #52A6FF',
-        color: '#FAFAFA',
-        borderRadius: '10px',
-        paddingLeft: '.5vw',
-        paddingRight: '.5vw',
-        paddingBottom: '2vh',
-        paddingTop: '1vh',
-        marginBottom: '3vh', 
+        ...style
       }}
     >
       <SectionHeader
@@ -231,17 +207,16 @@ function ContactSection({ practitioner }) {
 function MatchBadge({ label }) {
   return <div
     style={{
-      border: '1px solid #000000',
+      border: '1px solid #52A6FF',
       borderRadius: '40px',
-      backgroundColor: '#7891BB',
-      color: '#000000',
-      margin: '.2vw',
+      color: '#52A6FF',
       alignContent: 'center',
+      margin: '10px',
       textAlign: 'center',
-      paddingLeft: '2vw',
-      paddingRight: '2vw',
-      paddingTop: '1vh',
-      paddingBottom: '1vh',
+      paddingLeft: '20px',
+      paddingRight: '20px',
+      paddingTop: '10px',
+      paddingBottom: '10px',
     }}
   >{ label }</div>
   
@@ -256,8 +231,6 @@ function MatchSection({ practitioner, title, objKey }) {
   return (
     <div
       style={{
-        paddingLeft: '.5vw',
-        paddingRight: '.5vw',
       }}
     >
       <SectionHeader
@@ -267,14 +240,13 @@ function MatchSection({ practitioner, title, objKey }) {
         style={{
           display: 'flex',
           flexWrap: 'wrap',
-          backgroundColor: '#F1ECE4',
           borderRadius: '10px',
-          minHeight: '5vh',
-          paddingLeft: '1vw',
-          paddingRight: '1vw',
-          paddingTop: '1vh',
-          paddingBottom: '1vh',
-          marginBottom: '2.5vh',
+          minHeight: '50px',
+          paddingLeft: '10px',
+          paddingRight: '10px',
+          paddingTop: '10px',
+          paddingBottom: '10px',
+          marginBottom: '20px',
         }}
       >
         { matchBadges }
@@ -287,28 +259,53 @@ function MatchSection({ practitioner, title, objKey }) {
 /// Practitioner Page (Loaded) ///
 
 function PractitionerPageLoaded({ practitioner }) {
+
+  const contactAndTrainingStyle = {
+    flex: 1,
+    borderRadius: '10px',
+    paddingLeft: '10px',
+    paddingRight: '10px',
+    paddingBottom: '10px',
+    paddingTop: '10px',
+    margin: '10px',
+  }
+
   return (
-    <div>
+    <div
+      style={{
+        paddingLeft: '20px',
+      }} 
+    >
       <Header
         practitioner={ practitioner }
       ></Header>
+
+      { /* Contact and Training */ }
       <div
         style={{
           display: 'flex',
+          flexFlow: 'row wrap',
+          alignItems: 'stretch',
+          marginBottom: '20px',
         }} 
       >
         <div
           style={{
-            flex: 1,
+            ...contactAndTrainingStyle,
+            border: '1px solid #52A6FF',
           }}
         >
          <ContactSection
           practitioner={ practitioner }
+          //style={ contactAndTrainingStyle }
           ></ContactSection>
         </div>
         <div
           style={{
-            flex: 1,
+            ...contactAndTrainingStyle,
+            backgroundColor: '#2D3F5D',
+            border: '1px solid #D1E9FF',
+            color: '#FAFAFA',
           }}
         >
           <Training
@@ -316,31 +313,37 @@ function PractitionerPageLoaded({ practitioner }) {
           ></Training>
         </div>
       </div>
+
       <MatchSection
         practitioner={ practitioner }
         title="Where we work"
         objKey="state"
       ></MatchSection>
+
       <MatchSection
         practitioner={ practitioner }
         title="Activities we have expertise with"
         objKey="activities"
       ></MatchSection>
+
       <MatchSection
         practitioner={ practitioner }
         title="Sectors we have expertise with"
         objKey="sectors"
       ></MatchSection>
+
       <MatchSection
         practitioner={ practitioner }
         title="Hazards we have expertise with"
         objKey="hazards"
       ></MatchSection>
+
       <MatchSection
         practitioner={ practitioner }
         title="Size of communities we have expertise with"
         objKey="size"
       ></MatchSection>
+
     </div>
   )
 }

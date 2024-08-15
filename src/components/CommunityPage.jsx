@@ -20,7 +20,7 @@ function HeaderCell({ content, type, linkPath }) {
   return (
     <div
       style={{
-        minHeight: '10vh',
+        height: '150px',
         fontSize: '1.5em',
         alignContent: 'center',
         textAlign: 'center'
@@ -84,15 +84,14 @@ function Section ({ header='', type, cards, key }) {
   )
 }
 
-function SectionList ({ sections, width }) {
+function SectionList ({ sections }) {
   return (
     <div
       style={{
-        padding: '.5vw',
+        padding: '10px',
         border: '1px solid #D9D9D9',
         borderRadius: '10px',
-        width: width,
-        marginRight: '0.5vw',
+        marginRight: '10px',
       }} 
     >
     {
@@ -112,7 +111,7 @@ const matchVals = (commCats, practCats) => {
   return commCats.map(commCat => practCats.includes(commCat))
 }
  
-function PractMatchList ({ community, practitioner, width }) {
+function PractMatchList ({ community, practitioner }) {
 
   const sections = [
     [ [community.state], practitioner.state ],
@@ -132,7 +131,7 @@ function PractMatchList ({ community, practitioner, width }) {
   return (
     <div
       style={{
-        width: width
+        flex: '1 1 33%'
       }}
     >
       <HeaderCell
@@ -184,7 +183,6 @@ function PractitionerPanel({ community, practitioners, listWidth }) {
     return <PractMatchList
       community={ community }
       practitioner={ pract }
-      width={ listWidth }
       style={{
         flex: 1
       }}
@@ -235,14 +233,9 @@ function CommunityCategoryList({ community }) {
   )
 }
 
-function CommunityPanel({ community, width }) {
+function CommunityPanel({ community }) {
   return (
-    <div
-      width={ width }
-      style={{
-        flex: 1
-      }}
-    >
+    <div>
       <HeaderCell
         content={ community.name }
         type='community'
@@ -258,35 +251,38 @@ function CommunityPanel({ community, width }) {
 
 function MatchPageLoaded({ community, practitioners }) {
   
-  // styling stuff
-  const commCatListWidthRaw = 35
-
-  // fit all practititioners on the page
-  const practMatchListWidthRaw = parseInt((100 - commCatListWidthRaw) / practitioners.length)
-
-  const commCatListWidth = `${commCatListWidthRaw}vw`
-  const practMatchListWidth = `${practMatchListWidthRaw}vw`
-  const headerMinHeight = '5vh'
-
   return (
     <>
       <div
         style={{
-          display: 'flex'
+          display: 'flex',
+          flexWrap: 'nowrap'
         }}
       >
+        <div
+          style={{
+            flex: '2 1 40vw'
+          }} 
+        >
           <CommunityPanel
-            community={ community } 
-            width={ commCatListWidth }
-            headerMinHeight={ headerMinHeight }
+            community={ community }
+            // width={ commCatListWidth }
+            // headerMinHeight={ headerMinHeight }
           ></CommunityPanel>
-
+        </div>
+        <div
+          style={{
+            flex: '1 1 60vw',
+            display: 'flex'
+          }} 
+        >
           <PractitionerPanel
             community={ community }
             practitioners={ practitioners }
-            listWidth={ practMatchListWidth }
-            headerMinHeight={ headerMinHeight }
+            // listWidth={ practMatchListWidth }
+            // headerMinHeight={ headerMinHeight }
           ></PractitionerPanel>
+        </div>
       </div>
     </>
   )
