@@ -63,7 +63,7 @@ function Cell ({ label, type, key }) {
         fontSize: '.9em',
         textAlign: type === 'community' ? 'left' : 'center',
         // keep row alignment on small screens
-        maxHeight: '1vh'
+        height: '20px'
       }}
     >
     { type === 'community' ? label : PractMatchSymbol({ label }) }</div>
