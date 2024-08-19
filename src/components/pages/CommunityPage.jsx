@@ -23,7 +23,7 @@ const sectionStyles = {
 }
 
 const sectionHeaderStyles = {
-  height: '150px',
+  height: '200px',
   alignContent: 'center',
   textAlign: 'center',
   ...sectionStyles
@@ -43,7 +43,7 @@ function CommunityHeader({ label }) {
 
 function StrTrained({ isTrained }) {
   const trainedStyle = {
-    height: '50px',
+    height: '45px',
     marginTop: '10px',
   }
   if (isTrained === 'Yes') {
@@ -57,7 +57,7 @@ function StrTrained({ isTrained }) {
         verticalAlign: 'middle',
         justifyContent: 'center',
         alignItems: 'center',
-        fontSize: '.7em',
+        fontSize: '.8em',
       }} 
     >
       <div>
