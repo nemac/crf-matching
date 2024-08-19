@@ -1,5 +1,5 @@
 // styles
-import styles from '../styles'
+import styles from '../../styles'
 
 // react
 import { useState, useEffect } from 'react'
@@ -14,10 +14,10 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 // API 
-import { fetchAllCommunities } from '../util/api'
+import { fetchAllCommunities } from '../../util/api'
 
 // components
-import FullPageSpinner from './FullPageSpinner';
+import FullPageSpinner from '../FullPageSpinner';
 
 
 function CommunitiesPageLoaded({ communities }) {

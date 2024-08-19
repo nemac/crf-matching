@@ -5,9 +5,9 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import CommunityListPage from "./components/CommunityListPage.jsx";
-import CommunityPage from './components/CommunityPage.jsx'
-import PractitionerPage from "./components/PractitionerPage.jsx";
+import CommunityListPage from "./components/pages/CommunityListPage.jsx";
+import CommunityPage from './components/pages/CommunityPage.jsx'
+import PractitionerPage from "./components/pages/PractitionerPage.jsx";
 
 const router = createHashRouter([
   {

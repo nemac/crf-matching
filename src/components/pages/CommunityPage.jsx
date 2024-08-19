@@ -1,5 +1,5 @@
 // styles
-import styles from '../styles'
+import styles from '../../styles'
 
 // React
 import { useState, useLayoutEffect } from 'react'
@@ -8,34 +8,96 @@ import { useState, useLayoutEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 // API
-import { fetchCommunity, fetchPractitionersForCommunity } from '../util/api'
+import { fetchCommunity, fetchPractitionersForCommunity } from '../../util/api'
 
 // components
-import FullPageSpinner from './FullPageSpinner';
+import FullPageSpinner from '../FullPageSpinner';
+import GradCapSvg from '../GradCapSvg';
 
 
 /// Generic Components ///
 
-function HeaderCell({ content, type, linkPath }) {
+const sectionStyles = {
+  marginRight: '5px',
+  marginLeft: '5px',
+}
+
+const sectionHeaderStyles = {
+  height: '150px',
+  alignContent: 'center',
+  textAlign: 'center',
+  ...sectionStyles
+}
+
+function CommunityHeader({ label }) {
   return (
     <div
       style={{
-        height: '150px',
-        fontSize: '1.5em',
-        alignContent: 'center',
-        textAlign: 'center'
+        ...sectionHeaderStyles,
+        fontSize: '2em',
       }}
-    >
-    { type === 'community' ? content : HeaderCellPractBadge({ content, linkPath }) }
-    </div>
+    >{ label }</div>
   )
+
 }
 
-function HeaderCellPractBadge({ content, linkPath }) {
+function StrTrained({ isTrained }) {
+  const trainedStyle = {
+    height: '50px',
+    marginTop: '10px',
+  }
+  if (isTrained === 'Yes') {
+    return <div
+      style={{
+        ...trainedStyle,
+        borderRadius: '15px',
+        backgroundColor: styles.colors.darkBlue,
+        color: styles.colors.lightGray,
+        display: 'flex',
+        verticalAlign: 'middle',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: '.7em',
+      }} 
+    >
+      <div>
+        <GradCapSvg></GradCapSvg>
+        <span
+          style={{
+            marginLeft: '10px',
+            verticalAlign: 'baseline',
+          }}>STR Trained</span>
+      </div>
+    </div>
+  } else {
+    return <div
+      style={{
+        ...trainedStyle,
+        backgroundColor: styles.colors.lightGray,
+      }} 
+    >
+
+    </div>
+  }
+}
+
+function PractitionerHeader({ content, linkPath, strTrained }) {
   return (
-    <a
-      href={ linkPath }
-    >{ content || '(Org Name Not Found)' }</a>
+    <div
+      style={{
+        ...sectionHeaderStyles,
+        fontSize: '1.2em',
+      }}
+    >
+      <a
+        style={{
+          textDecoration: 'none',
+          color: styles.colors.darkBlue,
+        }}
+        href={ linkPath }
+      >{ content || '(Org Name Not Found)' }</a>
+      <StrTrained isTrained={ strTrained }></StrTrained>
+    </div>
   )
 }
 
@@ -80,7 +142,7 @@ function SectionList ({ sections }) {
         padding: '10px',
         border: `1px solid ${styles.colors.borderGray }`,
         borderRadius: '10px',
-        marginRight: '10px',
+        ...sectionStyles
       }} 
     >
     {
@@ -120,14 +182,15 @@ function PractMatchList ({ community, practitioner }) {
   return (
     <div
       style={{
-        flex: '1 1 33%'
+        flex: '1 1 33%',
+        backgroundColor: styles.colors.lightGray,
       }}
     >
-      <HeaderCell
+      <PractitionerHeader
         content={ practitioner.org || practitioner.name }
-        type='practitioner'
         linkPath={ `#/practitioner/${practitioner.id}`}
-      ></HeaderCell>
+        strTrained={ practitioner.strTrained }
+      ></PractitionerHeader>
       <SectionList
         sections= { sections }
       ></SectionList>
@@ -154,7 +217,7 @@ function PractMatchSvg() {
     <svg width="25" height="25" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M14 0C6.272 0 0 6.272 0 14C0 21.728 6.272 28 14 28C21.728 28 28 21.728 28 14C28 6.272 21.728 0 14 0ZM21 15.4H7V12.6H21V15.4Z"
-      fill={ styles.colors.checkmarkGreen }
+      fill={ styles.colors.matchGreen }
     />
     </svg>
   )
@@ -230,11 +293,16 @@ function CommunityCategoryList({ community }) {
 
 function CommunityPanel({ community }) {
   return (
-    <div>
-      <HeaderCell
-        content={ community.name }
-        type='community'
-      ></HeaderCell>
+    <div
+      style={{
+        backgroundColor: styles.colors.white,
+        borderRadius: '20px',
+        border: `0px solid ${styles.colors.white}`,
+      }} 
+    >
+      <CommunityHeader
+        label={ community.name }
+      ></CommunityHeader>
       <CommunityCategoryList
         community={ community } 
       ></CommunityCategoryList>
@@ -251,12 +319,13 @@ function MatchPageLoaded({ community, practitioners }) {
       <div
         style={{
           display: 'flex',
-          flexWrap: 'nowrap'
+          flexWrap: 'nowrap',
+          backgroundColor: styles.colors.lightGray,
         }}
       >
         <div
           style={{
-            flex: '2 1 40vw'
+            flex: '2 1 40vw',
           }} 
         >
           <CommunityPanel
