@@ -33,20 +33,9 @@ function HeaderCell({ content, type, linkPath }) {
 
 function HeaderCellPractBadge({ content, linkPath }) {
   return (
-    <>
-    { /*
-      <svg width="189" height="189" viewBox="0 0 189 189" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M110.475 119.673C106.275 117.523 100.825 115.773 94.5 115.773C88.175 115.773 82.725 117.523 78.525 119.673C76.025 120.948 74.5 123.523 74.5 126.323V133.273H114.5V126.323C114.5 123.523 112.975 120.948 110.475 119.673ZM88.95 113.273H100.05C103.075 113.273 105.4 110.623 105 107.623L104.2 101.498C103.425 96.7477 99.3 93.2727 94.5 93.2727C89.7 93.2727 85.575 96.7477 84.8 101.498L84 107.623C83.6 110.623 85.925 113.273 88.95 113.273Z"
-        fill="#D1E9FF"
-      />
-      </svg>
-    </>
-    */ }
     <a
       href={ linkPath }
     >{ content || '(Org Name Not Found)' }</a>
-    </>
   )
 }
 
@@ -56,7 +45,7 @@ function Cell ({ label, type, key }) {
       key={ key }
       style={{
         borderRadius: '10px',
-        backgroundColor: '#FFEED2',
+        backgroundColor: styles.colors.tan,
         padding: '25px',
         marginBottom: '5px',
         verticalAlign: 'top',
@@ -89,7 +78,7 @@ function SectionList ({ sections }) {
     <div
       style={{
         padding: '10px',
-        border: '1px solid #D9D9D9',
+        border: `1px solid ${styles.colors.borderGray }`,
         borderRadius: '10px',
         marginRight: '10px',
       }} 
@@ -163,7 +152,10 @@ function PractMatchSvg() {
   // check mark in a circle
   return (
     <svg width="25" height="25" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M14 0C6.272 0 0 6.272 0 14C0 21.728 6.272 28 14 28C21.728 28 28 21.728 28 14C28 6.272 21.728 0 14 0ZM21 15.4H7V12.6H21V15.4Z" fill="#FC8A79"/>
+    <path
+      d="M14 0C6.272 0 0 6.272 0 14C0 21.728 6.272 28 14 28C21.728 28 28 21.728 28 14C28 6.272 21.728 0 14 0ZM21 15.4H7V12.6H21V15.4Z"
+      fill={ styles.colors.checkmarkGreen }
+    />
     </svg>
   )
 }
@@ -173,7 +165,10 @@ function PractNoMatchSvg({ length }) {
   return (
     <svg
       width="25" height="25" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M18 0C8.064 0 0 8.064 0 18C0 27.936 8.064 36 18 36C27.936 36 36 27.936 36 18C36 8.064 27.936 0 18 0ZM14.4 27L5.4 18L7.938 15.462L14.4 21.906L28.062 8.244L30.6 10.8L14.4 27Z" fill="#677D66" />
+      <path
+        d="M18 0C8.064 0 0 8.064 0 18C0 27.936 8.064 36 18 36C27.936 36 36 27.936 36 18C36 8.064 27.936 0 18 0ZM14.4 27L5.4 18L7.938 15.462L14.4 21.906L28.062 8.244L30.6 10.8L14.4 27Z"
+        fill={ styles.colors.nomatchRed }
+      />
     </svg>
   )
 }

@@ -273,6 +273,3 @@ function importDataToAirtable() {
   }
   
 }
-
-/// Runtime ///
-importDataToAirtable()
