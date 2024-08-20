@@ -84,7 +84,15 @@ export const fetchCommunity = (communityId, setCommunity) => {
     console.log('Setting community to')
     const rec = records
       .map(rawRec => rawRec.fields)
-      .map(rec => normalizeRec(rec, communityFieldMap))[0]
+      .map(rec => normalizeRec(rec, communityFieldMap))
+      // add total of categories
+      .map(rec => {
+        rec.totalCategories = rec.activities.length +
+          rec.sectors.length +
+          rec.hazards.length +
+          2 // size + state
+        return rec;
+      })[0]
     console.log(rec)
     setCommunity(rec)
   })

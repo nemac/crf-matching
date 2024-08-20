@@ -29,6 +29,12 @@ const sectionHeaderStyles = {
   ...sectionStyles
 }
 
+const scoreSectionStyles = {
+  ...sectionStyles,
+  marginTop: '50px',
+  fontSize: '1.3em'
+}
+
 function CommunityHeader({ label }) {
   return (
     <div
@@ -135,22 +141,27 @@ function Section ({ header='', type, cards, key }) {
   )
 }
 
-function SectionList ({ sections }) {
+function SectionList ({ sections, type, score }) {
+  const scoreSection = type === 'community'
+    ? <CommunityTotal totalCategories={ score }></CommunityTotal>
+    : <PractitionerScore score={ score }></PractitionerScore>
+
   return (
     <div
       style={{
         padding: '10px',
         border: `1px solid ${styles.colors.borderGray }`,
-        borderRadius: '10px',
+        borderRadius: '15px',
         ...sectionStyles
       }} 
     >
-    {
-      sections.map((section, index) => {
-        section.key=index;
-        return Section(section)
-      })
-    }
+      {
+        sections.map((section, index) => {
+          section.key=index;
+          return Section(section)
+        })
+      }
+      { scoreSection }
     </div>
   )
 }
@@ -160,6 +171,17 @@ function SectionList ({ sections }) {
 
 const matchVals = (commCats, practCats) => {
   return commCats.map(commCat => practCats.includes(commCat))
+}
+
+function PractitionerScore({ score }) {
+  return <div
+    style={{
+      ...scoreSectionStyles,
+      textAlign: 'center',
+    }} 
+  >
+    { score } 
+  </div>
 }
  
 function PractMatchList ({ community, practitioner }) {
@@ -192,6 +214,8 @@ function PractMatchList ({ community, practitioner }) {
         strTrained={ practitioner.strTrained }
       ></PractitionerHeader>
       <SectionList
+        type="practitioner"
+        score={ practitioner.matchScore }
         sections= { sections }
       ></SectionList>
     </div>
@@ -237,7 +261,7 @@ function PractNoMatchSvg({ length }) {
   )
 }
 
-function PractitionerPanel({ community, practitioners, listWidth }) {
+function PractitionerPanel({ community, practitioners }) {
   const practMatchLists = practitioners.map(pract => {
     return <PractMatchList
       community={ community }
@@ -287,8 +311,23 @@ function CommunityCategoryList({ community }) {
 
   return (
     <SectionList
+      type="community"
+      score={ community.totalCategories }
       sections={ sections }
     ></SectionList>
+  )
+}
+
+function CommunityTotal({ totalCategories }) {
+  return (
+    <div
+      style={{
+        ...scoreSectionStyles
+      }}
+    >
+      Total
+      <div style={{ float: 'right' }}>{ totalCategories }</div>
+    </div>
   )
 }
 
@@ -297,8 +336,9 @@ function CommunityPanel({ community }) {
     <div
       style={{
         backgroundColor: styles.colors.white,
-        borderRadius: '20px',
+        borderRadius: '15px',
         border: `0px solid ${styles.colors.white}`,
+        paddingBottom: '10px',
       }} 
     >
       <CommunityHeader
