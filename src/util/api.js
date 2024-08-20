@@ -1,25 +1,6 @@
 // Airtable
 import Airtable from 'airtable'
 
-// for testing
-// shuffle practitioners
-// https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
-function shuffle(array) {
-  let currentIndex = array.length;
-
-  // While there remain elements to shuffle...
-  while (currentIndex != 0) {
-
-    // Pick a remaining element...
-    let randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-
-    // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex], array[currentIndex]];
-  }
-}
-
 // set up airtable
 Airtable.configure({
   endpointUrl: 'https://api.airtable.com',
@@ -30,28 +11,12 @@ const base = Airtable.base(__AIRTABLE_BASE__)
 
 /// configuration ///
 
-const normalizeValue = val => {
-  if (Array.isArray(val)) {
-    return val || []
-  }
-  return val || ''
-}
-
-const normalizeRecGeneric = (rec, fieldMap) => {
+const normalizeRec = (rec, fieldMap) => {
   const result = {}
-  Object.keys(fieldMap).forEach(fieldName => {
-    result[fieldName] = normalizeValue(rec[fieldMap[fieldName]])
-  })
-  return result
-}
-
-const getFetchFields = fields => Object.values(fields)
-
-const confGenerator = fieldMap => {
-  return {
-    fetchFields: getFetchFields(fieldMap),
-    normalizeRec: rec => normalizeRecGeneric(rec, fieldMap)
+  for (const [normKey, airKey] of Object.entries(fieldMap)) {
+    result[normKey] = rec[airKey] || ''
   }
+  return result
 }
 
 const practitionerFieldMap = {
@@ -81,8 +46,8 @@ const communityFieldMap = {
   id: 'Id'
 }
 
-const practitionerConf = confGenerator(practitionerFieldMap)
-const communityConf = confGenerator(communityFieldMap)
+const practFetchFields = Object.values(practitionerFieldMap);
+const communityFetchFields = Object.values(communityFieldMap);
 
 
 /// api ///
@@ -92,15 +57,15 @@ export const fetchPractitioner = (practitionerId, setPractitioner) => {
     maxRecords: 1,
     view: "Grid view",
     filterByFormula: `{Id} = '${practitionerId}'`,
-    fields: practitionerConf.fetchFields
+    fields: practFetchFields
   }).firstPage(function(err, records) {
     if (err) {
       console.error(err)
     }
     console.log('Setting practitioner to')
     const rec = records
-      .map(rec => rec.fields)
-      .map(practitionerConf.normalizeRec)[0]
+      .map(rawRec => rawRec.fields)
+      .map(rec => normalizeRec(rec, practitionerFieldMap))[0]
     console.log(rec)
     setPractitioner(rec)
   })
@@ -111,15 +76,15 @@ export const fetchCommunity = (communityId, setCommunity) => {
     maxRecords: 1,
     view: "Grid view",
     filterByFormula: `{Id} = '${communityId}'`,
-    fields: communityConf.fetchFields
+    fields: communityFetchFields,
   }).firstPage(function(err, records) {
     if (err) {
       console.error(err)
     }
     console.log('Setting community to')
     const rec = records
-      .map(rec => rec.fields)
-      .map(communityConf.normalizeRec)[0]
+      .map(rawRec => rawRec.fields)
+      .map(rec => normalizeRec(rec, communityFieldMap))[0]
     console.log(rec)
     setCommunity(rec)
   })
@@ -129,11 +94,11 @@ export const fetchAllCommunities = (setAllCommunities) => {
   const communities = []
   base('Community').select({
     view: "Grid view",
-    fields: communityConf.fetchFields
+    fields: communityFetchFields
   }).eachPage(function page(records, fetchNextPage) {
     const recs = records
-      .map(rec => rec.fields)
-      .map(communityConf.normalizeRec)
+      .map(rawRec => rawRec.fields)
+      .map(rec => normalizeRec(rec, communityFieldMap))
     communities.push(...recs)
     fetchNextPage();
   }, function done(err) {
@@ -155,13 +120,16 @@ export const fetchPractitionersForCommunity = (communityId, setPractitioners) =>
     //  filterByFormula: `{Community: Id} = '${communityId}'`,
     fields: [
       'Practitioner: Airtable Record ID',
+      'Practitioner: Id',
+      'Match Score',
     ]
-  }).firstPage(function(err, records) {
+  }).firstPage(function(err, matchRecs) {
+    matchRecs = matchRecs.map(rec => rec.fields)
     if (err) {
       console.error(err)
     }
-    const practIdFormulaSegments = records
-      .map(rec => rec.fields['Practitioner: Airtable Record ID'])
+    const practIdFormulaSegments = matchRecs
+      .map(rec => rec['Practitioner: Airtable Record ID'])
       .map(recId => `{Airtable Record ID} = '${recId}'`)
       .join(',')
     const formula = `OR(${practIdFormulaSegments})`
@@ -170,16 +138,26 @@ export const fetchPractitionersForCommunity = (communityId, setPractitioners) =>
       // maxRecords: 5,
       view: "Grid view",
       filterByFormula: formula,
-      fields: practitionerConf.fetchFields
-    }).firstPage(function(err, records) {
+      fields: practFetchFields,
+    }).firstPage(function(err, pracRecs) {
       if (err) {
         console.error(err)
       }
 
       console.log('Setting practitioners to')
-      const recs = records
-        .map(rec => rec.fields)
-        .map(practitionerConf.normalizeRec)
+      const recs = pracRecs
+        .map(rawRec => rawRec.fields)
+        .map(rec => normalizeRec(rec, practitionerFieldMap))
+        // insert match score manually
+        .map(rec => {
+          const filterById = rec.matchScore = matchRecs
+            .filter(mRec => {
+              const result = mRec['Practitioner: Id'][0] === rec.id
+              return result;
+            })
+          rec.matchScore = filterById[0]['Match Score']
+          return rec
+        })
 
       console.log(recs)
 

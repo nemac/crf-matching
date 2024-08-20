@@ -17,7 +17,7 @@ export default {
     lightBlue: '#52A6FF',
     tan: '#FFEED2',
     borderGray: '#D9D9D9',
-    nomatchRed: '#677D66',
-    matchGreen: '#FC8A79',
+    matchGreen: '#677D66',
+    nomatchRed: '#FC8A79',
   }
 }
