@@ -166,6 +166,8 @@ export const fetchPractitionersForCommunity = (communityId, setPractitioners) =>
           rec.matchScore = filterById[0]['Match Score']
           return rec
         })
+        // sort by match score (descending)
+        .sort((r1, r2) => r2.matchScore - r1.matchScore)
 
       console.log(recs)
 

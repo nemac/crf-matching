@@ -2,7 +2,7 @@
 import styles from '../../styles'
 
 // React
-import { useState, useLayoutEffect } from 'react'
+import { useRef, useState, useLayoutEffect } from 'react'
 
 // router
 import { useParams } from 'react-router-dom'
@@ -13,9 +13,9 @@ import { fetchCommunity, fetchPractitionersForCommunity } from '../../util/api'
 // components
 import FullPageSpinner from '../FullPageSpinner';
 import GradCapSvg from '../GradCapSvg';
+import ProfilePopper from '../ProfilePopper';
 
-
-/// Generic Components ///
+/// Styles ///
 
 const sectionStyles = {
   marginRight: '5px',
@@ -35,17 +35,8 @@ const scoreSectionStyles = {
   fontSize: '1.3em'
 }
 
-function CommunityHeader({ label }) {
-  return (
-    <div
-      style={{
-        ...sectionHeaderStyles,
-        fontSize: '2em',
-      }}
-    >{ label }</div>
-  )
 
-}
+/// Headers ///
 
 function StrTrained({ isTrained }) {
   const trainedStyle = {
@@ -87,25 +78,7 @@ function StrTrained({ isTrained }) {
   }
 }
 
-function PractitionerHeader({ content, linkPath, strTrained }) {
-  return (
-    <div
-      style={{
-        ...sectionHeaderStyles,
-        fontSize: '1.2em',
-      }}
-    >
-      <a
-        style={{
-          textDecoration: 'none',
-          color: styles.colors.darkBlue,
-        }}
-        href={ linkPath }
-      >{ content || '(Org Name Not Found)' }</a>
-      <StrTrained isTrained={ strTrained }></StrTrained>
-    </div>
-  )
-}
+/// Sections ///
 
 function Cell ({ label, type, key }) {
   return (
@@ -167,7 +140,51 @@ function SectionList ({ sections, type, score }) {
 }
 
 
+
 /// Practitioner ///
+
+
+function PractitionerHeader({
+  content,
+  linkPath,
+  strTrained,
+  practitioner,
+  poppedPractitioner,
+  setPoppedPractitioner
+}) {
+
+  const headerRef = useRef(null);
+
+  const onMouseEnter = e => {
+    setPoppedPractitioner(practitioner)
+  }
+
+  const header = <div
+    ref={ headerRef }
+    style={{
+      ...sectionHeaderStyles,
+      fontSize: '1.2em',
+    }}
+    onMouseEnter={ onMouseEnter }
+  >
+    { content || '(Org Name Not Found)' }
+    <StrTrained isTrained={ strTrained }></StrTrained>
+    <ProfilePopper
+      headerRef={ headerRef }
+      practitioner={ practitioner }
+      poppedPractitioner={ poppedPractitioner }
+      setPoppedPractitioner={ setPoppedPractitioner }
+    ></ProfilePopper>
+  </div>
+
+  return (
+    <>
+      { header }
+    </>
+  )
+}
+
+
 
 const matchVals = (commCats, practCats) => {
   return commCats.map(commCat => practCats.includes(commCat))
@@ -184,7 +201,12 @@ function PractitionerScore({ score }) {
   </div>
 }
  
-function PractMatchList ({ community, practitioner }) {
+function PractMatchList ({
+  community,
+  practitioner,
+  poppedPractitioner,
+  setPoppedPractitioner
+}) {
 
   const sections = [
     [ [community.state], practitioner.state ],
@@ -209,9 +231,12 @@ function PractMatchList ({ community, practitioner }) {
       }}
     >
       <PractitionerHeader
+        practitioner={ practitioner }
         content={ practitioner.org || practitioner.name }
         linkPath={ `#/practitioner/${practitioner.id}`}
         strTrained={ practitioner.strTrained }
+        poppedPractitioner={ poppedPractitioner }
+        setPoppedPractitioner={ setPoppedPractitioner }
       ></PractitionerHeader>
       <SectionList
         type="practitioner"
@@ -262,10 +287,16 @@ function PractNoMatchSvg({ length }) {
 }
 
 function PractitionerPanel({ community, practitioners }) {
+
+  // Profile info popup
+  const [ poppedPractitioner, setPoppedPractitioner ] = useState(null)
+
   const practMatchLists = practitioners.map(pract => {
     return <PractMatchList
       community={ community }
       practitioner={ pract }
+      poppedPractitioner={ poppedPractitioner }
+      setPoppedPractitioner={ setPoppedPractitioner }
       style={{
         flex: 1
       }}
@@ -280,6 +311,20 @@ function PractitionerPanel({ community, practitioners }) {
 
 
 /// Community Panel ///
+
+function CommunityHeader({ label }) {
+  return (
+    <div
+      style={{
+        ...sectionHeaderStyles,
+        fontSize: '2em',
+      }}
+    >{ label }</div>
+  )
+
+}
+
+
 
 function CommunityCategoryList({ community }) {
   const sections = [
