@@ -1,7 +1,7 @@
 
-import styles from '../styles'
+import styles from '../../styles'
 
-export default function GradCapSvg() {
+export default function GradCapIcon() {
   return (
     <svg
       verticalAlign='middle'

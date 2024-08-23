@@ -19,5 +19,9 @@ export default {
     borderGray: '#D9D9D9',
     matchGreen: '#677D66',
     nomatchRed: '#FC8A79',
+  },
+  scoreSection: {
+    marginTop: '50px',
+    fontSize: '1.3em'
   }
 }

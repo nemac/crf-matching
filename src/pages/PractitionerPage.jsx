@@ -5,15 +5,15 @@ import { useParams } from 'react-router-dom'
 import { useState, useLayoutEffect } from 'react'
 
 // API
-import { fetchPractitioner } from '../../util/api'
+import { fetchPractitioner } from '../util/api'
 
 // styles
-import styles from '../../styles'
+import styles from '../styles'
 
 // components
-import FullPageSpinner from '../FullPageSpinner';
-import GradCapSvg from '../GradCapSvg';
-import ContactRow from '../ContactRow';
+import FullPageSpinner from '../components/FullPageSpinner';
+import GradCapSvg from '../components/svg/GradCapIcon';
+import ContactRow from '../components/ContactRow';
 
 
 function Header ({ practitioner }) {
