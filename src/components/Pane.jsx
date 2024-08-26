@@ -2,9 +2,7 @@
 import { Stack, styled } from '@mui/material'
 
 export default styled(Stack)(({ theme }) => ({
-  marginRight: '5px',
-  marginLeft: '5px',
-  padding: '10px',
+  padding: 10,
   border: `1px solid ${theme.palette.primary.borderGray }`,
-  borderRadius: '15px',
+  borderRadius: 10
 }));

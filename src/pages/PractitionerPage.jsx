@@ -1,49 +1,51 @@
-// router
-import { useParams } from 'react-router-dom'
-
-// react
-import { useState, useLayoutEffect } from 'react'
-
-// API
-import { fetchPractitioner } from '../util/api'
+import { useState, useLayoutEffect } from "react";
+import { useParams } from "react-router-dom";
+import { ThemeProvider } from "@mui/material/styles";
+import { CssBaseline, Grid, Container, Box, Typography, styled } from '@mui/material'
 
 import theme from '../theme';
-
-// components
 import FullPageSpinner from '../components/FullPageSpinner';
 import GradCapSvg from '../components/svg/GradCapIcon';
 import ContactRow from '../components/ContactRow';
 
+// API
+import { fetchPractitioner } from '../util/api'
 
-function Header ({ practitioner }) {
-  return (
-    <div>
-      <h1
-        style={{
-          paddingTop: '20px',
-          paddingBottom: '20px',
-          marginTop: '0px',
-          marginLeft: '0px',
-          marginRight: '0px',
-          marginBottom: '15px',
-        }}>{ practitioner.org }
-      </h1>
-    </div>
-  )
-}
+
+const sections = [
+  {
+    title: "Where we work",
+    objKey: "state",
+  },
+  {
+    title: "Activities we have expertise with",
+    objKey: "activities",
+  },
+  {
+    title: "Sectors we have expertise with",
+    objKey: "sectors",
+  },
+  {
+    title: "Hazards we have expertise with",
+    objKey: "hazards",
+  },
+  {
+    title: "Size of communities we have expertise with",
+    objKey: "size",
+  }
+]
+
+
 
 function SectionHeader({ title, style }) {
   return (
-    <div>
-      <h3
-        style={{
-          color: theme.palette.primary.darkBlue,
-          marginTop: '0px',
-          marginBottom: '15px',
-          ...style,
-        }}
-      >{ title }</h3>
-   </div>
+    <Typography variant="h6"
+      sx={{
+        color: 'primary.main',
+        mb: 2,
+        ...style
+      }}
+    >{ title }</Typography>
   )
 }
 
@@ -57,48 +59,11 @@ function StrTrainedRow ( { isTrained }) {
       <span
         style={{
           marginLeft: '15px',
-          verticalAlign: 'baseline'
         }}
       >STR Training Class Completed</span>
     </div>
   )
 }
-
-function Training ({ practitioner }) {
-  return (
-    <div>
-      <SectionHeader
-        title='Certifications & Training'
-        style={{
-          color: theme.palette.primary.lightGray
-        }}
-      ></SectionHeader>
-      <StrTrainedRow
-        isTrained={ practitioner.strTrained === 'Yes' ? true : false }>
-      </StrTrainedRow>
-    </div>
-  )
-}
-
-
-/// Contact ///
-
-function ContactSection({ practitioner }) {
-  return (
-    <div>
-      <SectionHeader
-        title="Practitioner Org Contact"
-      ></SectionHeader>
-      <ContactRow type="linkedIn" practitioner={ practitioner }></ContactRow>
-      <ContactRow type="website" practitioner={ practitioner }></ContactRow>
-      <ContactRow type="email" practitioner={ practitioner }></ContactRow>
-      <ContactRow type="phone" practitioner={ practitioner }></ContactRow>
-    </div>
-  )
-}
-
-
-/// Match Section ///
 
 function MatchBadge({ label }) {
   return <div
@@ -115,7 +80,6 @@ function MatchBadge({ label }) {
       paddingBottom: '10px',
     }}
   >{ label }</div>
-  
 }
 
 function MatchSection({ practitioner, title, objKey }) {
@@ -125,10 +89,7 @@ function MatchSection({ practitioner, title, objKey }) {
   })
 
   return (
-    <div
-      style={{
-      }}
-    >
+    <div>
       <SectionHeader
         title={ title }
       ></SectionHeader>
@@ -151,95 +112,91 @@ function MatchSection({ practitioner, title, objKey }) {
   )
 }
 
+const ContactAndTrainingBox = styled(Box)(({ theme }) => ({
+  flex: 1,
+  borderRadius: 10,
+  padding: 10,
+  margin: 10,
+}));
 
-/// Practitioner Page (Loaded) ///
 
 function PractitionerPageLoaded({ practitioner }) {
 
-  const contactAndTrainingStyle = {
-    flex: 1,
-    borderRadius: '10px',
-    paddingLeft: '10px',
-    paddingRight: '10px',
-    paddingBottom: '10px',
-    paddingTop: '10px',
-    margin: '10px',
-  }
-
   return (
-    <div
-      style={{
-        paddingLeft: '20px',
-      }} 
-    >
-      <Header
-        practitioner={ practitioner }
-      ></Header>
-
-      { /* Contact and Training */ }
-      <div
-        style={{
-          display: 'flex',
-          flexFlow: 'row wrap',
-          alignItems: 'stretch',
-          marginBottom: '20px',
-        }} 
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Container
+        maxWidth='lg'
       >
-        <div
-          style={{
-            ...contactAndTrainingStyle,
-            border: `1px solid ${theme.palette.primary.midBlue}`,
+
+        { /* Header */ }
+        <Typography
+          variant="h3"
+          sx={{
+            mt: 3,
+            mb: 3,
+          }}>{ practitioner.org }</Typography>
+
+        { /* Contact & Training */ }
+        <Box
+          sx={{
+            display: 'flex',
+            flexFlow: 'row wrap',
+            alignItems: 'stretch',
+            mb: 2,
           }}
         >
-         <ContactSection
-          practitioner={ practitioner }
-          ></ContactSection>
-        </div>
-        <div
-          style={{
-            ...contactAndTrainingStyle,
-            backgroundColor: theme.palette.primary.darkBlue,
-            border: `1px solid ${theme.palette.primary.midBlue}`,
-            color: theme.palette.primary.lightGray,
-          }}
-        >
-          <Training
-            practitioner={ practitioner}
-          ></Training>
-        </div>
-      </div>
 
-      <MatchSection
-        practitioner={ practitioner }
-        title="Where we work"
-        objKey="state"
-      ></MatchSection>
+          { /* Contact */ }
+          <ContactAndTrainingBox
+            sx={{
+              color: 'primary.main',
+              border: `1px solid ${theme.palette.primary.midBlue}`,
+            }}
+          >
+            <SectionHeader
+              title="Practitioner Org Contact"
+            ></SectionHeader>
+            <ContactRow type="linkedIn" practitioner={ practitioner }></ContactRow>
+            <ContactRow type="website" practitioner={ practitioner }></ContactRow>
+            <ContactRow type="email" practitioner={ practitioner }></ContactRow>
+            <ContactRow type="phone" practitioner={ practitioner }></ContactRow>
+          </ContactAndTrainingBox> 
 
-      <MatchSection
-        practitioner={ practitioner }
-        title="Activities we have expertise with"
-        objKey="activities"
-      ></MatchSection>
+          { /* Training */ }
+          <ContactAndTrainingBox
+            sx={{
+              color: 'primary.lightGray',
+              bgcolor: 'primary.main',
+              border: `1px solid ${theme.palette.primary.midBlue}`,
+            }}
+          >
+            <SectionHeader
+              title='Certifications & Training'
+              style={{
+                color: theme.palette.primary.lightGray
+              }}
+            ></SectionHeader>
+            <StrTrainedRow
+              isTrained={ practitioner.strTrained === 'Yes' ? true : false }>
+            </StrTrainedRow>
+          </ContactAndTrainingBox>
 
-      <MatchSection
-        practitioner={ practitioner }
-        title="Sectors we have expertise with"
-        objKey="sectors"
-      ></MatchSection>
+        </Box>
 
-      <MatchSection
-        practitioner={ practitioner }
-        title="Hazards we have expertise with"
-        objKey="hazards"
-      ></MatchSection>
 
-      <MatchSection
-        practitioner={ practitioner }
-        title="Size of communities we have expertise with"
-        objKey="size"
-      ></MatchSection>
+      {
+        sections.map(data => {
+          return <MatchSection
+            practitioner={ practitioner }
+            title={ data.title }
+            objKey={ data.objKey }
+          ></MatchSection>
+        })
+      }
 
-    </div>
+      </Container>
+    </ThemeProvider>
   )
 }
 
@@ -257,15 +214,11 @@ function PractitionerPage() {
 
   if (practitioner) {
     return (
-      <div>
-        <PractitionerPageLoaded
-          practitioner={ practitioner }
-        ></PractitionerPageLoaded>
-      </div>
+      <PractitionerPageLoaded practitioner={ practitioner } />
     )
   } else {
     return (
-      <FullPageSpinner></FullPageSpinner>
+      <FullPageSpinner />
     )
   }
 

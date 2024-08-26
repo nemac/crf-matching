@@ -8,11 +8,11 @@ import { useParams } from 'react-router-dom'
 import { fetchCommunity, fetchPractitionersForCommunity } from '../util/api'
 
 // components
-import { CssBaseline } from '@mui/material'
+import { CssBaseline, Stack, Container } from '@mui/material'
 
 import FullPageSpinner from '../components/FullPageSpinner';
-import CommunityPanel from '../components/CommunityPanel';
-import PractitionerPanel from '../components/PractitionerPanel';
+import PractitionerPane from '../components/PractitionerPane';
+import CommunityPane from '../components/CommunityPane';
 
 import { ThemeProvider } from "@mui/material/styles";
 
@@ -23,42 +23,51 @@ import theme from '../theme';
 /// Match Page (Loaded) ///
 
 function CommunityPageLoaded({ community, practitioners }) {
-  
+
+  // Profile info popup
+  const [ poppedPractitioner, setPoppedPractitioner ] = useState(null)
+
+  const practitionerPanes = practitioners.map(pract => {
+    return <PractitionerPane
+      community={ community }
+      practitioner={ pract }
+      poppedPractitioner={ poppedPractitioner }
+      setPoppedPractitioner={ setPoppedPractitioner }
+      style={{
+        flex: 1
+      }}
+    ></PractitionerPane>
+  })
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'nowrap',
-          backgroundColor: theme.palette.primary.lightGray,
-        }}
-      >
-        <div
-          style={{
-            flex: '2 1 40vw',
-          }} 
+      <Container maxWidth={false} sx={{ p: 1 }}>
+        <Stack
+          direction='row'
+          gap={1}
+          ml={1}
+          sx={{
+            bgcolor: theme.palette.primary.lightGray,
+          }}
         >
-          <CommunityPanel
+          <CommunityPane
+            sx={{
+              borderRadius: 8,
+              flex: '2 1 40%',
+            }}
             community={ community }
-            // width={ commCatListWidth }
-            // headerMinHeight={ headerMinHeight }
-          ></CommunityPanel>
-        </div>
-        <div
-          style={{
-            flex: '1 1 60vw',
-            display: 'flex'
-          }} 
-        >
-          <PractitionerPanel
-            community={ community }
-            practitioners={ practitioners }
-            // listWidth={ practMatchListWidth }
-            // headerMinHeight={ headerMinHeight }
-          ></PractitionerPanel>
-        </div>
-      </div>
+          ></CommunityPane>
+          <div
+            style={{
+              flex: '1 1 60%',
+              display: 'flex'
+            }} 
+          >
+            { practitionerPanes }
+          </div>
+        </Stack>
+      </Container>
     </ThemeProvider>
   )
 }

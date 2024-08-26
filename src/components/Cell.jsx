@@ -24,7 +24,7 @@ export default function Cell ({ label, type, key }) {
         borderRadius: 2,
         padding: 3,
         bgcolor: 'primary.tan',
-        height: 50,
+        height: { xs: 85, md: 50 },
         justifyContent: 'center',
       }}
     >
