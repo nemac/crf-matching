@@ -14,4 +14,3 @@ export default function Section ({ header='', type, cards, key }) {
     </Box>
   )
 }
-
