@@ -1,24 +1,35 @@
+
+import { Box, Typography } from "@mui/material";
+
 import PractMatchSymbol from "./svg/PractMatchSymbol"
 
 import theme from '../theme';
 
 export default function Cell ({ label, type, key }) {
+  let content
+  if (type === 'community') {
+    content = <Typography
+      variant="body1"
+      sx={{ textAlign: 'left' }}
+    >{ label }</Typography>
+  } else {
+    content = PractMatchSymbol({ label })
+  }
   return (
-    <div
+    <Box
       key={ key }
-      style={{
-        borderRadius: '10px',
-        backgroundColor: theme.palette.primary.tan,
-        padding: '25px',
-        marginBottom: '5px',
-        verticalAlign: 'top',
-        fontSize: '.9em',
-        textAlign: type === 'community' ? 'left' : 'center',
-        // keep row alignment on small screens
-        height: '20px'
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        borderRadius: 2,
+        padding: 3,
+        bgcolor: 'primary.tan',
+        height: 50,
+        justifyContent: 'center',
       }}
     >
-    { type === 'community' ? label : PractMatchSymbol({ label }) }</div>
+    { content }
+  </Box>
   )
 }
 

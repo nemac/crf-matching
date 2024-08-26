@@ -1,16 +1,23 @@
 
+import { Box } from "@mui/material";
+
 import theme from '../../theme';
 
 export default function PractMatchSymbol({ label }) {
   // label is a boolean
   return (
-    <>
+    <Box sx={{
+      justifyContent: 'center',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center'
+    }}>
       {
         label
           ? <PractMatchIcon></PractMatchIcon>
           : <PractNoMatchSvg></PractNoMatchSvg>
       }
-    </>
+    </Box>
   )
 }
 

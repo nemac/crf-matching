@@ -1,5 +1,5 @@
 
-import { Typography, Box } from "@mui/material"
+import { Typography, Box, Stack } from "@mui/material"
 
 import Cell from "./Cell"
 
@@ -10,7 +10,9 @@ export default function Section ({ header='', type, cards, key }) {
       <Box sx={{ minHeight: '40px', mt: '10px', mb: '10px' }}>
         <Typography variant="h5" >{ header }</Typography>
       </Box>
-      { cells }
+      <Stack gap={2} useFlexGap={true}>
+        { cells }
+      </Stack>
     </Box>
   )
 }
