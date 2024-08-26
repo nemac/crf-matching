@@ -1,10 +1,9 @@
-
-import styles from '../styles'
-
 import GradCapIcon from './svg/GradCapIcon';
 
+import theme from '../theme';
 
 export default function StrTrainedBadge({ isTrained }) {
+
   const trainedStyle = {
     height: '45px',
     marginTop: '10px',
@@ -14,8 +13,8 @@ export default function StrTrainedBadge({ isTrained }) {
       style={{
         ...trainedStyle,
         borderRadius: '15px',
-        backgroundColor: styles.colors.darkBlue,
-        color: styles.colors.lightGray,
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.primary.lightGray,
         display: 'flex',
         verticalAlign: 'middle',
         justifyContent: 'center',
@@ -36,7 +35,7 @@ export default function StrTrainedBadge({ isTrained }) {
     return <div
       style={{
         ...trainedStyle,
-        backgroundColor: styles.colors.lightGray,
+        backgroundColor: theme.palette.primary.lightGray,
       }} 
     >
 

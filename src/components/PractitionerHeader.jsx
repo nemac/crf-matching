@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { Typography } from "@mui/material";
 import StrTrainedBadge from './StrTrainedBadge';
 import ProfilePopper from "./ProfilePopper";
-import HeaderSection from './HeaderSection';
+import HeaderBox from './HeaderBox';
 
 export default function PractitionerHeader({
   strTrained,
@@ -18,24 +18,20 @@ export default function PractitionerHeader({
     setPoppedPractitioner(practitioner)
   }
 
-  const header = <div
-    ref={ headerRef }
-    onMouseEnter={ onMouseEnter }
-  >
-    <Typography variant="h5">{ practitioner.org }</Typography>
-    <StrTrainedBadge isTrained={ strTrained }></StrTrainedBadge>
-    <ProfilePopper
-      headerRef={ headerRef }
-      practitioner={ practitioner }
-      poppedPractitioner={ poppedPractitioner }
-      setPoppedPractitioner={ setPoppedPractitioner }
-    ></ProfilePopper>
-  </div>
-
   return (
-    <HeaderSection>
-      { header }
-    </HeaderSection>
+    <HeaderBox
+      ref={ headerRef }
+      onMouseEnter={ onMouseEnter }
+    >
+      <Typography variant="h5">{ practitioner.org }</Typography>
+      <StrTrainedBadge isTrained={ strTrained }></StrTrainedBadge>
+      <ProfilePopper
+        headerRef={ headerRef }
+        practitioner={ practitioner }
+        poppedPractitioner={ poppedPractitioner }
+        setPoppedPractitioner={ setPoppedPractitioner }
+      ></ProfilePopper>
+    </HeaderBox>
   )
 }
 

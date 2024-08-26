@@ -1,6 +1,3 @@
-// styles
-import styles from '../styles'
-
 // React
 import { useState, useLayoutEffect } from 'react'
 
@@ -34,7 +31,7 @@ function CommunityPageLoaded({ community, practitioners }) {
         style={{
           display: 'flex',
           flexWrap: 'nowrap',
-          backgroundColor: styles.colors.lightGray,
+          backgroundColor: theme.palette.primary.lightGray,
         }}
       >
         <div
@@ -83,11 +80,7 @@ export default function CommunityPage() {
 
   if (community && practitioners.length) {
     return (
-      <div
-        style={{
-          ...styles.global,
-        }}
-      >
+      <div>
         <CommunityPageLoaded
           community={ community }
           practitioners={ practitioners }

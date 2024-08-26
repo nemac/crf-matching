@@ -1,5 +1,7 @@
 
-import SectionList from './SectionList';
+import ScoreSection from './ScoreSection';
+import Pane from './Pane';
+import Section from './Section';
 
 export default function CommunityCategoryList({ community }) {
   const sections = [
@@ -30,10 +32,24 @@ export default function CommunityCategoryList({ community }) {
     })
 
   return (
-    <SectionList
-      type="community"
-      score={ community.totalCategories }
+    <Pane
       sections={ sections }
-    ></SectionList>
+    >
+      {
+        sections.map((section, index) => {
+          section.key=index;
+          return Section(section)
+        })
+      }
+
+      <ScoreSection
+        style={{
+          justifyContent: 'space-between',
+        }} 
+      >
+        <div>Total</div>
+        <div>{ community.totalCategories }</div>
+      </ScoreSection>
+    </Pane>
   )
 }

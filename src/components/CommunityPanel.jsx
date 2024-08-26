@@ -1,19 +1,18 @@
 
 import { Typography } from "@mui/material";
 
-import styles from "../styles"
-
-import HeaderSection from "./HeaderSection";
+import HeaderSection from "./HeaderBox";
 import CommunityCategoryList from './CommunityCategoryList';
 
+import theme from '../theme';
 
 export default function CommunityPanel({ community }) {
   return (
     <div
       style={{
-        backgroundColor: styles.colors.white,
+        backgroundColor: theme.palette.primary.white,
         borderRadius: '15px',
-        border: `0px solid ${styles.colors.white}`,
+        border: `0px solid ${theme.palette.primary.white}`,
         paddingBottom: '10px',
       }} 
     >

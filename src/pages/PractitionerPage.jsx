@@ -7,8 +7,7 @@ import { useState, useLayoutEffect } from 'react'
 // API
 import { fetchPractitioner } from '../util/api'
 
-// styles
-import styles from '../styles'
+import theme from '../theme';
 
 // components
 import FullPageSpinner from '../components/FullPageSpinner';
@@ -38,7 +37,7 @@ function SectionHeader({ title, style }) {
     <div>
       <h3
         style={{
-          color: styles.colors.darkBlue,
+          color: theme.palette.primary.darkBlue,
           marginTop: '0px',
           marginBottom: '15px',
           ...style,
@@ -71,7 +70,7 @@ function Training ({ practitioner }) {
       <SectionHeader
         title='Certifications & Training'
         style={{
-          color: styles.colors.lightGray
+          color: theme.palette.primary.lightGray
         }}
       ></SectionHeader>
       <StrTrainedRow
@@ -104,9 +103,9 @@ function ContactSection({ practitioner }) {
 function MatchBadge({ label }) {
   return <div
     style={{
-      border: `1px solid ${styles.colors.midBlue}`,
+      border: `1px solid ${theme.palette.primary.midBlue}`,
       borderRadius: '40px',
-      color: styles.colors.midBlue,
+      color: theme.palette.primary.midBlue,
       alignContent: 'center',
       margin: '10px',
       textAlign: 'center',
@@ -189,7 +188,7 @@ function PractitionerPageLoaded({ practitioner }) {
         <div
           style={{
             ...contactAndTrainingStyle,
-            border: `1px solid ${styles.colors.midBlue}`,
+            border: `1px solid ${theme.palette.primary.midBlue}`,
           }}
         >
          <ContactSection
@@ -199,9 +198,9 @@ function PractitionerPageLoaded({ practitioner }) {
         <div
           style={{
             ...contactAndTrainingStyle,
-            backgroundColor: styles.colors.darkBlue,
-            border: `1px solid ${styles.colors.midBlue}`,
-            color: styles.colors.lightGray,
+            backgroundColor: theme.palette.primary.darkBlue,
+            border: `1px solid ${theme.palette.primary.midBlue}`,
+            color: theme.palette.primary.lightGray,
           }}
         >
           <Training
@@ -258,11 +257,7 @@ function PractitionerPage() {
 
   if (practitioner) {
     return (
-      <div
-        style={{
-          ...styles.global
-        }}
-      >
+      <div>
         <PractitionerPageLoaded
           practitioner={ practitioner }
         ></PractitionerPageLoaded>

@@ -1,7 +1,6 @@
-
-import styles from "../styles"
-
 import PractMatchSymbol from "./svg/PractMatchSymbol"
+
+import theme from '../theme';
 
 export default function Cell ({ label, type, key }) {
   return (
@@ -9,7 +8,7 @@ export default function Cell ({ label, type, key }) {
       key={ key }
       style={{
         borderRadius: '10px',
-        backgroundColor: styles.colors.tan,
+        backgroundColor: theme.palette.primary.tan,
         padding: '25px',
         marginBottom: '5px',
         verticalAlign: 'top',

@@ -1,6 +1,3 @@
-// styles
-import styles from '../styles'
-
 // react
 import { useState, useEffect } from 'react'
 
@@ -68,11 +65,7 @@ function CommunityListPage() {
 
   if (allCommunities.length) {
     return (
-      <div
-        style={{
-          ...styles.global,
-        }}
-      >
+      <div>
         <CommunitiesPageLoaded
           communities={ allCommunities }
         ></CommunitiesPageLoaded>

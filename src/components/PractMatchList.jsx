@@ -1,9 +1,10 @@
 
-import styles from '../styles';
-
-import SectionList from './SectionList';
+import Section from './Section';
+import ScoreSection from './ScoreSection';
+import Pane from './Pane';
 import PractitionerHeader from './PractitionerHeader';
 
+import theme from '../theme';
 
 const matchVals = (commCats, practCats) => {
   return commCats.map(commCat => practCats.includes(commCat))
@@ -15,7 +16,7 @@ export default function PractMatchList ({
   poppedPractitioner,
   setPoppedPractitioner
 }) {
-
+  
   const sections = [
     [ [community.state], practitioner.state ],
     [ community.activities, practitioner.activities ],
@@ -26,7 +27,6 @@ export default function PractMatchList ({
     .map(([ commCats, practCats ]) => matchVals(commCats, practCats))
     .map(matches => {
       return {
-        type: 'practitioner',
         cards: matches
       }
     })
@@ -35,7 +35,7 @@ export default function PractMatchList ({
     <div
       style={{
         flex: '1 1 33%',
-        backgroundColor: styles.colors.lightGray,
+        backgroundColor: theme.palette.primary.lightGray,
       }}
     >
       <PractitionerHeader
@@ -45,11 +45,22 @@ export default function PractMatchList ({
         poppedPractitioner={ poppedPractitioner }
         setPoppedPractitioner={ setPoppedPractitioner }
       ></PractitionerHeader>
-      <SectionList
-        type="practitioner"
-        score={ practitioner.matchScore }
-        sections= { sections }
-      ></SectionList>
+      <Pane>
+        {
+          sections.map((section, index) => {
+            section.key=index;
+            return Section(section)
+          })
+        }
+        <ScoreSection
+          style={{
+            justifyContent: 'center',
+          }}
+        > <div>{ practitioner.matchScore }</div>
+         
+        </ScoreSection>
+      </Pane>
+
     </div>
   )
 }
