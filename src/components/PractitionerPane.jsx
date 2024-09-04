@@ -105,8 +105,10 @@ export default function PractitionerPane ({
     [ [community.size], practitioner.size ],
   ]
     .map(([ commCats, practCats ]) => matchVals(commCats, practCats))
-    .map(matches => {
+    .map((matches, index) => {
       return {
+        type: 'practitioner',
+        key: `section${index}`,
         cards: matches
       }
     })
@@ -126,12 +128,7 @@ export default function PractitionerPane ({
         setPoppedPractitioner={ setPoppedPractitioner }
       ></PractitionerHeader>
       <Pane>
-        {
-          sections.map((section, index) => {
-            section.key=index;
-            return Section(section)
-          })
-        }
+        { sections.map((section) => Section(section)) }
         <ScoreSection
           style={{
             justifyContent: 'center',

@@ -19,6 +19,7 @@ let theme = createTheme({
       purple: '#6E8EAA',
       matchGreen: '#677D66',
       noMatchRed: '#FC8A79',
+      cellHoverBg: '#F1ECE4',
     }
   }
 });

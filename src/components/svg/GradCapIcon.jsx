@@ -4,7 +4,6 @@ import theme from '../../theme';
 export default function GradCapIcon() {
   return (
     <svg
-      verticalAlign='middle'
       width="30"
       height="20"
       viewBox="0 0 30 24"

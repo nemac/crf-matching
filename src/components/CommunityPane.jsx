@@ -6,7 +6,7 @@ import ScoreSection from './ScoreSection';
 import Pane from './Pane';
 import Section from './Section';
 
-import { Box } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 
 import theme from '../theme';
 
@@ -33,8 +33,9 @@ const getSectionData = community => [
     cards: [ community.size ]
   }
 ]
-.map(section => {
+.map((section, index) => {
   section.type = 'community'
+  section.key=`section${index}`
   return section
 });
 
@@ -50,21 +51,26 @@ export default function CommunityPane({ community }) {
         pr: 1,
         pl: 1,
         pt: 0,
-        pb: 0, 
+        pb: 1, 
       }}
     >
-      <HeaderBox>
-        <Typography align="center" variant="h5">{ community.name }</Typography>
-      </HeaderBox>
-      <Pane>
+      <Stack sx={{ width: '100%' }}>
+        <HeaderBox>
+          <Typography color="primary.main" fontWeight="700" align="center" variant="h5">{ community.name }</Typography>
+        </HeaderBox>
+        { /* filler box to match height of "Matched Practitioners" heading */ }
+        <Box sx={{ height: '40px', width: '100%', }}></Box>
+      </Stack>
+      <Pane sx={{ pl: 1 }}>
         {
           sectionData.map((section, index) => {
-            section.key=index;
             return Section(section)
           })
         }
         <ScoreSection
-          style={{
+          sx={{
+            pr: 2,
+            pl: 1,
             justifyContent: 'space-between',
           }} 
         >
