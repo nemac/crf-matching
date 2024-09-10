@@ -11,6 +11,7 @@
  */
 
 
+import { Box } from '@mui/material';
 import theme from '../theme';
 
 export default function ContactRow({ type, practitioner }) {
@@ -90,32 +91,16 @@ export default function ContactRow({ type, practitioner }) {
   }
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        minHeight: '30px',
-        flexDirection: 'row',
-        justifyContent: 'start',
+    <Box
+      sx={{
+        display: 'inline-flex',
+        minHeight: 35,
+        fontWeight: 700,
       }} 
     >
-      <div
-        style={{
-          flex: '0 1 20px',
-          marginRight: '15px',
-          verticalAlign: 'middle'
-        }} 
-      >
-        { icon }
-      </div>
-      <div
-        style={{
-          flex: '1 1 auto',
-          verticalAlign: 'baseline',
-        }}
-      >
-        { content }
-      </div>
-    </div>
+      <Box sx={{ mr: 2, }}>{ icon }</Box>
+      <Box>{ content }</Box>
+    </Box>
   )
 }
 

@@ -1,7 +1,7 @@
 import { useState, useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
-import { CssBaseline, Grid, Container, Box, Typography, styled } from '@mui/material'
+import { CssBaseline, Stack, Container, Box, Typography, styled } from '@mui/material'
 
 import theme from '../theme';
 import FullPageSpinner from '../components/FullPageSpinner';
@@ -157,10 +157,12 @@ function PractitionerPageLoaded({ practitioner }) {
             <SectionHeader
               title="Practitioner Org Contact"
             ></SectionHeader>
-            <ContactRow type="linkedIn" practitioner={ practitioner }></ContactRow>
-            <ContactRow type="website" practitioner={ practitioner }></ContactRow>
-            <ContactRow type="email" practitioner={ practitioner }></ContactRow>
-            <ContactRow type="phone" practitioner={ practitioner }></ContactRow>
+            <Stack>
+              <ContactRow type="linkedIn" practitioner={ practitioner }></ContactRow>
+              <ContactRow type="website" practitioner={ practitioner }></ContactRow>
+              <ContactRow type="email" practitioner={ practitioner }></ContactRow>
+              <ContactRow type="phone" practitioner={ practitioner }></ContactRow>
+            </Stack>
           </ContactAndTrainingBox> 
 
           { /* Training */ }
