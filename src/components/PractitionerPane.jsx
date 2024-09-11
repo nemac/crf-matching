@@ -29,11 +29,11 @@ function StrTrainedBadge({ isTrained }) {
   if (isTrained === 'Yes') {
     return <StyledBox
       sx={{
-        margin: 1,
+        display: 'inline-flex',
+        width: '100%',
         borderRadius: 4,
         bgcolor: 'primary.main',
         color: 'primary.lightGray',
-        display: 'flex',
         flexGrow: 'space-around',
         verticalAlign: 'middle',
         justifyContent: 'center',
@@ -43,6 +43,7 @@ function StrTrainedBadge({ isTrained }) {
       <GradCapIcon></GradCapIcon>
       <Typography
         style={{
+          fontSize: '1em',
           marginLeft: '10px',
           verticalAlign: 'baseline',
         }}>STR Trained</Typography>
@@ -77,7 +78,7 @@ function PractitionerHeader({
       ref={ headerRef }
       onMouseEnter={ onMouseEnter }
     >
-      <Typography variant="h5">{ practitioner.org }</Typography>
+      <Typography fontSize="18px" variant="h5">{ practitioner.org }</Typography>
       <StrTrainedBadge isTrained={ strTrained }></StrTrainedBadge>
       <ProfilePopper
         headerRef={ headerRef }
@@ -127,7 +128,9 @@ export default function PractitionerPane ({
         poppedPractitioner={ poppedPractitioner }
         setPoppedPractitioner={ setPoppedPractitioner }
       ></PractitionerHeader>
-      <Pane>
+      <Pane
+        boxShadow={2} 
+      >
         { sections.map((section) => Section(section)) }
         <ScoreSection
           style={{

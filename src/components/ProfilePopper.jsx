@@ -21,18 +21,6 @@ function PersonIcon () {
   </svg>
 }
 
-const LinkButton = styled(Button)(({ theme }) => ({
-  width: '100%',
-  textTransform: 'none',
-  color: theme.palette.primary.white,
-  backgroundColor: theme.palette.primary.midBlue,
-  textDecoration: 'none',
-  borderRadius: theme.spacing(2),
-  '&:hover': {
-    backgroundColor: theme.palette.primary.main,
-  }
-}))
-
 
 export default function ProfilePopper({ practitioner, poppedPractitioner, setPoppedPractitioner, headerRef }) {
 
@@ -115,6 +103,7 @@ export default function ProfilePopper({ practitioner, poppedPractitioner, setPop
           {/* inner box */}
           <Stack
             sx={{
+              boxShadow: 3,
               p: 1,
               mb: 3,
               borderRadius: 2,
@@ -139,13 +128,25 @@ export default function ProfilePopper({ practitioner, poppedPractitioner, setPop
             }}
             href={ `#/practitioner/${practitioner.id}` }
           >
-            <LinkButton
+            <Button
               component="label"
               role={undefined}
               variant="contained"
               tabIndex={-1}
+              sx={{
+                width: '100%',
+                textTransform: 'none',
+                color: 'primary.white',
+                backgroundColor: 'primary.midBlue',
+                textDecoration: 'none',
+                borderRadius: 4,
+                boxShadow: 3,
+                '&:hover': {
+                  backgroundColor: 'primary.main',
+                }
+              }}
               startIcon={<PersonIcon />}
-            >Full Practitioner Org Profile</LinkButton>
+            >Full Practitioner Org Profile</Button>
           </a>
         </Box>
       </Popper>

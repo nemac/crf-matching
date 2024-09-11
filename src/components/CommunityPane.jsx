@@ -54,14 +54,17 @@ export default function CommunityPane({ community }) {
         pb: 1, 
       }}
     >
-      <Stack sx={{ width: '100%' }}>
+      <Stack
+        sx={{ width: '100%' }}>
         <HeaderBox>
           <Typography color="primary.main" fontWeight="700" align="center" variant="h5">{ community.name }</Typography>
         </HeaderBox>
         { /* filler box to match height of "Matched Practitioners" heading */ }
         <Box sx={{ height: '40px', width: '100%', }}></Box>
       </Stack>
-      <Pane sx={{ pl: 1 }}>
+      <Pane
+        boxShadow={2}
+        sx={{ pl: 1 }}>
         {
           sectionData.map((section, index) => {
             return Section(section)

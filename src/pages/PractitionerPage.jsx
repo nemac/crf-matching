@@ -41,8 +41,9 @@ function SectionHeader({ title, style }) {
   return (
     <Typography variant="h6"
       sx={{
+        fontWeight: 700,
         color: 'primary.main',
-        mb: 2,
+        mb: 1,
         ...style
       }}
     >{ title }</Typography>
@@ -54,32 +55,32 @@ function StrTrainedRow ( { isTrained }) {
     return 'No certifications'
   }
   return (
-    <div>
+    <Box>
       <GradCapSvg/>
       <span
         style={{
           marginLeft: '15px',
         }}
       >STR Training Class Completed</span>
-    </div>
+    </Box>
   )
 }
 
 function MatchBadge({ label }) {
-  return <div
-    style={{
+  return <Box
+    sx={{
       border: `1px solid ${theme.palette.primary.midBlue}`,
-      borderRadius: '40px',
-      color: theme.palette.primary.midBlue,
+      borderRadius: 6,
+      color: 'primary.midBlue',
       alignContent: 'center',
-      margin: '10px',
       textAlign: 'center',
-      paddingLeft: '20px',
-      paddingRight: '20px',
-      paddingTop: '10px',
-      paddingBottom: '10px',
+      margin: 1,
+      pl: 3,
+      pr: 3,
+      pt: 1,
+      pb: 1,
     }}
-  >{ label }</div>
+  >{ label }</Box>
 }
 
 function MatchSection({ practitioner, title, objKey }) {
@@ -89,34 +90,30 @@ function MatchSection({ practitioner, title, objKey }) {
   })
 
   return (
-    <div>
+    <Box>
       <SectionHeader
         title={ title }
       ></SectionHeader>
-      <div
-        style={{
+      <Box
+        sx={{
           display: 'flex',
           flexWrap: 'wrap',
-          borderRadius: '10px',
           minHeight: '50px',
-          paddingLeft: '10px',
-          paddingRight: '10px',
-          paddingTop: '10px',
-          paddingBottom: '10px',
-          marginBottom: '20px',
+          p: 1,
+          mb: 1,
         }}
       >
         { matchBadges }
-      </div>
-    </div>
+      </Box>
+    </Box>
   )
 }
 
 const ContactAndTrainingBox = styled(Box)(({ theme }) => ({
   flex: 1,
-  borderRadius: 10,
-  padding: 10,
-  margin: 10,
+  borderRadius: theme.spacing(3),
+  padding: theme.spacing(3),
+  margin: theme.spacing(1),
 }));
 
 
@@ -150,12 +147,13 @@ function PractitionerPageLoaded({ practitioner }) {
           { /* Contact */ }
           <ContactAndTrainingBox
             sx={{
+              boxShadow: 3,
               color: 'primary.main',
               border: `1px solid ${theme.palette.primary.midBlue}`,
             }}
           >
             <SectionHeader
-              title="Practitioner Org Contact"
+              title="Contact"
             ></SectionHeader>
             <Stack>
               <ContactRow type="linkedIn" practitioner={ practitioner }></ContactRow>
@@ -171,6 +169,7 @@ function PractitionerPageLoaded({ practitioner }) {
               color: 'primary.lightGray',
               bgcolor: 'primary.main',
               border: `1px solid ${theme.palette.primary.midBlue}`,
+              boxShadow: 3,
             }}
           >
             <SectionHeader
