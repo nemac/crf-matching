@@ -2,6 +2,7 @@ import { useState, useLayoutEffect } from "react";
 import { useParams } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import { CssBaseline, Stack, Container, Box, Typography, styled } from '@mui/material'
+import Grid from '@mui/material/Unstable_Grid2';
 
 import theme from '../theme';
 import FullPageSpinner from '../components/FullPageSpinner';
@@ -109,8 +110,7 @@ function MatchSection({ practitioner, title, objKey }) {
   )
 }
 
-const ContactAndTrainingBox = styled(Box)(({ theme }) => ({
-  flex: 1,
+const ContactAndTrainingBox = styled(Grid)(({ theme }) => ({
   borderRadius: theme.spacing(3),
   padding: theme.spacing(3),
   margin: theme.spacing(1),
@@ -134,17 +134,12 @@ function PractitionerPageLoaded({ practitioner }) {
         </Typography>
 
         { /* Contact & Training Row */ }
-        <Box
-          sx={{
-            display: 'flex',
-            flexFlow: 'row wrap',
-            alignItems: 'stretch',
-            mb: 2,
-          }}
-        >
+        <Grid container spacing={1} gap={1} sx={{ mb: 2 }}>
 
           { /* Contact */ }
           <ContactAndTrainingBox
+            xs={12}
+            lg={5}
             sx={{
               boxShadow: 3,
               color: 'primary.main',
@@ -164,6 +159,8 @@ function PractitionerPageLoaded({ practitioner }) {
 
           { /* Training */ }
           <ContactAndTrainingBox
+            xs={12}
+            lg={5}
             sx={{
               color: 'primary.lightGray',
               bgcolor: 'primary.main',
@@ -182,7 +179,7 @@ function PractitionerPageLoaded({ practitioner }) {
             </StrTrainedRow>
           </ContactAndTrainingBox>
 
-        </Box>
+        </Grid>
 
 
       {
