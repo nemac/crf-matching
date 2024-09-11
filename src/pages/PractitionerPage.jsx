@@ -122,9 +122,7 @@ function PractitionerPageLoaded({ practitioner }) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Container
-        maxWidth='lg'
-      >
+      <Container maxWidth='lg'>
 
         { /* Header */ }
         <Typography
@@ -132,9 +130,10 @@ function PractitionerPageLoaded({ practitioner }) {
           sx={{
             mt: 3,
             mb: 3,
-          }}>{ practitioner.org }</Typography>
+          }}>{ practitioner.org }
+        </Typography>
 
-        { /* Contact & Training */ }
+        { /* Contact & Training Row */ }
         <Box
           sx={{
             display: 'flex',

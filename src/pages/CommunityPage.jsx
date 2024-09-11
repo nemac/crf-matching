@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 import { fetchCommunity, fetchPractitionersForCommunity } from '../util/api';
 
 // components
-import { CssBaseline, Stack, Container, Typography, Box } from '@mui/material';
+import { CssBaseline, Stack, Container, Typography } from '@mui/material';
 
 import FullPageSpinner from '../components/FullPageSpinner';
 import PractitionerPane from '../components/PractitionerPane';
@@ -60,7 +60,7 @@ export default function CommunityPage() {
         <RowHoverContext.Provider value={hoverRow}>
           <SetHoverRowContext.Provider value={setHoverRow}>
             <CssBaseline />
-            <Container maxWidth={false} sx={{ p: 1 }}>
+            <Container maxWidth="xl" sx={{ p: 2 }} >
               <Stack
                 direction='row'
                 gap={1}
@@ -70,17 +70,15 @@ export default function CommunityPage() {
                 }}
               >
                 <CommunityPane
-                  sx={{
-                    borderRadius: 8,
-                    flex: '2 1 40%',
-                  }}
                   community={ community }
                 ></CommunityPane>
+
+                { /* Practitioners */ }
+
                 <Stack sx={{ width: '60%' }}>
                   <Typography
                     color="primary.main"
                     sx={{
-                      width: '100%',
                       pt: 1,
                       height: '40px',
                       textAlign: 'center',
