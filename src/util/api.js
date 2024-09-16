@@ -33,6 +33,7 @@ const practitionerFieldMap = {
   phone: 'Phone Number',
   strTrained: 'Have You Completed The N O A A Steps To Resilience Training?',
   id: 'Id',
+  info: 'Please Provide Any Additional Information You Want Us To Know About Your Background And Qualifications To Provide Adaptation Services - ',
 }
 
 const communityFieldMap = {

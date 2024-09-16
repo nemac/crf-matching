@@ -26,7 +26,7 @@ function StrTrainedBadge({ isTrained }) {
 
   if (isTrained === 'Yes') {
     return <StyledBox
-      dropShadow={3}
+      boxShadow={3}
       sx={{
         display: 'inline-flex',
         width: '100%',
@@ -91,7 +91,6 @@ function PractitionerHeader({
       onMouseEnter={ onMouseEnter }
     >
       <StyledBox
-        dropShadow={3}
         sx={{
           display: 'flex',
           verticalAlign: 'middle',
