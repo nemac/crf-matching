@@ -103,7 +103,14 @@ function PractitionerHeader({
           }
         }} 
       >
-        <PersonIcon />
+        <PersonIcon
+          sx={{
+            display: {
+              xs: 'inherit',
+              md: 'none',
+            },
+          }} 
+        />
       </StyledBox>
       { /* practitioner label - hidden on xs */ }
       <Typography

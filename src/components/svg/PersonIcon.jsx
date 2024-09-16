@@ -2,7 +2,7 @@ import { SvgIcon } from "@mui/material"
 
 import theme from "../../theme"
 
-export default function PersonIcon () {
+export default function PersonIcon ({ sx }) {
   return <SvgIcon
     sx={{
       '& path': {
@@ -10,7 +10,8 @@ export default function PersonIcon () {
           xs: theme.palette.primary.lightBlue,
           md: theme.palette.primary.white,
         }
-      }
+      },
+      ...sx
     }} 
   >
     <svg
