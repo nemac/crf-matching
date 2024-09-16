@@ -1,10 +1,9 @@
 
-import { useState } from 'react';
-
 import { useRef } from "react";
 import { Typography, Box, styled } from "@mui/material";
-import ProfilePopper from "./ProfilePopper";
 
+import PersonIcon from "./svg/PersonIcon";
+import ProfilePopper from "./ProfilePopper";
 import HeaderBox from './HeaderBox';
 import Section from './Section';
 import ScoreSection from './ScoreSection';
@@ -21,18 +20,24 @@ const matchVals = (commCats, practCats) => {
 
 const StyledBox = styled(Box)({
   height: 45,
-  marginTop: '10px',
 })
 
 function StrTrainedBadge({ isTrained }) {
 
   if (isTrained === 'Yes') {
     return <StyledBox
+      dropShadow={3}
       sx={{
         display: 'inline-flex',
         width: '100%',
-        borderRadius: 4,
-        bgcolor: 'primary.main',
+        borderRadius: {
+          xs: 0,
+          md: 4,
+        },
+        bgcolor: {
+          xs: 'primary.lightBlue',
+          md: 'primary.main',
+        },
         color: 'primary.lightGray',
         flexGrow: 'space-around',
         verticalAlign: 'middle',
@@ -42,8 +47,12 @@ function StrTrainedBadge({ isTrained }) {
     >
       <GradCapIcon></GradCapIcon>
       <Typography
-        style={{
-          fontSize: '1em',
+        sx={{
+          display: {
+            xs: 'none',
+            md: 'inherit',
+          },
+          fontSize: '1rem',
           marginLeft: '10px',
           verticalAlign: 'baseline',
         }}>STR Trained</Typography>
@@ -51,8 +60,11 @@ function StrTrainedBadge({ isTrained }) {
   } else {
     return <StyledBox
       sx={{
-        bgcolor: 'primary.lightGray',
-      }} 
+        bgcolor: {
+          xs: 'primary.main',
+          md: 'primary.lightGray',
+        }
+      }}
     >
     </StyledBox>
   }
@@ -78,7 +90,31 @@ function PractitionerHeader({
       ref={ headerRef }
       onMouseEnter={ onMouseEnter }
     >
-      <Typography fontSize="18px" variant="h5">{ practitioner.org }</Typography>
+      <StyledBox
+        dropShadow={3}
+        sx={{
+          display: 'flex',
+          verticalAlign: 'middle',
+          justifyContent: 'center',
+          alignItems: 'center',
+          bgcolor: {
+            xs: 'primary.main',
+            md: 'primary.lightGray',
+          }
+        }} 
+      >
+        <PersonIcon />
+      </StyledBox>
+      { /* practitioner label - hidden on xs */ }
+      <Typography
+        variant="h5"
+        sx={{
+          display: {
+            xs: 'none',
+            md: 'inherit',
+          }
+        }}
+      >{ practitioner.org }</Typography>
       <StrTrainedBadge isTrained={ strTrained }></StrTrainedBadge>
       <ProfilePopper
         headerRef={ headerRef }

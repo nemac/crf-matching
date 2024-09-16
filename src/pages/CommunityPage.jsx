@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 import { fetchCommunity, fetchPractitionersForCommunity } from '../util/api';
 
 // components
-import { CssBaseline, Stack, Container, Typography } from '@mui/material';
+import { CssBaseline, Stack, Container, Typography, Box } from '@mui/material';
 
 import FullPageSpinner from '../components/FullPageSpinner';
 import PractitionerPane from '../components/PractitionerPane';
@@ -85,7 +85,16 @@ export default function CommunityPage() {
                       fontWeight: 700,
                     }}
                     variant="h5"
-                  >Matched Practitioners</Typography>
+                  >
+                    <Box
+                      sx={{
+                        display: {
+                          xs: 'none',
+                          md: 'inline-block',
+                        },
+                      }}
+                    >Matched</Box> Practitioners
+                  </Typography>
                   <Stack
                     direction='row'
                     gap={1}

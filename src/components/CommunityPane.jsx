@@ -57,7 +57,18 @@ export default function CommunityPane({ community }) {
       <Stack
         sx={{ width: '100%' }}>
         <HeaderBox>
-          <Typography color="primary.main" fontWeight="700" align="center" variant="h5">{ community.name }</Typography>
+          <Typography
+            color="primary.main"
+            fontWeight="700"
+            align="center"
+            variant="h5"
+            sx={{
+              fontSize: {
+                'xs': '1rem',
+                'lg': '1.5rem',
+              }
+            }}
+          >{ community.name }</Typography>
         </HeaderBox>
         { /* filler box to match height of "Matched Practitioners" heading */ }
         <Box sx={{ height: '40px', width: '100%', }}></Box>

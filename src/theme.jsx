@@ -15,6 +15,7 @@ let theme = createTheme({
       white: '#FFFFFF',
       lightGray: '#FAFAFA',
       borderGray: '#D9D9D9',
+      lightBlue: '#D1E9FF',
       midBlue: '#52A6FF',
       purple: '#6E8EAA',
       matchGreen: '#677D66',
