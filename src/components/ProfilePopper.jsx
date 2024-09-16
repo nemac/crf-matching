@@ -87,14 +87,16 @@ export default function ProfilePopper({ practitioner, poppedPractitioner, setPop
           >
             { practitioner.org }
           </Typography>
+          { /*
           <Typography
             variant="body2"
             fontWeight="700"
             maxWidth="300px"
             sx={{ pb: 2, mr: 1 }}
           >
-            A very short description, mission statement, or about us that most people will ignore
+            { practitioner.info }
           </Typography>
+          */}
 
           {/* inner box */}
           <Stack

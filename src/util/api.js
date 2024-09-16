@@ -34,6 +34,8 @@ const practitionerFieldMap = {
   strTrained: 'Have You Completed The N O A A Steps To Resilience Training?',
   id: 'Id',
   info: 'Please Provide Any Additional Information You Want Us To Know About Your Background And Qualifications To Provide Adaptation Services - ',
+  exampleStakeholders: 'Provide An Example Of Your Experience Working Directly With Stakeholders',
+  exampleMultipleBenefits: 'Provide An Example Of A Project That Provided Multiple Benefits Across Sectors And Scales, And How It Did That',
 }
 
 const communityFieldMap = {

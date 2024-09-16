@@ -67,8 +67,9 @@ function StrTrainedRow ( { isTrained }) {
   )
 }
 
-function MatchBadge({ label }) {
+function MatchBadge({ label, key }) {
   return <Box
+    key={key}
     sx={{
       border: `1px solid ${theme.palette.primary.midBlue}`,
       borderRadius: 6,
@@ -86,8 +87,8 @@ function MatchBadge({ label }) {
 
 function MatchSection({ practitioner, title, objKey }) {
 
-  const matchBadges = practitioner[objKey].map(label => {
-    return MatchBadge({ label })
+  const matchBadges = practitioner[objKey].map((label, index) => {
+    return MatchBadge({ label, key: index })
   })
 
   return (
@@ -181,16 +182,58 @@ function PractitionerPageLoaded({ practitioner }) {
 
         </Grid>
 
+        <Box>
+          <SectionHeader
+            title="Description"
+          ></SectionHeader>
+          <Box
+            sx={{
+              pb: 1, 
+              mb: 1,
+            }}
+          >
+            { practitioner.info || 'N/A' }
+          </Box>
+        </Box>
 
-      {
-        sections.map(data => {
-          return <MatchSection
-            practitioner={ practitioner }
-            title={ data.title }
-            objKey={ data.objKey }
-          ></MatchSection>
-        })
-      }
+        <Box>
+          <SectionHeader
+            title="Example Of Experience Working Directly With Stakeholders"
+          ></SectionHeader>
+          <Box
+            sx={{
+              pb: 1, 
+              mb: 1,
+            }}
+          >
+            { practitioner.exampleStakeholders || 'N/A' }
+          </Box>
+        </Box>
+
+        <Box>
+          <SectionHeader
+            title="Example Of A Project That Provided Multiple Benefits Across Sectors And Scales, And How It Did That"
+          ></SectionHeader>
+          <Box
+            sx={{
+              pb: 1, 
+              mb: 1,
+            }}
+          >
+            { practitioner.exampleMultipleBenefits || 'N/A' }
+          </Box>
+        </Box>
+
+        {
+          sections.map((data, index) => {
+            return <MatchSection
+              practitioner={ practitioner }
+              title={ data.title }
+              objKey={ data.objKey }
+              key={index}
+            ></MatchSection>
+          })
+        }
 
       </Container>
     </ThemeProvider>
