@@ -25,17 +25,17 @@ const practitionerFieldMap = {
   activities: 'Activities',
   sectors: 'Sectors',
   hazards: 'Hazards',
-  name: 'Linked Form - Name',
+  name: 'Name',
   org: 'Organization Name',
   website: 'Organization Website',
-  linkedIn: 'Review: LinkedIn',
+  linkedIn: 'LinkedIn URL',
   email: 'Email',
   phone: 'Phone Number',
-  strTrained: 'Have You Completed The N O A A Steps To Resilience Training?',
+  strTrained: 'Are There Members From Your Organization (Or Team) Who Have Completed The N O A A Steps To Resilience Training?',
   id: 'Id',
-  info: 'Please Provide Any Additional Information You Want Us To Know About Your Background And Qualifications To Provide Adaptation Services - ',
-  exampleStakeholders: 'Provide An Example Of Your Experience Working Directly With Stakeholders',
-  exampleMultipleBenefits: 'Provide An Example Of A Project That Provided Multiple Benefits Across Sectors And Scales, And How It Did That',
+  info: 'Please provide any additional information you want us to know about your organization\'s (or team\'s) background and qualifications to provide adaptation services',
+  //exampleStakeholders: 'Provide An Example Of Your Experience Working Directly With Stakeholders',
+  //exampleMultipleBenefits: 'Provide An Example Of A Project That Provided Multiple Benefits Across Sectors And Scales, And How It Did That',
 }
 
 const communityFieldMap = {
