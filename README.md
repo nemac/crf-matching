@@ -1,8 +1,28 @@
-# React + Vite
+## CRF Matching Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Local Setup
 
-Currently, two official plugins are available:
+- Create an [Airtable Personal Access Token](https://support.airtable.com/docs/creating-personal-access-tokens)
+- Create a `.env.` file in base folder that looks like this:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```
+AIRTABLE_TOKEN=YOUR_TOKEN
+AIRTABLE_BASE=app54Ce7cZjqk6dLw
+```
+
+Run `npm run dev` for local server
+
+### Vite setup
+
+- set base tag for GitHub Pages
+- env var injection
+
+### GitHub Pages
+
+- Action sets up Pages for `master` branch
+
+### TODOS
+
+- Revamp Practitioner page
+- Replace custom SVG with MUI icons
+- 
