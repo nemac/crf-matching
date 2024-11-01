@@ -19,6 +19,7 @@ const normalizeRec = (rec, fieldMap) => {
   return result
 }
 
+// map to airtable fields
 const practitionerFieldMap = {
   state: 'State',
   size: 'Size',
@@ -28,6 +29,7 @@ const practitionerFieldMap = {
   name: 'Name',
   org: 'Organization Name',
   website: 'Organization Website',
+  // TODO setup
   linkedIn: 'LinkedIn URL',
   email: 'Email',
   phone: 'Phone Number',
