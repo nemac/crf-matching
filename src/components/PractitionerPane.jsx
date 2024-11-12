@@ -1,15 +1,14 @@
 
 import { useRef } from "react";
 import { Typography, Box, styled } from "@mui/material";
+import PersonIcon from '@mui/icons-material/Person';
+import SchoolIcon from '@mui/icons-material/School';
 
-import PersonIcon from "./svg/PersonIcon";
 import ProfilePopper from "./ProfilePopper";
 import HeaderBox from './HeaderBox';
 import Section from './Section';
 import ScoreSection from './ScoreSection';
 import Pane from './Pane';
-import GradCapIcon from './svg/GradCapIcon';
-
 import theme from '../theme';
 
 
@@ -45,7 +44,7 @@ function StrTrainedBadge({ isTrained }) {
         alignItems: 'center',
       }} 
     >
-      <GradCapIcon></GradCapIcon>
+      <SchoolIcon/>
       <Typography
         sx={{
           display: {
