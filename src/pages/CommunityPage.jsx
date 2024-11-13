@@ -71,7 +71,7 @@ export default function CommunityPage() {
               >
                 <CommunityPane
                   community={ community }
-                ></CommunityPane>
+                />
 
                 { /* Practitioners */ }
 
