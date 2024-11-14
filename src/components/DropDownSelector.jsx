@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import theme from '../theme';
 
-const DropDownSelector = (props) => {
-  const { availableSelections, selections, setSelections, option } = props;
+const DropDownSelector = ({ availableSelections, selections, setSelections, option }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleAdd = (itemToAdd) => {
@@ -11,51 +11,62 @@ const DropDownSelector = (props) => {
     setIsDropdownOpen(false);
   };
 
-  const handleRemove = (itemToRemove) => {
-    setSelections(selections.filter((item) => item !== itemToRemove));
-  };
-
   return (
-    <div className="flex flex-col gap-2">
-      <div className="font-medium text-gray-700">{option}</div>
-
-      {/* Selected States */}
-      <div className="flex flex-col gap-2">
-        {selections.map((item) => (
-          <div
-            key={item}
-            className="flex items-center justify-between px-3 py-2 bg-amber-50 rounded"
-          >
-            <span>{item}</span>
-            <button
-              onClick={() => handleRemove(item)}
-              className="text-gray-500 hover:text-gray-700"
-            >
-              ×
-            </button>
-          </div>
-        ))}
-      </div>
-
-      {/* Add State Button & Dropdown */}
+    <div>
+      {/* Add Button & Dropdown */}
       <div className="relative">
         <button
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          className="flex items-center gap-2 px-3 py-2 text-blue-600 bg-blue-100 rounded hover:bg-blue-200"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '8px 12px',
+            color: theme.palette.primary.midBlue,
+            backgroundColor: theme.palette.primary.lightBlue,
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            width: '100%',
+          }}
         >
-          <span className="text-lg">+</span>
+          <span style={{ fontSize: '20px' }}>+</span>
           Add another {option}
         </button>
 
         {isDropdownOpen && (
-          <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg max-h-60 overflow-auto">
+          <div
+            style={{
+              position: 'absolute',
+              zIndex: 10,
+              width: '100%',
+              marginTop: '4px',
+              backgroundColor: theme.palette.primary.white,
+              border: `1px solid ${theme.palette.primary.borderGray}`,
+              borderRadius: '4px',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+              maxHeight: '240px',
+              overflowY: 'auto',
+            }}
+          >
             {availableSelections
               .filter((item) => !selections.includes(item))
               .map((item) => (
                 <button
                   key={item}
                   onClick={() => handleAdd(item)}
-                  className="w-full px-4 py-2 text-left hover:bg-gray-100"
+                  style={{
+                    width: '100%',
+                    padding: '8px 16px',
+                    textAlign: 'left',
+                    border: 'none',
+                    background: 'none',
+                    cursor: 'pointer',
+                    color: theme.palette.primary.main,
+                    ':hover': {
+                      backgroundColor: theme.palette.primary.lightGray,
+                    },
+                  }}
                 >
                   {item}
                 </button>

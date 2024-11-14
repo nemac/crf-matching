@@ -1,34 +1,56 @@
+import { useContext } from 'react';
+import { Box, Typography } from '@mui/material';
+import { RowHoverContext, SetHoverRowContext } from './RowHoverContext';
+import PractMatchSymbol from './svg/PractMatchSymbol';
+import theme from '../theme';
 
-import { useContext } from "react";
-import { Box, Typography } from "@mui/material";
-
-import { RowHoverContext, SetHoverRowContext } from "./RowHoverContext";
-
-import PractMatchSymbol from "./svg/PractMatchSymbol"
-
-import theme from "../theme";
-
-export default function Cell ({ label, type, key }) {
+export default function Cell({ label, type, key, isSelectable, onRemove }) {
   const hoverRow = useContext(RowHoverContext);
   const setHoverRow = useContext(SetHoverRowContext);
 
   let content;
   if (type === 'community') {
-    content = <Typography variant="body1" sx={{ textAlign: 'left' }}>
-      { label }
-    </Typography>
+    content = (
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          width: '100%',
+        }}
+      >
+        <Typography
+          variant="body1"
+          sx={{ textAlign: 'left' }}
+        >
+          {label}
+        </Typography>
+        {isSelectable && (
+          <button
+            onClick={() => onRemove(label)}
+            style={{
+              color: theme.palette.primary.main,
+              border: 'none',
+              background: 'none',
+              fontSize: '18px',
+              cursor: 'pointer',
+              padding: '0 4px',
+            }}
+          >
+            ×
+          </button>
+        )}
+      </Box>
+    );
   } else {
-    content = PractMatchSymbol({ label })
+    content = PractMatchSymbol({ label });
   }
+
   return (
     <Box
-      onMouseEnter={ e => {
-        setHoverRow(key);
-      }}
-      onMouseLeave={ e => {
-        setHoverRow(null);
-      }}
-      key={ key }
+      onMouseEnter={(e) => setHoverRow(key)}
+      onMouseLeave={(e) => setHoverRow(null)}
+      key={key}
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -42,8 +64,7 @@ export default function Cell ({ label, type, key }) {
         justifyContent: 'center',
       }}
     >
-    { content }
-  </Box>
-  )
+      {content}
+    </Box>
+  );
 }
-

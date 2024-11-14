@@ -6,36 +6,48 @@ import Pane from './Pane';
 import Section from './Section';
 import theme from '../theme';
 
-const getSectionData = (community) =>
+const getSectionData = (community, isSelectable, availableOptions, onSelectionChange) =>
   [
     {
       header: 'State',
       cards: community.state,
+      availableSelections: isSelectable ? availableOptions?.state || [] : [],
     },
     {
       header: 'Activities',
       cards: community.activities,
+      availableSelections: isSelectable ? availableOptions?.activities || [] : [],
     },
     {
       header: 'Sectors',
       cards: community.sectors,
+      availableSelections: isSelectable ? availableOptions?.sectors || [] : [],
     },
     {
       header: 'Hazards',
       cards: community.hazards,
+      availableSelections: isSelectable ? availableOptions?.hazards || [] : [],
     },
     {
       header: 'Size',
       cards: community.size,
+      availableSelections: isSelectable ? availableOptions?.size || [] : [],
     },
-  ].map((section, index) => {
-    section.type = 'community';
-    section.id = `section${index}`;
-    return section;
-  });
+  ].map((section, index) => ({
+    ...section,
+    type: 'community',
+    id: `section${index}`,
+    isSelectable: isSelectable,
+    onSelectionChange: onSelectionChange,
+  }));
 
-export default function CommunityPane({ community }) {
-  const sectionData = getSectionData(community);
+export default function CommunityPane({
+  community,
+  isSelectable = false,
+  availableOptions = {},
+  onSelectionChange = () => {},
+}) {
+  const sectionData = getSectionData(community, isSelectable, availableOptions, onSelectionChange);
 
   return (
     <Box

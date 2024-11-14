@@ -52,7 +52,7 @@ export default function SelfServicePage() {
     sectors: selectedOptions.sectors,
     hazards: selectedOptions.hazards,
     size: selectedOptions.size,
-    totalCategories: 0,
+    totalCategories: Object.values(selectedOptions).reduce((sum, arr) => sum + arr.length, 0),
   };
 
   useEffect(() => {
@@ -69,6 +69,13 @@ export default function SelfServicePage() {
         setError(err);
       });
   }, []);
+
+  const handleSelectionChange = (category, newSelections) => {
+    setSelectedOptions((prev) => ({
+      ...prev,
+      [category]: newSelections,
+    }));
+  };
 
   if (error) {
     return <div className="text-red-600 p-4">{error}</div>;
@@ -111,40 +118,13 @@ export default function SelfServicePage() {
                   bgcolor: theme.palette.primary.lightGray,
                 }}
               >
-                <CommunityPane community={community} />
-                <DropDownSelector
-                  availableSelections={availableOptions.state}
-                  selections={selectedOptions.state}
-                  setSelections={(selections) => setSelectedOptions({ ...selectedOptions, state: selections })}
-                  option="State"
+                <CommunityPane
+                  community={community}
+                  isSelectable={true}
+                  availableOptions={availableOptions}
+                  onSelectionChange={handleSelectionChange}
                 />
-                <DropDownSelector
-                  availableSelections={availableOptions.activities}
-                  selections={selectedOptions.activities}
-                  setSelections={(selections) => setSelectedOptions({ ...selectedOptions, activities: selections })}
-                  option="Activity"
-                />
-                <DropDownSelector
-                  availableSelections={availableOptions.sectors}
-                  selections={selectedOptions.sectors}
-                  setSelections={(selections) => setSelectedOptions({ ...selectedOptions, sectors: selections })}
-                  option="Sector"
-                />
-                <DropDownSelector
-                  availableSelections={availableOptions.hazards}
-                  selections={selectedOptions.hazards}
-                  setSelections={(selections) => setSelectedOptions({ ...selectedOptions, hazards: selections })}
-                  option="Hazard"
-                />
-                <DropDownSelector
-                  availableSelections={availableOptions.size}
-                  selections={selectedOptions.size}
-                  setSelections={(selections) => setSelectedOptions({ ...selectedOptions, size: selections })}
-                  option="Size"
-                />
-
                 {/* Practitioners */}
-
                 <Stack sx={{ width: '60%' }}>
                   <Typography
                     color="primary.main"
@@ -182,7 +162,5 @@ export default function SelfServicePage() {
         </RowHoverContext.Provider>
       </ThemeProvider>
     );
-  } else {
-    return <FullPageSpinner></FullPageSpinner>;
   }
 }
