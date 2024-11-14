@@ -186,3 +186,61 @@ export const fetchPractitionersForCommunity = (communityId, setPractitioners) =>
     })
   })
 }
+
+export const fetchOptionsFromAirtable = (setOptions) => {
+  base('Options').select({
+    view: "Grid view",
+    fields: [
+      'State',
+      'Activities',
+      'Hazards',
+      'Size',
+      'Sectors'
+    ]
+  }).firstPage(function(err, records) {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    // Initialize our options object with Sets for unique values
+    const availableOptions = {
+      state: new Set(),
+      activities: new Set(),
+      hazards: new Set(),
+      size: new Set(),
+      sectors: new Set()
+    };
+
+    // Process records
+    records.forEach(record => {
+      const fields = record.fields;
+
+      // Add values to respective sets if they exist
+      if (fields.State) availableOptions.state.add(fields.State);
+      if (fields.Activities) {
+        (Array.isArray(fields.Activities) ? fields.Activities : [fields.Activities])
+            .forEach(activity => availableOptions.activities.add(activity));
+      }
+      if (fields.Hazards) {
+        (Array.isArray(fields.Hazards) ? fields.Hazards : [fields.Hazards])
+            .forEach(hazard => availableOptions.hazards.add(hazard));
+      }
+      if (fields.Size) availableOptions.size.add(fields.Size);
+      if (fields.Sectors) {
+        (Array.isArray(fields.Sectors) ? fields.Sectors : [fields.Sectors])
+            .forEach(sector => availableOptions.sectors.add(sector));
+      }
+    });
+
+    // Convert Sets to sorted arrays
+    const options = {
+      state: [...availableOptions.state].sort(),
+      activities: [...availableOptions.activities].sort(),
+      hazards: [...availableOptions.hazards].sort(),
+      size: [...availableOptions.size].sort(),
+      sectors: [...availableOptions.sectors].sort()
+    };
+    setOptions(options);
+  });
+};

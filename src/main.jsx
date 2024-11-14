@@ -8,6 +8,7 @@ import {
 import CommunityListPage from "./pages/CommunityListPage.jsx";
 import CommunityPage from './pages/CommunityPage.jsx'
 import PractitionerPage from "./pages/PractitionerPage.jsx";
+import SelfServicePage from "./pages/SelfServicePage.jsx";
 
 const router = createHashRouter([
   {
@@ -21,6 +22,10 @@ const router = createHashRouter([
   {
     path: "/practitioner/:practitionerId",
     element: <PractitionerPage />
+  },
+  {
+    path: "/selfservice",
+    element: <SelfServicePage />
   }
 ])
 
