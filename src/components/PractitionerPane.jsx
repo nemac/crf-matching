@@ -129,11 +129,11 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
 
 export default function PractitionerPane({ community, practitioner, poppedPractitioner, setPoppedPractitioner }) {
   const sections = [
-    [[community.state], practitioner.state],
+    [community.state, practitioner.state],
     [community.activities, practitioner.activities],
     [community.sectors, practitioner.sectors],
     [community.hazards, practitioner.hazards],
-    [[community.size], practitioner.size],
+    [community.size, practitioner.size],
   ]
     .map(([commCats, practCats]) => matchVals(commCats, practCats))
     .map((matches, index) => {

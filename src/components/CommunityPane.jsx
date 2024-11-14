@@ -10,7 +10,7 @@ const getSectionData = (community) =>
   [
     {
       header: 'State',
-      cards: [community.state],
+      cards: community.state,
     },
     {
       header: 'Activities',
@@ -26,7 +26,7 @@ const getSectionData = (community) =>
     },
     {
       header: 'Size',
-      cards: [community.size],
+      cards: community.size,
     },
   ].map((section, index) => {
     section.type = 'community';

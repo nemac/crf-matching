@@ -14,17 +14,15 @@ import FullPageSpinner from '../components/FullPageSpinner';
 import PractitionerPane from '../components/PractitionerPane';
 import CommunityPane from '../components/CommunityPane';
 
-import { ThemeProvider } from "@mui/material/styles";
+import { ThemeProvider } from '@mui/material/styles';
 
 // theme
 import theme from '../theme';
 
 import { RowHoverContext, SetHoverRowContext } from '../components/RowHoverContext';
-import DropDownSelector from "../components/DropDownSelector.jsx";
-
+import DropDownSelector from '../components/DropDownSelector.jsx';
 
 export default function SelfServicePage() {
-
   const [selectedOptions, setSelectedOptions] = useState({
     state: [],
     activities: [],
@@ -41,9 +39,9 @@ export default function SelfServicePage() {
     size: [],
   });
 
-  const [ practitioners, setPractitioners ] = useState([]);
-  const [ poppedPractitioner, setPoppedPractitioner ] = useState(null);
-  const [ hoverRow, setHoverRow ] = useState(null);
+  const [practitioners, setPractitioners] = useState([]);
+  const [poppedPractitioner, setPoppedPractitioner] = useState(null);
+  const [hoverRow, setHoverRow] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -54,7 +52,8 @@ export default function SelfServicePage() {
     sectors: selectedOptions.sectors,
     hazards: selectedOptions.hazards,
     size: selectedOptions.size,
-  }
+    totalCategories: 0,
+  };
 
   useEffect(() => {
     const loadOptions = async () => {
@@ -62,11 +61,13 @@ export default function SelfServicePage() {
       await fetchOptionsFromAirtable(setAvailableOptions);
     };
 
-    loadOptions().then(() => {
-      setIsLoading(false);
-    }).catch((err) => {
-      setError(err);
-    });
+    loadOptions()
+      .then(() => {
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setError(err);
+      });
   }, []);
 
   if (error) {
@@ -78,108 +79,110 @@ export default function SelfServicePage() {
   }
 
   if (availableOptions) {
-
     const practitionerPanes = practitioners.map((pract, index) => {
-      return <PractitionerPane
-          community={ community }
-          practitioner={ pract }
-          poppedPractitioner={ poppedPractitioner }
-          setPoppedPractitioner={ setPoppedPractitioner }
-          key={ index }
+      return (
+        <PractitionerPane
+          community={community}
+          practitioner={pract}
+          poppedPractitioner={poppedPractitioner}
+          setPoppedPractitioner={setPoppedPractitioner}
+          key={index}
           style={{
-            flex: 1
+            flex: 1,
           }}
-      ></PractitionerPane>
-    })
+        ></PractitionerPane>
+      );
+    });
 
     return (
-        <ThemeProvider theme={theme}>
-          <RowHoverContext.Provider value={hoverRow}>
-            <SetHoverRowContext.Provider value={setHoverRow}>
-              <CssBaseline />
-              <Container maxWidth="xl" sx={{ p: 2 }} >
-                <Stack
-                    direction='row'
-                    gap={1}
-                    ml={1}
+      <ThemeProvider theme={theme}>
+        <RowHoverContext.Provider value={hoverRow}>
+          <SetHoverRowContext.Provider value={setHoverRow}>
+            <CssBaseline />
+            <Container
+              maxWidth="xl"
+              sx={{ p: 2 }}
+            >
+              <Stack
+                direction="row"
+                gap={1}
+                ml={1}
+                sx={{
+                  bgcolor: theme.palette.primary.lightGray,
+                }}
+              >
+                <CommunityPane community={community} />
+                <DropDownSelector
+                  availableSelections={availableOptions.state}
+                  selections={selectedOptions.state}
+                  setSelections={(selections) => setSelectedOptions({ ...selectedOptions, state: selections })}
+                  option="State"
+                />
+                <DropDownSelector
+                  availableSelections={availableOptions.activities}
+                  selections={selectedOptions.activities}
+                  setSelections={(selections) => setSelectedOptions({ ...selectedOptions, activities: selections })}
+                  option="Activity"
+                />
+                <DropDownSelector
+                  availableSelections={availableOptions.sectors}
+                  selections={selectedOptions.sectors}
+                  setSelections={(selections) => setSelectedOptions({ ...selectedOptions, sectors: selections })}
+                  option="Sector"
+                />
+                <DropDownSelector
+                  availableSelections={availableOptions.hazards}
+                  selections={selectedOptions.hazards}
+                  setSelections={(selections) => setSelectedOptions({ ...selectedOptions, hazards: selections })}
+                  option="Hazard"
+                />
+                <DropDownSelector
+                  availableSelections={availableOptions.size}
+                  selections={selectedOptions.size}
+                  setSelections={(selections) => setSelectedOptions({ ...selectedOptions, size: selections })}
+                  option="Size"
+                />
+
+                {/* Practitioners */}
+
+                <Stack sx={{ width: '60%' }}>
+                  <Typography
+                    color="primary.main"
                     sx={{
-                      bgcolor: theme.palette.primary.lightGray,
+                      pt: 1,
+                      height: '40px',
+                      textAlign: 'center',
+                      fontWeight: 700,
                     }}
-                >
-                  <CommunityPane
-                      community={ community }
-                  />
-                  <DropDownSelector
-                      availableSelections = { availableOptions.state }
-                      selections = { selectedOptions.state }
-                      setSelections = { (selections) => setSelectedOptions({ ...selectedOptions, state: selections }) }
-                      option = "State"
-                  />
-                  <DropDownSelector
-                      availableSelections = { availableOptions.activities }
-                      selections = { selectedOptions.activities }
-                      setSelections = { (selections) => setSelectedOptions({ ...selectedOptions, activities: selections }) }
-                      option = "Activity"
-                  />
-                  <DropDownSelector
-                      availableSelections = { availableOptions.sectors }
-                      selections = { selectedOptions.sectors }
-                      setSelections = { (selections) => setSelectedOptions({ ...selectedOptions, sectors: selections }) }
-                      option = "Sector"
-                  />
-                  <DropDownSelector
-                      availableSelections = { availableOptions.hazards }
-                      selections = { selectedOptions.hazards }
-                      setSelections = { (selections) => setSelectedOptions({ ...selectedOptions, hazards: selections }) }
-                      option = "Hazard"
-                  />
-                  <DropDownSelector
-                      availableSelections = { availableOptions.size }
-                      selections = { selectedOptions.size }
-                      setSelections = { (selections) => setSelectedOptions({ ...selectedOptions, size: selections }) }
-                      option = "Size"
-                  />
-
-                  { /* Practitioners */ }
-
-                  <Stack sx={{ width: '60%' }}>
-                    <Typography
-                        color="primary.main"
-                        sx={{
-                          pt: 1,
-                          height: '40px',
-                          textAlign: 'center',
-                          fontWeight: 700,
-                        }}
-                        variant="h5"
+                    variant="h5"
+                  >
+                    <Box
+                      sx={{
+                        display: {
+                          xs: 'none',
+                          md: 'inline-block',
+                        },
+                      }}
                     >
-                      <Box
-                          sx={{
-                            display: {
-                              xs: 'none',
-                              md: 'inline-block',
-                            },
-                          }}
-                      >Matched</Box> Practitioners
-                    </Typography>
-                    <Stack
-                        direction='row'
-                        gap={1}
-                        mr={1}
-                    >
-                      { practitionerPanes }
-                    </Stack>
+                      Matched
+                    </Box>{' '}
+                    Practitioners
+                  </Typography>
+                  <Stack
+                    direction="row"
+                    gap={1}
+                    mr={1}
+                  >
+                    {practitionerPanes}
                   </Stack>
                 </Stack>
-              </Container>
-            </SetHoverRowContext.Provider>
-          </RowHoverContext.Provider>
-        </ThemeProvider>
-    )
+              </Stack>
+            </Container>
+          </SetHoverRowContext.Provider>
+        </RowHoverContext.Provider>
+      </ThemeProvider>
+    );
   } else {
-    return (
-        <FullPageSpinner></FullPageSpinner>
-    )
+    return <FullPageSpinner></FullPageSpinner>;
   }
-
 }
