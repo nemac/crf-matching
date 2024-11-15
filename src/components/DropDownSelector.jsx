@@ -1,79 +1,123 @@
 import React, { useState } from 'react';
-import theme from '../theme';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Button from '@mui/material/Button';
+import { styled } from '@mui/material/styles';
+
+// Styled components
+const AddButton = styled(Button)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: '8px 12px',
+  color: '#fff',
+  backgroundColor: '#2196f3',
+  borderRadius: '4px',
+  textTransform: 'none',
+  justifyContent: 'flex-start',
+  width: '300px', // Increased width
+  '&:hover': {
+    backgroundColor: '#1976d2',
+  },
+  '& .MuiButton-startIcon': {
+    marginRight: 4,
+  },
+}));
+
+const StyledMenu = styled(Menu)(({ theme }) => ({
+  '& .MuiPaper-root': {
+    width: '300px', // Match button width
+    maxHeight: '240px',
+    marginTop: '4px',
+    borderRadius: '8px',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+    border: '1px solid #e0e0e0',
+    backgroundColor: '#fff',
+    padding: '8px', // Add padding around the menu items
+  },
+  '& .MuiList-root': {
+    padding: '4px',
+  },
+  '& .MuiMenuItem-root': {
+    fontSize: '14px',
+    padding: '8px 12px',
+    margin: '4px 0', // Add vertical margin between items
+    borderRadius: '20px', // Make items pill-shaped
+    backgroundColor: '#e3f2fd', // Light blue background
+    color: '#1976d2', // Darker blue text
+    '&:hover': {
+      backgroundColor: '#bbdefb', // Slightly darker on hover
+    },
+  },
+}));
+
+const PlusIcon = styled('span')({
+  fontSize: '20px',
+  marginRight: '8px',
+  fontWeight: 'normal',
+});
 
 const DropDownSelector = ({ availableSelections, selections, setSelections, option }) => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const handleAdd = (itemToAdd) => {
     if (!selections.includes(itemToAdd)) {
       setSelections([...selections, itemToAdd]);
     }
-    setIsDropdownOpen(false);
+    handleClose();
   };
+
+  // Filter out already selected items
+  const availableItems = availableSelections.filter((item) => !selections.includes(item));
 
   return (
     <div>
-      {/* Add Button & Dropdown */}
-      <div className="relative">
-        <button
-          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            padding: '8px 12px',
-            color: theme.palette.primary.midBlue,
-            backgroundColor: theme.palette.primary.lightBlue,
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            width: '100%',
-          }}
-        >
-          <span style={{ fontSize: '20px' }}>+</span>
-          Add another {option}
-        </button>
+      <AddButton
+        id="dropdown-button"
+        aria-controls={open ? 'dropdown-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
+        startIcon={<PlusIcon>+</PlusIcon>}
+      >
+        Add another {option}
+      </AddButton>
 
-        {isDropdownOpen && (
-          <div
-            style={{
-              position: 'absolute',
-              zIndex: 10,
-              width: '100%',
-              marginTop: '4px',
-              backgroundColor: theme.palette.primary.white,
-              border: `1px solid ${theme.palette.primary.borderGray}`,
-              borderRadius: '4px',
-              boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-              maxHeight: '240px',
-              overflowY: 'auto',
-            }}
+      <StyledMenu
+        id="dropdown-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'dropdown-button',
+        }}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+      >
+        {availableItems.map((item) => (
+          <MenuItem
+            key={item}
+            onClick={() => handleAdd(item)}
           >
-            {availableSelections
-              .filter((item) => !selections.includes(item))
-              .map((item) => (
-                <button
-                  key={item}
-                  onClick={() => handleAdd(item)}
-                  style={{
-                    width: '100%',
-                    padding: '8px 16px',
-                    textAlign: 'left',
-                    border: 'none',
-                    background: 'none',
-                    cursor: 'pointer',
-                    color: theme.palette.primary.main,
-                    ':hover': {
-                      backgroundColor: theme.palette.primary.lightGray,
-                    },
-                  }}
-                >
-                  {item}
-                </button>
-              ))}
-          </div>
-        )}
-      </div>
+            {item}
+          </MenuItem>
+        ))}
+        {availableItems.length === 0 && <MenuItem disabled>No more options available</MenuItem>}
+      </StyledMenu>
     </div>
   );
 };
