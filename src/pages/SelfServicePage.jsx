@@ -5,7 +5,7 @@ import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
 // API
-import { fetchCommunity, fetchPractitionersForCommunity, fetchOptionsFromAirtable } from '../util/api';
+import { fetchCommunity, fetchPractitionersByFilters, fetchOptionsFromAirtable } from '../util/api';
 
 // components
 import { CssBaseline, Stack, Container, Typography, Box } from '@mui/material';
@@ -71,10 +71,14 @@ export default function SelfServicePage() {
   }, []);
 
   const handleSelectionChange = (category, newSelections) => {
-    setSelectedOptions((prev) => ({
-      ...prev,
+    const updatedOptions = {
+      ...selectedOptions,
       [category]: newSelections,
-    }));
+    };
+    setSelectedOptions(updatedOptions);
+
+    // Call API with updated selections
+    fetchPractitionersByFilters(updatedOptions, setPractitioners);
   };
 
   if (error) {
