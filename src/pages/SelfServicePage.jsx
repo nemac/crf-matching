@@ -141,7 +141,14 @@ export default function SelfServicePage() {
                       </Typography>
                     </Box>
                     {hasMorePractitioners && (
-                      <Box sx={{ position: 'absolute', right: '24px' }}>
+                      <Box
+                        sx={{
+                          position: 'fixed',
+                          top: '24px',
+                          right: '24px',
+                          zIndex: 1000,
+                        }}
+                      >
                         <Button
                           onClick={handleViewMore}
                           variant="contained"

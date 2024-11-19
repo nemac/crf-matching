@@ -16,6 +16,7 @@ const matchVals = (commCats, practCats) => {
 
 const StyledBox = styled(Box)({
   height: 45,
+  maxWidth: '80%',
 });
 
 function StrTrainedBadge({ isTrained }) {
@@ -115,7 +116,6 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
           overflow: 'hidden',
           textOverflow: 'ellipsis',
           whiteSpace: 'nowrap',
-          maxWidth: '80%', // Ensure there's room for the STR trained badge
         }}
       >
         {practitioner.org}
