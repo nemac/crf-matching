@@ -274,52 +274,33 @@ export const fetchPractitionersByFilters = (selectedOptions, setPractitioners) =
       const recs = records
         .map((rawRec) => rawRec.fields)
         .map((rec) => normalizeRec(rec, practitionerFieldMap))
-        // Calculate match score based on number of matching categories
+        // Calculate match score based on simple count of matching categories
         .map((rec) => {
           let matchCount = 0;
-          let totalSelectedCategories = 0;
 
-          // For each category that has selections, count if there's any match
-          if (selectedOptions.state.length) {
-            totalSelectedCategories++;
-            if (selectedOptions.state.some((s) => rec.state.includes(s))) {
-              matchCount++;
-            }
+          // For each category, increment score by 1 if there's any match
+          if (selectedOptions.state.length && selectedOptions.state.some((s) => rec.state.includes(s))) {
+            matchCount++;
           }
-          if (selectedOptions.activities.length) {
-            totalSelectedCategories++;
-            if (selectedOptions.activities.some((a) => rec.activities.includes(a))) {
-              matchCount++;
-            }
+          if (selectedOptions.activities.length && selectedOptions.activities.some((a) => rec.activities.includes(a))) {
+            matchCount++;
           }
-          if (selectedOptions.sectors.length) {
-            totalSelectedCategories++;
-            if (selectedOptions.sectors.some((s) => rec.sectors.includes(s))) {
-              matchCount++;
-            }
+          if (selectedOptions.sectors.length && selectedOptions.sectors.some((s) => rec.sectors.includes(s))) {
+            matchCount++;
           }
-          if (selectedOptions.hazards.length) {
-            totalSelectedCategories++;
-            if (selectedOptions.hazards.some((h) => rec.hazards.includes(h))) {
-              matchCount++;
-            }
+          if (selectedOptions.hazards.length && selectedOptions.hazards.some((h) => rec.hazards.includes(h))) {
+            matchCount++;
           }
-          if (selectedOptions.size.length) {
-            totalSelectedCategories++;
-            if (selectedOptions.size.some((s) => rec.size.includes(s))) {
-              matchCount++;
-            }
+          if (selectedOptions.size.length && selectedOptions.size.some((s) => rec.size.includes(s))) {
+            matchCount++;
           }
 
-          // Calculate percentage of matching categories
-          rec.matchScore = totalSelectedCategories > 0 ? (matchCount / totalSelectedCategories) * 100 : 0;
-
+          rec.matchScore = matchCount;
           return rec;
         })
         // Sort by match score (descending)
         .sort((r1, r2) => r2.matchScore - r1.matchScore);
 
-      console.log(recs);
       setPractitioners(recs);
     });
 };
