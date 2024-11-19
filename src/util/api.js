@@ -284,6 +284,9 @@ export const fetchPractitionersByFilters = (selectedOptions, setPractitioners) =
     return;
   }
 
+  // List of practitioners to exclude
+  const excludedPractitioners = ['NEMAC', 'NEMAC 2', 'NEMAC 3'];
+
   base('Practitioner')
     .select({
       view: 'Grid view',
@@ -299,6 +302,8 @@ export const fetchPractitionersByFilters = (selectedOptions, setPractitioners) =
       const recs = records
         .map((rawRec) => rawRec.fields)
         .map((rec) => normalizeRec(rec, practitionerFieldMap))
+        // Filter out excluded practitioners
+        .filter((rec) => !excludedPractitioners.includes(rec.org))
         // Calculate match score based on count of all matching items
         .map((rec) => {
           let matchCount = 0;

@@ -112,6 +112,10 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
             xs: 'none',
             md: 'inherit',
           },
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+          maxWidth: '80%', // Ensure there's room for the STR trained badge
         }}
       >
         {practitioner.org}

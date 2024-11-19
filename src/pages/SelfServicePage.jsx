@@ -168,15 +168,19 @@ export default function SelfServicePage() {
                     direction="row"
                     gap={1}
                     sx={{
-                      pb: 2, // Add padding bottom for scrollbar
+                      pb: 2,
+                      width: '100%',
                     }}
                   >
                     {visiblePractitioners.map((pract, index) => (
                       <Box
                         key={index}
                         sx={{
-                          minWidth: '33%', // Each pane takes up one-third of the space
-                          flexShrink: 0, // Prevent shrinking
+                          width: `${100 / 3}%`,
+                          minWidth: '250px',
+                          flexGrow: 1,
+                          flexShrink: 0,
+                          flexBasis: 0,
                         }}
                       >
                         <PractitionerPane
