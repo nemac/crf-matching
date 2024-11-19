@@ -299,26 +299,40 @@ export const fetchPractitionersByFilters = (selectedOptions, setPractitioners) =
       const recs = records
         .map((rawRec) => rawRec.fields)
         .map((rec) => normalizeRec(rec, practitionerFieldMap))
-        // Calculate match score based on simple count of matching categories
+        // Calculate match score based on count of all matching items
         .map((rec) => {
           let matchCount = 0;
 
-          // For each category, increment score by 1 if there's any match
-          if (selectedOptions.state.length && selectedOptions.state.some((s) => rec.state.includes(s))) {
-            matchCount++;
-          }
-          if (selectedOptions.activities.length && selectedOptions.activities.some((a) => rec.activities.includes(a))) {
-            matchCount++;
-          }
-          if (selectedOptions.sectors.length && selectedOptions.sectors.some((s) => rec.sectors.includes(s))) {
-            matchCount++;
-          }
-          if (selectedOptions.hazards.length && selectedOptions.hazards.some((h) => rec.hazards.includes(h))) {
-            matchCount++;
-          }
-          if (selectedOptions.size.length && selectedOptions.size.some((s) => rec.size.includes(s))) {
-            matchCount++;
-          }
+          // Count each individual match for all categories
+          selectedOptions.state.forEach((state) => {
+            if (rec.state.includes(state)) {
+              matchCount++;
+            }
+          });
+
+          selectedOptions.activities.forEach((activity) => {
+            if (rec.activities.includes(activity)) {
+              matchCount++;
+            }
+          });
+
+          selectedOptions.sectors.forEach((sector) => {
+            if (rec.sectors.includes(sector)) {
+              matchCount++;
+            }
+          });
+
+          selectedOptions.hazards.forEach((hazard) => {
+            if (rec.hazards.includes(hazard)) {
+              matchCount++;
+            }
+          });
+
+          selectedOptions.size.forEach((size) => {
+            if (rec.size.includes(size)) {
+              matchCount++;
+            }
+          });
 
           rec.matchScore = matchCount;
           return rec;
