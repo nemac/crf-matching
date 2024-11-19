@@ -128,6 +128,9 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
 }
 
 export default function PractitionerPane({ community, practitioner, poppedPractitioner, setPoppedPractitioner }) {
+  // Determine if we're on SelfServicePage by checking if community.name is "Self Service"
+  const isSelfService = community.name === 'Self Service';
+
   const sections = [
     [community.state, practitioner.state],
     [community.activities, practitioner.activities],
@@ -157,13 +160,24 @@ export default function PractitionerPane({ community, practitioner, poppedPracti
         strTrained={practitioner.strTrained}
         poppedPractitioner={poppedPractitioner}
         setPoppedPractitioner={setPoppedPractitioner}
-      ></PractitionerHeader>
+      />
       <Pane boxShadow={2}>
-        {sections.map((section) => (
-          <Section
-            key={section.id}
-            {...section}
-          />
+        {sections.map((section, index) => (
+          <div key={section.id}>
+            <Section {...section} />
+            {/* Add invisible spacer that matches "Add another" button if on SelfServicePage */}
+            {isSelfService && (
+              <Box
+                sx={{
+                  height: '51px', // Match button height
+                  mb: 2, // Match button margin
+                  visibility: 'hidden',
+                }}
+              >
+                {/* Empty box with same dimensions as Add Another button */}
+              </Box>
+            )}
+          </div>
         ))}
         <ScoreSection style={{ justifyContent: 'center' }}>
           <Box>{practitioner.matchScore}</Box>
