@@ -130,6 +130,31 @@ export const fetchAllCommunities = (setAllCommunities) => {
     );
 };
 
+export const fetchAllPractitioners = (setAllPractitioners) => {
+  const practitioners = [];
+  base('Practitioner')
+    .select({
+      view: 'Grid view',
+      fields: practFetchFields,
+      // Sort by organization name
+      sort: [{ field: 'Organization Name', direction: 'asc' }],
+    })
+    .eachPage(
+      function page(records, fetchNextPage) {
+        const recs = records.map((rawRec) => rawRec.fields).map((rec) => normalizeRec(rec, practitionerFieldMap));
+        practitioners.push(...recs);
+        fetchNextPage();
+      },
+      function done(err) {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        setAllPractitioners(practitioners);
+      }
+    );
+};
+
 export const fetchPractitionersForCommunity = (communityId, setPractitioners) => {
   base('Matches')
     .select({
