@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200">
+    <!-- Logo Group -->
+    <g transform="translate(20, 20)">
+        <!-- Hexagon background -->
+        <path d="M80 10L155 50L155 150L80 190L5 150L5 50Z" fill="#f0f9ff" stroke="#2D3F5D" stroke-width="4"/>
+
+        <!-- Sun -->
+        <circle cx="45" cy="70" r="20" fill="#FFB800"/>
+
+        <!-- Cloud -->
+        <path d="M70 60 Q80 50 90 60 Q100 50 110 60 Q120 60 120 70 Q120 80 110 80 L70 80 Q60 80 60 70 Q60 60 70 60Z" fill="#34A853"/>
+
+        <!-- Water waves -->
+        <path d="M20 120 Q40 110 60 120 Q80 130 100 120 Q120 110 140 120" fill="none" stroke="#4285F4" stroke-width="4"/>
+        <path d="M20 135 Q40 125 60 135 Q80 145 100 135 Q120 125 140 135" fill="none" stroke="#4285F4" stroke-width="4"/>
+
+        <!-- Leaf -->
+        <path d="M90 90 Q100 85 105 95 Q110 105 100 110 Q90 115 85 105 Q80 95 90 90Z" fill="#34A853"/>
+    </g>
+
+    <!-- Company Name -->
+    <g transform="translate(200, 85)">
+        <!-- Main Text -->
+        <text x="0" y="0" font-family="Arial" font-weight="bold" font-size="36" fill="#2D3F5D">
+            CLIMATE ADAPTATION
+        </text>
+        <!-- Subtext -->
+        <text x="0" y="45" font-family="Arial" font-weight="bold" font-size="36" fill="#2D3F5D">
+            COMPANY
+        </text>
+    </g>
+</svg>

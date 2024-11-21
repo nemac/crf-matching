@@ -57,7 +57,7 @@ export default function LandingPage() {
               },
             }}
           >
-            Self Service
+            Find a Practitioner for Your Community
           </Button>
 
           <Button

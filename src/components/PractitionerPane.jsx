@@ -133,7 +133,7 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
 
 export default function PractitionerPane({ community, practitioner, poppedPractitioner, setPoppedPractitioner }) {
   // Determine if we're on SelfServicePage by checking if community.name is "Self Service"
-  const isSelfService = community.name === 'Self Service';
+  const isSelfService = community.name === 'My Community';
 
   const sections = [
     [community.state, practitioner.state],

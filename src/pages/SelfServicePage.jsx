@@ -48,7 +48,7 @@ export default function SelfServicePage() {
   const [error, setError] = useState(null);
 
   const community = {
-    name: 'Self Service',
+    name: 'My Community',
     state: selectedOptions.state,
     activities: selectedOptions.activities,
     sectors: selectedOptions.sectors,
