@@ -26,6 +26,7 @@ const normalizeRec = (rec, fieldMap) => {
 
 // map to airtable fields
 const practitionerFieldMap = {
+  airtableRecId: 'Airtable Record ID',
   state: 'State',
   size: 'Size',
   activities: 'Activities',
@@ -40,7 +41,6 @@ const practitionerFieldMap = {
   phone: 'Phone Number',
   strTrained:
     'Are There Members From Your Organization (Or Team) Who Have Completed The N O A A Steps To Resilience Training?',
-  id: 'Id',
   info: "Please provide any additional information you want us to know about your organization's (or team's) background and qualifications to provide adaptation services",
   //exampleStakeholders: 'Provide An Example Of Your Experience Working Directly With Stakeholders',
   //exampleMultipleBenefits: 'Provide An Example Of A Project That Provided Multiple Benefits Across Sectors And Scales, And How It Did That',
@@ -54,7 +54,6 @@ const communityFieldMap = {
   activities: 'Activities',
   sectors: 'Sectors',
   hazards: 'Hazards',
-  id: 'Id',
 };
 
 const practFetchFields = Object.values(practitionerFieldMap);
@@ -86,7 +85,7 @@ export const fetchCommunity = (communityId, setCommunity) => {
     .select({
       maxRecords: 1,
       view: 'Grid view',
-      filterByFormula: `{Id} = '${communityId}'`,
+      filterByFormula: `{Airtable Record ID} = '${communityId}'`,
       fields: communityFetchFields,
     })
     .firstPage(function (err, records) {
@@ -156,25 +155,25 @@ export const fetchAllPractitioners = (setAllPractitioners) => {
 };
 
 export const fetchPractitionersForCommunity = (communityId, setPractitioners) => {
-  base('Matches')
+  base('Curate Community Matches')
     .select({
       maxRecords: 5,
       view: 'Grid view',
 
       // Curated only
-      filterByFormula: `AND({Community: Id} = '${communityId}', {Curated})`,
-
+      filterByFormula: `AND({Community-airtable-id} = '${communityId}', {curated status} = 'Curated')`,
       // For testing - get all even if not curated
       //  filterByFormula: `{Community: Id} = '${communityId}'`,
-      fields: ['Practitioner: Airtable Record ID', 'Practitioner: Id', 'Match Score'],
+      fields: ['practitioner-airtable-id', 'match score'],
     })
     .firstPage(function (err, matchRecs) {
+      console.log('jeff match recs', matchRecs);
       matchRecs = matchRecs.map((rec) => rec.fields);
       if (err) {
         console.error(err);
       }
       const practIdFormulaSegments = matchRecs
-        .map((rec) => rec['Practitioner: Airtable Record ID'])
+        .map((rec) => rec['practitioner-airtable-id'])
         .map((recId) => `{Airtable Record ID} = '${recId}'`)
         .join(',');
       const formula = `OR(${practIdFormulaSegments})`;
@@ -198,7 +197,7 @@ export const fetchPractitionersForCommunity = (communityId, setPractitioners) =>
             // insert match score manually
             .map((rec) => {
               const filterById = (rec.matchScore = matchRecs.filter((mRec) => {
-                const result = mRec['Practitioner: Id'][0] === rec.id;
+                const result = mRec['practitioner-airtable-id'] === rec.airtableRecId;
                 return result;
               }));
               rec.matchScore = filterById[0]['Match Score'];
