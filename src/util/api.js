@@ -200,7 +200,7 @@ export const fetchPractitionersForCommunity = (communityId, setPractitioners) =>
                 const result = mRec['practitioner-airtable-id'] === rec.airtableRecId;
                 return result;
               }));
-              rec.matchScore = filterById[0]['Match Score'];
+              rec.matchScore = filterById[0]['match score'];
               return rec;
             })
             // sort by match score (descending)
