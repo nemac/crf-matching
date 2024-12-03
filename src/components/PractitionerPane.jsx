@@ -116,6 +116,7 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
           overflow: 'hidden',
           textOverflow: 'ellipsis',
           whiteSpace: 'nowrap',
+          textWrap: 'auto',
         }}
       >
         {practitioner.org}
@@ -154,7 +155,7 @@ export default function PractitionerPane({ community, practitioner, poppedPracti
   return (
     <Box
       style={{
-        flex: '1 1 33%',
+        // flex: '1 1 33%',
         backgroundColor: theme.palette.primary.lightGray,
       }}
     >

@@ -87,6 +87,7 @@ const DropDownSelector = ({ availableSelections, selections, setSelections, opti
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
         startIcon={<PlusIcon>+</PlusIcon>}
+        sx={{ width: "100%" }}
       >
         Add another {option}
       </AddButton>

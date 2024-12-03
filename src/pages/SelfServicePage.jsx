@@ -114,7 +114,9 @@ export default function SelfServicePage() {
                 gap={1}
                 sx={{ bgcolor: theme.palette.primary.lightGray }}
               >
-                <Box mt={3}>
+
+                {/* My Community */}
+                <Box mt={3} sx={{ flex: "1 1 250px;" }}>
                   <CommunityPane
                     community={community}
                     isSelectable={true}
@@ -122,8 +124,9 @@ export default function SelfServicePage() {
                     onSelectionChange={handleSelectionChange}
                   />
                 </Box>
+
                 {/* Practitioners */}
-                <Stack sx={{ width: '60%', pl: 0 }}>
+                <Stack sx={{ width: '60%', pl: 0, flex: "3 2 auto" }}>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, mt: 1 }}>
                     <Box sx={{ width: '100%', textAlign: 'center' }}>
                       {' '}
@@ -140,6 +143,7 @@ export default function SelfServicePage() {
                         Matched Practitioners
                       </Typography>
                     </Box>
+                    
                     {hasMorePractitioners && (
                       <Box
                         sx={{
@@ -177,18 +181,14 @@ export default function SelfServicePage() {
                     sx={{
                       pb: 2,
                       width: '100%',
+                      // bgcolor: "purple" for testing
                     }}
                   >
+                    {/* each individual box */}
                     {visiblePractitioners.map((pract, index) => (
                       <Box
                         key={index}
-                        sx={{
-                          width: `${100 / 3}%`,
-                          minWidth: '250px',
-                          flexGrow: 1,
-                          flexShrink: 0,
-                          flexBasis: 0,
-                        }}
+                        sx={{ flex: "1 1 0" }}
                       >
                         <PractitionerPane
                           community={community}
@@ -199,7 +199,7 @@ export default function SelfServicePage() {
                       </Box>
                     ))}
                   </Stack>
-                </Stack>
+                 </Stack>
               </Stack>
             </Container>
           </SetHoverRowContext.Provider>
