@@ -1,7 +1,7 @@
 // react
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
 
-// material UI 
+// material UI
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,19 +10,18 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-// API 
-import { fetchAllCommunities } from '../util/api'
+// API
+import { fetchAllCommunities } from '../util/api';
 
 // components
 import FullPageSpinner from '../components/FullPageSpinner';
-
 
 function CommunitiesPageLoaded({ communities }) {
   return (
     <div
       style={{
         width: '60vw',
-        margin: 'auto'
+        margin: 'auto',
       }}
     >
       <div>
@@ -40,10 +39,11 @@ function CommunitiesPageLoaded({ communities }) {
                   key={index}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
-                  <TableCell component="th" scope="row">
-                    <a
-                        href={ `#/community/${community.id}`}
-                      >{ community.name }</a>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                  >
+                    <a href={`#/community/${community.airtableRecId}`}>{community.name}</a>
                   </TableCell>
                 </TableRow>
               ))}
@@ -52,33 +52,39 @@ function CommunitiesPageLoaded({ communities }) {
         </TableContainer>
       </div>
     </div>
-  )
+  );
 }
 
 function CommunityListPage() {
-
-  const [ allCommunities, setAllCommunities ] = useState([])
+  const [allCommunities, setAllCommunities] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchAllCommunities(setAllCommunities)
-  }, [])
+    (async () => {
+      try {
+        await fetchAllCommunities(setAllCommunities);
+        setIsLoading(false);
+      } catch (err) {
+        setError(err);
+        setIsLoading(false);
+      }
+    })();
+  }, []);
 
-  if (allCommunities.length) {
-    return (
-      <div>
-        <CommunitiesPageLoaded
-          communities={ allCommunities }
-        ></CommunitiesPageLoaded>
-      </div>
-    )
-  } else {
-    return (
-      <FullPageSpinner></FullPageSpinner>
-    )
+  if (isLoading) {
+    return <FullPageSpinner />;
   }
 
+  if (error) {
+    return <div className="error-message">Error: {error.message}</div>;
+  }
 
-
+  return (
+    <div>
+      <CommunitiesPageLoaded communities={allCommunities} />
+    </div>
+  );
 }
 
-export default CommunityListPage
+export default CommunityListPage;

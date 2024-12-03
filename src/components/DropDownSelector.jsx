@@ -1,69 +1,124 @@
 import React, { useState } from 'react';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Button from '@mui/material/Button';
+import { styled } from '@mui/material/styles';
 
-const DropDownSelector = (props) => {
-  const { availableSelections, selections, setSelections, option } = props;
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+// Styled components
+const AddButton = styled(Button)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: '8px 12px',
+  color: '#fff',
+  backgroundColor: '#2196f3',
+  borderRadius: '4px',
+  textTransform: 'none',
+  justifyContent: 'flex-start',
+  width: '300px', // Increased width
+  '&:hover': {
+    backgroundColor: '#1976d2',
+  },
+  '& .MuiButton-startIcon': {
+    marginRight: 4,
+  },
+}));
+
+const StyledMenu = styled(Menu)(({ theme }) => ({
+  '& .MuiPaper-root': {
+    width: '300px', // Match button width
+    maxHeight: '240px',
+    marginTop: '4px',
+    borderRadius: '8px',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+    border: '1px solid #e0e0e0',
+    backgroundColor: '#fff',
+    padding: '8px', // Add padding around the menu items
+  },
+  '& .MuiList-root': {
+    padding: '4px',
+  },
+  '& .MuiMenuItem-root': {
+    fontSize: '14px',
+    padding: '8px 12px',
+    margin: '4px 0', // Add vertical margin between items
+    borderRadius: '20px', // Make items pill-shaped
+    backgroundColor: '#e3f2fd', // Light blue background
+    color: '#1976d2', // Darker blue text
+    '&:hover': {
+      backgroundColor: '#bbdefb', // Slightly darker on hover
+    },
+  },
+}));
+
+const PlusIcon = styled('span')({
+  fontSize: '20px',
+  marginRight: '8px',
+  fontWeight: 'normal',
+});
+
+const DropDownSelector = ({ availableSelections, selections, setSelections, option }) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   const handleAdd = (itemToAdd) => {
     if (!selections.includes(itemToAdd)) {
       setSelections([...selections, itemToAdd]);
     }
-    setIsDropdownOpen(false);
+    handleClose();
   };
 
-  const handleRemove = (itemToRemove) => {
-    setSelections(selections.filter(item => item !== itemToRemove));
-  };
+  // Filter out already selected items
+  const availableItems = availableSelections.filter((item) => !selections.includes(item));
 
   return (
-      <div className="flex flex-col gap-2">
-        <div className="font-medium text-gray-700">{option}</div>
+    <div>
+      <AddButton
+        id="dropdown-button"
+        aria-controls={open ? 'dropdown-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
+        startIcon={<PlusIcon>+</PlusIcon>}
+      >
+        Add another {option}
+      </AddButton>
 
-        {/* Selected States */}
-        <div className="flex flex-col gap-2">
-          {selections.map((item) => (
-              <div
-                  key={item}
-                  className="flex items-center justify-between px-3 py-2 bg-amber-50 rounded"
-              >
-                <span>{item}</span>
-                <button
-                    onClick={() => handleRemove(state)}
-                    className="text-gray-500 hover:text-gray-700"
-                >
-                  ×
-                </button>
-              </div>
-          ))}
-        </div>
-
-        {/* Add State Button & Dropdown */}
-        <div className="relative">
-          <button
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="flex items-center gap-2 px-3 py-2 text-blue-600 bg-blue-100 rounded hover:bg-blue-200"
+      <StyledMenu
+        id="dropdown-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'dropdown-button',
+        }}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+      >
+        {availableItems.map((item) => (
+          <MenuItem
+            key={item}
+            onClick={() => handleAdd(item)}
           >
-            <span className="text-lg">+</span>
-            Add another {option}
-          </button>
-
-          {isDropdownOpen && (
-              <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg max-h-60 overflow-auto">
-                {availableSelections
-                    .filter(item => !selections.includes(item))
-                    .map((item) => (
-                        <button
-                            key={item}
-                            onClick={() => handleAdd(item)}
-                            className="w-full px-4 py-2 text-left hover:bg-gray-100"
-                        >
-                          {item}
-                        </button>
-                    ))}
-              </div>
-          )}
-        </div>
-      </div>
+            {item}
+          </MenuItem>
+        ))}
+        {availableItems.length === 0 && <MenuItem disabled>No more options available</MenuItem>}
+      </StyledMenu>
+    </div>
   );
 };
 
