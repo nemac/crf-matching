@@ -14,9 +14,9 @@ const matchVals = (commCats, practCats) => {
   return commCats.map((commCat) => practCats.includes(commCat));
 };
 
+// Person icon (mobile), school icon (mobile)
 const StyledBox = styled(Box)({
   height: 45,
-  maxWidth: '80%',
 });
 
 function StrTrainedBadge({ isTrained }) {
@@ -35,7 +35,10 @@ function StrTrainedBadge({ isTrained }) {
             xs: 'primary.lightBlue',
             md: 'primary.main',
           },
-          color: 'primary.lightGray',
+          color: {
+            xs: 'primary.main',
+            md: 'primary.lightGray',
+          },
           flexGrow: 'space-around',
           verticalAlign: 'middle',
           justifyContent: 'center',
@@ -80,7 +83,18 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
   };
 
   return (
-    <HeaderBox
+    <HeaderBox 
+      sx={{
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        width: '80%',
+        margin: '0 auto',
+        display: {
+          md: 'flex',
+          xs: 'block'
+        },
+      }}
       ref={headerRef}
       onMouseEnter={onMouseEnter}
     >
@@ -102,6 +116,7 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
               xs: 'inherit',
               md: 'none',
             },
+            color: "primary.lightBlue",
           }}
         />
       </StyledBox>
@@ -117,6 +132,7 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
           textOverflow: 'ellipsis',
           whiteSpace: 'nowrap',
           textWrap: 'auto',
+          textAlign: 'center',
         }}
       >
         {practitioner.org}

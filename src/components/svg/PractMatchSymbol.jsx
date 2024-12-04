@@ -15,13 +15,9 @@ export default function PractMatchSymbol({ label }) {
       <Box
         sx={{
           width: {
-            xs: 20,
+            xs: "clamp(20px, 75%, 40px)",
             md: 25
-          },
-          height: {
-            xs: 20,
-            md: 25
-          }
+          }    
         }} 
       >
         {
