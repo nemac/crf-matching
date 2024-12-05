@@ -357,6 +357,8 @@ export const fetchPractitionersByFilters = (selectedOptions, setPractitioners) =
       const recs = records
         .map((rawRec) => rawRec.fields)
         .map((rec) => normalizeRec(rec, practitionerFieldMap))
+        // Only include Accepted practitioners
+        .filter((rec) => rec.status === 'Accepted')
         // Calculate match score based on count of all matching items
         .map((rec) => {
           let matchCount = 0;
