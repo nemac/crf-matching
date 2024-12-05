@@ -175,13 +175,17 @@ export default function SelfServicePage() {
                       </Box>
                     )}
                   </Box>
+                  {/* matched practitioners list */}
                   <Stack
                     direction="row"
-                    gap={1}
                     sx={{
                       pb: 2,
                       width: '100%',
-                      // bgcolor: "purple" for testing
+                      gap: {
+                        sm: "4px",
+                        md: "8px"
+                      },
+                      overflowX: "auto",
                     }}
                   >
                     {/* each individual box */}
