@@ -35,7 +35,7 @@ const practitionerFieldMap = {
   name: 'Name',
   org: 'Organization Name',
   website: 'Organization Website',
-  // TODO setup
+  status: 'Status',
   linkedIn: 'LinkedIn URL',
   email: 'Email',
   phone: 'Phone Number',
@@ -78,6 +78,61 @@ export const fetchPractitioner = (practitionerId, setPractitioner) => {
       console.log(rec);
       setPractitioner(rec);
     });
+};
+
+export const fetchFilteredPractitioners = (filters, setPractitioners) => {
+  // If no filters, return empty array
+  if (!Object.values(filters).some((val) => val && val.length)) {
+    setPractitioners([]);
+    return;
+  }
+
+  base('Practitioner')
+    .select({
+      view: 'Grid view',
+      fields: practFetchFields,
+      // Sort by organization name
+      sort: [{ field: 'Organization Name', direction: 'asc' }],
+    })
+    .eachPage(
+      function page(records, fetchNextPage) {
+        const recs = records
+          .map((rawRec) => rawRec.fields)
+          .map((rec) => normalizeRec(rec, practitionerFieldMap))
+          // Only include Accepted practitioners
+          .filter((rec) => rec.status === 'Accepted')
+          // Filter based on provided criteria
+          .filter((rec) => {
+            let matches = true;
+
+            if (filters.state?.length) {
+              matches = matches && rec.state.some((s) => filters.state.includes(s));
+            }
+            if (filters.activities?.length) {
+              matches = matches && rec.activities.some((a) => filters.activities.includes(a));
+            }
+            if (filters.sectors?.length) {
+              matches = matches && rec.sectors.some((s) => filters.sectors.includes(s));
+            }
+            if (filters.hazards?.length) {
+              matches = matches && rec.hazards.some((h) => filters.hazards.includes(h));
+            }
+            if (filters.size?.length) {
+              matches = matches && rec.size.some((s) => filters.size.includes(s));
+            }
+
+            return matches;
+          });
+
+        setPractitioners(recs);
+      },
+      function done(err) {
+        if (err) {
+          console.error(err);
+          return;
+        }
+      }
+    );
 };
 
 export const fetchCommunity = (communityId, setCommunity) => {
@@ -140,7 +195,11 @@ export const fetchAllPractitioners = (setAllPractitioners) => {
     })
     .eachPage(
       function page(records, fetchNextPage) {
-        const recs = records.map((rawRec) => rawRec.fields).map((rec) => normalizeRec(rec, practitionerFieldMap));
+        const recs = records
+          .map((rawRec) => rawRec.fields)
+          .map((rec) => normalizeRec(rec, practitionerFieldMap))
+          // Only include Accepted practitioners
+          .filter((rec) => rec.status === 'Accepted');
         practitioners.push(...recs);
         fetchNextPage();
       },
@@ -283,9 +342,6 @@ export const fetchPractitionersByFilters = (selectedOptions, setPractitioners) =
     return;
   }
 
-  // List of practitioners to exclude
-  const excludedPractitioners = ['NEMAC', 'NEMAC 2', 'NEMAC 3'];
-
   base('Practitioner')
     .select({
       view: 'Grid view',
@@ -301,8 +357,6 @@ export const fetchPractitionersByFilters = (selectedOptions, setPractitioners) =
       const recs = records
         .map((rawRec) => rawRec.fields)
         .map((rec) => normalizeRec(rec, practitionerFieldMap))
-        // Filter out excluded practitioners
-        .filter((rec) => !excludedPractitioners.includes(rec.org))
         // Calculate match score based on count of all matching items
         .map((rec) => {
           let matchCount = 0;

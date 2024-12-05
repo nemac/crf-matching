@@ -15,7 +15,7 @@ const AddButton = styled(Button)(({ theme }) => ({
   borderRadius: '4px',
   textTransform: 'none',
   justifyContent: 'flex-start',
-  width: '300px', // Increased width
+  width: '400px',
   '&:hover': {
     backgroundColor: '#1976d2',
   },
@@ -26,7 +26,7 @@ const AddButton = styled(Button)(({ theme }) => ({
 
 const StyledMenu = styled(Menu)(({ theme }) => ({
   '& .MuiPaper-root': {
-    width: '300px', // Match button width
+    width: '400px',
     maxHeight: '240px',
     marginTop: '4px',
     borderRadius: '8px',
@@ -79,6 +79,14 @@ const DropDownSelector = ({ availableSelections, selections, setSelections, opti
   // Filter out already selected items
   const availableItems = availableSelections.filter((item) => !selections.includes(item));
 
+  // Trim the option name for better display
+  let trimmedOption = option;
+  if (option === 'Activities') {
+    trimmedOption = 'activity';
+  } else if (option.endsWith('s')) {
+    trimmedOption = option.slice(0, -1);
+  }
+
   return (
     <div>
       <AddButton
@@ -88,12 +96,11 @@ const DropDownSelector = ({ availableSelections, selections, setSelections, opti
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
         startIcon={<PlusIcon>+</PlusIcon>}
-        sx={{ width: "100%" }}
+        sx={{ width: '100%' }}
       >
-        <Typography sx={{ display: {xs: 'none', md: 'inherit'}, fontSize: '.875rem' }}>
-          Add another&nbsp;
+        <Typography sx={{ display: { xs: 'inherit', md: 'inherit' }, fontSize: '.875rem' }}>
+          Add another {trimmedOption.toLowerCase()}
         </Typography>
-        {option}
       </AddButton>
 
       <StyledMenu
