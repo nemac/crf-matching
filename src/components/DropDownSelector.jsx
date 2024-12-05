@@ -96,12 +96,11 @@ const DropDownSelector = ({ availableSelections, selections, setSelections, opti
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
         startIcon={<PlusIcon>+</PlusIcon>}
-        sx={{ width: "100%" }}
+        sx={{ width: '100%' }}
       >
-        <Typography sx={{ display: {xs: 'none', md: 'inherit'}, fontSize: '.875rem' }}>
+        <Typography sx={{ display: { xs: 'inherit', md: 'inherit' }, fontSize: '.875rem' }}>
           Add another {trimmedOption.toLowerCase()}
         </Typography>
-        {option}   
       </AddButton>
 
       <StyledMenu
