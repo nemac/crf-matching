@@ -3,6 +3,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
+import { Typography } from '@mui/material';
 
 // Styled components
 const AddButton = styled(Button)(({ theme }) => ({
@@ -87,8 +88,12 @@ const DropDownSelector = ({ availableSelections, selections, setSelections, opti
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
         startIcon={<PlusIcon>+</PlusIcon>}
+        sx={{ width: "100%" }}
       >
-        Add another {option}
+        <Typography sx={{ display: {xs: 'none', md: 'inherit'}, fontSize: '.875rem' }}>
+          Add another&nbsp;
+        </Typography>
+        {option}
       </AddButton>
 
       <StyledMenu
