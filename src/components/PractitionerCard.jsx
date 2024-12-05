@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, Typography, Box, Button, Chip, Stack } from '@mui/material';
+import { Card, CardContent, Typography, Box, Button, Stack, Checkbox, FormControlLabel } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import climatePracLogo from '../assets/climate_prac.png';
 import theme from '../theme';
@@ -7,8 +7,6 @@ import theme from '../theme';
 export default function PractitionerCard({ practitioner }) {
   const description = practitioner.info || 'No description available';
   const truncatedDescription = description.length > 200 ? description.substring(0, 200) + '...' : description;
-
-  // Only take first 3 activities for display
   const displayedActivities = practitioner.activities.slice(0, 3);
 
   return (
@@ -22,7 +20,6 @@ export default function PractitionerCard({ practitioner }) {
       }}
     >
       <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-        {/* Logo Container */}
         <Box
           sx={{
             width: '100%',
@@ -67,28 +64,38 @@ export default function PractitionerCard({ practitioner }) {
             variant="subtitle2"
             sx={{ mb: 1, fontWeight: 'bold' }}
           >
-            Expertise
+            Adaptation Expertise
           </Typography>
-          <Stack
-            direction="row"
-            spacing={1}
-            flexWrap="wrap"
-            gap={1}
+          <Box
+            sx={{
+              display: 'flex',
+              gap: '2px',
+              flexDirection: 'row',
+              flexWrap: 'nowrap',
+            }}
           >
             {displayedActivities.map((activity, index) => (
-              <Chip
+              <Box
                 key={index}
-                label={activity}
-                size="small"
                 sx={{
-                  borderRadius: '16px',
-                  backgroundColor: 'white',
                   border: `1px solid ${theme.palette.primary.midBlue}`,
+                  borderRadius: '20px',
+                  px: 1.5,
+                  py: 0.75,
                   color: theme.palette.primary.main,
+                  fontSize: '0.9rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  minHeight: '32px',
+                  flex: '1 1 0px',
+                  textAlign: 'center',
                 }}
-              />
+              >
+                {activity}
+              </Box>
             ))}
-          </Stack>
+          </Box>
         </Box>
 
         <Box sx={{ mt: 'auto' }}>
@@ -101,6 +108,7 @@ export default function PractitionerCard({ practitioner }) {
               backgroundColor: theme.palette.primary.midBlue,
               borderRadius: 8,
               textTransform: 'none',
+              mb: 2,
               '&:hover': {
                 backgroundColor: theme.palette.primary.main,
               },
@@ -108,6 +116,26 @@ export default function PractitionerCard({ practitioner }) {
           >
             Full Practitioner Org Profile
           </Button>
+
+          <FormControlLabel
+            control={
+              <Checkbox
+                sx={{
+                  color: theme.palette.primary.main,
+                  '&.Mui-checked': {
+                    color: theme.palette.primary.main,
+                  },
+                }}
+              />
+            }
+            label="Compare this practitioner"
+            sx={{
+              '& .MuiFormControlLabel-label': {
+                fontSize: '0.875rem',
+                color: theme.palette.primary.main,
+              },
+            }}
+          />
         </Box>
       </CardContent>
     </Card>
