@@ -1,27 +1,6 @@
-// React
-import { useState, useEffect, useContext } from 'react';
-
-// router
-import { useParams } from 'react-router-dom';
-
-// API
-import { fetchCommunity, fetchPractitionersByFilters, fetchOptionsFromAirtable } from '../util/api';
-
-// components
-import { Button, CssBaseline, Stack, Container, Typography, Box } from '@mui/material';
-import ReadMoreIcon from '@mui/icons-material/ReadMore';
-
-import FullPageSpinner from '../components/FullPageSpinner';
-import PractitionerPane from '../components/PractitionerPane';
-import CommunityPane from '../components/CommunityPane';
-
-import { ThemeProvider } from '@mui/material/styles';
-
-// theme
-import theme from '../theme';
-
-import { RowHoverContext, SetHoverRowContext } from '../components/RowHoverContext';
-import DropDownSelector from '../components/DropDownSelector.jsx';
+import { useState, useEffect } from 'react';
+import { fetchPractitionersByFilters, fetchOptionsFromAirtable } from '../util/api';
+import ComparisonBoard from '../components/ComparisonBoard';
 
 export default function SelfServicePage() {
   const [selectedOptions, setSelectedOptions] = useState({
@@ -41,9 +20,7 @@ export default function SelfServicePage() {
   });
 
   const [practitioners, setPractitioners] = useState([]);
-  const [poppedPractitioner, setPoppedPractitioner] = useState(null);
   const [displayCount, setDisplayCount] = useState(3);
-  const [hoverRow, setHoverRow] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -55,14 +32,6 @@ export default function SelfServicePage() {
     hazards: selectedOptions.hazards,
     size: selectedOptions.size,
     totalCategories: Object.values(selectedOptions).reduce((sum, arr) => sum + arr.length, 0),
-  };
-
-  // Get visible practitioners
-  const visiblePractitioners = practitioners.slice(0, displayCount);
-  const hasMorePractitioners = practitioners.length > displayCount;
-
-  const handleViewMore = () => {
-    setDisplayCount((prev) => prev + 3);
   };
 
   useEffect(() => {
@@ -86,8 +55,6 @@ export default function SelfServicePage() {
       [category]: newSelections,
     };
     setSelectedOptions(updatedOptions);
-
-    // Call API with updated selections
     fetchPractitionersByFilters(updatedOptions, setPractitioners);
   };
 
@@ -99,116 +66,15 @@ export default function SelfServicePage() {
     return <div className="p-4">Loading options...</div>;
   }
 
-  if (availableOptions) {
-    return (
-      <ThemeProvider theme={theme}>
-        <RowHoverContext.Provider value={hoverRow}>
-          <SetHoverRowContext.Provider value={setHoverRow}>
-            <CssBaseline />
-            <Container
-              maxWidth="xl"
-              sx={{ p: 2 }}
-            >
-              <Stack
-                direction="row"
-                gap={1}
-                sx={{ bgcolor: theme.palette.primary.lightGray }}
-              >
-
-                {/* My Community */}
-                <Box mt={3} sx={{ flex: "1 1 250px;" }}>
-                  <CommunityPane
-                    community={community}
-                    isSelectable={true}
-                    availableOptions={availableOptions}
-                    onSelectionChange={handleSelectionChange}
-                  />
-                </Box>
-
-                {/* Practitioners */}
-                <Stack sx={{ width: '60%', pl: 0, flex: "3 2 auto" }}>
-                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, mt: 1 }}>
-                    <Box sx={{ width: '100%', textAlign: 'center' }}>
-                      {' '}
-                      {/* Center the title */}
-                      <Typography
-                        color="primary.main"
-                        sx={{
-                          pt: 1,
-                          height: '40px',
-                          fontWeight: 700,
-                        }}
-                        variant="h5"
-                      >
-                        Matched Practitioners
-                      </Typography>
-                    </Box>
-                    
-                    {hasMorePractitioners && (
-                      <Box
-                        sx={{
-                          position: 'fixed',
-                          top: '24px',
-                          right: '24px',
-                          zIndex: 1000,
-                        }}
-                      >
-                        <Button
-                          onClick={handleViewMore}
-                          variant="contained"
-                          sx={{
-                            bgcolor: 'primary.white',
-                            color: 'primary.main',
-                            border: '1px solid',
-                            borderColor: 'primary.borderGray',
-                            borderRadius: 2,
-                            boxShadow: 2,
-                            textTransform: 'none',
-                            '&:hover': {
-                              bgcolor: 'primary.lightGray',
-                            },
-                          }}
-                          startIcon={<ReadMoreIcon />}
-                        >
-                          View more matches
-                        </Button>
-                      </Box>
-                    )}
-                  </Box>
-                  {/* matched practitioners list */}
-                  <Stack
-                    direction="row"
-                    sx={{
-                      pb: 2,
-                      width: '100%',
-                      gap: {
-                        sm: "4px",
-                        md: "8px"
-                      },
-                      overflowX: "auto",
-                    }}
-                  >
-                    {/* each individual box */}
-                    {visiblePractitioners.map((pract, index) => (
-                      <Box
-                        key={index}
-                        sx={{ flex: "1 1 0" }}
-                      >
-                        <PractitionerPane
-                          community={community}
-                          practitioner={pract}
-                          poppedPractitioner={poppedPractitioner}
-                          setPoppedPractitioner={setPoppedPractitioner}
-                        />
-                      </Box>
-                    ))}
-                  </Stack>
-                 </Stack>
-              </Stack>
-            </Container>
-          </SetHoverRowContext.Provider>
-        </RowHoverContext.Provider>
-      </ThemeProvider>
-    );
-  }
+  return (
+    <ComparisonBoard
+      community={community}
+      practitioners={practitioners}
+      isSelectable={true}
+      availableOptions={availableOptions}
+      onSelectionChange={handleSelectionChange}
+      displayCount={displayCount}
+      setDisplayCount={setDisplayCount}
+    />
+  );
 }
