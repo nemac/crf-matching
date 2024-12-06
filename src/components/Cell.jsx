@@ -58,6 +58,7 @@ export default function Cell({ label, type, key, isSelectable, onRemove }) {
         borderBottomRightRadius: 0,
         borderTopLeftRadius: type === 'community' ? theme.spacing(2) : 0,
         borderBottomLeftRadius: type === 'community' ? theme.spacing(2) : 0,
+        padding: 1,
         bgcolor: key === hoverRow ? 'primary.cellHoverBg' : 'primary.tan',
         height: { xs: 120, md: 50 },
         minWidth: {xs: 50, md: 175 },
