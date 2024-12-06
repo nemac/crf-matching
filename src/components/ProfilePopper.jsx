@@ -28,9 +28,7 @@ export default function ProfilePopper({ practitioner, poppedPractitioner, setPop
               md: 'inherit',
             },
           }}
-        >
-          <PersonIcon />
-        </Box>
+        ></Box>
 
         {/* content */}
         <Box

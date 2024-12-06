@@ -12,8 +12,6 @@ import {
   Chip,
   Menu,
   MenuItem,
-  ToggleButtonGroup,
-  ToggleButton,
 } from '@mui/material';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import AddIcon from '@mui/icons-material/Add';
@@ -21,6 +19,7 @@ import TuneIcon from '@mui/icons-material/Tune';
 import WindowIcon from '@mui/icons-material/Window';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import { fetchFilteredPractitioners, fetchOptionsFromAirtable, fetchAllPractitioners } from '../util/api';
+import ComparisonBoard from '../components/ComparisonBoard';
 import PractitionerCard from '../components/PractitionerCard';
 
 const PRACTITIONERS_PER_PAGE = 6;
@@ -294,6 +293,34 @@ export default function LandingPage() {
     size: [],
   });
 
+  // Helper to check if all filters are empty
+  const areFiltersEmpty = () => {
+    return Object.values(filters).every((arr) => arr.length === 0);
+  };
+
+  // Get community name based on selection state
+  const getCommunityName = () => {
+    if (areFiltersEmpty()) {
+      return 'My Community';
+    }
+    return selectedLocation ? `${selectedLocation.city}, ${selectedLocation.state}` : 'My Community';
+  };
+
+  const community = {
+    name: getCommunityName(),
+    state: filters.state || (selectedState ? [selectedState] : []), // Use filters.state if available
+    activities: filters.activities,
+    sectors: filters.sectors,
+    hazards: filters.hazards,
+    size: filters.size,
+    totalCategories:
+      (filters.state?.length || (selectedState ? 1 : 0)) +
+      filters.activities.length +
+      filters.sectors.length +
+      filters.hazards.length +
+      filters.size.length,
+  };
+
   const visiblePractitioners = practitioners.slice(0, displayCount);
   const hasMorePractitioners = practitioners.length > displayCount;
   const hasAnyFilters = Object.values(filters).some((arr) => arr.length > 0) || selectedState;
@@ -310,25 +337,48 @@ export default function LandingPage() {
   }, []);
 
   useEffect(() => {
-    if (selectedState || Object.values(filters).some((arr) => arr.length > 0)) {
-      fetchFilteredPractitioners(
-        {
-          state: selectedState ? [selectedState] : [],
-          ...filters,
-        },
-        setPractitioners
-      );
+    if (Object.values(filters).some((arr) => arr.length > 0)) {
+      fetchFilteredPractitioners(filters, setPractitioners);
     } else {
       setPractitioners([]);
     }
-  }, [selectedState, filters]);
+  }, [filters]);
 
   const handleLocationSelect = (event, newValue) => {
     setSelectedLocation(newValue);
     if (newValue) {
       setSelectedState(newValue.state);
+      setFilters((prev) => ({
+        ...prev,
+        state: [newValue.state],
+      }));
     } else {
       setSelectedState('');
+      setFilters((prev) => ({
+        ...prev,
+        state: [],
+      }));
+    }
+  };
+
+  const handleSelectionChange = (category, newSelections) => {
+    if (category === 'state') {
+      // Clear location selection if state is removed
+      if (newSelections.length === 0) {
+        setSelectedLocation(null);
+        setSelectedState('');
+      }
+      // Update filters
+      setFilters((prev) => ({
+        ...prev,
+        [category]: newSelections,
+      }));
+    } else {
+      // Handle other categories normally
+      setFilters((prev) => ({
+        ...prev,
+        [category]: newSelections,
+      }));
     }
   };
 
@@ -520,55 +570,70 @@ export default function LandingPage() {
               onViewChange={handleViewChange}
             />
 
-            <Typography
-              variant="body1"
-              sx={{ mb: 3, color: 'text.secondary' }}
-            >
-              {visiblePractitioners.length} out of {practitioners.length} practitioners selected from the{' '}
-              {totalPractitioners} available in the practitioner registry
-            </Typography>
+            {currentView === 'cards' ? (
+              <>
+                <Typography
+                  variant="body1"
+                  sx={{ mb: 3, color: 'text.secondary' }}
+                >
+                  {visiblePractitioners.length} out of {practitioners.length} practitioners selected from the{' '}
+                  {totalPractitioners} available in the practitioner registry
+                </Typography>
 
-            <Grid
-              container
-              spacing={3}
-              sx={{ mb: 4 }}
-            >
-              {visiblePractitioners.map((practitioner, index) => (
                 <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  md={4}
-                  key={index}
+                  container
+                  spacing={3}
+                  sx={{ mb: 4 }}
                 >
-                  <PractitionerCard practitioner={practitioner} />
+                  {visiblePractitioners.map((practitioner, index) => (
+                    <Grid
+                      item
+                      xs={12}
+                      sm={6}
+                      md={4}
+                      key={index}
+                    >
+                      <PractitionerCard practitioner={practitioner} />
+                    </Grid>
+                  ))}
                 </Grid>
-              ))}
-            </Grid>
 
-            {hasMorePractitioners && (
-              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Button
-                  onClick={() => setDisplayCount((prev) => prev + PRACTITIONERS_PER_PAGE)}
-                  variant="outlined"
-                  sx={{
-                    color: 'text.primary',
-                    backgroundColor: 'white',
-                    border: '1px solid',
-                    borderColor: 'grey.300',
-                    textTransform: 'none',
-                    boxShadow: 1,
-                    px: 4,
-                    py: 1,
-                    '&:hover': {
-                      backgroundColor: 'grey.50',
-                      borderColor: 'grey.400',
-                    },
-                  }}
-                >
-                  Load more practitioners
-                </Button>
-              </Box>
+                {hasMorePractitioners && (
+                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <Button
+                      onClick={() => setDisplayCount((prev) => prev + PRACTITIONERS_PER_PAGE)}
+                      variant="outlined"
+                      sx={{
+                        color: 'text.primary',
+                        backgroundColor: 'white',
+                        border: '1px solid',
+                        borderColor: 'grey.300',
+                        textTransform: 'none',
+                        boxShadow: 1,
+                        px: 4,
+                        py: 1,
+                        '&:hover': {
+                          backgroundColor: 'grey.50',
+                          borderColor: 'grey.400',
+                        },
+                      }}
+                    >
+                      Load more practitioners
+                    </Button>
+                  </Box>
+                )}
+              </>
+            ) : (
+              // Comparison view
+              <ComparisonBoard
+                community={community}
+                practitioners={practitioners}
+                isSelectable={true}
+                availableOptions={availableOptions}
+                onSelectionChange={handleSelectionChange}
+                displayCount={displayCount}
+                setDisplayCount={setDisplayCount}
+              />
             )}
           </Box>
         )}

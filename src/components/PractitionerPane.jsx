@@ -83,7 +83,7 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
   };
 
   return (
-    <HeaderBox 
+    <HeaderBox
       sx={{
         flexDirection: 'column',
         justifyContent: 'space-around',
@@ -92,7 +92,7 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
         margin: '0 auto',
         display: {
           md: 'flex',
-          xs: 'block'
+          xs: 'block',
         },
       }}
       ref={headerRef}
@@ -116,7 +116,7 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
               xs: 'inherit',
               md: 'none',
             },
-            color: "primary.lightBlue",
+            color: 'primary.lightBlue',
           }}
         />
       </StyledBox>
@@ -150,7 +150,7 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
 
 export default function PractitionerPane({ community, practitioner, poppedPractitioner, setPoppedPractitioner }) {
   // Determine if we're on SelfServicePage by checking if community.name is "Self Service"
-  const isSelfService = community.name === 'My Community';
+  const isSelfService = community.name === 'My Community' || community.name.includes(',');
 
   const sections = [
     [community.state, practitioner.state],
@@ -177,7 +177,7 @@ export default function PractitionerPane({ community, practitioner, poppedPracti
     >
       <PractitionerHeader
         practitioner={practitioner}
-        linkPath={`#/practitioner/${practitioner.id}`}
+        linkPath={`#/practitioner/${practitioner.airtableRecId}`}
         strTrained={practitioner.strTrained}
         poppedPractitioner={poppedPractitioner}
         setPoppedPractitioner={setPoppedPractitioner}

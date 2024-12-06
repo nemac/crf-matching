@@ -122,7 +122,46 @@ export const fetchFilteredPractitioners = (filters, setPractitioners) => {
             }
 
             return matches;
-          });
+          })
+          // Calculate match score
+          .map((rec) => {
+            let matchCount = 0;
+
+            if (filters.state?.length) {
+              filters.state.forEach((state) => {
+                if (rec.state.includes(state)) matchCount++;
+              });
+            }
+
+            if (filters.activities?.length) {
+              filters.activities.forEach((activity) => {
+                if (rec.activities.includes(activity)) matchCount++;
+              });
+            }
+
+            if (filters.sectors?.length) {
+              filters.sectors.forEach((sector) => {
+                if (rec.sectors.includes(sector)) matchCount++;
+              });
+            }
+
+            if (filters.hazards?.length) {
+              filters.hazards.forEach((hazard) => {
+                if (rec.hazards.includes(hazard)) matchCount++;
+              });
+            }
+
+            if (filters.size?.length) {
+              filters.size.forEach((size) => {
+                if (rec.size.includes(size)) matchCount++;
+              });
+            }
+
+            rec.matchScore = matchCount;
+            return rec;
+          })
+          // Sort by match score (highest first)
+          .sort((a, b) => b.matchScore - a.matchScore);
 
         setPractitioners(recs);
       },
