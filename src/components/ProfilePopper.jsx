@@ -119,6 +119,8 @@ export default function ProfilePopper({ practitioner, poppedPractitioner, setPop
           {/* link to full profile */}
           <a
             href={`#/practitioner/${practitioner.airtableRecId}`}
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
               textDecoration: 'none',
               display: 'block',
