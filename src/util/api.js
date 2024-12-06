@@ -66,7 +66,7 @@ export const fetchPractitioner = (practitionerId, setPractitioner) => {
     .select({
       maxRecords: 1,
       view: 'Grid view',
-      filterByFormula: `{Id} = '${practitionerId}'`,
+      filterByFormula: `{Airtable Record ID} = '${practitionerId}'`,
       fields: practFetchFields,
     })
     .firstPage(function (err, records) {
