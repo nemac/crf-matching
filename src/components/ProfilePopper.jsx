@@ -1,8 +1,8 @@
 import Popper from '@mui/material/Popper';
 import ContactRow from './ContactRow';
 import CloseIcon from '@mui/icons-material/Close';
+import PersonIcon from '@mui/icons-material/Person';
 import { IconButton, Typography, Box, Stack, Button, ClickAwayListener } from '@mui/material';
-import PersonIcon from './svg/PersonIcon';
 import theme from '../theme';
 
 export default function ProfilePopper({ practitioner, poppedPractitioner, setPoppedPractitioner, headerRef }) {
@@ -29,25 +29,7 @@ export default function ProfilePopper({ practitioner, poppedPractitioner, setPop
             },
           }}
         >
-          <svg
-            height="35"
-            width="30"
-            xmlns="http://www.w3.org/2000/svg"
-            style={{
-              position: 'absolute',
-              right: '47%',
-              top: '-34',
-            }}
-          >
-            <polyline
-              points="0,35 15,0 30,35"
-              style={{
-                fill: theme.palette.primary.lightGray,
-                stroke: theme.palette.primary.purple,
-                strokeWidth: 1,
-              }}
-            />
-          </svg>
+          <PersonIcon />
         </Box>
 
         {/* content */}
@@ -138,7 +120,7 @@ export default function ProfilePopper({ practitioner, poppedPractitioner, setPop
 
           {/* link to full profile */}
           <a
-            href={`#/practitioner/${practitioner.id}`}
+            href={`#/practitioner/${practitioner.airtableRecId}`}
             style={{
               textDecoration: 'none',
               display: 'block',
