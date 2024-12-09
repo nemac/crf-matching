@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import {
   Autocomplete,
   TextField,
@@ -19,10 +20,13 @@ import AddIcon from '@mui/icons-material/Add';
 import TuneIcon from '@mui/icons-material/Tune';
 import WindowIcon from '@mui/icons-material/Window';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
+import ShareIcon from '@mui/icons-material/Share';
 import { fetchFilteredPractitioners, fetchOptionsFromAirtable, fetchAllPractitioners } from '../util/api';
+import Toast from '../components/Toast';
 import ComparisonBoard from '../components/ComparisonBoard';
 import PractitionerCard from '../components/PractitionerCard';
 import { searchLocations, getLocationDetails } from '../util/geocoding';
+import { filtersToSearchParams, searchParamsToFilters, generateShareableUrl } from '../util/urlStateManagement';
 
 const PRACTITIONERS_PER_PAGE = 6;
 
@@ -323,6 +327,7 @@ const ViewToggle = ({ view, onViewChange }) => {
 };
 
 export default function LandingPage() {
+  const [toastOpen, setToastOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedState, setSelectedState] = useState('');
   const [practitioners, setPractitioners] = useState([]);
@@ -331,6 +336,7 @@ export default function LandingPage() {
   const [currentView, setCurrentView] = useState('cards');
   const [displayCount, setDisplayCount] = useState(PRACTITIONERS_PER_PAGE);
   const [selectedForComparison, setSelectedForComparison] = useState(new Set());
+  const [searchParams, setSearchParams] = useSearchParams();
   const [filters, setFilters] = useState({
     activities: [],
     sectors: [],
@@ -343,11 +349,53 @@ export default function LandingPage() {
     hazards: [],
     size: [],
   });
+  const navigate = useNavigate();
+
+  // Load state from URL on initial render
+  useEffect(() => {
+    const loadStateFromUrl = async () => {
+      if (searchParams.toString()) {
+        const { filters: urlFilters, location } = await searchParamsToFilters(searchParams);
+
+        // Update all state from URL
+        setFilters(urlFilters);
+        setSelectedLocation(location.selectedLocation);
+        setSelectedState(location.selectedState);
+      }
+    };
+
+    loadStateFromUrl();
+  }, []); // Only run on mount
 
   // Helper to check if all filters are empty
   const areFiltersEmpty = () => {
     return Object.values(filters).every((arr) => arr.length === 0);
   };
+
+  // Update URL when filters or location change
+  useEffect(() => {
+    const params = filtersToSearchParams(filters, selectedLocation);
+    setSearchParams(params);
+  }, [filters, selectedLocation]);
+
+  useEffect(() => {
+    fetchOptionsFromAirtable(setAvailableOptions);
+  }, []);
+
+  useEffect(() => {
+    // Get total practitioners count
+    fetchAllPractitioners((practitioners) => {
+      setTotalPractitioners(practitioners.length);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (Object.values(filters).some((arr) => arr.length > 0)) {
+      fetchFilteredPractitioners(filters, setPractitioners);
+    } else {
+      setPractitioners([]);
+    }
+  }, [filters]);
 
   // Get community name based on selection state
   const getCommunityName = () => {
@@ -376,24 +424,20 @@ export default function LandingPage() {
   const hasMorePractitioners = practitioners.length > displayCount;
   const hasAnyFilters = Object.values(filters).some((arr) => arr.length > 0) || selectedState;
 
-  useEffect(() => {
-    fetchOptionsFromAirtable(setAvailableOptions);
-  }, []);
+  const handleShare = async () => {
+    const shareableUrl = generateShareableUrl(filters, selectedLocation);
 
-  useEffect(() => {
-    // Get total practitioners count
-    fetchAllPractitioners((practitioners) => {
-      setTotalPractitioners(practitioners.length);
-    });
-  }, []);
-
-  useEffect(() => {
-    if (Object.values(filters).some((arr) => arr.length > 0)) {
-      fetchFilteredPractitioners(filters, setPractitioners);
-    } else {
-      setPractitioners([]);
+    try {
+      await navigator.clipboard.writeText(shareableUrl);
+      setToastOpen(true);
+    } catch (err) {
+      console.error('Failed to copy:', err);
     }
-  }, [filters]);
+  };
+
+  const handleToastClose = () => {
+    setToastOpen(false);
+  };
 
   const handleLocationSelect = (event, newValue) => {
     setSelectedLocation(newValue);
@@ -627,16 +671,52 @@ export default function LandingPage() {
         {/* Practitioners Section */}
         {practitioners.length > 0 && hasAnyFilters && (
           <Box sx={{ mt: 4 }}>
-            <Typography
-              variant="h5"
+            <Box
               sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
                 mb: 3,
-                fontWeight: 'bold',
-                color: 'primary.main',
               }}
             >
-              Adaptation practitioners that can help your community
-            </Typography>
+              <Typography
+                variant="h5"
+                sx={{
+                  fontWeight: 'bold',
+                  color: 'primary.main',
+                }}
+              >
+                Adaptation practitioners that can help your community
+              </Typography>
+
+              <Button
+                onClick={handleShare}
+                startIcon={<ShareIcon />}
+                sx={{
+                  bgcolor: 'primary.white',
+                  color: 'primary.main',
+                  textTransform: 'none',
+                  borderRadius: 2,
+                  px: 2,
+                  ml: 2,
+                  '&:hover': {
+                    bgcolor: 'grey.100',
+                  },
+                  fontSize: {
+                    xs: '0.875rem',
+                    sm: '1rem',
+                  },
+                }}
+              >
+                Share Community
+              </Button>
+
+              <Toast
+                open={toastOpen}
+                message="URL Copied"
+                onClose={handleToastClose}
+              />
+            </Box>
 
             <ViewToggle
               view={currentView}
