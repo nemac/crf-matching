@@ -126,13 +126,14 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
         sx={{
           display: {
             xs: 'none',
-            md: 'inherit',
+            md: '-webkit-box',
           },
           overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap',
+          paddingRight: '10px', //chrome bug where full ellipses won't show without padding
           textWrap: 'auto',
           textAlign: 'center',
+          WebkitLineClamp: '2',
+          WebkitBoxOrient: 'vertical',
         }}
       >
         {practitioner.org}
