@@ -71,7 +71,7 @@ export default function PractitionerCard({ practitioner }) {
               display: 'flex',
               gap: '2px',
               flexDirection: 'row',
-              flexWrap: 'nowrap',
+              flexWrap: 'wrap',
             }}
           >
             {displayedActivities.map((activity, index) => (
@@ -88,7 +88,6 @@ export default function PractitionerCard({ practitioner }) {
                   alignItems: 'center',
                   justifyContent: 'center',
                   minHeight: '32px',
-                  flex: '1 1 0px',
                   textAlign: 'center',
                 }}
               >
