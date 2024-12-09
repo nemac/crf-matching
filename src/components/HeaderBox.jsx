@@ -4,7 +4,7 @@ import { styled } from "@mui/material/styles";
 
 
 const HeaderBox = styled(Box)(({ theme }) => ({
-  height: '200px',
+  height: '225px',
   alignContent: 'center',
 }));
 
