@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   Autocomplete,
   TextField,
+  CircularProgress,
   Typography,
   Container,
   Box,
@@ -21,62 +22,111 @@ import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import { fetchFilteredPractitioners, fetchOptionsFromAirtable, fetchAllPractitioners } from '../util/api';
 import ComparisonBoard from '../components/ComparisonBoard';
 import PractitionerCard from '../components/PractitionerCard';
+import { searchLocations, getLocationDetails } from '../util/geocoding';
 
 const PRACTITIONERS_PER_PAGE = 6;
 
-// State capitals data
-const cityData = [
-  { city: 'Montgomery', state: 'Alabama' },
-  { city: 'Juneau', state: 'Alaska' },
-  { city: 'Phoenix', state: 'Arizona' },
-  { city: 'Little Rock', state: 'Arkansas' },
-  { city: 'Sacramento', state: 'California' },
-  { city: 'Denver', state: 'Colorado' },
-  { city: 'Hartford', state: 'Connecticut' },
-  { city: 'Dover', state: 'Delaware' },
-  { city: 'Tallahassee', state: 'Florida' },
-  { city: 'Atlanta', state: 'Georgia' },
-  { city: 'Honolulu', state: 'Hawaii' },
-  { city: 'Boise', state: 'Idaho' },
-  { city: 'Springfield', state: 'Illinois' },
-  { city: 'Indianapolis', state: 'Indiana' },
-  { city: 'Des Moines', state: 'Iowa' },
-  { city: 'Topeka', state: 'Kansas' },
-  { city: 'Frankfort', state: 'Kentucky' },
-  { city: 'Baton Rouge', state: 'Louisiana' },
-  { city: 'Augusta', state: 'Maine' },
-  { city: 'Annapolis', state: 'Maryland' },
-  { city: 'Boston', state: 'Massachusetts' },
-  { city: 'Lansing', state: 'Michigan' },
-  { city: 'Saint Paul', state: 'Minnesota' },
-  { city: 'Jackson', state: 'Mississippi' },
-  { city: 'Jefferson City', state: 'Missouri' },
-  { city: 'Helena', state: 'Montana' },
-  { city: 'Lincoln', state: 'Nebraska' },
-  { city: 'Carson City', state: 'Nevada' },
-  { city: 'Concord', state: 'New Hampshire' },
-  { city: 'Trenton', state: 'New Jersey' },
-  { city: 'Santa Fe', state: 'New Mexico' },
-  { city: 'Albany', state: 'New York' },
-  { city: 'Raleigh', state: 'North Carolina' },
-  { city: 'Bismarck', state: 'North Dakota' },
-  { city: 'Columbus', state: 'Ohio' },
-  { city: 'Oklahoma City', state: 'Oklahoma' },
-  { city: 'Salem', state: 'Oregon' },
-  { city: 'Harrisburg', state: 'Pennsylvania' },
-  { city: 'Providence', state: 'Rhode Island' },
-  { city: 'Columbia', state: 'South Carolina' },
-  { city: 'Pierre', state: 'South Dakota' },
-  { city: 'Nashville', state: 'Tennessee' },
-  { city: 'Austin', state: 'Texas' },
-  { city: 'Salt Lake City', state: 'Utah' },
-  { city: 'Montpelier', state: 'Vermont' },
-  { city: 'Richmond', state: 'Virginia' },
-  { city: 'Olympia', state: 'Washington' },
-  { city: 'Charleston', state: 'West Virginia' },
-  { city: 'Madison', state: 'Wisconsin' },
-  { city: 'Cheyenne', state: 'Wyoming' },
-];
+const LocationSearch = ({ value, onChange, disabled }) => {
+  const [open, setOpen] = useState(false);
+  const [options, setOptions] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+
+  // Update input value when value prop changes
+  useEffect(() => {
+    if (value?.fullText) {
+      setInputValue(value.fullText);
+    }
+  }, [value]);
+
+  const handleInputChange = async (event, newInputValue) => {
+    setInputValue(newInputValue);
+
+    if (newInputValue.length >= 3) {
+      setLoading(true);
+      const suggestions = await searchLocations(newInputValue);
+      // Transform suggestions to match the selected value format
+      const transformedSuggestions = suggestions.map((suggestion) => ({
+        ...suggestion,
+        fullText: suggestion.text,
+      }));
+      setOptions(transformedSuggestions);
+      setLoading(false);
+    } else {
+      setOptions([]);
+    }
+  };
+
+  const handleChange = async (event, newValue) => {
+    if (newValue?.magicKey) {
+      setLoading(true);
+      const details = await getLocationDetails(newValue.magicKey);
+      if (details) {
+        onChange(event, details);
+      }
+      setLoading(false);
+    } else {
+      onChange(event, null);
+    }
+  };
+
+  return (
+    <Autocomplete
+      value={value}
+      onChange={handleChange}
+      inputValue={inputValue}
+      onInputChange={handleInputChange}
+      options={value ? [value, ...options] : options}
+      getOptionLabel={(option) => {
+        if (!option) return '';
+        return option.fullText || option.text || '';
+      }}
+      isOptionEqualToValue={(option, value) => {
+        if (!option || !value) return false;
+        return option.fullText === value.fullText;
+      }}
+      filterOptions={(x) => x}
+      autoComplete
+      includeInputInList
+      filterSelectedOptions
+      loading={loading}
+      loadingText="Searching..."
+      noOptionsText={inputValue.length < 3 ? 'Type at least 3 characters' : 'No locations found'}
+      open={open && inputValue.length >= 3}
+      onOpen={() => setOpen(true)}
+      onClose={() => setOpen(false)}
+      disabled={disabled}
+      sx={{ flexGrow: 1 }}
+      popupIcon={null}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          placeholder="Enter your city"
+          sx={{
+            bgcolor: 'white',
+            borderRadius: 1,
+            '& .MuiOutlinedInput-root': {
+              borderRadius: 1,
+              '& .MuiOutlinedInput-input': {
+                paddingRight: '14px !important',
+              },
+            },
+          }}
+          InputProps={{
+            ...params.InputProps,
+            startAdornment: <LocationOnIcon sx={{ ml: 1, mr: -0.5, color: 'grey.500' }} />,
+            endAdornment: loading ? (
+              <CircularProgress
+                color="inherit"
+                size={20}
+              />
+            ) : null,
+          }}
+        />
+      )}
+    />
+  );
+};
 
 const FilterSection = ({ title, description, type, selected, availableOptions, onAdd, onRemove }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -448,29 +498,10 @@ export default function LandingPage() {
               Where is your community?
             </Typography>
 
-            <Autocomplete
+            <LocationSearch
               value={selectedLocation}
               onChange={handleLocationSelect}
-              options={cityData}
-              getOptionLabel={(option) => `${option.city}, ${option.state}`}
-              sx={{ flexGrow: 1 }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  placeholder="Enter your city"
-                  sx={{
-                    bgcolor: 'white',
-                    borderRadius: 1,
-                    '& .MuiOutlinedInput-root': {
-                      borderRadius: 1,
-                    },
-                  }}
-                  InputProps={{
-                    ...params.InputProps,
-                    startAdornment: <LocationOnIcon sx={{ ml: 1, mr: -0.5, color: 'grey.500' }} />,
-                  }}
-                />
-              )}
+              disabled={false}
             />
 
             {selectedLocation && (

@@ -8,6 +8,7 @@ export default defineConfig(({ command, mode }) => {
     define: {
       __AIRTABLE_TOKEN__: JSON.stringify(env.AIRTABLE_TOKEN),
       __AIRTABLE_BASE__: JSON.stringify(env.AIRTABLE_BASE),
+      __AGOL_API_KEY__: JSON.stringify(env.AGOL_API_KEY),
     },
     //base: 'https://nemac.github.io/crf-matching',
     plugins: [react()],
