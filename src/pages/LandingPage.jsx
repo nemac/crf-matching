@@ -166,8 +166,16 @@ const FilterSection = ({ title, description, type, selected, availableOptions, o
       <Box
         sx={{
           display: 'flex',
+          flexDirection: {
+            xs: 'column',
+            md: 'row',
+          },
           justifyContent: 'space-between',
-          alignItems: 'center',
+          gap: 1,
+          alignItems: {
+            xs: 'flex-start',
+            md: 'center',
+          },
           mb: 1,
         }}
       >
@@ -182,6 +190,8 @@ const FilterSection = ({ title, description, type, selected, availableOptions, o
           sx={{
             textTransform: 'none',
             color: 'primary.main',
+            textDecoration: 'underline',
+            padding: '6px 0',
           }}
         >
           Learn more
@@ -528,9 +538,16 @@ export default function LandingPage() {
           <Box
             sx={{
               display: 'flex',
-              alignItems: 'center',
+              alignItems:{
+                xs: 'stretch',
+                md: 'center',
+              },
               gap: 2,
               mb: 2,
+              flexDirection: {
+                xs: 'column',
+                md: 'row',
+              }
             }}
           >
             <Typography

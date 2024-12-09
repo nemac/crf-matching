@@ -86,10 +86,11 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
     <HeaderBox
       sx={{
         flexDirection: 'column',
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
         alignItems: 'center',
-        width: '80%',
+        // width: '80%',
         margin: '0 auto',
+        padding: '8px 0',
         display: {
           md: 'flex',
           xs: 'block',
@@ -126,13 +127,14 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
         sx={{
           display: {
             xs: 'none',
-            md: 'inherit',
+            md: '-webkit-box',
           },
           overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap',
+          paddingRight: '10px', //chrome bug where full ellipses won't show without padding
           textWrap: 'auto',
           textAlign: 'center',
+          WebkitLineClamp: '3',
+          WebkitBoxOrient: 'vertical',
         }}
       >
         {practitioner.org}
