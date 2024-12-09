@@ -330,6 +330,7 @@ export default function LandingPage() {
   const [showFilters, setShowFilters] = useState(false);
   const [currentView, setCurrentView] = useState('cards');
   const [displayCount, setDisplayCount] = useState(PRACTITIONERS_PER_PAGE);
+  const [selectedForComparison, setSelectedForComparison] = useState(new Set());
   const [filters, setFilters] = useState({
     activities: [],
     sectors: [],
@@ -448,6 +449,10 @@ export default function LandingPage() {
 
   const handleViewChange = (event, newView) => {
     if (newView !== null) {
+      if (newView === 'compare' && selectedForComparison.size > 0) {
+        // Reset display count when switching to compare view with selections
+        setDisplayCount(selectedForComparison.size);
+      }
       setCurrentView(newView);
     }
   };
@@ -456,6 +461,7 @@ export default function LandingPage() {
     // Reset location state
     setSelectedLocation(null);
     setSelectedState('');
+    setSelectedForComparison(new Set());
 
     // Reset all filters
     setFilters({
@@ -477,6 +483,18 @@ export default function LandingPage() {
 
     // Reset view back to cards if in compare mode
     setCurrentView('cards');
+  };
+
+  const handleComparisonSelect = (practitionerId, isSelected) => {
+    setSelectedForComparison((prev) => {
+      const newSelected = new Set(prev);
+      if (isSelected) {
+        newSelected.add(practitionerId);
+      } else {
+        newSelected.delete(practitionerId);
+      }
+      return newSelected;
+    });
   };
 
   return (
@@ -648,7 +666,11 @@ export default function LandingPage() {
                       md={4}
                       key={index}
                     >
-                      <PractitionerCard practitioner={practitioner} />
+                      <PractitionerCard
+                        practitioner={practitioner}
+                        onComparisonSelect={handleComparisonSelect}
+                        isSelectedForComparison={selectedForComparison.has(practitioner.airtableRecId)}
+                      />
                     </Grid>
                   ))}
                 </Grid>
@@ -682,7 +704,11 @@ export default function LandingPage() {
               // Comparison view
               <ComparisonBoard
                 community={community}
-                practitioners={practitioners}
+                practitioners={practitioners.filter((p) =>
+                  // If there are any selected practitioners, only show those
+                  // Otherwise show all practitioners
+                  selectedForComparison.size === 0 ? true : selectedForComparison.has(p.airtableRecId)
+                )}
                 isSelectable={true}
                 availableOptions={availableOptions}
                 onSelectionChange={handleSelectionChange}

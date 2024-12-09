@@ -4,7 +4,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import climatePracLogo from '../assets/climate_prac.png';
 import theme from '../theme';
 
-export default function PractitionerCard({ practitioner }) {
+export default function PractitionerCard({ practitioner, onComparisonSelect, isSelectedForComparison }) {
   const description = practitioner.info || 'No description available';
   const truncatedDescription = description.length > 200 ? description.substring(0, 200) + '...' : description;
   const displayedActivities = practitioner.activities.slice(0, 3);
@@ -122,6 +122,8 @@ export default function PractitionerCard({ practitioner }) {
           <FormControlLabel
             control={
               <Checkbox
+                checked={isSelectedForComparison}
+                onChange={(e) => onComparisonSelect(practitioner.airtableRecId, e.target.checked)}
                 sx={{
                   color: theme.palette.primary.main,
                   '&.Mui-checked': {
