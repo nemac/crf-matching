@@ -452,6 +452,33 @@ export default function LandingPage() {
     }
   };
 
+  const handleResetCommunity = () => {
+    // Reset location state
+    setSelectedLocation(null);
+    setSelectedState('');
+
+    // Reset all filters
+    setFilters({
+      activities: [],
+      sectors: [],
+      hazards: [],
+      size: [],
+      state: [],
+    });
+
+    // Reset practitioners
+    setPractitioners([]);
+
+    // Reset display count back to initial value
+    setDisplayCount(PRACTITIONERS_PER_PAGE);
+
+    // Collapse filters section if it's expanded
+    setShowFilters(false);
+
+    // Reset view back to cards if in compare mode
+    setCurrentView('cards');
+  };
+
   return (
     <Container
       maxWidth="lg"
@@ -509,10 +536,7 @@ export default function LandingPage() {
                 variant="contained"
                 size="small"
                 startIcon={<AddIcon />}
-                onClick={() => {
-                  setSelectedLocation(null);
-                  setSelectedState('');
-                }}
+                onClick={handleResetCommunity}
                 sx={{
                   bgcolor: 'grey.400',
                   textTransform: 'none',
