@@ -582,7 +582,7 @@ export default function LandingPage() {
           <Box
             sx={{
               display: 'flex',
-              alignItems:{
+              alignItems: {
                 xs: 'stretch',
                 md: 'center',
               },
@@ -591,7 +591,7 @@ export default function LandingPage() {
               flexDirection: {
                 xs: 'column',
                 md: 'row',
-              }
+              },
             }}
           >
             <Typography
@@ -747,7 +747,18 @@ export default function LandingPage() {
                   sx={{ mb: 3, color: 'text.secondary' }}
                 >
                   {visiblePractitioners.length} out of {practitioners.length} practitioners selected from the{' '}
-                  {totalPractitioners} available in the practitioner registry
+                  {totalPractitioners} available in the{' '}
+                  <a
+                    href="https://www.climateresiliencefund.org/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      color: 'inherit',
+                      textDecoration: 'underline',
+                    }}
+                  >
+                    practitioner registry
+                  </a>
                 </Typography>
 
                 <Grid
