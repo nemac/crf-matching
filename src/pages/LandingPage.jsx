@@ -158,6 +158,8 @@ const FilterSection = ({ title, description, type, selected, availableOptions, o
         return 'Add hazard';
       case 'sectors':
         return 'Add sector';
+      case 'size':
+        return 'Add population';
       default:
         return 'Add';
     }
@@ -366,12 +368,15 @@ export default function LandingPage() {
   useEffect(() => {
     const loadStateFromUrl = async () => {
       if (searchParams.toString()) {
-        const { filters: urlFilters, location } = await searchParamsToFilters(searchParams);
+        const { filters: urlFilters, location, view } = await searchParamsToFilters(searchParams);
 
         // Update all state from URL
         setFilters(urlFilters);
         setSelectedLocation(location.selectedLocation);
         setSelectedState(location.selectedState);
+        if (view) {
+          setCurrentView(view);
+        }
       }
     };
 
@@ -385,9 +390,9 @@ export default function LandingPage() {
 
   // Update URL when filters or location change
   useEffect(() => {
-    const params = filtersToSearchParams(filters, selectedLocation);
+    const params = filtersToSearchParams(filters, selectedLocation, currentView);
     setSearchParams(params);
-  }, [filters, selectedLocation]);
+  }, [filters, selectedLocation, currentView]);
 
   useEffect(() => {
     fetchOptionsFromAirtable(setAvailableOptions);
@@ -436,7 +441,7 @@ export default function LandingPage() {
   const hasAnyFilters = Object.values(filters).some((arr) => arr.length > 0) || selectedState;
 
   const handleShare = async () => {
-    const shareableUrl = generateShareableUrl(filters, selectedLocation);
+    const shareableUrl = generateShareableUrl(filters, selectedLocation, currentView);
 
     try {
       await navigator.clipboard.writeText(shareableUrl);
@@ -680,6 +685,15 @@ export default function LandingPage() {
                 availableOptions={availableOptions.sectors}
                 onAdd={(value) => handleAddFilter('sectors', value)}
                 onRemove={(value) => handleRemoveFilter('sectors', value)}
+              />
+              <FilterSection
+                title="Find practitioners by community population size"
+                description="Brief JARGON free summary of what community size means in adaptation."
+                type="size"
+                selected={filters.size}
+                availableOptions={availableOptions.size}
+                onAdd={(value) => handleAddFilter('size', value)}
+                onRemove={(value) => handleRemoveFilter('size', value)}
               />
             </Box>
           </Collapse>

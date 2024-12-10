@@ -3,13 +3,18 @@
 import { getLocationDetails } from './geocoding';
 
 // Convert filters object to URL search params
-export const filtersToSearchParams = (filters, selectedLocation) => {
+export const filtersToSearchParams = (filters, selectedLocation, view) => {
   const params = new URLSearchParams();
 
   // Handle location
   if (selectedLocation) {
     params.set('city', selectedLocation.city);
     params.set('state', selectedLocation.state);
+  }
+
+  // Handle view
+  if (view) {
+    params.set('view', view);
   }
 
   // Handle filter arrays
@@ -37,6 +42,8 @@ export const searchParamsToFilters = async (searchParams) => {
     selectedLocation: null,
     selectedState: '',
   };
+
+  const view = searchParams.get('view');
 
   // Parse each filter type
   Object.keys(filters).forEach((key) => {
@@ -67,12 +74,13 @@ export const searchParamsToFilters = async (searchParams) => {
     }
   }
 
-  return { filters, location };
+  return { filters, location, view };
 };
 
 // Generate shareable URL
-export const generateShareableUrl = (filters, selectedLocation) => {
-  const params = filtersToSearchParams(filters, selectedLocation);
-  const baseUrl = window.location.origin + window.location.pathname;
-  return `${baseUrl}/?${params.toString()}`;
+export const generateShareableUrl = (filters, selectedLocation, view) => {
+  const params = filtersToSearchParams(filters, selectedLocation, view);
+  // Remove any trailing slashes from origin and ensure clean path
+  const baseUrl = window.location.origin.replace(/\/$/, '');
+  return `${baseUrl}?${params.toString()}`;
 };
