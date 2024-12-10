@@ -43,7 +43,7 @@ function CommunitiesPageLoaded({ communities }) {
                     component="th"
                     scope="row"
                   >
-                    <a href={`#/community/${community.airtableRecId}`}>{community.name}</a>
+                    <a href={`/community/${community.airtableRecId}`}>{community.name}</a>
                   </TableCell>
                 </TableRow>
               ))}

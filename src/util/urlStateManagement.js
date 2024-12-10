@@ -74,5 +74,5 @@ export const searchParamsToFilters = async (searchParams) => {
 export const generateShareableUrl = (filters, selectedLocation) => {
   const params = filtersToSearchParams(filters, selectedLocation);
   const baseUrl = window.location.origin + window.location.pathname;
-  return `${baseUrl}#/?${params.toString()}`;
+  return `${baseUrl}/?${params.toString()}`;
 };

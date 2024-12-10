@@ -179,7 +179,7 @@ export default function PractitionerPane({ community, practitioner, poppedPracti
     >
       <PractitionerHeader
         practitioner={practitioner}
-        linkPath={`#/practitioner/${practitioner.airtableRecId}`}
+        linkPath={`/practitioner/${practitioner.airtableRecId}`}
         strTrained={practitioner.strTrained}
         poppedPractitioner={poppedPractitioner}
         setPoppedPractitioner={setPoppedPractitioner}

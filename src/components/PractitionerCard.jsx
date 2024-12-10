@@ -101,7 +101,7 @@ export default function PractitionerCard({ practitioner, onComparisonSelect, isS
           <Button
             fullWidth
             variant="contained"
-            href={`#/practitioner/${practitioner.airtableRecId}`}
+            href={`/practitioner/${practitioner.airtableRecId}`}
             target="_blank"
             rel="noopener noreferrer"
             startIcon={<PersonIcon />}
