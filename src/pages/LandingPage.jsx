@@ -15,6 +15,7 @@ import {
   Menu,
   MenuItem,
 } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import AddIcon from '@mui/icons-material/Add';
 import TuneIcon from '@mui/icons-material/Tune';
@@ -107,7 +108,7 @@ const LocationSearch = ({ value, onChange, disabled }) => {
           {...params}
           placeholder="Enter your city"
           sx={{
-            bgcolor: 'white',
+            bgcolor: 'primary.white',
             borderRadius: 1,
             '& .MuiOutlinedInput-root': {
               borderRadius: 1,
@@ -231,7 +232,7 @@ const FilterSection = ({ title, description, type, selected, availableOptions, o
           disabled={availableChoices.length === 0}
           sx={{
             bgcolor: 'grey.400',
-            color: 'white',
+            color: 'primary.white',
             textTransform: 'none',
             borderRadius: '20px',
             '&:hover': {
@@ -291,7 +292,7 @@ const ViewToggle = ({ view, onViewChange }) => {
       <Box
         sx={{
           bgcolor: view === 'cards' ? 'primary.main' : 'white',
-          color: view === 'cards' ? 'white' : 'primary.main',
+          color: view === 'cards' ? 'primary.white' : 'primary.main',
           borderRadius: '20px',
           cursor: 'pointer',
           minWidth: '120px',
@@ -312,8 +313,8 @@ const ViewToggle = ({ view, onViewChange }) => {
       </Box>
       <Box
         sx={{
-          bgcolor: view === 'compare' ? 'primary.main' : 'white',
-          color: view === 'compare' ? 'white' : 'primary.main',
+          bgcolor: view === 'compare' ? 'primary.main' : 'primary.white',
+          color: view === 'compare' ? 'primary.white' : 'primary.main',
           borderRadius: '20px',
           cursor: 'pointer',
           minWidth: '120px',
@@ -337,6 +338,7 @@ const ViewToggle = ({ view, onViewChange }) => {
 };
 
 export default function LandingPage() {
+  const theme = useTheme();
   const [toastOpen, setToastOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedState, setSelectedState] = useState('');
@@ -359,7 +361,6 @@ export default function LandingPage() {
     hazards: [],
     size: [],
   });
-  const navigate = useNavigate();
 
   // Load state from URL on initial render
   useEffect(() => {
@@ -568,7 +569,6 @@ export default function LandingPage() {
         >
           Looking to connect to an adaptation practitioner?
         </Typography>
-
         <Paper
           variant="outlined"
           sx={{
@@ -684,7 +684,6 @@ export default function LandingPage() {
             </Box>
           </Collapse>
         </Paper>
-
         {/* Practitioners Section */}
         {practitioners.length > 0 && hasAnyFilters && (
           <Box sx={{ mt: 4 }}>
@@ -790,7 +789,7 @@ export default function LandingPage() {
                       variant="outlined"
                       sx={{
                         color: 'text.primary',
-                        backgroundColor: 'white',
+                        backgroundColor: 'primary.white',
                         border: '1px solid',
                         borderColor: 'grey.300',
                         textTransform: 'none',
