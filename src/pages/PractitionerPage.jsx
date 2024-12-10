@@ -56,13 +56,14 @@ function StrTrainedRow({ isTrained }) {
     return 'No certifications';
   }
   return (
-    <Box>
+    <Box
+      sx={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 2,
+      }}>
       <SchoolIcon />
-      <span
-        style={{
-          marginLeft: '15px',
-        }}
-      >
+      <span>
         STR Training Class Completed
       </span>
     </Box>

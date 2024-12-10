@@ -694,6 +694,10 @@ export default function LandingPage() {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 mb: 3,
+                flexDirection: {
+                  xs: 'column',
+                  md: 'row',
+                },
               }}
             >
               <Typography

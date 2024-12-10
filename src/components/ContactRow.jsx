@@ -81,7 +81,8 @@ export default function ContactRow({ type, practitioner }) {
 
   const linkStyle = {
     textDecoration: 'none',
-    color: theme.palette.primary.main
+    color: theme.palette.primary.main,
+    wordBreak: 'break-word',
   }
   let content
   if (type === 'website') {
@@ -96,6 +97,7 @@ export default function ContactRow({ type, practitioner }) {
         display: 'inline-flex',
         minHeight: 35,
         fontWeight: 700,
+        alignItems: 'center',
       }} 
     >
       <Box sx={{ mr: 2, }}>{ icon }</Box>
