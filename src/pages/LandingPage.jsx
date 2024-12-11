@@ -876,6 +876,31 @@ export default function LandingPage() {
                     </Grid>
                   ))}
                 </Grid>
+                {/* Load More Button */}
+                {hasMorePractitioners && (
+                  <Box sx={{ display: 'flex', justifyContent: 'center', mb: 4 }}>
+                    <Button
+                      onClick={() => setDisplayCount((prev) => prev + PRACTITIONERS_PER_PAGE)}
+                      variant="outlined"
+                      sx={{
+                        color: 'text.primary',
+                        backgroundColor: 'primary.white',
+                        border: '1px solid',
+                        borderColor: 'grey.300',
+                        textTransform: 'none',
+                        boxShadow: 1,
+                        px: 4,
+                        py: 1,
+                        '&:hover': {
+                          backgroundColor: 'grey.50',
+                          borderColor: 'grey.400',
+                        },
+                      }}
+                    >
+                      Load more practitioners
+                    </Button>
+                  </Box>
+                )}
               </>
             ) : (
               // Compare view
