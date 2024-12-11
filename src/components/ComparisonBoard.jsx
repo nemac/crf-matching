@@ -5,7 +5,6 @@ import { ThemeProvider } from '@mui/material/styles';
 
 import PractitionerPane from './PractitionerPane';
 import CommunityPane from './CommunityPane';
-import Logo from './Logo';
 import theme from '../theme';
 import { RowHoverContext, SetHoverRowContext } from './RowHoverContext';
 
@@ -38,7 +37,6 @@ export default function ComparisonBoard({
             maxWidth="xl"
             sx={{ p: 2 }}
           >
-            {/* <Logo /> CSCI Logo */}
             <Stack
               direction="row"
               gap={1}

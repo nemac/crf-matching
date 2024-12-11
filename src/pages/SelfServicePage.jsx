@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { fetchPractitionersByFilters, fetchOptionsFromAirtable } from '../util/api';
+import { Container } from '@mui/material';
 import ComparisonBoard from '../components/ComparisonBoard';
+import Logo from '../components/Logo';
 
 export default function SelfServicePage() {
   const [selectedOptions, setSelectedOptions] = useState({
@@ -67,14 +69,19 @@ export default function SelfServicePage() {
   }
 
   return (
-    <ComparisonBoard
-      community={community}
-      practitioners={practitioners}
-      isSelectable={true}
-      availableOptions={availableOptions}
-      onSelectionChange={handleSelectionChange}
-      displayCount={displayCount}
-      setDisplayCount={setDisplayCount}
-    />
+    <>
+      <Container maxWidth="xl" sx={{ p: 3 }}>
+        <Logo /> {/* CSCI Logo */}
+      </Container>
+      <ComparisonBoard
+        community={community}
+        practitioners={practitioners}
+        isSelectable={true}
+        availableOptions={availableOptions}
+        onSelectionChange={handleSelectionChange}
+        displayCount={displayCount}
+        setDisplayCount={setDisplayCount}
+      />
+    </>
   );
 }

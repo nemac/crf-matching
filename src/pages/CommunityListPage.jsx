@@ -22,7 +22,7 @@ function CommunitiesPageLoaded({ communities }) {
     <div
       style={{
         width: '60vw',
-        margin: 'auto',
+        margin: '24px auto',
       }}
     >
       <div>
