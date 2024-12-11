@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchCommunity, fetchPractitionersForCommunity } from '../util/api';
+import { Container } from '@mui/material';
 import ComparisonBoard from '../components/ComparisonBoard';
+import Logo from '../components/Logo';
 import FullPageSpinner from '../components/FullPageSpinner';
 
 export default function CommunityPage() {
@@ -20,12 +22,17 @@ export default function CommunityPage() {
   }
 
   return (
-    <ComparisonBoard
-      community={community}
-      practitioners={practitioners}
-      isSelectable={false}
-      displayCount={displayCount}
-      setDisplayCount={setDisplayCount}
-    />
+    <>
+      <Container maxWidth="xl" sx={{ p: 3 }}>
+        <Logo /> {/* CSCI Logo */}
+      </Container>
+      <ComparisonBoard
+        community={community}
+        practitioners={practitioners}
+        isSelectable={false}
+        displayCount={displayCount}
+        setDisplayCount={setDisplayCount}
+      />
+    </>
   );
 }

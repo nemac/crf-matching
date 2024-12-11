@@ -27,6 +27,7 @@ import ComparisonBoard from '../components/ComparisonBoard';
 import PractitionerCard from '../components/PractitionerCard';
 import { searchLocations, getLocationDetails } from '../util/geocoding';
 import { filtersToSearchParams, searchParamsToFilters, generateShareableUrl } from '../util/urlStateManagement';
+import Logo from '../components/Logo';
 
 const PRACTITIONERS_PER_PAGE = 6;
 
@@ -556,6 +557,7 @@ export default function LandingPage() {
       maxWidth="lg"
       sx={{ mt: 4 }}
     >
+      <Logo /> {/* CSCI Logo */}
       <Box sx={{ mb: 6 }}>
         <Typography
           variant="h3"

@@ -8,6 +8,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import theme from '../theme';
 import FullPageSpinner from '../components/FullPageSpinner';
 import ContactRow from '../components/ContactRow';
+import Logo from '../components/Logo';
 
 // API
 import { fetchPractitioner } from '../util/api';
@@ -125,12 +126,13 @@ function PractitionerPageLoaded({ practitioner }) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" sx={{ p: 3 }}>
+        <Logo /> {/* CSCI Logo */}
+        
         {/* Header */}
         <Typography
           variant="h3"
           sx={{
-            mt: 3,
             mb: 3,
           }}
         >

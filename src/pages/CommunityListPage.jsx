@@ -15,16 +15,18 @@ import { fetchAllCommunities } from '../util/api';
 
 // components
 import FullPageSpinner from '../components/FullPageSpinner';
+import Logo from '../components/Logo';
 
 function CommunitiesPageLoaded({ communities }) {
   return (
     <div
       style={{
         width: '60vw',
-        margin: 'auto',
+        margin: '24px auto',
       }}
     >
       <div>
+        <Logo /> {/* CSCI Logo */}
         <h1>CRF Community Matching Tool</h1>
         <TableContainer component={Paper}>
           <Table aria-label="simple table">
