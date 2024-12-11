@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Typography, Box, Stack } from '@mui/material';
 import HeaderBox from './HeaderBox';
 import ScoreSection from './ScoreSection';

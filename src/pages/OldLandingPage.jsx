@@ -28,7 +28,7 @@ export default function OldLandingPage() {
         >
           <Button
             variant="contained"
-            href="#/communities"
+            href="/communities"
             startIcon={<GroupIcon />}
             sx={{
               backgroundColor: 'primary.main',
@@ -45,7 +45,7 @@ export default function OldLandingPage() {
 
           <Button
             variant="contained"
-            href="#/selfservice"
+            href="/selfservice"
             startIcon={<SearchIcon />}
             sx={{
               backgroundColor: 'primary.main',
@@ -62,7 +62,7 @@ export default function OldLandingPage() {
 
           <Button
             variant="contained"
-            href="#/practitioners"
+            href="/practitioners"
             startIcon={<BusinessIcon />}
             sx={{
               backgroundColor: 'primary.main',

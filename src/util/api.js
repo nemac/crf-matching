@@ -362,14 +362,30 @@ export const fetchOptionsFromAirtable = (setOptions) => {
         }
       });
 
+      // Define custom sort order for size
+      const sizeOrder = [
+        'Under 10k',
+        '10k-50k',
+        '50k-100k',
+        '100k-200k',
+        '200k-300k',
+        '300k-400k',
+        '400k-500k',
+        'Over 500k',
+      ];
+
       // Convert Sets to sorted arrays
       const options = {
         state: [...availableOptions.state].sort(),
         activities: [...availableOptions.activities].sort(),
         hazards: [...availableOptions.hazards].sort(),
-        size: [...availableOptions.size].sort(),
+        // Custom sort for size based on defined order
+        size: [...availableOptions.size].sort((a, b) => {
+          return sizeOrder.indexOf(a) - sizeOrder.indexOf(b);
+        }),
         sectors: [...availableOptions.sectors].sort(),
       };
+
       setOptions(options);
     });
 };
