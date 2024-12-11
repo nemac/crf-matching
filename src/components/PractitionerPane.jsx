@@ -1,7 +1,9 @@
 import { useRef } from 'react';
-import { Typography, Box, styled } from '@mui/material';
+import { Typography, Box, styled, IconButton } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import SchoolIcon from '@mui/icons-material/School';
+import Button from '@mui/material/Button';
+import InfoIcon from '@mui/icons-material/Info';
 
 import ProfilePopper from './ProfilePopper';
 import HeaderBox from './HeaderBox';
@@ -26,31 +28,18 @@ function StrTrainedBadge({ isTrained }) {
         sx={{
           display: 'inline-flex',
           width: '100%',
-          borderRadius: {
-            xs: 0,
-            md: 2,
-          },
           bgcolor: {
             xs: 'primary.lightBlue',
             md: 'transparent',
           },
-          color: {
-            xs: 'primary.main',
-            md: 'primary.main',
-          },
-          border: {
-            xs: 'none',
-            md: `1px solid ${theme.palette.primary.main}`,
-          },
+          color: theme.palette.primary.main,
           flexGrow: 'space-around',
           verticalAlign: 'middle',
           justifyContent: 'center',
           alignItems: 'center',
-          px: 2,
-          py: 1,
         }}
       >
-        <SchoolIcon sx={{ fontSize: '1.2rem' }} />
+        <SchoolIcon sx={{ fontSize: '1rem', mr: 0.5 }} />
         <Typography
           sx={{
             display: {
@@ -58,11 +47,11 @@ function StrTrainedBadge({ isTrained }) {
               md: 'inherit',
             },
             fontSize: '0.875rem',
-            marginLeft: '8px',
-            fontWeight: 'normal',
+            marginLeft: '10px',
+            verticalAlign: 'baseline',
           }}
         >
-          STR Trained
+          StR Trained
         </Typography>
       </StyledBox>
     );
@@ -82,9 +71,19 @@ function StrTrainedBadge({ isTrained }) {
 
 function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setPoppedPractitioner }) {
   const headerRef = useRef(null);
+  const timeoutRef = useRef(null);
 
-  const onMouseEnter = (e) => {
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
     setPoppedPractitioner(practitioner);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setPoppedPractitioner(null);
+    }, 100);
   };
 
   return (
@@ -93,7 +92,6 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'center',
-        // width: '80%',
         margin: '0 auto',
         padding: '8px 0',
         display: {
@@ -102,7 +100,6 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
         },
       }}
       ref={headerRef}
-      onMouseEnter={onMouseEnter}
     >
       <StyledBox
         sx={{
@@ -126,31 +123,92 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
           }}
         />
       </StyledBox>
-      {/* practitioner label - hidden on xs */}
-      <Typography
-        variant="h5"
+
+      {/* Title and info icon container */}
+      <Box
         sx={{
-          display: {
-            xs: 'none',
-            md: '-webkit-box',
-          },
-          overflow: 'hidden',
-          paddingRight: '10px', //chrome bug where full ellipses won't show without padding
-          textWrap: 'auto',
-          textAlign: 'center',
-          WebkitLineClamp: '3',
-          WebkitBoxOrient: 'vertical',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          mb: 1, // Add margin bottom to reduce space between title and STR trained
         }}
       >
-        {practitioner.org}
-      </Typography>
-      <StrTrainedBadge isTrained={strTrained}></StrTrainedBadge>
-      <ProfilePopper
-        headerRef={headerRef}
-        practitioner={practitioner}
-        poppedPractitioner={poppedPractitioner}
-        setPoppedPractitioner={setPoppedPractitioner}
-      ></ProfilePopper>
+        <Typography
+          variant="h5"
+          sx={{
+            display: {
+              xs: 'none',
+              md: '-webkit-box',
+            },
+            overflow: 'hidden',
+            textWrap: 'auto',
+            textAlign: 'center',
+            WebkitLineClamp: '3',
+            WebkitBoxOrient: 'vertical',
+          }}
+        >
+          {practitioner.org}
+        </Typography>
+        <IconButton
+          size="small"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          sx={{
+            color: 'primary.main',
+            padding: '4px', // Reduce padding around icon
+            marginLeft: '-4px', // Pull icon closer to text
+            '&:hover': {
+              backgroundColor: 'transparent',
+            },
+          }}
+        >
+          <InfoIcon fontSize="small" />
+        </IconButton>
+      </Box>
+
+      {/* Bottom container for badge, popper, and button */}
+      <Box
+        sx={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center', // Center STR trained badge
+          gap: 1,
+        }}
+      >
+        <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+          <StrTrainedBadge isTrained={strTrained} />
+        </Box>
+        <ProfilePopper
+          headerRef={headerRef}
+          practitioner={practitioner}
+          poppedPractitioner={poppedPractitioner}
+          setPoppedPractitioner={setPoppedPractitioner}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        />
+
+        <Button
+          component="a"
+          href={`/practitioner/${practitioner.airtableRecId}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          startIcon={<PersonIcon />}
+          variant="contained"
+          sx={{
+            bgcolor: 'primary.midBlue',
+            color: 'primary.white',
+            textTransform: 'none',
+            borderRadius: 2,
+            width: '100%',
+            '&:hover': {
+              bgcolor: 'primary.main',
+            },
+          }}
+        >
+          View Full Profile
+        </Button>
+      </Box>
     </HeaderBox>
   );
 }
@@ -178,13 +236,11 @@ export default function PractitionerPane({ community, practitioner, poppedPracti
   return (
     <Box
       style={{
-        // flex: '1 1 33%',
         backgroundColor: theme.palette.primary.lightGray,
       }}
     >
       <PractitionerHeader
         practitioner={practitioner}
-        linkPath={`/practitioner/${practitioner.airtableRecId}`}
         strTrained={practitioner.strTrained}
         poppedPractitioner={poppedPractitioner}
         setPoppedPractitioner={setPoppedPractitioner}
@@ -193,17 +249,14 @@ export default function PractitionerPane({ community, practitioner, poppedPracti
         {sections.map((section, index) => (
           <div key={section.id}>
             <Section {...section} />
-            {/* Add invisible spacer that matches "Add another" button if on SelfServicePage */}
             {isSelfService && (
               <Box
                 sx={{
-                  height: '51px', // Match button height
-                  mb: 2, // Match button margin
+                  height: '51px',
+                  mb: 2,
                   visibility: 'hidden',
                 }}
-              >
-                {/* Empty box with same dimensions as Add Another button */}
-              </Box>
+              />
             )}
           </div>
         ))}
