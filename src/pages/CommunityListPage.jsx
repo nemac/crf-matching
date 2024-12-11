@@ -15,6 +15,7 @@ import { fetchAllCommunities } from '../util/api';
 
 // components
 import FullPageSpinner from '../components/FullPageSpinner';
+import Logo from '../components/Logo';
 
 function CommunitiesPageLoaded({ communities }) {
   return (
@@ -25,6 +26,7 @@ function CommunitiesPageLoaded({ communities }) {
       }}
     >
       <div>
+        <Logo /> {/* CSCI Logo */}
         <h1>CRF Community Matching Tool</h1>
         <TableContainer component={Paper}>
           <Table aria-label="simple table">
