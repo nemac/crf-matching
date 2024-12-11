@@ -22,6 +22,7 @@ import TuneIcon from '@mui/icons-material/Tune';
 import WindowIcon from '@mui/icons-material/Window';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import ShareIcon from '@mui/icons-material/Share';
+import ClearAllIcon from '@mui/icons-material/ClearAll';
 import { fetchFilteredPractitioners, fetchOptionsFromAirtable, fetchAllPractitioners } from '../util/api';
 import Toast from '../components/Toast';
 import ComparisonBoard from '../components/ComparisonBoard';
@@ -507,6 +508,17 @@ export default function LandingPage() {
     }));
   };
 
+  const handleClearAllFilters = () => {
+    setFilters({
+      activities: [],
+      sectors: [],
+      hazards: [],
+      size: [],
+      // Don't clear state/location as that's handled separately
+      state: filters.state,
+    });
+  };
+
   const handleViewChange = (event, newView) => {
     if (newView !== null) {
       if (newView === 'compare' && selectedForComparison.size > 0) {
@@ -640,18 +652,50 @@ export default function LandingPage() {
             sx={{
               display: 'flex',
               alignItems: 'center',
+              justifyContent: 'space-between',
               gap: 1,
               cursor: 'pointer',
             }}
-            onClick={() => setShowFilters(!showFilters)}
           >
-            <TuneIcon sx={{ color: 'primary.main' }} />
-            <Typography
-              variant="body1"
-              sx={{ color: 'primary.main' }}
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1,
+                cursor: 'pointer',
+              }}
+              onClick={() => setShowFilters(!showFilters)}
             >
-              Filter practitioners by their expertise
-            </Typography>
+              <TuneIcon sx={{ color: 'primary.main' }} />
+              <Typography
+                variant="body1"
+                sx={{ color: 'primary.main' }}
+              >
+                Filter practitioners by their expertise
+              </Typography>
+            </Box>
+            {/* Only show clear button if there are filters applied */}
+            {(filters.activities.length > 0 ||
+              filters.sectors.length > 0 ||
+              filters.hazards.length > 0 ||
+              filters.size.length > 0) && (
+              <Button
+                startIcon={<ClearAllIcon />}
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent filter panel from toggling
+                  handleClearAllFilters();
+                }}
+                sx={{
+                  color: 'primary.main',
+                  textTransform: 'none',
+                  '&:hover': {
+                    bgcolor: 'primary.tan',
+                  },
+                }}
+              >
+                Clear all filters
+              </Button>
+            )}
           </Box>
 
           {/* Filter Sections */}
@@ -762,7 +806,7 @@ export default function LandingPage() {
                   {visiblePractitioners.length} out of {practitioners.length} practitioners selected from the{' '}
                   {totalPractitioners} available in the{' '}
                   <a
-                    href="https://www.climateresiliencefund.org/"
+                    href="https://climatesmartcommunity.org/apply-now-the-registry-of-climate-adaptation-and-resilience-professionals/"
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{
