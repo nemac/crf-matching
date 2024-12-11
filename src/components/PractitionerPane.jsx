@@ -23,38 +23,43 @@ function StrTrainedBadge({ isTrained }) {
   if (isTrained === 'Yes') {
     return (
       <StyledBox
-        boxShadow={3}
         sx={{
           display: 'inline-flex',
           width: '100%',
           borderRadius: {
             xs: 0,
-            md: 4,
+            md: 2,
           },
           bgcolor: {
             xs: 'primary.lightBlue',
-            md: 'primary.main',
+            md: 'transparent',
           },
           color: {
             xs: 'primary.main',
-            md: 'primary.lightGray',
+            md: 'primary.main',
+          },
+          border: {
+            xs: 'none',
+            md: `1px solid ${theme.palette.primary.main}`,
           },
           flexGrow: 'space-around',
           verticalAlign: 'middle',
           justifyContent: 'center',
           alignItems: 'center',
+          px: 2,
+          py: 1,
         }}
       >
-        <SchoolIcon />
+        <SchoolIcon sx={{ fontSize: '1.2rem' }} />
         <Typography
           sx={{
             display: {
               xs: 'none',
               md: 'inherit',
             },
-            fontSize: '1rem',
-            marginLeft: '10px',
-            verticalAlign: 'baseline',
+            fontSize: '0.875rem',
+            marginLeft: '8px',
+            fontWeight: 'normal',
           }}
         >
           STR Trained
