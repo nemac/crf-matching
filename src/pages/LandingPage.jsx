@@ -23,6 +23,7 @@ import WindowIcon from '@mui/icons-material/Window';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import ShareIcon from '@mui/icons-material/Share';
 import ClearAllIcon from '@mui/icons-material/ClearAll';
+import { PersonOffOutlined } from '@mui/icons-material';
 import { fetchFilteredPractitioners, fetchOptionsFromAirtable, fetchAllPractitioners } from '../util/api';
 import Toast from '../components/Toast';
 import ComparisonBoard from '../components/ComparisonBoard';
@@ -281,7 +282,7 @@ const FilterSection = ({ title, description, type, selected, availableOptions, o
   );
 };
 
-const ViewToggle = ({ view, onViewChange }) => {
+const ViewToggle = ({ view, onViewChange, selectedCount, onClearSelected }) => {
   return (
     <Box
       sx={{
@@ -290,6 +291,7 @@ const ViewToggle = ({ view, onViewChange }) => {
         width: '100%',
         mb: 3,
         gap: 2,
+        position: 'relative', // For absolute positioning of clear button
       }}
     >
       <Box
@@ -336,6 +338,30 @@ const ViewToggle = ({ view, onViewChange }) => {
         <CompareArrowsIcon sx={{ mr: 1, fontSize: '1.2rem' }} />
         Compare
       </Box>
+
+      {/* Clear Selected Button - Only show when there are selected practitioners */}
+      {selectedCount > 0 && (
+        <Button
+          onClick={onClearSelected}
+          startIcon={<PersonOffOutlined />}
+          sx={{
+            position: 'absolute',
+            right: 0,
+            bgcolor: 'primary.white',
+            color: 'primary.main',
+            border: '1px solid',
+            borderColor: 'primary.borderGray',
+            borderRadius: '20px',
+            boxShadow: 1,
+            textTransform: 'none',
+            '&:hover': {
+              bgcolor: 'grey.100',
+            },
+          }}
+        >
+          Clear selected ({selectedCount})
+        </Button>
+      )}
     </Box>
   );
 };
@@ -521,9 +547,16 @@ export default function LandingPage() {
 
   const handleViewChange = (event, newView) => {
     if (newView !== null) {
+      // When switching to compare view, filter practitioners to only show selected ones
       if (newView === 'compare' && selectedForComparison.size > 0) {
-        // Reset display count when switching to compare view with selections
-        setDisplayCount(selectedForComparison.size);
+        // Create a filtered version of practitioners that only includes selected ones
+        const selectedPractitioners = practitioners.filter((p) => selectedForComparison.has(p.airtableRecId));
+        // Update display count to match number of selected practitioners
+        setDisplayCount(selectedPractitioners.length);
+      } else if (newView === 'cards') {
+        // When switching back to cards view, reset to show all practitioners
+        // but maintain original pagination
+        setDisplayCount(PRACTITIONERS_PER_PAGE);
       }
       setCurrentView(newView);
     }
@@ -567,6 +600,10 @@ export default function LandingPage() {
       }
       return newSelected;
     });
+  };
+
+  const handleClearSelectedPractitioners = () => {
+    setSelectedForComparison(new Set());
   };
 
   return (
@@ -791,12 +828,12 @@ export default function LandingPage() {
                 onClose={handleToastClose}
               />
             </Box>
-
             <ViewToggle
               view={currentView}
               onViewChange={handleViewChange}
+              selectedCount={selectedForComparison.size}
+              onClearSelected={handleClearSelectedPractitioners}
             />
-
             {currentView === 'cards' ? (
               <>
                 <Typography
@@ -839,39 +876,12 @@ export default function LandingPage() {
                     </Grid>
                   ))}
                 </Grid>
-
-                {hasMorePractitioners && (
-                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <Button
-                      onClick={() => setDisplayCount((prev) => prev + PRACTITIONERS_PER_PAGE)}
-                      variant="outlined"
-                      sx={{
-                        color: 'text.primary',
-                        backgroundColor: 'primary.white',
-                        border: '1px solid',
-                        borderColor: 'grey.300',
-                        textTransform: 'none',
-                        boxShadow: 1,
-                        px: 4,
-                        py: 1,
-                        '&:hover': {
-                          backgroundColor: 'grey.50',
-                          borderColor: 'grey.400',
-                        },
-                      }}
-                    >
-                      Load more practitioners
-                    </Button>
-                  </Box>
-                )}
               </>
             ) : (
-              // Comparison view
+              // Compare view
               <ComparisonBoard
                 community={community}
                 practitioners={practitioners.filter((p) =>
-                  // If there are any selected practitioners, only show those
-                  // Otherwise show all practitioners
                   selectedForComparison.size === 0 ? true : selectedForComparison.has(p.airtableRecId)
                 )}
                 isSelectable={true}
@@ -880,7 +890,7 @@ export default function LandingPage() {
                 displayCount={displayCount}
                 setDisplayCount={setDisplayCount}
               />
-            )}
+            )}{' '}
           </Box>
         )}
       </Box>
