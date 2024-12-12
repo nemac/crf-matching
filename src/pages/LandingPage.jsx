@@ -754,29 +754,6 @@ export default function LandingPage() {
             >
               Filter practitioners by their expertise
             </Button>
-
-            {/* Only show clear button if there are filters applied */}
-            {(filters.activities.length > 0 ||
-              filters.sectors.length > 0 ||
-              filters.hazards.length > 0 ||
-              filters.size.length > 0) && (
-              <Button
-                startIcon={<ClearAllIcon />}
-                onClick={(e) => {
-                  e.stopPropagation(); // Prevent filter panel from toggling
-                  handleClearAllFilters();
-                }}
-                sx={{
-                  color: 'primary.main',
-                  bgcolor: 'primary.white',
-                  '&:hover': {
-                    bgcolor: 'grey.100',
-                  },
-                }}
-              >
-                Filter practitioners by their expertise
-              </Typography>
-            </Box>
             <Box sx={{ display: 'flex', gap: 2 }}>
               {/* Only show browse all when no community is selected */}
               {!selectedLocation && (
