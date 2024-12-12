@@ -577,16 +577,11 @@ export default function LandingPage() {
 
   const handleViewChange = (event, newView) => {
     if (newView !== null) {
-      // When switching to compare view, filter practitioners to only show selected ones
+      // When switching views, maintain the current displayCount unless we're filtering for selected practitioners
       if (newView === 'compare' && selectedForComparison.size > 0) {
-        // Create a filtered version of practitioners that only includes selected ones
+        // Only show selected practitioners in compare view if there are any selected
         const selectedPractitioners = practitioners.filter((p) => selectedForComparison.has(p.airtableRecId));
-        // Update display count to match number of selected practitioners
         setDisplayCount(selectedPractitioners.length);
-      } else if (newView === 'cards') {
-        // When switching back to cards view, reset to show all practitioners
-        // but maintain original pagination
-        setDisplayCount(PRACTITIONERS_PER_PAGE);
       }
       setCurrentView(newView);
     }
@@ -737,7 +732,13 @@ export default function LandingPage() {
               <TuneIcon sx={{ color: 'primary.main' }} />
               <Typography
                 variant="body1"
-                sx={{ color: 'primary.main' }}
+                sx={{
+                  color: 'primary.main',
+                  bgcolor: 'primary.white',
+                  '&:hover': {
+                    bgcolor: 'grey.100',
+                  },
+                }}
               >
                 Filter practitioners by their expertise
               </Typography>
