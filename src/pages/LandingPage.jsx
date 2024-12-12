@@ -25,6 +25,8 @@ import ShareIcon from '@mui/icons-material/Share';
 import ClearAllIcon from '@mui/icons-material/ClearAll';
 import { PersonOffOutlined } from '@mui/icons-material';
 import { FormatListBulleted } from '@mui/icons-material';
+import CancelIcon from '@mui/icons-material/Cancel';
+import IconButton from '@mui/material/IconButton';
 import { fetchFilteredPractitioners, fetchOptionsFromAirtable, fetchAllPractitioners } from '../util/api';
 import Toast from '../components/Toast';
 import ComparisonBoard from '../components/ComparisonBoard';
@@ -79,6 +81,12 @@ const LocationSearch = ({ value, onChange, disabled }) => {
     }
   };
 
+  const handleClear = (event) => {
+    event.stopPropagation(); // Prevent triggering other click handlers
+    onChange(null, null);
+    setInputValue('');
+  };
+
   return (
     <Autocomplete
       value={value}
@@ -117,19 +125,37 @@ const LocationSearch = ({ value, onChange, disabled }) => {
             '& .MuiOutlinedInput-root': {
               borderRadius: 1,
               '& .MuiOutlinedInput-input': {
-                paddingRight: '14px !important',
+                paddingRight: value ? '64px !important' : '14px !important',
               },
             },
           }}
           InputProps={{
             ...params.InputProps,
             startAdornment: <LocationOnIcon sx={{ ml: 1, mr: -0.5, color: 'grey.500' }} />,
-            endAdornment: loading ? (
-              <CircularProgress
-                color="inherit"
-                size={20}
-              />
-            ) : null,
+            endAdornment: (
+              <>
+                {loading ? (
+                  <CircularProgress
+                    color="inherit"
+                    size={20}
+                  />
+                ) : value ? (
+                  <IconButton
+                    onClick={handleClear}
+                    sx={{
+                      position: 'absolute',
+                      right: 8,
+                      color: 'primary.main',
+                      '&:hover': {
+                        color: 'grey.500',
+                      },
+                    }}
+                  >
+                    <CancelIcon />
+                  </IconButton>
+                ) : null}
+              </>
+            ),
           }}
         />
       )}
