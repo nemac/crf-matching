@@ -746,10 +746,18 @@ export default function LandingPage() {
               {/* Only show browse all when no community is selected */}
               {!selectedLocation && (
                 <Button
-                  component="a"
-                  href="/communities"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  onClick={() => {
+                    // Fetch all practitioners
+                    fetchAllPractitioners((practitioners) => {
+                      setPractitioners(practitioners);
+                      // Set display count to show all practitioners
+                      setDisplayCount(practitioners.length);
+                      // Make sure we're in card view
+                      setCurrentView('cards');
+                      // Set selected state to something so comparison board shows
+                      setSelectedState('BrowseAll');
+                    });
+                  }}
                   startIcon={<FormatListBulleted />}
                   sx={{
                     bgcolor: 'primary.white',
@@ -766,7 +774,7 @@ export default function LandingPage() {
                     },
                   }}
                 >
-                  Browse All Communities
+                  Browse All
                 </Button>
               )}
 
