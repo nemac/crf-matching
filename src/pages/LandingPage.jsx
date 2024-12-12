@@ -492,6 +492,7 @@ export default function LandingPage() {
         ...prev,
         state: [newValue.state],
       }));
+      setShowFilters(true);
     } else {
       setSelectedState('');
       setFilters((prev) => ({
