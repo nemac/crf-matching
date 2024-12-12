@@ -93,7 +93,7 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
         justifyContent: 'space-between',
         alignItems: 'center',
         margin: '0 auto',
-        padding: '8px 0',
+        padding: '8px 1px', // 1px L/R padding to fix Chrome bug where full ellipses don't show
         display: {
           md: 'flex',
           xs: 'block',
@@ -130,7 +130,8 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          mb: 1, // Add margin bottom to reduce space between title and STR trained
+          margin: '8px 0', // Add margin to increase space between icon and STR trained
+          flexDirection: 'column', // Stack title and icon
         }}
       >
         <Typography
@@ -155,8 +156,6 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
           onMouseLeave={handleMouseLeave}
           sx={{
             color: 'primary.main',
-            padding: '4px', // Reduce padding around icon
-            marginLeft: '-4px', // Pull icon closer to text
             '&:hover': {
               backgroundColor: 'transparent',
             },
@@ -206,7 +205,8 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
             },
           }}
         >
-          View Full Profile
+          <Typography sx={{ display: { xs: 'none', md: 'inherit' }, fontSize: '.875rem' }}>View Full Profile</Typography>
+          <Typography sx={{ display: { xs: 'inherit', md: 'none' }, fontSize: '.875rem' }}>View Profile</Typography>
         </Button>
       </Box>
     </HeaderBox>
