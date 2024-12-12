@@ -423,12 +423,23 @@ export default function LandingPage() {
   useEffect(() => {
     const loadStateFromUrl = async () => {
       if (searchParams.toString()) {
-        const { filters: urlFilters, location, view } = await searchParamsToFilters(searchParams);
+        const {
+          filters: urlFilters,
+          location,
+          view,
+          selectedPractitioners,
+        } = await searchParamsToFilters(searchParams);
 
         // Update all state from URL
         setFilters(urlFilters);
         setSelectedLocation(location.selectedLocation);
         setSelectedState(location.selectedState);
+
+        // Set selected practitioners from URL
+        if (selectedPractitioners.length > 0) {
+          setSelectedForComparison(new Set(selectedPractitioners));
+        }
+
         if (view) {
           setCurrentView(view);
         }
@@ -436,18 +447,18 @@ export default function LandingPage() {
     };
 
     loadStateFromUrl();
-  }, []); // Only run on mount
+  }, []);
 
   // Helper to check if all filters are empty
   const areFiltersEmpty = () => {
     return Object.values(filters).every((arr) => arr.length === 0);
   };
 
-  // Update URL when filters or location change
+  // Update URL when filters, location, or selected practitioners change
   useEffect(() => {
-    const params = filtersToSearchParams(filters, selectedLocation, currentView);
+    const params = filtersToSearchParams(filters, selectedLocation, currentView, Array.from(selectedForComparison));
     setSearchParams(params);
-  }, [filters, selectedLocation, currentView]);
+  }, [filters, selectedLocation, currentView, selectedForComparison]);
 
   useEffect(() => {
     fetchOptionsFromAirtable(setAvailableOptions);
@@ -496,7 +507,12 @@ export default function LandingPage() {
   const hasAnyFilters = Object.values(filters).some((arr) => arr.length > 0) || selectedState;
 
   const handleShare = async () => {
-    const shareableUrl = generateShareableUrl(filters, selectedLocation, currentView);
+    const shareableUrl = generateShareableUrl(
+      filters,
+      selectedLocation,
+      currentView,
+      Array.from(selectedForComparison)
+    );
 
     try {
       await navigator.clipboard.writeText(shareableUrl);
