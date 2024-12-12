@@ -730,24 +730,42 @@ export default function LandingPage() {
           <Box
             sx={{
               display: 'flex',
+              flexDirection: {
+                xs: 'column',
+                sm: 'row',
+              },
               alignItems: 'center',
               justifyContent: 'space-between',
               gap: 1,
             }}
           >
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 1,
-                cursor: 'pointer',
-                flex: 1,
-              }}
+            <Button
+              variant="contained"
+              size="small"
+              startIcon={<TuneIcon />}
               onClick={() => setShowFilters(!showFilters)}
+              sx={{
+                textTransform: 'none',
+                bgcolor: 'grey.500',
+                '&:hover': {
+                  bgcolor: 'grey.600',
+                },
+              }}
             >
-              <TuneIcon sx={{ color: 'primary.main' }} />
-              <Typography
-                variant="body1"
+              Filter practitioners by their expertise
+            </Button>
+
+            {/* Only show clear button if there are filters applied */}
+            {(filters.activities.length > 0 ||
+              filters.sectors.length > 0 ||
+              filters.hazards.length > 0 ||
+              filters.size.length > 0) && (
+              <Button
+                startIcon={<ClearAllIcon />}
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent filter panel from toggling
+                  handleClearAllFilters();
+                }}
                 sx={{
                   color: 'primary.main',
                   bgcolor: 'primary.white',
@@ -873,6 +891,7 @@ export default function LandingPage() {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 mb: 3,
+                gap: 1,
                 flexDirection: {
                   xs: 'column',
                   md: 'row',
