@@ -62,11 +62,10 @@ function StrTrainedRow({ isTrained }) {
         display: 'inline-flex',
         alignItems: 'center',
         gap: 2,
-      }}>
+      }}
+    >
       <SchoolIcon />
-      <span>
-        STR Training Class Completed
-      </span>
+      <span>STR Training Class Completed</span>
     </Box>
   );
 }
@@ -126,9 +125,11 @@ function PractitionerPageLoaded({ practitioner }) {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Container maxWidth="lg" sx={{ p: 3 }}>
+      <Container
+        maxWidth="lg"
+        sx={{ p: 3 }}
+      >
         <Logo /> {/* CSCI Logo */}
-        
         {/* Header */}
         <Typography
           variant="h3"
@@ -138,7 +139,6 @@ function PractitionerPageLoaded({ practitioner }) {
         >
           {practitioner.org}
         </Typography>
-
         {/* Contact & Training Row */}
         <Grid
           container
@@ -197,7 +197,6 @@ function PractitionerPageLoaded({ practitioner }) {
             <StrTrainedRow isTrained={practitioner.strTrained === 'Yes' ? true : false}></StrTrainedRow>
           </ContactAndTrainingBox>
         </Grid>
-
         <Box>
           <SectionHeader title="Description"></SectionHeader>
           <Box
@@ -209,31 +208,50 @@ function PractitionerPageLoaded({ practitioner }) {
             {practitioner.info || 'N/A'}
           </Box>
         </Box>
-
         <Box>
-          <SectionHeader title="Example Of Experience Working Directly With Stakeholders"></SectionHeader>
+          <SectionHeader title="Organization Type"></SectionHeader>
           <Box
             sx={{
               pb: 1,
               mb: 1,
             }}
           >
-            {practitioner.exampleStakeholders || 'N/A'}
+            {practitioner.organizationType || 'N/A'}
           </Box>
         </Box>
-
         <Box>
-          <SectionHeader title="Example Of A Project That Provided Multiple Benefits Across Sectors And Scales, And How It Did That"></SectionHeader>
+          <SectionHeader title="Please provide any additional information you want us to know about your organization's (or team's) background and qualifications to provide adaptation services"></SectionHeader>
           <Box
             sx={{
               pb: 1,
               mb: 1,
             }}
           >
-            {practitioner.exampleMultipleBenefits || 'N/A'}
+            {practitioner.additionalInformation || 'N/A'}
           </Box>
         </Box>
-
+        <Box>
+          <SectionHeader title="Are Members Of Your Organization (Or Team) Fluent In Any Languages Other Than English?"></SectionHeader>
+          <Box
+            sx={{
+              pb: 1,
+              mb: 1,
+            }}
+          >
+            {practitioner.languageFluencies || 'N/A'}
+          </Box>
+        </Box>
+        <Box>
+          <SectionHeader title="Does Your Organization Specialize In Specific Types Of Communities?"></SectionHeader>
+          <Box
+            sx={{
+              pb: 1,
+              mb: 1,
+            }}
+          >
+            {practitioner.specificTypesOfCommunities || 'N/A'}
+          </Box>
+        </Box>
         {sections.map((data, index) => {
           return (
             <MatchSection

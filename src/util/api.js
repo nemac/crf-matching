@@ -42,8 +42,12 @@ const practitionerFieldMap = {
   strTrained:
     'Are There Members From Your Organization (Or Team) Who Have Completed The N O A A Steps To Resilience Training?',
   info: "Please provide any additional information you want us to know about your organization's (or team's) background and qualifications to provide adaptation services",
-  //exampleStakeholders: 'Provide An Example Of Your Experience Working Directly With Stakeholders',
-  //exampleMultipleBenefits: 'Provide An Example Of A Project That Provided Multiple Benefits Across Sectors And Scales, And How It Did That',
+  organizationType: 'Organization Type',
+  additionalInformation:
+    "Please provide any additional information you want us to know about your organization's (or team's) background and qualifications to provide adaptation services",
+  specificTypesOfCommunities:
+    'Does Your Organization Specialize In Specific Types Of Communities? (E - G - , Size, Geography, Economic Or Sociological Profile)',
+  languageFluencies: 'Are Members Of Your Organization (Or Team) Fluent In Any Languages Other Than English?',
 };
 
 const communityFieldMap = {
