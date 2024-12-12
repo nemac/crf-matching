@@ -24,6 +24,7 @@ import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import ShareIcon from '@mui/icons-material/Share';
 import ClearAllIcon from '@mui/icons-material/ClearAll';
 import { PersonOffOutlined } from '@mui/icons-material';
+import { FormatListBulleted } from '@mui/icons-material';
 import { fetchFilteredPractitioners, fetchOptionsFromAirtable, fetchAllPractitioners } from '../util/api';
 import Toast from '../components/Toast';
 import ComparisonBoard from '../components/ComparisonBoard';
@@ -693,7 +694,6 @@ export default function LandingPage() {
               alignItems: 'center',
               justifyContent: 'space-between',
               gap: 1,
-              cursor: 'pointer',
             }}
           >
             <Box
@@ -702,6 +702,7 @@ export default function LandingPage() {
                 alignItems: 'center',
                 gap: 1,
                 cursor: 'pointer',
+                flex: 1,
               }}
               onClick={() => setShowFilters(!showFilters)}
             >
@@ -713,28 +714,57 @@ export default function LandingPage() {
                 Filter practitioners by their expertise
               </Typography>
             </Box>
-            {/* Only show clear button if there are filters applied */}
-            {(filters.activities.length > 0 ||
-              filters.sectors.length > 0 ||
-              filters.hazards.length > 0 ||
-              filters.size.length > 0) && (
-              <Button
-                startIcon={<ClearAllIcon />}
-                onClick={(e) => {
-                  e.stopPropagation(); // Prevent filter panel from toggling
-                  handleClearAllFilters();
-                }}
-                sx={{
-                  color: 'primary.main',
-                  textTransform: 'none',
-                  '&:hover': {
-                    bgcolor: 'primary.tan',
-                  },
-                }}
-              >
-                Clear all filters
-              </Button>
-            )}
+            <Box sx={{ display: 'flex', gap: 2 }}>
+              {/* Only show browse all when no community is selected */}
+              {!selectedLocation && (
+                <Button
+                  component="a"
+                  href="/communities"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  startIcon={<FormatListBulleted />}
+                  sx={{
+                    bgcolor: 'primary.white',
+                    color: 'primary.main',
+                    textTransform: 'none',
+                    borderRadius: 2,
+                    px: 2,
+                    '&:hover': {
+                      bgcolor: 'grey.100',
+                    },
+                    fontSize: {
+                      xs: '0.875rem',
+                      sm: '1rem',
+                    },
+                  }}
+                >
+                  Browse All Communities
+                </Button>
+              )}
+
+              {/* Only show clear button if there are filters applied */}
+              {(filters.activities.length > 0 ||
+                filters.sectors.length > 0 ||
+                filters.hazards.length > 0 ||
+                filters.size.length > 0) && (
+                <Button
+                  startIcon={<ClearAllIcon />}
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent filter panel from toggling
+                    handleClearAllFilters();
+                  }}
+                  sx={{
+                    color: 'primary.main',
+                    textTransform: 'none',
+                    '&:hover': {
+                      bgcolor: 'primary.tan',
+                    },
+                  }}
+                >
+                  Clear all filters
+                </Button>
+              )}
+            </Box>
           </Box>
 
           {/* Filter Sections */}
