@@ -538,13 +538,14 @@ export default function LandingPage() {
   };
 
   const handleClearAllFilters = () => {
+    setSelectedLocation(null);
+    setShowFilters(false);
     setFilters({
       activities: [],
       sectors: [],
       hazards: [],
       size: [],
-      // Don't clear state/location as that's handled separately
-      state: filters.state,
+      state: [],
     });
   };
 
