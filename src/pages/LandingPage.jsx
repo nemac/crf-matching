@@ -24,6 +24,9 @@ import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import ShareIcon from '@mui/icons-material/Share';
 import ClearAllIcon from '@mui/icons-material/ClearAll';
 import { PersonOffOutlined } from '@mui/icons-material';
+import { FormatListBulleted } from '@mui/icons-material';
+import CancelIcon from '@mui/icons-material/Cancel';
+import IconButton from '@mui/material/IconButton';
 import { fetchFilteredPractitioners, fetchOptionsFromAirtable, fetchAllPractitioners } from '../util/api';
 import Toast from '../components/Toast';
 import ComparisonBoard from '../components/ComparisonBoard';
@@ -78,6 +81,12 @@ const LocationSearch = ({ value, onChange, disabled }) => {
     }
   };
 
+  const handleClear = (event) => {
+    event.stopPropagation(); // Prevent triggering other click handlers
+    onChange(null, null);
+    setInputValue('');
+  };
+
   return (
     <Autocomplete
       value={value}
@@ -116,19 +125,37 @@ const LocationSearch = ({ value, onChange, disabled }) => {
             '& .MuiOutlinedInput-root': {
               borderRadius: 1,
               '& .MuiOutlinedInput-input': {
-                paddingRight: '14px !important',
+                paddingRight: value ? '64px !important' : '14px !important',
               },
             },
           }}
           InputProps={{
             ...params.InputProps,
             startAdornment: <LocationOnIcon sx={{ ml: 1, mr: -0.5, color: 'grey.500' }} />,
-            endAdornment: loading ? (
-              <CircularProgress
-                color="inherit"
-                size={20}
-              />
-            ) : null,
+            endAdornment: (
+              <>
+                {loading ? (
+                  <CircularProgress
+                    color="inherit"
+                    size={20}
+                  />
+                ) : value ? (
+                  <IconButton
+                    onClick={handleClear}
+                    sx={{
+                      position: 'absolute',
+                      right: 8,
+                      color: 'primary.main',
+                      '&:hover': {
+                        color: 'grey.500',
+                      },
+                    }}
+                  >
+                    <CancelIcon />
+                  </IconButton>
+                ) : null}
+              </>
+            ),
           }}
         />
       )}
@@ -195,17 +222,17 @@ const FilterSection = ({ title, description, type, selected, availableOptions, o
         >
           {title}
         </Typography>
-        <Button
-          variant="text"
-          sx={{
-            textTransform: 'none',
-            color: 'primary.main',
-            textDecoration: 'underline',
-            padding: '6px 0',
-          }}
-        >
-          Learn more
-        </Button>
+        {/*<Button*/}
+        {/*  variant="text"*/}
+        {/*  sx={{*/}
+        {/*    textTransform: 'none',*/}
+        {/*    color: 'primary.main',*/}
+        {/*    textDecoration: 'underline',*/}
+        {/*    padding: '6px 0',*/}
+        {/*  }}*/}
+        {/*>*/}
+        {/*  Learn more*/}
+        {/*</Button>*/}
       </Box>
 
       <Typography
@@ -396,12 +423,23 @@ export default function LandingPage() {
   useEffect(() => {
     const loadStateFromUrl = async () => {
       if (searchParams.toString()) {
-        const { filters: urlFilters, location, view } = await searchParamsToFilters(searchParams);
+        const {
+          filters: urlFilters,
+          location,
+          view,
+          selectedPractitioners,
+        } = await searchParamsToFilters(searchParams);
 
         // Update all state from URL
         setFilters(urlFilters);
         setSelectedLocation(location.selectedLocation);
         setSelectedState(location.selectedState);
+
+        // Set selected practitioners from URL
+        if (selectedPractitioners.length > 0) {
+          setSelectedForComparison(new Set(selectedPractitioners));
+        }
+
         if (view) {
           setCurrentView(view);
         }
@@ -409,18 +447,18 @@ export default function LandingPage() {
     };
 
     loadStateFromUrl();
-  }, []); // Only run on mount
+  }, []);
 
   // Helper to check if all filters are empty
   const areFiltersEmpty = () => {
     return Object.values(filters).every((arr) => arr.length === 0);
   };
 
-  // Update URL when filters or location change
+  // Update URL when filters, location, or selected practitioners change
   useEffect(() => {
-    const params = filtersToSearchParams(filters, selectedLocation, currentView);
+    const params = filtersToSearchParams(filters, selectedLocation, currentView, Array.from(selectedForComparison));
     setSearchParams(params);
-  }, [filters, selectedLocation, currentView]);
+  }, [filters, selectedLocation, currentView, selectedForComparison]);
 
   useEffect(() => {
     fetchOptionsFromAirtable(setAvailableOptions);
@@ -469,7 +507,12 @@ export default function LandingPage() {
   const hasAnyFilters = Object.values(filters).some((arr) => arr.length > 0) || selectedState;
 
   const handleShare = async () => {
-    const shareableUrl = generateShareableUrl(filters, selectedLocation, currentView);
+    const shareableUrl = generateShareableUrl(
+      filters,
+      selectedLocation,
+      currentView,
+      Array.from(selectedForComparison)
+    );
 
     try {
       await navigator.clipboard.writeText(shareableUrl);
@@ -491,6 +534,7 @@ export default function LandingPage() {
         ...prev,
         state: [newValue.state],
       }));
+      setShowFilters(true);
     } else {
       setSelectedState('');
       setFilters((prev) => ({
@@ -536,28 +580,24 @@ export default function LandingPage() {
   };
 
   const handleClearAllFilters = () => {
+    setSelectedLocation(null);
+    setShowFilters(false);
     setFilters({
       activities: [],
       sectors: [],
       hazards: [],
       size: [],
-      // Don't clear state/location as that's handled separately
-      state: filters.state,
+      state: [],
     });
   };
 
   const handleViewChange = (event, newView) => {
     if (newView !== null) {
-      // When switching to compare view, filter practitioners to only show selected ones
+      // When switching views, maintain the current displayCount unless we're filtering for selected practitioners
       if (newView === 'compare' && selectedForComparison.size > 0) {
-        // Create a filtered version of practitioners that only includes selected ones
+        // Only show selected practitioners in compare view if there are any selected
         const selectedPractitioners = practitioners.filter((p) => selectedForComparison.has(p.airtableRecId));
-        // Update display count to match number of selected practitioners
         setDisplayCount(selectedPractitioners.length);
-      } else if (newView === 'cards') {
-        // When switching back to cards view, reset to show all practitioners
-        // but maintain original pagination
-        setDisplayCount(PRACTITIONERS_PER_PAGE);
       }
       setCurrentView(newView);
     }
@@ -697,7 +737,6 @@ export default function LandingPage() {
               alignItems: 'center',
               justifyContent: 'space-between',
               gap: 1,
-              mt: 6,
             }}
           >
             <Button
@@ -729,15 +768,74 @@ export default function LandingPage() {
                 }}
                 sx={{
                   color: 'primary.main',
-                  textTransform: 'none',
+                  bgcolor: 'primary.white',
                   '&:hover': {
-                    bgcolor: 'primary.tan',
+                    bgcolor: 'grey.100',
                   },
                 }}
               >
-                Clear all filters
-              </Button>
-            )}
+                Filter practitioners by their expertise
+              </Typography>
+            </Box>
+            <Box sx={{ display: 'flex', gap: 2 }}>
+              {/* Only show browse all when no community is selected */}
+              {!selectedLocation && (
+                <Button
+                  onClick={() => {
+                    // Fetch all practitioners
+                    fetchAllPractitioners((practitioners) => {
+                      setPractitioners(practitioners);
+                      // Set display count to show all practitioners
+                      setDisplayCount(practitioners.length);
+                      // Make sure we're in card view
+                      setCurrentView('cards');
+                      // Set selected state to something so comparison board shows
+                      setSelectedState('BrowseAll');
+                    });
+                  }}
+                  startIcon={<FormatListBulleted />}
+                  sx={{
+                    bgcolor: 'primary.white',
+                    color: 'primary.main',
+                    textTransform: 'none',
+                    borderRadius: 2,
+                    px: 2,
+                    '&:hover': {
+                      bgcolor: 'grey.100',
+                    },
+                    fontSize: {
+                      xs: '0.875rem',
+                      sm: '1rem',
+                    },
+                  }}
+                >
+                  Browse All
+                </Button>
+              )}
+
+              {/* Only show clear button if there are filters applied */}
+              {(filters.activities.length > 0 ||
+                filters.sectors.length > 0 ||
+                filters.hazards.length > 0 ||
+                filters.size.length > 0) && (
+                <Button
+                  startIcon={<ClearAllIcon />}
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent filter panel from toggling
+                    handleClearAllFilters();
+                  }}
+                  sx={{
+                    color: 'primary.main',
+                    textTransform: 'none',
+                    '&:hover': {
+                      bgcolor: 'primary.tan',
+                    },
+                  }}
+                >
+                  Clear all filters
+                </Button>
+              )}
+            </Box>
           </Box>
 
           {/* Filter Sections */}
@@ -745,7 +843,7 @@ export default function LandingPage() {
             <Box sx={{ mt: 3 }}>
               <FilterSection
                 title="Find practitioners by activities that are important in your community"
-                description="Brief JARGON free summary of what activities are in adaptation."
+                // description="Brief JARGON free summary of what activities are in adaptation."
                 type="activities"
                 selected={filters.activities}
                 availableOptions={availableOptions.activities}
@@ -755,7 +853,7 @@ export default function LandingPage() {
 
               <FilterSection
                 title="Find practitioners by hazards that are affecting your community"
-                description="Brief JARGON free summary of what hazards are in adaptation."
+                // description="Brief JARGON free summary of what hazards are in adaptation."
                 type="hazards"
                 selected={filters.hazards}
                 availableOptions={availableOptions.hazards}
@@ -765,7 +863,7 @@ export default function LandingPage() {
 
               <FilterSection
                 title="Find practitioners by important sectors in your community"
-                description="Brief JARGON free summary of what sectors are in adaptation."
+                // description="Brief JARGON free summary of what sectors are in adaptation."
                 type="sectors"
                 selected={filters.sectors}
                 availableOptions={availableOptions.sectors}
@@ -774,7 +872,7 @@ export default function LandingPage() {
               />
               <FilterSection
                 title="Find practitioners by community population size"
-                description="Brief JARGON free summary of what community size means in adaptation."
+                // description="Brief JARGON free summary of what community size means in adaptation."
                 type="size"
                 selected={filters.size}
                 availableOptions={availableOptions.size}

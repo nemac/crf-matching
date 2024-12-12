@@ -28,7 +28,7 @@ const getSectionData = (community, isSelectable, availableOptions, onSelectionCh
       availableSelections: isSelectable ? availableOptions?.hazards || [] : [],
     },
     {
-      header: 'Size',
+      header: 'Community Population',
       cards: community.size,
       availableSelections: isSelectable ? availableOptions?.size || [] : [],
     },

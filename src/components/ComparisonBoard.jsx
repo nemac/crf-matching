@@ -32,7 +32,6 @@ export default function ComparisonBoard({
     <ThemeProvider theme={theme}>
       <RowHoverContext.Provider value={hoverRow}>
         <SetHoverRowContext.Provider value={setHoverRow}>
-          <CssBaseline />
           <Container
             maxWidth="xl"
             sx={{ p: 2 }}
