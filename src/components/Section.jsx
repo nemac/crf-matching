@@ -32,7 +32,7 @@ export default function Section({
       key={id}
       sx={{ mb: 2 }}
     >
-      <Box sx={{ minHeight: '40px', mt: '5px', mb: '5px' }}>
+      <Box sx={{ minHeight: { xs: '60px', md: '40px' }, mt: '5px', mb: '5px' }}>
         <Typography variant="body1">{header}</Typography>
       </Box>
 
