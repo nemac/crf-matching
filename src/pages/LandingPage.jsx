@@ -663,7 +663,7 @@ export default function LandingPage() {
             mb: 1,
           }}
         >
-          (DEVELOP BRANCH) Looking to connect to an adaptation practitioner?
+          (Jeff Jeff Jeff Test) Looking to connect to an adaptation practitioner?
         </Typography>
         <Paper
           variant="outlined"
