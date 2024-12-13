@@ -936,7 +936,7 @@ export default function LandingPage() {
                       textDecoration: 'underline',
                     }}
                   >
-                    practitioner registry
+                    The Registry of Adaptation Practitioners
                   </a>
                 </Typography>
 
