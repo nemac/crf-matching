@@ -98,9 +98,8 @@ const DropDownSelector = ({ availableSelections, selections, setSelections, opti
         startIcon={<PlusIcon>+</PlusIcon>}
         sx={{ width: '100%' }}
       >
-        <Typography sx={{ display: { xs: 'none', md: 'inherit' }, fontSize: '.875rem' }}>Add another&nbsp;</Typography>
-        <Typography sx={{ display: { xs: 'inherit', md: 'none' }, fontSize: '.875rem' }}>Add&nbsp;</Typography>
-        <Typography sx={{ fontSize: '.875rem' }}>{trimmedOption.toLowerCase()}</Typography>
+        <Typography sx={{ display: { xs: 'none', md: 'inherit' }, fontSize: '.875rem', whiteSpace: 'nowrap', }}>Add another {trimmedOption.toLowerCase()}</Typography>
+        {/* <Typography sx={{ display: { xs: 'inherit', md: 'none' }, fontSize: '.875rem', textTransform: 'capitalize', whiteSpace: 'nowrap', }}>{trimmedOption}</Typography> */}
       </AddButton>
 
       <StyledMenu

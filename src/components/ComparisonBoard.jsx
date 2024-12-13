@@ -34,12 +34,11 @@ export default function ComparisonBoard({
         <SetHoverRowContext.Provider value={setHoverRow}>
           <Container
             maxWidth="xl"
-            sx={{ p: 2 }}
+            sx={{ p: 0 }}
           >
             <Stack
               direction="row"
-              gap={1}
-              sx={{ bgcolor: theme.palette.primary.lightGray }}
+              sx={{ bgcolor: theme.palette.primary.lightGray, gap: { xs: 0, md: 1 }}}
             >
               {/* Community Panel */}
               <Box
@@ -109,7 +108,10 @@ export default function ComparisonBoard({
                   sx={{
                     pb: 2,
                     width: '100%',
-                    gap: 1,
+                    gap: {
+                      xs: '4px',
+                      md: 1,
+                    },
                     overflowX: 'auto',
                   }}
                 >
