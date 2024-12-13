@@ -61,7 +61,7 @@ export default function CommunityPane({
       }}
     >
       <Stack sx={{ width: '100%' }}>
-        <HeaderBox sx={{ height: '299px' }}>
+        <HeaderBox>
           <Typography
             color="primary.main"
             fontWeight="700"
