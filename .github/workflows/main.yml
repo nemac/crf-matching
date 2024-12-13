@@ -22,8 +22,8 @@ jobs:
       - name: Create .env file
         run: |
           echo "AIRTABLE_TOKEN='${{ secrets.AIRTABLE_TOKEN }}'" > .env
-          echo "AIRTABLE_TOKEN='${{ secrets.AIRTABLE_BASE }}'" >> .env
-          echo "AIRTABLE_TOKEN='${{ secrets.AGOL_API_KEY }}'" >> .env
+          echo "AIRTABLE_BASE='${{ secrets.AIRTABLE_BASE }}'" >> .env
+          echo "AGOL_API_KEY='${{ secrets.AGOL_API_KEY }}'" >> .env
 
       - name: Install dependencies
         run: npm ci
