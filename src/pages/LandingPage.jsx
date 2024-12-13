@@ -867,7 +867,7 @@ export default function LandingPage() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                mb: 3,
+                mb: 4,
                 gap: 1,
                 flexDirection: {
                   xs: 'column',

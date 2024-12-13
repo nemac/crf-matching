@@ -75,7 +75,11 @@ export default function ComparisonBoard({
                     <Box
                       sx={{
                         position: 'absolute',
-                        top: '8px',
+                        top: {
+                          xs: '70px',
+                          sm: '40px',
+                          lg: '8px',
+                        },
                         right: '8px',
                       }}
                     >
