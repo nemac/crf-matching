@@ -1,7 +1,9 @@
 import { useRef } from 'react';
-import { Typography, Box, styled } from '@mui/material';
+import { Typography, Box, styled, IconButton } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import SchoolIcon from '@mui/icons-material/School';
+import Button from '@mui/material/Button';
+import InfoIcon from '@mui/icons-material/Info';
 
 import ProfilePopper from './ProfilePopper';
 import HeaderBox from './HeaderBox';
@@ -23,41 +25,33 @@ function StrTrainedBadge({ isTrained }) {
   if (isTrained === 'Yes') {
     return (
       <StyledBox
-        boxShadow={3}
         sx={{
           display: 'inline-flex',
           width: '100%',
-          borderRadius: {
-            xs: 0,
-            md: 4,
-          },
           bgcolor: {
             xs: 'primary.lightBlue',
-            md: 'primary.main',
+            md: 'transparent',
           },
-          color: {
-            xs: 'primary.main',
-            md: 'primary.lightGray',
-          },
+          color: theme.palette.primary.main,
           flexGrow: 'space-around',
           verticalAlign: 'middle',
           justifyContent: 'center',
           alignItems: 'center',
         }}
       >
-        <SchoolIcon />
+        <SchoolIcon sx={{ fontSize: '1rem', mr: 0.5 }} />
         <Typography
           sx={{
             display: {
               xs: 'none',
               md: 'inherit',
             },
-            fontSize: '1rem',
+            fontSize: '0.875rem',
             marginLeft: '10px',
             verticalAlign: 'baseline',
           }}
         >
-          STR Trained
+          StR Trained
         </Typography>
       </StyledBox>
     );
@@ -77,26 +71,35 @@ function StrTrainedBadge({ isTrained }) {
 
 function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setPoppedPractitioner }) {
   const headerRef = useRef(null);
+  const timeoutRef = useRef(null);
 
-  const onMouseEnter = (e) => {
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
     setPoppedPractitioner(practitioner);
   };
 
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setPoppedPractitioner(null);
+    }, 100);
+  };
+
   return (
-    <HeaderBox 
+    <HeaderBox
       sx={{
         flexDirection: 'column',
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
         alignItems: 'center',
-        width: '80%',
         margin: '0 auto',
+        padding: '8px 1px', // 1px L/R padding to fix Chrome bug where full ellipses don't show
         display: {
           md: 'flex',
-          xs: 'block'
+          xs: 'block',
         },
       }}
       ref={headerRef}
-      onMouseEnter={onMouseEnter}
     >
       <StyledBox
         sx={{
@@ -116,41 +119,103 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
               xs: 'inherit',
               md: 'none',
             },
-            color: "primary.lightBlue",
+            color: 'primary.lightBlue',
           }}
         />
       </StyledBox>
-      {/* practitioner label - hidden on xs */}
-      <Typography
-        variant="h5"
+
+      {/* Title and info icon container */}
+      <Box
         sx={{
-          display: {
-            xs: 'none',
-            md: 'inherit',
-          },
-          overflow: 'hidden',
-          textOverflow: 'ellipsis',
-          whiteSpace: 'nowrap',
-          textWrap: 'auto',
-          textAlign: 'center',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          margin: '8px 0', // Add margin to increase space between icon and STR trained
+          flexDirection: 'column', // Stack title and icon
         }}
       >
-        {practitioner.org}
-      </Typography>
-      <StrTrainedBadge isTrained={strTrained}></StrTrainedBadge>
-      <ProfilePopper
-        headerRef={headerRef}
-        practitioner={practitioner}
-        poppedPractitioner={poppedPractitioner}
-        setPoppedPractitioner={setPoppedPractitioner}
-      ></ProfilePopper>
+        <Typography
+          variant="h5"
+          sx={{
+            display: {
+              xs: 'none',
+              md: '-webkit-box',
+            },
+            overflow: 'hidden',
+            textWrap: 'auto',
+            textAlign: 'center',
+            WebkitLineClamp: '3',
+            WebkitBoxOrient: 'vertical',
+          }}
+        >
+          {practitioner.org}
+        </Typography>
+        <IconButton
+          size="small"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          sx={{
+            color: 'primary.main',
+            '&:hover': {
+              backgroundColor: 'transparent',
+            },
+          }}
+        >
+          <InfoIcon fontSize="small" />
+        </IconButton>
+      </Box>
+
+      {/* Bottom container for badge, popper, and button */}
+      <Box
+        sx={{
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center', // Center STR trained badge
+          gap: 1,
+        }}
+      >
+        <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+          <StrTrainedBadge isTrained={strTrained} />
+        </Box>
+        <ProfilePopper
+          headerRef={headerRef}
+          practitioner={practitioner}
+          poppedPractitioner={poppedPractitioner}
+          setPoppedPractitioner={setPoppedPractitioner}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        />
+
+        <Button
+          component="a"
+          href={`/practitioner/${practitioner.airtableRecId}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          startIcon={<PersonIcon />}
+          variant="contained"
+          sx={{
+            bgcolor: 'primary.midBlue',
+            color: 'primary.white',
+            textTransform: 'none',
+            borderRadius: 2,
+            width: '100%',
+            '&:hover': {
+              bgcolor: 'primary.main',
+            },
+          }}
+        >
+          <Typography sx={{ display: { xs: 'none', md: 'inherit' }, fontSize: '.875rem' }}>View Full Profile</Typography>
+          <Typography sx={{ display: { xs: 'inherit', md: 'none' }, fontSize: '.875rem' }}>View Profile</Typography>
+        </Button>
+      </Box>
     </HeaderBox>
   );
 }
 
 export default function PractitionerPane({ community, practitioner, poppedPractitioner, setPoppedPractitioner }) {
   // Determine if we're on SelfServicePage by checking if community.name is "Self Service"
-  const isSelfService = community.name === 'My Community';
+  const isSelfService = community.name === 'My Community' || community.name.includes(',');
 
   const sections = [
     [community.state, practitioner.state],
@@ -171,13 +236,11 @@ export default function PractitionerPane({ community, practitioner, poppedPracti
   return (
     <Box
       style={{
-        // flex: '1 1 33%',
         backgroundColor: theme.palette.primary.lightGray,
       }}
     >
       <PractitionerHeader
         practitioner={practitioner}
-        linkPath={`#/practitioner/${practitioner.id}`}
         strTrained={practitioner.strTrained}
         poppedPractitioner={poppedPractitioner}
         setPoppedPractitioner={setPoppedPractitioner}
@@ -186,17 +249,14 @@ export default function PractitionerPane({ community, practitioner, poppedPracti
         {sections.map((section, index) => (
           <div key={section.id}>
             <Section {...section} />
-            {/* Add invisible spacer that matches "Add another" button if on SelfServicePage */}
             {isSelfService && (
               <Box
                 sx={{
-                  height: '51px', // Match button height
-                  mb: 2, // Match button margin
+                  height: '51px',
+                  mb: 2,
                   visibility: 'hidden',
                 }}
-              >
-                {/* Empty box with same dimensions as Add Another button */}
-              </Box>
+              />
             )}
           </div>
         ))}

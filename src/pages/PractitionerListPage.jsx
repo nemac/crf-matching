@@ -3,6 +3,7 @@ import { Container, Grid, Typography } from '@mui/material';
 import { fetchAllPractitioners } from '../util/api';
 import FullPageSpinner from '../components/FullPageSpinner';
 import PractitionerCard from '../components/PractitionerCard';
+import Logo from '../components/Logo';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../theme';
 
@@ -32,6 +33,7 @@ export default function PractitionerListPage() {
         maxWidth="lg"
         sx={{ py: 4 }}
       >
+        <Logo /> {/* CSCI Logo */}
         <Typography
           variant="h4"
           textAlign="center"

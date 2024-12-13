@@ -32,7 +32,6 @@ export default function ComparisonBoard({
     <ThemeProvider theme={theme}>
       <RowHoverContext.Provider value={hoverRow}>
         <SetHoverRowContext.Provider value={setHoverRow}>
-          <CssBaseline />
           <Container
             maxWidth="xl"
             sx={{ p: 2 }}
@@ -57,7 +56,8 @@ export default function ComparisonBoard({
 
               {/* Practitioners Panel */}
               <Stack sx={{ width: '60%', pl: 0, flex: '3 2 auto' }}>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, mt: 1 }}>
+                {/* Header Area with View More Button */}
+                <Box sx={{ mb: 2, mt: 1, position: 'relative' }}>
                   <Box sx={{ width: '100%', textAlign: 'center' }}>
                     <Typography
                       color="primary.main"
@@ -75,10 +75,9 @@ export default function ComparisonBoard({
                   {hasMorePractitioners && (
                     <Box
                       sx={{
-                        position: 'fixed',
-                        top: '24px',
-                        right: '24px',
-                        zIndex: 1000,
+                        position: 'absolute',
+                        top: '8px',
+                        right: '8px',
                       }}
                     >
                       <Button
@@ -110,10 +109,7 @@ export default function ComparisonBoard({
                   sx={{
                     pb: 2,
                     width: '100%',
-                    gap: {
-                      sm: '4px',
-                      md: '8px',
-                    },
+                    gap: 1,
                     overflowX: 'auto',
                   }}
                 >

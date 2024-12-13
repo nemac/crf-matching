@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Typography, Box, Stack } from '@mui/material';
 import HeaderBox from './HeaderBox';
 import ScoreSection from './ScoreSection';
@@ -29,7 +28,7 @@ const getSectionData = (community, isSelectable, availableOptions, onSelectionCh
       availableSelections: isSelectable ? availableOptions?.hazards || [] : [],
     },
     {
-      header: 'Size',
+      header: 'Community Population',
       cards: community.size,
       availableSelections: isSelectable ? availableOptions?.size || [] : [],
     },

@@ -3,11 +3,13 @@
 ### Local Setup
 
 - Create an [Airtable Personal Access Token](https://support.airtable.com/docs/creating-personal-access-tokens)
+- Create an [ArcGIS Online API Key](https://developers.arcgis.com/documentation/security-and-authentication/api-key-authentication/tutorials/create-an-api-key/)
 - Create a `.env.` file in base folder that looks like this:
 
 ```
 AIRTABLE_TOKEN=YOUR_TOKEN
 AIRTABLE_BASE=app54Ce7cZjqk6dLw
+AGOL_API_KEY=YOUR_API_KEY
 ```
 
 Run `npm run dev` for local server

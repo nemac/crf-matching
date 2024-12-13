@@ -42,8 +42,12 @@ const practitionerFieldMap = {
   strTrained:
     'Are There Members From Your Organization (Or Team) Who Have Completed The N O A A Steps To Resilience Training?',
   info: "Please provide any additional information you want us to know about your organization's (or team's) background and qualifications to provide adaptation services",
-  //exampleStakeholders: 'Provide An Example Of Your Experience Working Directly With Stakeholders',
-  //exampleMultipleBenefits: 'Provide An Example Of A Project That Provided Multiple Benefits Across Sectors And Scales, And How It Did That',
+  organizationType: 'Organization Type',
+  additionalInformation:
+    "Please provide any additional information you want us to know about your organization's (or team's) background and qualifications to provide adaptation services",
+  specificTypesOfCommunities:
+    'Does Your Organization Specialize In Specific Types Of Communities? (E - G - , Size, Geography, Economic Or Sociological Profile)',
+  languageFluencies: 'Are Members Of Your Organization (Or Team) Fluent In Any Languages Other Than English?',
 };
 
 const communityFieldMap = {
@@ -122,7 +126,46 @@ export const fetchFilteredPractitioners = (filters, setPractitioners) => {
             }
 
             return matches;
-          });
+          })
+          // Calculate match score
+          .map((rec) => {
+            let matchCount = 0;
+
+            if (filters.state?.length) {
+              filters.state.forEach((state) => {
+                if (rec.state.includes(state)) matchCount++;
+              });
+            }
+
+            if (filters.activities?.length) {
+              filters.activities.forEach((activity) => {
+                if (rec.activities.includes(activity)) matchCount++;
+              });
+            }
+
+            if (filters.sectors?.length) {
+              filters.sectors.forEach((sector) => {
+                if (rec.sectors.includes(sector)) matchCount++;
+              });
+            }
+
+            if (filters.hazards?.length) {
+              filters.hazards.forEach((hazard) => {
+                if (rec.hazards.includes(hazard)) matchCount++;
+              });
+            }
+
+            if (filters.size?.length) {
+              filters.size.forEach((size) => {
+                if (rec.size.includes(size)) matchCount++;
+              });
+            }
+
+            rec.matchScore = matchCount;
+            return rec;
+          })
+          // Sort by match score (highest first)
+          .sort((a, b) => b.matchScore - a.matchScore);
 
         setPractitioners(recs);
       },
@@ -323,14 +366,30 @@ export const fetchOptionsFromAirtable = (setOptions) => {
         }
       });
 
+      // Define custom sort order for size
+      const sizeOrder = [
+        'Under 10k',
+        '10k-50k',
+        '50k-100k',
+        '100k-200k',
+        '200k-300k',
+        '300k-400k',
+        '400k-500k',
+        'Over 500k',
+      ];
+
       // Convert Sets to sorted arrays
       const options = {
         state: [...availableOptions.state].sort(),
         activities: [...availableOptions.activities].sort(),
         hazards: [...availableOptions.hazards].sort(),
-        size: [...availableOptions.size].sort(),
+        // Custom sort for size based on defined order
+        size: [...availableOptions.size].sort((a, b) => {
+          return sizeOrder.indexOf(a) - sizeOrder.indexOf(b);
+        }),
         sectors: [...availableOptions.sectors].sort(),
       };
+
       setOptions(options);
     });
 };
