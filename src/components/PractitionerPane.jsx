@@ -141,7 +141,7 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
         <IconButton
           size="small"
           onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          // onMouseLeave={handleMouseLeave}
           sx={{
             color: 'primary.main',
             '&:hover': {
