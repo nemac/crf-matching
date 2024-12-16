@@ -316,6 +316,7 @@ const ViewToggle = ({ view, onViewChange, selectedCount, onClearSelected }) => {
       sx={{
         display: 'flex',
         justifyContent: 'center',
+        flexWrap: 'wrap',
         width: '100%',
         mb: 3,
         gap: 2,
@@ -333,6 +334,10 @@ const ViewToggle = ({ view, onViewChange, selectedCount, onClearSelected }) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          flexBasis: { // So the clear button wraps in mobile
+            xs: '40%',
+            md: 'auto',
+          },
           boxShadow: view === 'cards' ? 2 : 1,
           transition: 'all 0.2s ease-in-out',
           '&:hover': {
@@ -355,6 +360,10 @@ const ViewToggle = ({ view, onViewChange, selectedCount, onClearSelected }) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          flexBasis: { // So the clear button wraps in mobile
+            xs: '40%',
+            md: 'auto',
+          },
           boxShadow: view === 'compare' ? 2 : 1,
           transition: 'all 0.2s ease-in-out',
           '&:hover': {
@@ -373,7 +382,10 @@ const ViewToggle = ({ view, onViewChange, selectedCount, onClearSelected }) => {
           onClick={onClearSelected}
           startIcon={<PersonOffOutlined />}
           sx={{
-            position: 'absolute',
+            position: {
+              xs: 'static',
+              md: 'absolute',
+            },
             right: 0,
             bgcolor: 'primary.white',
             color: 'primary.main',
