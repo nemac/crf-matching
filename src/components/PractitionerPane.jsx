@@ -166,13 +166,24 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
         <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
           <StrTrainedBadge isTrained={strTrained} />
         </Box>
+
+        {/* Display popup with hover events depending on if it's mobile or desktop */}
         <ProfilePopper
           headerRef={headerRef}
           practitioner={practitioner}
           poppedPractitioner={poppedPractitioner}
           setPoppedPractitioner={setPoppedPractitioner}
-          // onMouseEnter={handleMouseEnter}
-          // onMouseLeave={handleMouseLeave}
+          sx ={{display: { xs: 'inherit', md: 'none' }}}
+        />
+
+        <ProfilePopper
+          headerRef={headerRef}
+          practitioner={practitioner}
+          poppedPractitioner={poppedPractitioner}
+          setPoppedPractitioner={setPoppedPractitioner}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          sx ={{display: { xs: 'none', md: 'inherit' }}}
         />
 
         <Button
