@@ -334,7 +334,8 @@ const ViewToggle = ({ view, onViewChange, selectedCount, onClearSelected }) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          flexBasis: { // So the clear button wraps in mobile
+          flexBasis: {
+            // So the clear button wraps in mobile
             xs: '40%',
             md: 'auto',
           },
@@ -360,7 +361,8 @@ const ViewToggle = ({ view, onViewChange, selectedCount, onClearSelected }) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          flexBasis: { // So the clear button wraps in mobile
+          flexBasis: {
+            // So the clear button wraps in mobile
             xs: '40%',
             md: 'auto',
           },
@@ -675,7 +677,7 @@ export default function LandingPage() {
             mb: 1,
           }}
         >
-          (Jeff Jeff Jeff Test) Looking to connect to an adaptation practitioner?
+          Looking to connect to an adaptation practitioner?
         </Typography>
         <Paper
           variant="outlined"
@@ -758,9 +760,9 @@ export default function LandingPage() {
               onClick={() => setShowFilters(!showFilters)}
               sx={{
                 textTransform: 'none',
-                bgcolor: 'grey.500',
+                bgcolor: 'primary.main',
                 '&:hover': {
-                  bgcolor: 'grey.600',
+                  bgcolor: 'primary.dark',
                 },
               }}
             >

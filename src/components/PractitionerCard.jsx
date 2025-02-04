@@ -31,7 +31,8 @@ export default function PractitionerCard({ practitioner, onComparisonSelect, isS
               height: 140,
               mb: 2,
               backgroundColor: '#F5F5F5',
-              display: 'flex',
+              // display: 'flex',
+              display: 'none', // remove this and uncomment flex to get the logo back
               justifyContent: 'center',
               alignItems: 'center',
               borderRadius: 2,
@@ -69,7 +70,7 @@ export default function PractitionerCard({ practitioner, onComparisonSelect, isS
               variant="subtitle2"
               sx={{ mb: 1, fontWeight: 'bold' }}
             >
-              Adaptation Expertise
+              Services Provided
             </Typography>
             <Box
               sx={{
