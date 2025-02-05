@@ -670,14 +670,40 @@ export default function LandingPage() {
       <Box sx={{ mb: 6 }}>
         <Typography
           variant="h3"
-          component="h1"
           sx={{
             color: 'primary.main',
             fontWeight: 'bold',
             mb: 1,
           }}
         >
-          Looking to connect to an adaptation practitioner?
+          Registry of Adaptation Practitioners
+        </Typography>
+        <Typography
+          sx={{
+            mb: 1,
+          }}
+        >
+          The Registry of Adaptation Practitioners is a community resource for easy identification of a qualified
+          practitioner that can provide the support you need!
+        </Typography>
+        <Typography
+          sx={{
+            fontWeight: 'bold',
+            mb: 1,
+            ml: 1,
+          }}
+        >
+          Get Started!
+        </Typography>
+        <Typography
+          variant="h4"
+          sx={{
+            color: 'primary.main',
+            fontWeight: 'bold',
+            mb: 1,
+          }}
+        >
+          Looking for an adaptation practitioner?
         </Typography>
         <Paper
           variant="outlined"
