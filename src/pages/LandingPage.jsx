@@ -739,7 +739,7 @@ export default function LandingPage() {
                 whiteSpace: 'nowrap',
               }}
             >
-              Where is your community?
+              Where is the community?
             </Typography>
 
             <LocationSearch
