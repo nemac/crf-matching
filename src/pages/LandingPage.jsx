@@ -183,7 +183,7 @@ const FilterSection = ({ title, description, type, selected, availableOptions, o
   const getButtonText = () => {
     switch (type) {
       case 'activities':
-        return 'Add activity';
+        return 'Add a service';
       case 'hazards':
         return 'Add hazard';
       case 'sectors':
@@ -863,7 +863,7 @@ export default function LandingPage() {
           <Collapse in={showFilters}>
             <Box sx={{ mt: 3 }}>
               <FilterSection
-                title="Find practitioners by activities that are important in your community"
+                title="Find practitioners by services that are important in your community"
                 // description="Brief JARGON free summary of what activities are in adaptation."
                 type="activities"
                 selected={filters.activities}
