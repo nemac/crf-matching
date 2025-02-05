@@ -943,7 +943,7 @@ export default function LandingPage() {
                   variant="body1"
                   sx={{ mb: 3, color: 'text.secondary' }}
                 >
-                  {visiblePractitioners.length} out of {practitioners.length} practitioners selected from the{' '}
+                  {visiblePractitioners.length} out of {practitioners.length} practitioners selected from {' '}
                   {totalPractitioners} available in the{' '}
                   <a
                     href="https://climatesmartcommunity.org/registry/"
