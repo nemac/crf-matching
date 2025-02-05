@@ -779,7 +779,7 @@ export default function LandingPage() {
                   onClick={() => {
                     // Fetch all practitioners
                     fetchAllPractitioners((practitioners) => {
-                      setPractitioners(practitioners);
+                      setPractitioners(practitioners.sort(() => Math.random() - 0.5));
                       // Set display count to show all practitioners
                       setDisplayCount(practitioners.length);
                       // Make sure we're in card view
@@ -943,8 +943,8 @@ export default function LandingPage() {
                   variant="body1"
                   sx={{ mb: 3, color: 'text.secondary' }}
                 >
-                  {visiblePractitioners.length} out of {practitioners.length} practitioners selected from {' '}
-                  {totalPractitioners} available in {' '}
+                  {visiblePractitioners.length} out of {practitioners.length} practitioners selected from{' '}
+                  {totalPractitioners} available in{' '}
                   <a
                     href="https://climatesmartcommunity.org/registry/"
                     target="_blank"
