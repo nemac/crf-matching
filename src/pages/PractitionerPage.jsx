@@ -77,10 +77,11 @@ function MatchBadge({ label, key }) {
       sx={{
         border: `1px solid ${theme.palette.primary.midBlue}`,
         borderRadius: 6,
-        color: 'primary.midBlue',
+        // color: 'primary.midBlue',
+        color: theme.palette.primary.main,
         alignContent: 'center',
         textAlign: 'center',
-        margin: 1,
+        margin: .5,
         pl: 3,
         pr: 3,
         pt: 1,
