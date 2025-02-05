@@ -764,6 +764,10 @@ export default function LandingPage() {
                 '&:hover': {
                   bgcolor: 'primary.dark',
                 },
+                fontSize: {
+                  xs: '0.875rem',
+                  sm: '1rem',
+                },
               }}
             >
               Filter practitioners by their expertise
