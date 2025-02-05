@@ -946,7 +946,7 @@ export default function LandingPage() {
                   {visiblePractitioners.length} out of {practitioners.length} practitioners selected from the{' '}
                   {totalPractitioners} available in the{' '}
                   <a
-                    href="https://climatesmartcommunity.org/apply-now-the-registry-of-climate-adaptation-and-resilience-professionals/"
+                    href="https://climatesmartcommunity.org/registry/"
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{
@@ -954,7 +954,7 @@ export default function LandingPage() {
                       textDecoration: 'underline',
                     }}
                   >
-                    The Registry of Adaptation Practitioners
+                    the Registry of Adaptation Practitioners
                   </a>
                 </Typography>
 
