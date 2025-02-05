@@ -804,7 +804,7 @@ export default function LandingPage() {
                     },
                   }}
                 >
-                  Browse All
+                  Browse all {totalPractitioners} practitioners
                 </Button>
               )}
 
