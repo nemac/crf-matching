@@ -12,5 +12,8 @@ export default defineConfig(({ command, mode }) => {
     },
     //base: 'https://nemac.github.io/crf-matching',
     plugins: [react()],
+    optimizeDeps: { // 
+      include: ['@mui/material/Unstable_Grid2'],
+    },    
   };
 });
