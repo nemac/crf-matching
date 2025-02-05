@@ -19,7 +19,7 @@ const sections = [
     objKey: 'state',
   },
   {
-    title: 'Activities we have expertise with',
+    title: 'Services we provide',
     objKey: 'activities',
   },
   {
