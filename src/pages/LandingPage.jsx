@@ -944,7 +944,7 @@ export default function LandingPage() {
                   sx={{ mb: 3, color: 'text.secondary' }}
                 >
                   {visiblePractitioners.length} out of {practitioners.length} practitioners selected from {' '}
-                  {totalPractitioners} available in the{' '}
+                  {totalPractitioners} available in {' '}
                   <a
                     href="https://climatesmartcommunity.org/registry/"
                     target="_blank"
@@ -954,7 +954,7 @@ export default function LandingPage() {
                       textDecoration: 'underline',
                     }}
                   >
-                    the Registry of Adaptation Practitioners
+                    The Registry of Adaptation Practitioners
                   </a>
                 </Typography>
 
