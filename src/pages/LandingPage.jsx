@@ -33,6 +33,7 @@ import ComparisonBoard from '../components/ComparisonBoard';
 import PractitionerCard from '../components/PractitionerCard';
 import { searchLocations, getLocationDetails } from '../util/geocoding';
 import { filtersToSearchParams, searchParamsToFilters, generateShareableUrl } from '../util/urlStateManagement';
+import { lightBlue } from '@mui/material/colors';
 import Logo from '../components/Logo';
 
 const PRACTITIONERS_PER_PAGE = 6;
@@ -263,12 +264,13 @@ const FilterSection = ({ title, description, type, selected, availableOptions, o
           onClick={handleClick}
           disabled={availableChoices.length === 0}
           sx={{
-            bgcolor: 'grey.400',
+            bgcolor: lightBlue[900],
             color: 'primary.white',
             textTransform: 'none',
             borderRadius: '20px',
             '&:hover': {
-              bgcolor: 'grey.500',
+              bgcolor: lightBlue[700],
+              color: 'primary.white',
             },
             '&.Mui-disabled': {
               bgcolor: 'grey.300',
@@ -816,13 +818,14 @@ export default function LandingPage() {
                   }}
                   startIcon={<FormatListBulleted />}
                   sx={{
-                    bgcolor: 'primary.white',
+                    // bgcolor: 'primary.white',
+                    bgcolor: lightBlue[50],
                     color: 'primary.main',
                     textTransform: 'none',
                     borderRadius: 2,
                     px: 2,
                     '&:hover': {
-                      bgcolor: 'grey.100',
+                      bgcolor: lightBlue[100],
                     },
                     fontSize: {
                       xs: '0.875rem',
