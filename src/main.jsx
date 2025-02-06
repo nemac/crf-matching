@@ -5,6 +5,7 @@ import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
 
+import AboutPage from './pages/AboutPage.jsx';
 import CommunityListPage from './pages/CommunityListPage.jsx';
 import CommunityPage from './pages/CommunityPage.jsx';
 import LandingPage from './pages/LandingPage.jsx';
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
   {
     path: '/selfservice',
     element: <SelfServicePage />,
+  },
+  {
+    path: '/about',
+    element: <AboutPage />,
   },
 ]);
 
