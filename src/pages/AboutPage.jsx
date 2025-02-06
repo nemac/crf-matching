@@ -1,5 +1,6 @@
 import { Container, Typography, Box, Button, Grid, Paper } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
+import Navbar from '../components/Navbar.jsx';
 import theme from '../theme';
 import Logo from '../components/Logo';
 import crf_logo from '../assets/CRF_logo.jpg';
@@ -7,37 +8,81 @@ import ecoadapt_logo from '../assets/EcoAdapt_logo.jpg';
 import geos_logo from '../assets/geos_logo.jpg';
 import nemac_logo from '../assets/nemac_logo.png';
 
-// Placeholder component for partner logos
-const PartnerLogo = ({ name, imgSrc }) => (
+const PartnerLogo = ({ name, imgSrc, url }) => (
   <Paper
     elevation={2}
     sx={{
-      p: 4,
-      height: '200px',
+      height: '220px',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'center',
       borderRadius: 2,
       bgcolor: 'primary.white',
+      transition: 'transform 0.2s ease-in-out',
+      '&:hover': {
+        transform: 'scale(1.02)',
+      },
+      overflow: 'hidden',
     }}
   >
-    <Box
-      component="img"
-      src={imgSrc || '/api/placeholder/150/100'}
-      alt={name}
-      sx={{
-        maxWidth: '100%',
-        height: 'auto',
-        mb: 2,
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      style={{
+        textDecoration: 'none',
+        color: 'inherit',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: '100%',
+        height: '100%',
       }}
-    />
-    <Typography
-      variant="h6"
-      align="center"
     >
-      {name}
-    </Typography>
+      <Box
+        sx={{
+          flex: 1,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          p: 1,
+          pb: 2,
+        }}
+      >
+        <Box
+          component="img"
+          src={imgSrc}
+          alt={name}
+          sx={{
+            maxWidth: '100%',
+            maxHeight: '130px',
+            objectFit: 'contain',
+          }}
+        />
+      </Box>
+      <Box
+        sx={{
+          width: '100%',
+          bgcolor: 'white',
+          p: 2,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Typography
+          variant="h6"
+          align="center"
+          sx={{
+            fontSize: '1.1rem',
+            fontWeight: 'bold',
+          }}
+        >
+          {name}
+        </Typography>
+      </Box>
+    </a>
   </Paper>
 );
 
@@ -48,7 +93,7 @@ export default function AboutPage() {
         maxWidth="lg"
         sx={{ pt: 4, pb: 8 }}
       >
-        <Logo />
+        <Navbar />
 
         {/* Main Title Section */}
         <Typography
@@ -65,7 +110,7 @@ export default function AboutPage() {
         </Typography>
 
         {/* Main Description Section */}
-        <Box sx={{ mb: 6 }}>
+        <Box sx={{ mb: 2 }}>
           <Typography
             variant="body1"
             paragraph
@@ -86,8 +131,20 @@ export default function AboutPage() {
           </Typography>
         </Box>
 
+        <Box sx={{ mb: 2 }}>
+          <Typography variant="body1">The review process assesses...</Typography>
+
+          <Typography
+            variant="body1"
+            component="div"
+            sx={{ pl: 3 }}
+          >
+            • have a checklist figure here that highlights the key skills/features of a qualified applicant
+          </Typography>
+        </Box>
+
         {/* Registration Section */}
-        <Box sx={{ mb: 8 }}>
+        <Box sx={{ mb: 4 }}>
           <Typography
             variant="h4"
             sx={{
@@ -104,14 +161,24 @@ export default function AboutPage() {
             paragraph
           >
             If your organization provides services in the field of climate resilience and adaptation, is committed to
-            following best practices, and has a track record of high-quality results, submit an application! We are
-            especially interested in organizations that support entire community adaptation processes, including
-            stakeholder engagement, vulnerability assessment, adaptation planning, and plan implementation.
+            following best practices, and has a track record of high-quality results,&nbsp;
+            <a
+              href="https://climatesmartcommunity.org/registry/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: theme.palette.primary.main, textDecoration: 'underline' }}
+            >
+              submit an application
+            </a>
+            ! We are especially interested in organizations that support entire community adaptation processes,
+            including stakeholder engagement, vulnerability assessment, adaptation planning, and plan implementation.
           </Typography>
 
           <Button
             variant="contained"
-            href="/submit-application"
+            href="https://climatesmartcommunity.org/registry/"
+            target="_blank"
+            rel="noopener noreferrer"
             sx={{
               bgcolor: 'primary.main',
               color: 'primary.white',
@@ -129,7 +196,7 @@ export default function AboutPage() {
         </Box>
 
         {/* Foundation Support Section */}
-        <Box sx={{ mb: 8 }}>
+        <Box sx={{ mb: 4 }}>
           <Typography
             variant="body1"
             paragraph
@@ -153,10 +220,10 @@ export default function AboutPage() {
             spacing={4}
           >
             {[
-              { name: 'EcoAdapt', imgSrc: ecoadapt_logo },
-              { name: 'Climate Resilience Fund', imgSrc: crf_logo },
-              { name: 'Geos Institute', imgSrc: geos_logo },
-              { name: 'NEMAC', imgSrc: nemac_logo },
+              { name: 'EcoAdapt', imgSrc: ecoadapt_logo, url: 'https://ecoadapt.org' },
+              { name: 'Climate Resilience Fund', imgSrc: crf_logo, url: 'https://climateresiliencefund.org' },
+              { name: 'Geos Institute', imgSrc: geos_logo, url: 'https://geosinstitute.org' },
+              { name: 'NEMAC', imgSrc: nemac_logo, url: 'https://nemac.unca.edu' },
             ].map((partner, index) => (
               <Grid
                 item
