@@ -27,6 +27,7 @@ import { PersonOffOutlined } from '@mui/icons-material';
 import { FormatListBulleted } from '@mui/icons-material';
 import CancelIcon from '@mui/icons-material/Cancel';
 import IconButton from '@mui/material/IconButton';
+import SortByAlphaIcon from '@mui/icons-material/SortByAlpha';
 import { fetchFilteredPractitioners, fetchOptionsFromAirtable, fetchAllPractitioners } from '../util/api';
 import Toast from '../components/Toast';
 import ComparisonBoard from '../components/ComparisonBoard';
@@ -422,6 +423,7 @@ export default function LandingPage() {
   const [displayCount, setDisplayCount] = useState(PRACTITIONERS_PER_PAGE);
   const [selectedForComparison, setSelectedForComparison] = useState(new Set());
   const [searchParams, setSearchParams] = useSearchParams();
+  const [isAscending, setIsAscending] = useState(true);
   const [filters, setFilters] = useState({
     activities: [],
     sectors: [],
@@ -968,24 +970,64 @@ export default function LandingPage() {
             />
             {currentView === 'cards' ? (
               <>
-                <Typography
-                  variant="body1"
-                  sx={{ mb: 3, color: 'text.secondary' }}
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    mb: 3,
+                    gap: 2,
+                  }}
                 >
-                  {visiblePractitioners.length} out of {practitioners.length} practitioners selected from{' '}
-                  {totalPractitioners} available in{' '}
-                  <a
-                    href="https://climatesmartcommunity.org/registry/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      color: 'inherit',
-                      textDecoration: 'underline',
-                    }}
+                  <Typography
+                    variant="body1"
+                    sx={{ mb: 3, color: 'text.secondary' }}
                   >
-                    The Registry of Adaptation Practitioners
-                  </a>
-                </Typography>
+                    {visiblePractitioners.length} out of {practitioners.length} practitioners selected from{' '}
+                    {totalPractitioners} available in{' '}
+                    <a
+                      href="https://climatesmartcommunity.org/registry/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        color: 'inherit',
+                        textDecoration: 'underline',
+                      }}
+                    >
+                      The Registry of Adaptation Practitioners
+                    </a>
+                  </Typography>
+                  {selectedState === 'BrowseAll' && (
+                    <Button
+                      startIcon={<SortByAlphaIcon />}
+                      sx={{
+                        bgcolor: 'primary.white',
+                        color: 'primary.main',
+                        border: '1px solid',
+                        borderColor: 'primary.borderGray',
+                        borderRadius: '20px',
+                        boxShadow: 1,
+                        textTransform: 'none',
+                        whiteSpace: 'nowrap',
+                        '&:hover': {
+                          bgcolor: 'grey.100',
+                        },
+                      }}
+                      onClick={() => {
+                        const sortedPractitioners = [...practitioners].sort((a, b) => a.org.localeCompare(b.org));
+
+                        if (!isAscending) {
+                          sortedPractitioners.reverse();
+                        }
+
+                        setPractitioners(sortedPractitioners);
+                        setIsAscending(!isAscending);
+                      }}
+                    >
+                      Sort
+                    </Button>
+                  )}
+                </Box>
 
                 <Grid
                   container
