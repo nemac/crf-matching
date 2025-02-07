@@ -91,6 +91,7 @@ export default function PractitionerCard({ practitioner, onComparisonSelect, isS
                     fontSize: '0.75rem',
                     p: 1.325,
                     m: 0.5,
+                    minWidth: '75px',
                   }}
                 >
                   {activity}
