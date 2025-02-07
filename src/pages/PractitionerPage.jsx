@@ -103,7 +103,6 @@ function MatchSection({ practitioner, title, objKey }) {
           display: 'flex',
           flexWrap: 'wrap',
           minHeight: '50px',
-          p: 1,
         }}
       >
         {matchBadges}
