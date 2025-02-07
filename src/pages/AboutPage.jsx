@@ -109,7 +109,7 @@ export default function AboutPage() {
             mt: 4,
           }}
         >
-          About the adaptation registry
+          About the Registry
         </Typography>
 
         {/* Main Description Section */}
@@ -128,7 +128,7 @@ export default function AboutPage() {
           >
             The Registry is open to all organizations that provide climate adaptation and resilience services. For climate adaptation practitioners, 
             the Registry offers an opportunity to showcase their organization and its skills, be discoverable by those that need their help, and be 
-            eligible for funding from sources such as the <a
+            eligible for funding from sources, such as the <a
               href="https://climatesmartcommunity.org/"
               target="_blank"
               rel="noopener noreferrer"
@@ -139,9 +139,9 @@ export default function AboutPage() {
 
         <Box sx={{ mb: 2 }}>
           <Typography variant="body1">
-          In order to be accepted into the Registry, organizations must submit an application that is then reviewed and approved to ensure that they 
-          possess the depth of expertise and skill that will allow them to provide effective, equitable, and sustainable adaptation services to communities, 
-          and that they adhere to the known best practices in the field. The review process assesses:
+          In order to be accepted into the Registry, organizations must submit an application that is then reviewed and approved to ensure that 
+          they possess the depth of expertise and skill that will allow them to provide effective, equitable, and sustainable adaptation services to 
+          communities, and that they adhere to the known best practices in the field. The review process assesses:
           </Typography>
 
           <Typography component="ul"  sx={{ mt: 1, mb: 2, ml: 2, mr: 2}}>
@@ -149,73 +149,85 @@ export default function AboutPage() {
                 Length of time working in the field
               </li>
               <li>
-                Whether practitioners have completed certifications or trainings such as the NOAA Steps to Resilience training
+                Whether practitioners have certifications or training, such as the NOAA Steps to Resilience training
               </li>
               <li>
-                Understanding of and commitment to incorporating stakeholder engagement and consideration of equity into adaptation work
+                Proficiency incorporating stakeholder engagement and equity into adaptation work
               </li>
               <li>
-                Expertise and ability to provide adaptation services such as vulnerability assessment, adaptation planning, and project implementation to communities
+               Expertise and ability to provide adaptation services from  vulnerability assessment, adaptation planning, to project implementation
               </li>
           </Typography>
         </Box>
 
         {/* Registration Section */}
-        <Box sx={{ mb: 4 }}>
+        <Box sx={{ mb: 1 }}>
           <Typography
             variant="h4"
             sx={{
               color: 'primary.main',
               fontWeight: 'bold',
-              fontStyle: 'italic',
-              mt: 3,
               mb: 1,
             }}
           >
             Want to be included in the Registry? 
           </Typography>
 
-          <Typography
-            variant="body1"
-            paragraph
-          >
-            If your organization provides services in the field of climate resilience and adaptation, 
-            is committed to following best practices, and has a track record of high-quality results,&nbsp;
-            <a
+          <Box sx={{ 
+            width: `100%`,
+            
+          }}>
+
+            <Typography
+              variant="body1"
+              paragraph
+            >
+              If your organization provides services in the field of climate resilience and adaptation, 
+              is committed to following best practices, and has a track record of high-quality results,&nbsp;
+              <a
+                href="https://www.surveymonkey.com/r/community-sign-up"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: theme.palette.primary.main, textDecoration: 'underline' }}
+              >
+                submit an application
+              </a>
+              ! We are especially interested in organizations that support entire community adaptation processes, including stakeholder 
+              engagement, vulnerability assessment, adaptation planning, and plan implementation.
+            </Typography>
+          </Box>
+        </Box>
+
+        <Box sx={{ 
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '100%',
+          mb: 4,
+        }}>
+          <Button
+              variant="contained"
               href="https://www.surveymonkey.com/r/community-sign-up"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: theme.palette.primary.main, textDecoration: 'underline' }}
+              sx={{
+                bgcolor: 'primary.main',
+                color: 'primary.white',
+                textTransform: 'none',
+                px: 4,
+                py: 1,
+                borderRadius: 1,
+                '&:hover': {
+                  bgcolor: 'primary.dark',
+                },
+              }}
             >
-              submit an application
-            </a>
-            ! We are especially interested in organizations that support entire community adaptation processes, including stakeholder 
-            engagement, vulnerability assessment, adaptation planning, and plan implementation.
-          </Typography>
-
-          <Button
-            variant="contained"
-            href="https://www.surveymonkey.com/r/community-sign-up"
-            target="_blank"
-            rel="noopener noreferrer"
-            sx={{
-              bgcolor: 'primary.main',
-              color: 'primary.white',
-              textTransform: 'none',
-              px: 4,
-              py: 1,
-              borderRadius: 1,
-              '&:hover': {
-                bgcolor: 'primary.dark',
-              },
-            }}
-          >
-            Submit an application
+              Submit an application
           </Button>
         </Box>
 
         {/* Foundation Support Section */}
-        <Box sx={{ mb: 4 }}>
+        <Box sx={{ mt: 1, mb: 4 }}>
           <Typography
             variant="body1"
             paragraph
@@ -230,7 +242,7 @@ export default function AboutPage() {
             variant="body1"
             sx={{ mb: 4 }}
           >
-            The Registry is conceived, supported, directed, created and operated by EcoAdapt, Climate Resilience Fund, Geos, and UNC Asheville's NEMAC (designer/technical lead) 
+            The Registry is conceived, supported, directed, created and operated by EcoAdapt, Climate Resilience Fund, Geos, and UNC Asheville's NEMAC. 
           </Typography>
 
           <Grid
