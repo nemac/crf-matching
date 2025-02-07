@@ -77,15 +77,12 @@ function MatchBadge({ label, key }) {
       sx={{
         border: `1px solid ${theme.palette.primary.midBlue}`,
         borderRadius: 6,
-        // color: 'primary.midBlue',
         color: theme.palette.primary.main,
         alignContent: 'center',
         textAlign: 'center',
-        margin: .5,
-        pl: 3,
-        pr: 3,
-        pt: 1,
-        pb: 1,
+        fontSize: '0.75rem',
+        p: 1.25,
+        m: 0.5,
       }}
     >
       {label}
@@ -106,7 +103,7 @@ function MatchSection({ practitioner, title, objKey }) {
           display: 'flex',
           flexWrap: 'wrap',
           minHeight: '50px',
-          p: .025,
+          p: 1,
           mb: 1,
         }}
       >
@@ -218,17 +215,6 @@ function PractitionerPageLoaded({ practitioner }) {
             }}
           >
             {practitioner.specificTypesOfCommunities || 'N/A'}
-          </Box>
-        </Box>
-        <Box>
-          <SectionHeader title="Other Languages"></SectionHeader>
-          <Box
-            sx={{
-              pb: 1,
-              mb: 1,
-            }}
-          >
-            {practitioner.languageFluencies || 'N/A'}
           </Box>
         </Box>
         <Box>

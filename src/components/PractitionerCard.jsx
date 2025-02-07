@@ -75,7 +75,6 @@ export default function PractitionerCard({ practitioner, onComparisonSelect, isS
             <Box
               sx={{
                 display: 'flex',
-                // gap: '4px',
                 flexDirection: 'row',
                 flexWrap: 'wrap',
               }}
@@ -86,15 +85,12 @@ export default function PractitionerCard({ practitioner, onComparisonSelect, isS
                   sx={{
                     border: `1px solid ${theme.palette.primary.midBlue}`,
                     borderRadius: 6,
-                    // color: 'primary.midBlue',
                     color: theme.palette.primary.main,
                     alignContent: 'center',
                     textAlign: 'center',
-                    margin: .5,
-                    pl: 3,
-                    pr: 3,
-                    pt: 1,
-                    pb: 1,
+                    fontSize: '0.75rem',
+                    p: 1.325,
+                    m: 0.5,
                   }}
                 >
                   {activity}
