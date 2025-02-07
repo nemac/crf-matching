@@ -2,8 +2,9 @@ import { useState, useLayoutEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import SchoolIcon from '@mui/icons-material/School';
-import { CssBaseline, Stack, Container, Box, Typography, styled, AppBar, Toolbar } from '@mui/material';
+import { CssBaseline, Stack, Container, Box, Typography, styled, AppBar, Toolbar, Button } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import theme from '../theme';
 import FullPageSpinner from '../components/FullPageSpinner';
@@ -120,15 +121,71 @@ const ContactAndTrainingBox = styled(Grid)(({ theme }) => ({
 }));
 
 function PractitionerPageLoaded({ practitioner }) {
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const logoWidth = isSmallScreen ? 125 : 180;
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <AppBar
+        position="static"
+        sx={{
+          bgcolor: 'primary.white',
+          boxShadow: 1,
+          borderBottom: `1px solid ${theme.palette.primary.borderGray}`,
+        }}
+      >
+        <Container maxWidth="lg"> 
+          <Toolbar sx={{ gap: 3, maxWidth: "lg"}}>
+            {/* Logo */}
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',              
+                width: `${logoWidth}px`,
+                py: 1,
+                pt: 2,
+                pb: 1,
+              }}
+            >
+              <Logo />
+            </Box>
+
+            {/* Navigation Links */}
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 3,
+              }}
+            >
+              <Typography
+                sx={{
+                  color: 'primary.main',
+                  textTransform: 'none',
+                  fontSize: '1rem',
+                  padding: 0,
+                  minWidth: 0,
+                  fontWeight: 'bold',
+                }}
+                onClick={() => {
+                  setPageSelect('registry');
+                }}
+              >
+                {isSmallScreen ? ( 'Practitioner Profile' ) : ( 'Registry of Adaptation Practitioner Profile' )}
+              </Typography>
+            </Box>
+          </Toolbar>
+        </Container> 
+      </AppBar>            
       <Container
         maxWidth="lg"
         sx={{ p: 3 }}
       >
-        <Logo /> {/* CSCI Logo */}
+        {/* <Logo /> CSCI Logo */}
         {/* Header */}
+        {/* <SectionHeader title="Registry of Adaptation Practitioner Profile"></SectionHeader>       */}
+      
         <Typography
           variant="h3"
           sx={{
