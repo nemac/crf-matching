@@ -34,7 +34,7 @@ export default function ComparisonBoard({
         <SetHoverRowContext.Provider value={setHoverRow}>
           <Container
             maxWidth="xl"
-            sx={{ p: 0 }}
+            sx={{ p: 0, cursor: 'default'  }}
           >
             <Stack
               direction="row"
