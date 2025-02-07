@@ -120,7 +120,7 @@ const LocationSearch = ({ value, onChange, disabled }) => {
       renderInput={(params) => (
         <TextField
           {...params}
-          placeholder="Enter your community"
+          placeholder="Enter the community location"
           sx={{
             bgcolor: 'primary.white',
             borderRadius: 1,
@@ -351,7 +351,7 @@ const ViewToggle = ({ view, onViewChange, selectedCount, onClearSelected }) => {
         onClick={() => onViewChange(null, 'cards')}
       >
         <WindowIcon sx={{ mr: 1, fontSize: '1.2rem' }} />
-        Cards
+        Grid
       </Box>
       <Box
         sx={{
@@ -687,7 +687,7 @@ export default function Registry() {
             mb: 3,
           }}
         >
-          The Registry of Adaptation Practitioners is a community resource for easy identification of a qualified adaptation practitioner that can provide the support you need!
+          The Registry of Adaptation Practitioners is a community resource for easy identification of a qualified adaptation practitioner to provide the support you need!
         </Typography>
         <Typography
           variant="h4"
@@ -790,7 +790,7 @@ export default function Registry() {
                 },
               }}
             >
-              Filter practitioners by their expertise
+              Filter practitioners
             </Button>
             <Box sx={{ display: 'flex', gap: 2 }}>
               {/* Only show browse all when no community is selected */}
@@ -921,7 +921,7 @@ export default function Registry() {
                   color: 'primary.main',
                 }}
               >
-                Adaptation practitioners that can help your community
+                {/* Adaptation practitioners that can help your community */}
               </Typography>
 
               <Button
