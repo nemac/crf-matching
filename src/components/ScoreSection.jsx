@@ -7,5 +7,6 @@ export default styled(Box)({
   marginTop: theme.spacing(2),
   fontSize: '1.3em',
   display: 'flex',
-  fontWeight: 700
+  fontWeight: 700,
+  minHeight: '35px',
 });
