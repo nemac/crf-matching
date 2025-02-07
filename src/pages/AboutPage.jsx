@@ -8,6 +8,9 @@ import geos_logo from '../assets/geos_logo.jpg';
 import nemac_logo from '../assets/nemac_logo.png';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import CircleIcon from "@mui/icons-material/Circle";
+
 
 const PartnerLogo = ({ name, imgSrc, url }) => (
   <Paper
@@ -141,29 +144,19 @@ export default function AboutPage() {
           and that they adhere to the known best practices in the field. The review process assesses:
           </Typography>
 
-          <Typography
-            variant="body1"
-            component="div"
-            sx={{ pl: 3 }}
-          >
-            <List>
-              <ListItem>
+          <Typography component="ul"  sx={{ mt: 1, mb: 2, ml: 2, mr: 2}}>
+              <li>
                 Length of time working in the field
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 Whether practitioners have completed certifications or trainings such as the NOAA Steps to Resilience training
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 Understanding of and commitment to incorporating stakeholder engagement and consideration of equity into adaptation work
-              </ListItem>
-              <ListItem>
+              </li>
+              <li>
                 Expertise and ability to provide adaptation services such as vulnerability assessment, adaptation planning, and project implementation to communities
-              </ListItem>                            
-            </List>
-           
-            
-            
-
+              </li>
           </Typography>
         </Box>
 
@@ -175,7 +168,8 @@ export default function AboutPage() {
               color: 'primary.main',
               fontWeight: 'bold',
               fontStyle: 'italic',
-              mb: 3,
+              mt: 3,
+              mb: 1,
             }}
           >
             Want to be included in the Registry? 
