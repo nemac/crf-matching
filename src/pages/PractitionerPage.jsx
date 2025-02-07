@@ -84,6 +84,7 @@ function MatchBadge({ label, key }) {
         fontSize: '0.75rem',
         p: 1.25,
         m: 0.5,
+        mb: 1,
       }}
     >
       {label}
