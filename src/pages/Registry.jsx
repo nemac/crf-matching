@@ -670,7 +670,7 @@ export default function Registry() {
       maxWidth="lg"
       sx={{ mt: 4 }}
     >
-      <Logo /> {/* CSCI Logo */}
+      {/* <Logo /> CSCI Logo */}
       <Box sx={{ mb: 6 }}>
         <Typography
           variant="h3"
@@ -684,20 +684,10 @@ export default function Registry() {
         </Typography>
         <Typography
           sx={{
-            mb: 1,
+            mb: 3,
           }}
         >
-          The Registry of Adaptation Practitioners is a community resource for easy identification of a qualified
-          practitioner that can provide the support you need!
-        </Typography>
-        <Typography
-          sx={{
-            fontWeight: 'bold',
-            mb: 1,
-            ml: 1,
-          }}
-        >
-          Get Started!
+          The Registry of Adaptation Practitioners is a community resource for easy identification of a qualified adaptation practitioner that can provide the support you need!
         </Typography>
         <Typography
           variant="h4"
@@ -765,7 +755,7 @@ export default function Registry() {
                   },
                 }}
               >
-                Change your community
+                Change the community
               </Button>
             )}
           </Box>
@@ -868,7 +858,7 @@ export default function Registry() {
           <Collapse in={showFilters}>
             <Box sx={{ mt: 3 }}>
               <FilterSection
-                title="Find practitioners by services that are important in your community"
+                title="Filter practitioners by the adaptation services they can provide to a community"
                 // description="Brief JARGON free summary of what activities are in adaptation."
                 type="activities"
                 selected={filters.activities}
@@ -878,7 +868,7 @@ export default function Registry() {
               />
 
               <FilterSection
-                title="Find practitioners by hazards that are affecting your community"
+                title="Filter practitioners by hazards that are affecting the community"
                 // description="Brief JARGON free summary of what hazards are in adaptation."
                 type="hazards"
                 selected={filters.hazards}
@@ -888,7 +878,7 @@ export default function Registry() {
               />
 
               <FilterSection
-                title="Find practitioners by important sectors in your community"
+                title="Filter practitioners by important sectors in the community"
                 // description="Brief JARGON free summary of what sectors are in adaptation."
                 type="sectors"
                 selected={filters.sectors}
@@ -897,7 +887,7 @@ export default function Registry() {
                 onRemove={(value) => handleRemoveFilter('sectors', value)}
               />
               <FilterSection
-                title="Find practitioners by community population size"
+                title="Filter practitioners by community population size"
                 // description="Brief JARGON free summary of what community size means in adaptation."
                 type="size"
                 selected={filters.size}
@@ -984,8 +974,8 @@ export default function Registry() {
                     sx={{ mb: 3, color: 'text.secondary' }}
                   >
                     {visiblePractitioners.length} out of {practitioners.length} practitioners selected from{' '}
-                    {totalPractitioners} available in{' '}
-                    <a
+                    {totalPractitioners} available in the Registry of Adaptation Practitioners
+                    {/* <a
                       href="https://climatesmartcommunity.org/registry/"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -994,8 +984,8 @@ export default function Registry() {
                         textDecoration: 'underline',
                       }}
                     >
-                      The Registry of Adaptation Practitioners
-                    </a>
+                      the Registry of Adaptation Practitioners
+                    </a> */}
                   </Typography>
                   {selectedState === 'BrowseAll' && (
                     <Button
