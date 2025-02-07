@@ -46,6 +46,7 @@ export default function HomePage() {
                 fontSize: '1rem',
                 padding: 0,
                 minWidth: 0,
+                textDecoration: pageSelect === 'registry' ? 'underline' : 'none',
                 '&:hover': {
                   bgcolor: 'transparent',
                   textDecoration: 'underline',
@@ -67,6 +68,7 @@ export default function HomePage() {
                 fontSize: '1rem',
                 padding: 0,
                 minWidth: 0,
+                textDecoration: pageSelect === 'about' ? 'underline' : 'none',
                 '&:hover': {
                   bgcolor: 'transparent',
                   textDecoration: 'underline',
