@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AppBar, Toolbar, Button, Box } from '@mui/material';
+import { AppBar, Toolbar, Button, Box, Container } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Registry from './Registry.jsx';
 import AboutPage from './AboutPage.jsx';
@@ -9,7 +9,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function HomePage() {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const logoWidth = isSmallScreen ? 130 : 180;
+  const logoWidth = isSmallScreen ? 125 : 180;
   const [pageSelect, setPageSelect] = useState('registry');
   return (
     <>
@@ -21,12 +21,17 @@ export default function HomePage() {
           borderBottom: `1px solid ${theme.palette.primary.borderGray}`,
         }}
       >
-        <Toolbar sx={{ gap: 3 }}>
+      <Container maxWidth="lg"> 
+        <Toolbar sx={{ gap: 3, maxWidth: "lg"}}>
           {/* Logo */}
           <Box
             sx={{
+              display: 'flex',
+              alignItems: 'center',              
               width: `${logoWidth}px`,
               py: 1,
+              pt: 2,
+              pb: 1,
             }}
           >
             <Logo />
@@ -87,8 +92,9 @@ export default function HomePage() {
             </Button>
           </Box>
         </Toolbar>
+        </Container> 
       </AppBar>
       {pageSelect === 'registry' ? <Registry /> : <AboutPage />}
-    </>
+      </>
   );
 }
