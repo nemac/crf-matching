@@ -5,8 +5,10 @@ import Registry from './Registry.jsx';
 import AboutPage from './AboutPage.jsx';
 import Logo from '../components/Logo.jsx';
 import theme from '../theme.jsx';
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function HomePage() {
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
   const [pageSelect, setPageSelect] = useState('registry');
   return (
     <>
@@ -57,7 +59,7 @@ export default function HomePage() {
                 setPageSelect('registry');
               }}
             >
-              Registry of Adaptation Practitioners
+              {isSmallScreen ? ( 'Registry' ) : ( 'Registry of Adaptation Practitioners' )}
             </Button>
 
             <Button
