@@ -9,6 +9,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function HomePage() {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const logoWidth = isSmallScreen ? 130 : 180;
   const [pageSelect, setPageSelect] = useState('registry');
   return (
     <>
@@ -24,7 +25,7 @@ export default function HomePage() {
           {/* Logo */}
           <Box
             sx={{
-              width: 175,
+              width: `${logoWidth}px`,
               py: 1,
             }}
           >
