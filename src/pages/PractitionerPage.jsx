@@ -2,7 +2,7 @@ import { useState, useLayoutEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import SchoolIcon from '@mui/icons-material/School';
-import { CssBaseline, Stack, Container, Box, Typography, styled } from '@mui/material';
+import { CssBaseline, Stack, Container, Box, Typography, styled, AppBar, Toolbar } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 
 import theme from '../theme';
@@ -15,25 +15,25 @@ import { fetchPractitioner } from '../util/api';
 
 const sections = [
   {
-    title: 'Where we work',
-    objKey: 'state',
-  },
-  {
-    title: 'Services we provide',
+    title: 'Services Provided',
     objKey: 'activities',
   },
   {
-    title: 'Sectors we have expertise with',
-    objKey: 'sectors',
-  },
-  {
-    title: 'Hazards we have expertise with',
+    title: 'Hazard Expertise',
     objKey: 'hazards',
   },
   {
-    title: 'Size of communities we have expertise with',
+    title: 'Sector Expertise',
+    objKey: 'sectors',
+  },
+  {
+    title: 'Size of Communities Where We Work',
     objKey: 'size',
   },
+  {
+    title: 'Where we work',
+    objKey: 'state',
+  },  
 ];
 
 function SectionHeader({ title, style }) {
@@ -106,7 +106,7 @@ function MatchSection({ practitioner, title, objKey }) {
           display: 'flex',
           flexWrap: 'wrap',
           minHeight: '50px',
-          p: 1,
+          p: .025,
           mb: 1,
         }}
       >
@@ -159,10 +159,10 @@ function PractitionerPageLoaded({ practitioner }) {
           >
             <SectionHeader title="Contact"></SectionHeader>
             <Stack>
-              <ContactRow
+              {/* <ContactRow
                 type="linkedIn"
                 practitioner={practitioner}
-              ></ContactRow>
+              ></ContactRow> */}
               <ContactRow
                 type="website"
                 practitioner={practitioner}
@@ -199,7 +199,7 @@ function PractitionerPageLoaded({ practitioner }) {
           </ContactAndTrainingBox>
         </Grid>
         <Box>
-          <SectionHeader title="Description"></SectionHeader>
+          <SectionHeader title="Organization Description"></SectionHeader>
           <Box
             sx={{
               pb: 1,
@@ -207,6 +207,28 @@ function PractitionerPageLoaded({ practitioner }) {
             }}
           >
             {practitioner.info || 'N/A'}
+          </Box>
+        </Box>
+        <Box>
+          <SectionHeader title="Community Specializations"></SectionHeader>
+          <Box
+            sx={{
+              pb: 1,
+              mb: 1,
+            }}
+          >
+            {practitioner.specificTypesOfCommunities || 'N/A'}
+          </Box>
+        </Box>
+        <Box>
+          <SectionHeader title="Other Languages"></SectionHeader>
+          <Box
+            sx={{
+              pb: 1,
+              mb: 1,
+            }}
+          >
+            {practitioner.languageFluencies || 'N/A'}
           </Box>
         </Box>
         <Box>
@@ -218,39 +240,6 @@ function PractitionerPageLoaded({ practitioner }) {
             }}
           >
             {practitioner.organizationType || 'N/A'}
-          </Box>
-        </Box>
-        <Box>
-          <SectionHeader title="Please provide any additional information you want us to know about your organization's (or team's) background and qualifications to provide adaptation services"></SectionHeader>
-          <Box
-            sx={{
-              pb: 1,
-              mb: 1,
-            }}
-          >
-            {practitioner.additionalInformation || 'N/A'}
-          </Box>
-        </Box>
-        <Box>
-          <SectionHeader title="Are Members Of Your Organization (Or Team) Fluent In Any Languages Other Than English?"></SectionHeader>
-          <Box
-            sx={{
-              pb: 1,
-              mb: 1,
-            }}
-          >
-            {practitioner.languageFluencies || 'N/A'}
-          </Box>
-        </Box>
-        <Box>
-          <SectionHeader title="Does Your Organization Specialize In Specific Types Of Communities?"></SectionHeader>
-          <Box
-            sx={{
-              pb: 1,
-              mb: 1,
-            }}
-          >
-            {practitioner.specificTypesOfCommunities || 'N/A'}
           </Box>
         </Box>
         {sections.map((data, index) => {
