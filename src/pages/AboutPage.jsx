@@ -6,6 +6,8 @@ import crf_logo from '../assets/CRF_logo.jpg';
 import ecoadapt_logo from '../assets/EcoAdapt_logo.jpg';
 import geos_logo from '../assets/geos_logo.jpg';
 import nemac_logo from '../assets/nemac_logo.png';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 
 const PartnerLogo = ({ name, imgSrc, url }) => (
   <Paper
@@ -71,11 +73,12 @@ const PartnerLogo = ({ name, imgSrc, url }) => (
         }}
       >
         <Typography
-          variant="h6"
+          // variant="h6"
           align="center"
           sx={{
-            fontSize: '1.1rem',
+            fontSize: '1.0 rem',
             fontWeight: 'bold',
+            color: 'theme.palette.primary.main'
           }}
         >
           {name}
@@ -112,31 +115,55 @@ export default function AboutPage() {
             variant="body1"
             paragraph
           >
-            The Registry of Adaptation Practitioners is an online guided directory of vetted adaptation service
-            providers. The Registry enables communities and organizations seeking climate adaptation support services to
-            easily find practitioners whose expertise and focus match their needs.
+            The <strong >Registry of Adaptation Practitioners</strong> is an online guided directory of vetted adaptation service providers. The Registry 
+            enables communities and organizations seeking climate adaptation support services to easily find practitioners whose expertise and focus match their needs. 
           </Typography>
 
           <Typography
             variant="body1"
             paragraph
           >
-            The Registry of Adaptation Practitioners is open to all organizations that provide climate adaptation and
-            resilience services. For climate adaptation practitioners, the Registry offers an opportunity to showcase
-            their organization and its skills, be discoverable by those that need their help, and be eligible for
-            funding from sources, such as the Climate Smart Communities Initiative.
+            The Registry is open to all organizations that provide climate adaptation and resilience services. For climate adaptation practitioners, 
+            the Registry offers an opportunity to showcase their organization and its skills, be discoverable by those that need their help, and be 
+            eligible for funding from sources such as the <a
+              href="https://climatesmartcommunity.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: theme.palette.primary.main, textDecoration: 'underline' }}
+            >Climate Smart Communities Initiative. </a>
           </Typography>
         </Box>
 
         <Box sx={{ mb: 2 }}>
-          <Typography variant="body1">The review process assesses...</Typography>
+          <Typography variant="body1">
+          In order to be accepted into the Registry, organizations must submit an application that is then reviewed and approved to ensure that they 
+          possess the depth of expertise and skill that will allow them to provide effective, equitable, and sustainable adaptation services to communities, 
+          and that they adhere to the known best practices in the field. The review process assesses:
+          </Typography>
 
           <Typography
             variant="body1"
             component="div"
             sx={{ pl: 3 }}
           >
-            • have a checklist figure here that highlights the key skills/features of a qualified applicant
+            <List>
+              <ListItem>
+                Length of time working in the field
+              </ListItem>
+              <ListItem>
+                Whether practitioners have completed certifications or trainings such as the NOAA Steps to Resilience training
+              </ListItem>
+              <ListItem>
+                Understanding of and commitment to incorporating stakeholder engagement and consideration of equity into adaptation work
+              </ListItem>
+              <ListItem>
+                Expertise and ability to provide adaptation services such as vulnerability assessment, adaptation planning, and project implementation to communities
+              </ListItem>                            
+            </List>
+           
+            
+            
+
           </Typography>
         </Box>
 
@@ -147,33 +174,34 @@ export default function AboutPage() {
             sx={{
               color: 'primary.main',
               fontWeight: 'bold',
+              fontStyle: 'italic',
               mb: 3,
             }}
           >
-            Want to be included in the Registry?
+            Want to be included in the Registry? 
           </Typography>
 
           <Typography
             variant="body1"
             paragraph
           >
-            If your organization provides services in the field of climate resilience and adaptation, is committed to
-            following best practices, and has a track record of high-quality results,&nbsp;
+            If your organization provides services in the field of climate resilience and adaptation, 
+            is committed to following best practices, and has a track record of high-quality results,&nbsp;
             <a
-              href="https://climatesmartcommunity.org/registry/"
+              href="https://www.surveymonkey.com/r/community-sign-up"
               target="_blank"
               rel="noopener noreferrer"
               style={{ color: theme.palette.primary.main, textDecoration: 'underline' }}
             >
               submit an application
             </a>
-            ! We are especially interested in organizations that support entire community adaptation processes,
-            including stakeholder engagement, vulnerability assessment, adaptation planning, and plan implementation.
+            ! We are especially interested in organizations that support entire community adaptation processes, including stakeholder 
+            engagement, vulnerability assessment, adaptation planning, and plan implementation.
           </Typography>
 
           <Button
             variant="contained"
-            href="https://climatesmartcommunity.org/registry/"
+            href="https://www.surveymonkey.com/r/community-sign-up"
             target="_blank"
             rel="noopener noreferrer"
             sx={{
@@ -198,8 +226,7 @@ export default function AboutPage() {
             variant="body1"
             paragraph
           >
-            The Registry of Adaptation Professionals is made possible by the Walton Family Foundation and the Gordon and
-            Betty Moore Foundation.
+            The Registry of Adaptation Professionals is made possible by the Walton Family Foundation and the Gordon and Betty Moore Foundation.
           </Typography>
         </Box>
 
@@ -209,7 +236,7 @@ export default function AboutPage() {
             variant="body1"
             sx={{ mb: 4 }}
           >
-            The Registry is conceived, supported, directed, created and operated by:
+            The Registry is conceived, supported, directed, created and operated by EcoAdapt, Climate Resilience Fund, Geos, and UNC Asheville's NEMAC (designer/technical lead) 
           </Typography>
 
           <Grid
@@ -220,7 +247,7 @@ export default function AboutPage() {
               { name: 'EcoAdapt', imgSrc: ecoadapt_logo, url: 'https://ecoadapt.org' },
               { name: 'Climate Resilience Fund', imgSrc: crf_logo, url: 'https://climateresiliencefund.org' },
               { name: 'Geos Institute', imgSrc: geos_logo, url: 'https://geosinstitute.org' },
-              { name: 'NEMAC', imgSrc: nemac_logo, url: 'https://nemac.unca.edu' },
+              { name: 'UNC Asheville\'s NEMAC', imgSrc: nemac_logo, url: 'https://nemac.unca.edu' },
             ].map((partner, index) => (
               <Grid
                 item
