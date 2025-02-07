@@ -411,7 +411,7 @@ const ViewToggle = ({ view, onViewChange, selectedCount, onClearSelected }) => {
   );
 };
 
-export default function LandingPage() {
+export default function Registry() {
   const theme = useTheme();
   const [toastOpen, setToastOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);

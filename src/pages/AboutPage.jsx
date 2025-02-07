@@ -1,8 +1,7 @@
 import { Container, Typography, Box, Button, Grid, Paper } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
-import Navbar from '../components/Navbar.jsx';
+import HomePage from './HomePage.jsx';
 import theme from '../theme';
-import Logo from '../components/Logo';
 import crf_logo from '../assets/CRF_logo.jpg';
 import ecoadapt_logo from '../assets/EcoAdapt_logo.jpg';
 import geos_logo from '../assets/geos_logo.jpg';
@@ -93,8 +92,6 @@ export default function AboutPage() {
         maxWidth="lg"
         sx={{ pt: 4, pb: 8 }}
       >
-        <Navbar />
-
         {/* Main Title Section */}
         <Typography
           variant="h2"
