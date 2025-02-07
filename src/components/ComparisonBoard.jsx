@@ -122,7 +122,7 @@ export default function ComparisonBoard({
                   {visiblePractitioners.map((pract, index) => (
                     <Box
                       key={index}
-                      sx={{ flex: '1 1 0' }}
+                      sx={{ flex: '1 1 0', minWidth: {xs: 50, md: 175 } }}
                     >
                       <PractitionerPane
                         community={community}
