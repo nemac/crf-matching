@@ -109,7 +109,7 @@ export default function AboutPage() {
             mt: 4,
           }}
         >
-          About the adaptation registry?
+          About the adaptation registry
         </Typography>
 
         {/* Main Description Section */}
