@@ -44,7 +44,6 @@ function SectionHeader({ title, style }) {
       sx={{
         fontWeight: 700,
         color: 'primary.main',
-        mb: 1,
         ...style,
       }}
     >
@@ -84,7 +83,6 @@ function MatchBadge({ label, key }) {
         fontSize: '0.75rem',
         p: 1.25,
         m: 0.5,
-        mb: 1,
       }}
     >
       {label}
@@ -98,7 +96,7 @@ function MatchSection({ practitioner, title, objKey }) {
   });
 
   return (
-    <Box>
+    <Box sx={{ mb: 2, }}>
       <SectionHeader title={title}></SectionHeader>
       <Box
         sx={{
@@ -106,7 +104,6 @@ function MatchSection({ practitioner, title, objKey }) {
           flexWrap: 'wrap',
           minHeight: '50px',
           p: 1,
-          mb: 1,
         }}
       >
         {matchBadges}
@@ -280,7 +277,7 @@ function PractitionerPageLoaded({ practitioner }) {
           <Box
             sx={{
               pb: 1,
-              mb: 1,
+              mb: 2,
             }}
           >
             {practitioner.organizationType || 'N/A'}
