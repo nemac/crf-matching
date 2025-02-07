@@ -16,6 +16,7 @@ const PartnerLogo = ({ name, imgSrc, url }) => (
   <Paper
     elevation={2}
     sx={{
+      cursor: 'default',
       height: '220px',
       display: 'flex',
       flexDirection: 'column',
@@ -96,7 +97,7 @@ export default function AboutPage() {
     <ThemeProvider theme={theme}>
       <Container
         maxWidth="lg"
-        sx={{ pt: 4, pb: 8 }}
+        sx={{ pt: 4, pb: 8, cursor: 'default' }}
       >
         {/* Main Title Section */}
         <Typography

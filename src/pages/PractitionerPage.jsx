@@ -136,7 +136,7 @@ function PractitionerPageLoaded({ practitioner }) {
         }}
       >
         <Container maxWidth="lg"> 
-          <Toolbar sx={{ gap: 3, maxWidth: "lg"}}>
+          <Toolbar sx={{ gap: 3, maxWidth: "lg", cursor: 'default' }}>
             {/* Logo */}
             <Box
               sx={{
@@ -180,7 +180,7 @@ function PractitionerPageLoaded({ practitioner }) {
       </AppBar>            
       <Container
         maxWidth="lg"
-        sx={{ p: 3 }}
+        sx={{ p: 3, cursor: 'default'  }}
       >
         {/* <Logo /> CSCI Logo */}
         {/* Header */}

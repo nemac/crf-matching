@@ -668,7 +668,7 @@ export default function Registry() {
   return (
     <Container
       maxWidth="lg"
-      sx={{ mt: 4, mb: 4 }}
+      sx={{ mt: 4, mb: 4, cursor: 'default' }}
     >
       {/* <Logo /> CSCI Logo */}
       <Box sx={{ mb: 6 }}>
