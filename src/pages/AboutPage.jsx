@@ -156,7 +156,7 @@ export default function AboutPage() {
                 Proficiency incorporating stakeholder engagement and equity into adaptation work
               </li>
               <li>
-               Expertise and ability to provide adaptation services from  vulnerability assessment, adaptation planning, to project implementation
+               Expertise and ability to provide adaptation services from vulnerability assessment and adaptation planning to project implementation
               </li>
           </Typography>
         </Box>
