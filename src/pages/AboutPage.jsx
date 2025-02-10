@@ -57,6 +57,7 @@ const PartnerLogo = ({ name, imgSrc, url }) => (
             maxWidth: '100%',
             maxHeight: '130px',
             objectFit: 'contain',
+            opacity: '100%',
           }}
         />
       </Box>
