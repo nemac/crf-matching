@@ -16,14 +16,16 @@ export default function Logo () {
             pb: 2,
           }}
         >
-          <img
-            src={csciLogo}
-            alt="Registry of Adaptation Practitioners Logo"
-            style={{
-              height: 'auto',
-              width: `${logoWidth}px`,
-            }}
-          />
+          <a href="/">
+            <img
+              src={csciLogo}
+              alt="Registry of Adaptation Practitioners Logo"
+              style={{
+                height: 'auto',
+                width: `${logoWidth}px`,
+              }}
+            />
+          </a>
         </Box>
   )
 }
