@@ -1,16 +1,10 @@
 import { Container, Typography, Box, Button, Grid, Paper } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
-import HomePage from './HomePage.jsx';
 import theme from '../theme';
 import crf_logo from '../assets/CRF_logo.jpg';
-import ecoadapt_logo from '../assets/EcoAdapt_logo.jpg';
+import ecoadapt_logo from '../assets/EcoAdapt_logo_cmyk.jpg';
 import geos_logo from '../assets/geos_logo.jpg';
 import nemac_logo from '../assets/nemac_logo.png';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import CircleIcon from "@mui/icons-material/Circle";
-
 
 const PartnerLogo = ({ name, imgSrc, url }) => (
   <Paper
