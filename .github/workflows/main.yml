@@ -51,7 +51,13 @@ jobs:
         run: |
           if [ "${{ github.ref }}" = "refs/heads/master" ]; then
             aws cloudfront create-invalidation \
-              --distribution-id E6AN64MGEH6XD \
+              --distribution-id E6AN64MGEH6XD  \
+              --paths "/*"
+            aws cloudfront create-invalidation \
+              --distribution-id E3LE6G8XQS44Y4 \
+              --paths "/*"
+            aws cloudfront create-invalidation \
+              --distribution-id E35676Q3CH6Y85 \
               --paths "/*"
           elif [ "${{ github.ref }}" = "refs/heads/develop" ]; then
             aws cloudfront create-invalidation \
