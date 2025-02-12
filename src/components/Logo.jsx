@@ -1,6 +1,6 @@
 
 import Box from '@mui/material/Box';
-import csciLogo from '../assets/CSCI_logo.png';
+import csciLogo from '../assets/Registry_Logo_primary_CMYK.jpg';
 import theme from '../theme.jsx';
 import useMediaQuery from "@mui/material/useMediaQuery";
 
