@@ -39,7 +39,7 @@ function StrTrainedBadge({ isTrained }) {
           alignItems: 'center',
         }}
       >
-        <SchoolIcon sx={{ fontSize: '1rem', mr: 0.5 }} />
+        <SchoolIcon sx={{ fontSize: {xs: 'inherit', md: '1rem'}, mr: 0.5 }} />
         <Typography
           sx={{
             display: {
@@ -107,21 +107,9 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
           verticalAlign: 'middle',
           justifyContent: 'center',
           alignItems: 'center',
-          bgcolor: {
-            xs: 'primary.main',
-            md: 'primary.lightGray',
-          },
+          bgcolor: 'primary.lightGray',
         }}
       >
-        <PersonIcon
-          sx={{
-            display: {
-              xs: 'inherit',
-              md: 'none',
-            },
-            color: 'primary.lightBlue',
-          }}
-        />
       </StyledBox>
 
       {/* Title and info icon container */}
@@ -178,6 +166,16 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
         <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
           <StrTrainedBadge isTrained={strTrained} />
         </Box>
+
+        {/* Display popup with hover events depending on if it's mobile or desktop */}
+        <ProfilePopper
+          headerRef={headerRef}
+          practitioner={practitioner}
+          poppedPractitioner={poppedPractitioner}
+          setPoppedPractitioner={setPoppedPractitioner}
+          sx ={{display: { xs: 'inherit', md: 'none' }}}
+        />
+
         <ProfilePopper
           headerRef={headerRef}
           practitioner={practitioner}
@@ -185,6 +183,7 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
           setPoppedPractitioner={setPoppedPractitioner}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
+          sx ={{display: { xs: 'none', md: 'inherit' }}}
         />
 
         <Button
@@ -192,7 +191,7 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
           href={`/practitioner/${practitioner.airtableRecId}`}
           target="_blank"
           rel="noopener noreferrer"
-          startIcon={<PersonIcon />}
+          startIcon={<PersonIcon sx={{ mr: '-12px' }}/>}
           variant="contained"
           sx={{
             bgcolor: 'primary.midBlue',
@@ -200,13 +199,13 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
             textTransform: 'none',
             borderRadius: 2,
             width: '100%',
+            gap: '12px',
             '&:hover': {
               bgcolor: 'primary.main',
             },
           }}
         >
           <Typography sx={{ display: { xs: 'none', md: 'inherit' }, fontSize: '.875rem' }}>View Full Profile</Typography>
-          <Typography sx={{ display: { xs: 'inherit', md: 'none' }, fontSize: '.875rem' }}>View Profile</Typography>
         </Button>
       </Box>
     </HeaderBox>

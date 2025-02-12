@@ -5,17 +5,19 @@ import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
 
+import AboutPage from './pages/AboutPage.jsx';
 import CommunityListPage from './pages/CommunityListPage.jsx';
 import CommunityPage from './pages/CommunityPage.jsx';
-import LandingPage from './pages/LandingPage.jsx';
+import Registry from './pages/Registry.jsx';
 import PractitionerPage from './pages/PractitionerPage.jsx';
 import PractitionerListPage from './pages/PractitionerListPage.jsx';
 import SelfServicePage from './pages/SelfServicePage.jsx';
+import HomePage from './pages/HomePage.jsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <LandingPage />,
+    element: <HomePage />,
   },
   {
     path: '/communities',
@@ -36,6 +38,10 @@ const router = createBrowserRouter([
   {
     path: '/selfservice',
     element: <SelfServicePage />,
+  },
+  {
+    path: '/about',
+    element: <AboutPage />,
   },
 ]);
 

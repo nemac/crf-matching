@@ -27,12 +27,14 @@ import { PersonOffOutlined } from '@mui/icons-material';
 import { FormatListBulleted } from '@mui/icons-material';
 import CancelIcon from '@mui/icons-material/Cancel';
 import IconButton from '@mui/material/IconButton';
+import SortByAlphaIcon from '@mui/icons-material/SortByAlpha';
 import { fetchFilteredPractitioners, fetchOptionsFromAirtable, fetchAllPractitioners } from '../util/api';
 import Toast from '../components/Toast';
 import ComparisonBoard from '../components/ComparisonBoard';
 import PractitionerCard from '../components/PractitionerCard';
 import { searchLocations, getLocationDetails } from '../util/geocoding';
 import { filtersToSearchParams, searchParamsToFilters, generateShareableUrl } from '../util/urlStateManagement';
+import { lightBlue } from '@mui/material/colors';
 import Logo from '../components/Logo';
 
 const PRACTITIONERS_PER_PAGE = 6;
@@ -118,7 +120,7 @@ const LocationSearch = ({ value, onChange, disabled }) => {
       renderInput={(params) => (
         <TextField
           {...params}
-          placeholder="Enter your city"
+          placeholder="Enter the community location"
           sx={{
             bgcolor: 'primary.white',
             borderRadius: 1,
@@ -183,7 +185,7 @@ const FilterSection = ({ title, description, type, selected, availableOptions, o
   const getButtonText = () => {
     switch (type) {
       case 'activities':
-        return 'Add activity';
+        return 'Add a service';
       case 'hazards':
         return 'Add hazard';
       case 'sectors':
@@ -263,12 +265,13 @@ const FilterSection = ({ title, description, type, selected, availableOptions, o
           onClick={handleClick}
           disabled={availableChoices.length === 0}
           sx={{
-            bgcolor: 'grey.400',
+            bgcolor: lightBlue[900],
             color: 'primary.white',
             textTransform: 'none',
             borderRadius: '20px',
             '&:hover': {
-              bgcolor: 'grey.500',
+              bgcolor: lightBlue[700],
+              color: 'primary.white',
             },
             '&.Mui-disabled': {
               bgcolor: 'grey.300',
@@ -316,6 +319,7 @@ const ViewToggle = ({ view, onViewChange, selectedCount, onClearSelected }) => {
       sx={{
         display: 'flex',
         justifyContent: 'center',
+        flexWrap: 'wrap',
         width: '100%',
         mb: 3,
         gap: 2,
@@ -333,6 +337,11 @@ const ViewToggle = ({ view, onViewChange, selectedCount, onClearSelected }) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          flexBasis: {
+            // So the clear button wraps in mobile
+            xs: '40%',
+            md: 'auto',
+          },
           boxShadow: view === 'cards' ? 2 : 1,
           transition: 'all 0.2s ease-in-out',
           '&:hover': {
@@ -342,7 +351,7 @@ const ViewToggle = ({ view, onViewChange, selectedCount, onClearSelected }) => {
         onClick={() => onViewChange(null, 'cards')}
       >
         <WindowIcon sx={{ mr: 1, fontSize: '1.2rem' }} />
-        Cards
+        Grid
       </Box>
       <Box
         sx={{
@@ -355,6 +364,11 @@ const ViewToggle = ({ view, onViewChange, selectedCount, onClearSelected }) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          flexBasis: {
+            // So the clear button wraps in mobile
+            xs: '40%',
+            md: 'auto',
+          },
           boxShadow: view === 'compare' ? 2 : 1,
           transition: 'all 0.2s ease-in-out',
           '&:hover': {
@@ -373,7 +387,10 @@ const ViewToggle = ({ view, onViewChange, selectedCount, onClearSelected }) => {
           onClick={onClearSelected}
           startIcon={<PersonOffOutlined />}
           sx={{
-            position: 'absolute',
+            position: {
+              xs: 'static',
+              md: 'absolute',
+            },
             right: 0,
             bgcolor: 'primary.white',
             color: 'primary.main',
@@ -394,7 +411,7 @@ const ViewToggle = ({ view, onViewChange, selectedCount, onClearSelected }) => {
   );
 };
 
-export default function LandingPage() {
+export default function Registry() {
   const theme = useTheme();
   const [toastOpen, setToastOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState(null);
@@ -406,6 +423,7 @@ export default function LandingPage() {
   const [displayCount, setDisplayCount] = useState(PRACTITIONERS_PER_PAGE);
   const [selectedForComparison, setSelectedForComparison] = useState(new Set());
   const [searchParams, setSearchParams] = useSearchParams();
+  const [isAscending, setIsAscending] = useState(true);
   const [filters, setFilters] = useState({
     activities: [],
     sectors: [],
@@ -650,20 +668,36 @@ export default function LandingPage() {
   return (
     <Container
       maxWidth="lg"
-      sx={{ mt: 4 }}
+      sx={{ mt: 4, mb: 4, cursor: 'default' }}
     >
-      <Logo /> {/* CSCI Logo */}
+      {/* <Logo /> CSCI Logo */}
       <Box sx={{ mb: 6 }}>
         <Typography
           variant="h3"
-          component="h1"
           sx={{
             color: 'primary.main',
             fontWeight: 'bold',
             mb: 1,
           }}
         >
-          Looking to connect to an adaptation practitioner?
+          Registry of Adaptation Practitioners
+        </Typography>
+        <Typography
+          sx={{
+            mb: 3,
+          }}
+        >
+          The Registry of Adaptation Practitioners is a community resource for easy identification of a qualified adaptation practitioner to provide the support you need!
+        </Typography>
+        <Typography
+          variant="h4"
+          sx={{
+            color: 'primary.main',
+            fontWeight: 'bold',
+            mb: 1,
+          }}
+        >
+          Looking for an adaptation practitioner?
         </Typography>
         <Paper
           variant="outlined"
@@ -697,7 +731,7 @@ export default function LandingPage() {
                 whiteSpace: 'nowrap',
               }}
             >
-              Where is your community?
+              Where is the community?
             </Typography>
 
             <LocationSearch
@@ -721,7 +755,7 @@ export default function LandingPage() {
                   },
                 }}
               >
-                Change your community
+                Change the community
               </Button>
             )}
           </Box>
@@ -746,13 +780,17 @@ export default function LandingPage() {
               onClick={() => setShowFilters(!showFilters)}
               sx={{
                 textTransform: 'none',
-                bgcolor: 'grey.500',
+                bgcolor: 'primary.main',
                 '&:hover': {
-                  bgcolor: 'grey.600',
+                  bgcolor: 'primary.dark',
+                },
+                fontSize: {
+                  xs: '0.875rem',
+                  sm: '1rem',
                 },
               }}
             >
-              Filter practitioners by their expertise
+              Filter practitioners
             </Button>
             <Box sx={{ display: 'flex', gap: 2 }}>
               {/* Only show browse all when no community is selected */}
@@ -761,7 +799,7 @@ export default function LandingPage() {
                   onClick={() => {
                     // Fetch all practitioners
                     fetchAllPractitioners((practitioners) => {
-                      setPractitioners(practitioners);
+                      setPractitioners(practitioners.sort(() => Math.random() - 0.5));
                       // Set display count to show all practitioners
                       setDisplayCount(practitioners.length);
                       // Make sure we're in card view
@@ -772,13 +810,14 @@ export default function LandingPage() {
                   }}
                   startIcon={<FormatListBulleted />}
                   sx={{
-                    bgcolor: 'primary.white',
+                    // bgcolor: 'primary.white',
+                    bgcolor: lightBlue[50],
                     color: 'primary.main',
                     textTransform: 'none',
                     borderRadius: 2,
                     px: 2,
                     '&:hover': {
-                      bgcolor: 'grey.100',
+                      bgcolor: lightBlue[100],
                     },
                     fontSize: {
                       xs: '0.875rem',
@@ -786,7 +825,7 @@ export default function LandingPage() {
                     },
                   }}
                 >
-                  Browse All
+                  Browse all {totalPractitioners} practitioners
                 </Button>
               )}
 
@@ -819,7 +858,7 @@ export default function LandingPage() {
           <Collapse in={showFilters}>
             <Box sx={{ mt: 3 }}>
               <FilterSection
-                title="Find practitioners by activities that are important in your community"
+                title="Filter practitioners by the adaptation services they can provide to a community"
                 // description="Brief JARGON free summary of what activities are in adaptation."
                 type="activities"
                 selected={filters.activities}
@@ -829,7 +868,7 @@ export default function LandingPage() {
               />
 
               <FilterSection
-                title="Find practitioners by hazards that are affecting your community"
+                title="Filter practitioners by hazards that are affecting the community"
                 // description="Brief JARGON free summary of what hazards are in adaptation."
                 type="hazards"
                 selected={filters.hazards}
@@ -839,7 +878,7 @@ export default function LandingPage() {
               />
 
               <FilterSection
-                title="Find practitioners by important sectors in your community"
+                title="Filter practitioners by important sectors in the community"
                 // description="Brief JARGON free summary of what sectors are in adaptation."
                 type="sectors"
                 selected={filters.sectors}
@@ -848,7 +887,7 @@ export default function LandingPage() {
                 onRemove={(value) => handleRemoveFilter('sectors', value)}
               />
               <FilterSection
-                title="Find practitioners by community population size"
+                title="Filter practitioners by community population size"
                 // description="Brief JARGON free summary of what community size means in adaptation."
                 type="size"
                 selected={filters.size}
@@ -867,7 +906,7 @@ export default function LandingPage() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                mb: 3,
+                mb: 4,
                 gap: 1,
                 flexDirection: {
                   xs: 'column',
@@ -882,7 +921,7 @@ export default function LandingPage() {
                   color: 'primary.main',
                 }}
               >
-                Adaptation practitioners that can help your community
+                {/* Adaptation practitioners that can help your community */}
               </Typography>
 
               <Button
@@ -921,24 +960,64 @@ export default function LandingPage() {
             />
             {currentView === 'cards' ? (
               <>
-                <Typography
-                  variant="body1"
-                  sx={{ mb: 3, color: 'text.secondary' }}
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    mb: 3,
+                    gap: 2,
+                  }}
                 >
-                  {visiblePractitioners.length} out of {practitioners.length} practitioners selected from the{' '}
-                  {totalPractitioners} available in the{' '}
-                  <a
-                    href="https://climatesmartcommunity.org/apply-now-the-registry-of-climate-adaptation-and-resilience-professionals/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      color: 'inherit',
-                      textDecoration: 'underline',
-                    }}
+                  <Typography
+                    variant="body1"
+                    sx={{ mb: 3, color: 'text.secondary' }}
                   >
-                    The Registry of Adaptation Practitioners
-                  </a>
-                </Typography>
+                    {visiblePractitioners.length} out of {practitioners.length} practitioners selected from{' '}
+                    {totalPractitioners} available in the Registry of Adaptation Practitioners
+                    {/* <a
+                      href="https://climatesmartcommunity.org/registry/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        color: 'inherit',
+                        textDecoration: 'underline',
+                      }}
+                    >
+                      the Registry of Adaptation Practitioners
+                    </a> */}
+                  </Typography>
+                  {selectedState === 'BrowseAll' && (
+                    <Button
+                      startIcon={<SortByAlphaIcon />}
+                      sx={{
+                        bgcolor: 'primary.white',
+                        color: 'primary.main',
+                        border: '1px solid',
+                        borderColor: 'primary.borderGray',
+                        borderRadius: '20px',
+                        boxShadow: 1,
+                        textTransform: 'none',
+                        whiteSpace: 'nowrap',
+                        '&:hover': {
+                          bgcolor: 'grey.100',
+                        },
+                      }}
+                      onClick={() => {
+                        const sortedPractitioners = [...practitioners].sort((a, b) => a.org.localeCompare(b.org));
+
+                        if (!isAscending) {
+                          sortedPractitioners.reverse();
+                        }
+
+                        setPractitioners(sortedPractitioners);
+                        setIsAscending(!isAscending);
+                      }}
+                    >
+                      Sort
+                    </Button>
+                  )}
+                </Box>
 
                 <Grid
                   container

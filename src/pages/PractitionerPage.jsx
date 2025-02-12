@@ -2,8 +2,9 @@ import { useState, useLayoutEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import SchoolIcon from '@mui/icons-material/School';
-import { CssBaseline, Stack, Container, Box, Typography, styled } from '@mui/material';
+import { CssBaseline, Stack, Container, Box, Typography, styled, AppBar, Toolbar, Button } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import theme from '../theme';
 import FullPageSpinner from '../components/FullPageSpinner';
@@ -15,25 +16,25 @@ import { fetchPractitioner } from '../util/api';
 
 const sections = [
   {
-    title: 'Where we work',
-    objKey: 'state',
-  },
-  {
-    title: 'Activities we have expertise with',
+    title: 'Services Provided',
     objKey: 'activities',
   },
   {
-    title: 'Sectors we have expertise with',
-    objKey: 'sectors',
-  },
-  {
-    title: 'Hazards we have expertise with',
+    title: 'Hazard Expertise',
     objKey: 'hazards',
   },
   {
-    title: 'Size of communities we have expertise with',
+    title: 'Sector Expertise',
+    objKey: 'sectors',
+  },
+  {
+    title: 'Size of Communities Where We Work',
     objKey: 'size',
   },
+  {
+    title: 'Where we work',
+    objKey: 'state',
+  },  
 ];
 
 function SectionHeader({ title, style }) {
@@ -43,7 +44,6 @@ function SectionHeader({ title, style }) {
       sx={{
         fontWeight: 700,
         color: 'primary.main',
-        mb: 1,
         ...style,
       }}
     >
@@ -77,14 +77,13 @@ function MatchBadge({ label, key }) {
       sx={{
         border: `1px solid ${theme.palette.primary.midBlue}`,
         borderRadius: 6,
-        color: 'primary.midBlue',
+        color: theme.palette.primary.main,
         alignContent: 'center',
         textAlign: 'center',
-        margin: 1,
-        pl: 3,
-        pr: 3,
-        pt: 1,
-        pb: 1,
+        fontSize: '0.75rem',
+        p: 1.25,
+        m: 0.5,
+        minWidth: '75px',
       }}
     >
       {label}
@@ -98,15 +97,13 @@ function MatchSection({ practitioner, title, objKey }) {
   });
 
   return (
-    <Box>
+    <Box sx={{ mb: 2, }}>
       <SectionHeader title={title}></SectionHeader>
       <Box
         sx={{
           display: 'flex',
           flexWrap: 'wrap',
           minHeight: '50px',
-          p: 1,
-          mb: 1,
         }}
       >
         {matchBadges}
@@ -122,15 +119,71 @@ const ContactAndTrainingBox = styled(Grid)(({ theme }) => ({
 }));
 
 function PractitionerPageLoaded({ practitioner }) {
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const logoWidth = isSmallScreen ? 125 : 180;
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <AppBar
+        position="static"
+        sx={{
+          bgcolor: 'primary.white',
+          boxShadow: 1,
+          borderBottom: `1px solid ${theme.palette.primary.borderGray}`,
+        }}
+      >
+        <Container maxWidth="lg"> 
+          <Toolbar sx={{ gap: 3, maxWidth: "lg", cursor: 'default' }}>
+            {/* Logo */}
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',              
+                width: `${logoWidth}px`,
+                py: 1,
+                pt: 2,
+                pb: 1,
+              }}
+            >
+              <Logo />
+            </Box>
+
+            {/* Navigation Links */}
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 3,
+              }}
+            >
+              <Typography
+                sx={{
+                  color: 'primary.main',
+                  textTransform: 'none',
+                  fontSize: '1rem',
+                  padding: 0,
+                  minWidth: 0,
+                  fontWeight: 'bold',
+                }}
+                onClick={() => {
+                  setPageSelect('registry');
+                }}
+              >
+                {isSmallScreen ? ( 'Practitioner Profile' ) : ( 'Registry of Adaptation Practitioner Profile' )}
+              </Typography>
+            </Box>
+          </Toolbar>
+        </Container> 
+      </AppBar>            
       <Container
         maxWidth="lg"
-        sx={{ p: 3 }}
+        sx={{ p: 3, cursor: 'default'  }}
       >
-        <Logo /> {/* CSCI Logo */}
+        {/* <Logo /> CSCI Logo */}
         {/* Header */}
+        {/* <SectionHeader title="Registry of Adaptation Practitioner Profile"></SectionHeader>       */}
+      
         <Typography
           variant="h3"
           sx={{
@@ -158,10 +211,10 @@ function PractitionerPageLoaded({ practitioner }) {
           >
             <SectionHeader title="Contact"></SectionHeader>
             <Stack>
-              <ContactRow
+              {/* <ContactRow
                 type="linkedIn"
                 practitioner={practitioner}
-              ></ContactRow>
+              ></ContactRow> */}
               <ContactRow
                 type="website"
                 practitioner={practitioner}
@@ -198,7 +251,7 @@ function PractitionerPageLoaded({ practitioner }) {
           </ContactAndTrainingBox>
         </Grid>
         <Box>
-          <SectionHeader title="Description"></SectionHeader>
+          <SectionHeader title="Organization Description"></SectionHeader>
           <Box
             sx={{
               pb: 1,
@@ -209,40 +262,7 @@ function PractitionerPageLoaded({ practitioner }) {
           </Box>
         </Box>
         <Box>
-          <SectionHeader title="Organization Type"></SectionHeader>
-          <Box
-            sx={{
-              pb: 1,
-              mb: 1,
-            }}
-          >
-            {practitioner.organizationType || 'N/A'}
-          </Box>
-        </Box>
-        <Box>
-          <SectionHeader title="Please provide any additional information you want us to know about your organization's (or team's) background and qualifications to provide adaptation services"></SectionHeader>
-          <Box
-            sx={{
-              pb: 1,
-              mb: 1,
-            }}
-          >
-            {practitioner.additionalInformation || 'N/A'}
-          </Box>
-        </Box>
-        <Box>
-          <SectionHeader title="Are Members Of Your Organization (Or Team) Fluent In Any Languages Other Than English?"></SectionHeader>
-          <Box
-            sx={{
-              pb: 1,
-              mb: 1,
-            }}
-          >
-            {practitioner.languageFluencies || 'N/A'}
-          </Box>
-        </Box>
-        <Box>
-          <SectionHeader title="Does Your Organization Specialize In Specific Types Of Communities?"></SectionHeader>
+          <SectionHeader title="Community Specializations"></SectionHeader>
           <Box
             sx={{
               pb: 1,
@@ -250,6 +270,17 @@ function PractitionerPageLoaded({ practitioner }) {
             }}
           >
             {practitioner.specificTypesOfCommunities || 'N/A'}
+          </Box>
+        </Box>
+        <Box>
+          <SectionHeader title="Organization Type"></SectionHeader>
+          <Box
+            sx={{
+              pb: 1,
+              mb: 2,
+            }}
+          >
+            {practitioner.organizationType || 'N/A'}
           </Box>
         </Box>
         {sections.map((data, index) => {

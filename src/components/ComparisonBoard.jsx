@@ -34,12 +34,11 @@ export default function ComparisonBoard({
         <SetHoverRowContext.Provider value={setHoverRow}>
           <Container
             maxWidth="xl"
-            sx={{ p: 2 }}
+            sx={{ p: 0, cursor: 'default'  }}
           >
             <Stack
               direction="row"
-              gap={1}
-              sx={{ bgcolor: theme.palette.primary.lightGray }}
+              sx={{ bgcolor: theme.palette.primary.lightGray, gap: { xs: 0, md: 1 }}}
             >
               {/* Community Panel */}
               <Box
@@ -76,7 +75,11 @@ export default function ComparisonBoard({
                     <Box
                       sx={{
                         position: 'absolute',
-                        top: '8px',
+                        top: {
+                          xs: '70px',
+                          sm: '40px',
+                          lg: '8px',
+                        },
                         right: '8px',
                       }}
                     >
@@ -109,14 +112,17 @@ export default function ComparisonBoard({
                   sx={{
                     pb: 2,
                     width: '100%',
-                    gap: 1,
+                    gap: {
+                      xs: '4px',
+                      md: 1,
+                    },
                     overflowX: 'auto',
                   }}
                 >
                   {visiblePractitioners.map((pract, index) => (
                     <Box
                       key={index}
-                      sx={{ flex: '1 1 0' }}
+                      sx={{ flex: '1 1 0', minWidth: {xs: 50, md: 175 } }}
                     >
                       <PractitionerPane
                         community={community}

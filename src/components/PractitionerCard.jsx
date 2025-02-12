@@ -31,7 +31,8 @@ export default function PractitionerCard({ practitioner, onComparisonSelect, isS
               height: 140,
               mb: 2,
               backgroundColor: '#F5F5F5',
-              display: 'flex',
+              // display: 'flex',
+              display: 'none', // remove this and uncomment flex to get the logo back
               justifyContent: 'center',
               alignItems: 'center',
               borderRadius: 2,
@@ -69,12 +70,11 @@ export default function PractitionerCard({ practitioner, onComparisonSelect, isS
               variant="subtitle2"
               sx={{ mb: 1, fontWeight: 'bold' }}
             >
-              Adaptation Expertise
+              Services Provided
             </Typography>
             <Box
               sx={{
                 display: 'flex',
-                gap: '2px',
                 flexDirection: 'row',
                 flexWrap: 'wrap',
               }}
@@ -84,16 +84,14 @@ export default function PractitionerCard({ practitioner, onComparisonSelect, isS
                   key={index}
                   sx={{
                     border: `1px solid ${theme.palette.primary.midBlue}`,
-                    borderRadius: '20px',
-                    px: 1.5,
-                    py: 0.75,
+                    borderRadius: 6,
                     color: theme.palette.primary.main,
-                    fontSize: '0.9rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    minHeight: '32px',
+                    alignContent: 'center',
                     textAlign: 'center',
+                    fontSize: '0.75rem',
+                    p: 1.325,
+                    m: 0.5,
+                    minWidth: '75px',
                   }}
                 >
                   {activity}

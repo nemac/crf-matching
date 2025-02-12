@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - develop
 
 jobs:
   build-and-deploy:
@@ -40,12 +41,20 @@ jobs:
 
       - name: Upload to S3
         run: |
-          aws s3 sync dist/ s3://crf-matching
+          if [ "${{ github.ref }}" = "refs/heads/master" ]; then
+            aws s3 sync dist/ s3://crf-matching
+          elif [ "${{ github.ref }}" = "refs/heads/develop" ]; then
+            aws s3 sync dist/ s3://crf-matching-dev
+          fi
 
       - name: Invalidate CloudFront
         run: |
-          for DISTRIBUTION_ID in E6AN64MGEH6XD E35676Q3CH6Y85 E3LE6G8XQS44Y4; do
+          if [ "${{ github.ref }}" = "refs/heads/master" ]; then
             aws cloudfront create-invalidation \
-              --distribution-id $DISTRIBUTION_ID \
+              --distribution-id E6AN64MGEH6XD \
               --paths "/*"
-          done
+          elif [ "${{ github.ref }}" = "refs/heads/develop" ]; then
+            aws cloudfront create-invalidation \
+              --distribution-id E2NM5QT3AUD8LF \
+              --paths "/*" 
+          fi
