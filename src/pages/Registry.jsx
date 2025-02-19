@@ -681,6 +681,7 @@ export default function Registry() {
           }}
         >
           Registry of Adaptation Practitioners
+          <Chip sx={{ mb: 6, backgroundColor: lightBlue[700], color: '#FFFFFF' }} label='Beta version'   />
         </Typography>
         <Typography
           sx={{
