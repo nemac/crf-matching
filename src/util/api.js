@@ -41,10 +41,10 @@ const practitionerFieldMap = {
   phone: 'Phone Number',
   strTrained:
     'Are There Members From Your Organization (Or Team) Who Have Completed The N O A A Steps To Resilience Training?',
-  info: "Please provide any additional information you want us to know about your organization's (or team's) background and qualifications to provide adaptation services",
+  info: "Please Submit A Brief Description Of Your Organization (Or Team) To Be Displayed On Your Registry Profile Page",
   organizationType: 'Organization Type',
   additionalInformation:
-    "Please provide any additional information you want us to know about your organization's (or team's) background and qualifications to provide adaptation services",
+    "Please Submit A Brief Description Of Your Organization (Or Team) To Be Displayed On Your Registry Profile Page",
   specificTypesOfCommunities:
     'Does Your Organization Specialize In Specific Types Of Communities? (E - G - , Size, Geography, Economic Or Sociological Profile)',
   languageFluencies: 'Are Members Of Your Organization (Or Team) Fluent In Any Languages Other Than English?',
