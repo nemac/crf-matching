@@ -54,7 +54,7 @@ function SectionHeader({ title, style }) {
 
 function StrTrainedRow({ isTrained }) {
   if (!isTrained) {
-    return 'No certifications';
+    return '';
   }
   return (
     <Box
@@ -65,7 +65,7 @@ function StrTrainedRow({ isTrained }) {
       }}
     >
       <SchoolIcon />
-      <span>STR Training Class Completed</span>
+      <span>StR certified</span>
     </Box>
   );
 }
@@ -202,7 +202,7 @@ function PractitionerPageLoaded({ practitioner }) {
           {/* Contact */}
           <ContactAndTrainingBox
             xs={12}
-            lg={5}
+            lg={6}
             sx={{
               boxShadow: 3,
               color: 'primary.main',
@@ -229,27 +229,11 @@ function PractitionerPageLoaded({ practitioner }) {
               ></ContactRow>
             </Stack>
           </ContactAndTrainingBox>
-
           {/* Training */}
-          <ContactAndTrainingBox
-            xs={12}
-            lg={5}
-            sx={{
-              color: 'primary.lightGray',
-              bgcolor: 'primary.main',
-              border: `1px solid ${theme.palette.primary.midBlue}`,
-              boxShadow: 3,
-            }}
-          >
-            <SectionHeader
-              title="Certifications & Training"
-              style={{
-                color: theme.palette.primary.lightGray,
-              }}
-            ></SectionHeader>
+          <ContactAndTrainingBox xs={12} lg={5} >
             <StrTrainedRow isTrained={practitioner.strTrained === 'Yes' ? true : false}></StrTrainedRow>
-          </ContactAndTrainingBox>
-        </Grid>
+          </ContactAndTrainingBox>           
+        </Grid>       
         <Box>
           <SectionHeader title="Organization Description"></SectionHeader>
           <Box
