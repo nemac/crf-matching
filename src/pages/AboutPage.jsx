@@ -181,7 +181,7 @@ export default function AboutPage() {
               If your organization provides services in the field of climate resilience and adaptation, 
               is committed to following best practices, and has a track record of high-quality results,&nbsp;
               <a
-                href="https://www.surveymonkey.com/r/community-sign-up"
+                href="https://www.surveymonkey.com/r/adaptation-registry"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ color: theme.palette.primary.main, textDecoration: 'underline' }}
@@ -203,7 +203,7 @@ export default function AboutPage() {
         }}>
           <Button
               variant="contained"
-              href="https://www.surveymonkey.com/r/community-sign-up"
+              href="https://www.surveymonkey.com/r/adaptation-registry"
               target="_blank"
               rel="noopener noreferrer"
               sx={{
