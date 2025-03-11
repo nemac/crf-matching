@@ -37,7 +37,7 @@ import { filtersToSearchParams, searchParamsToFilters, generateShareableUrl } fr
 import { lightBlue } from '@mui/material/colors';
 import Logo from '../components/Logo';
 
-const PRACTITIONERS_PER_PAGE = 6;
+const PRACTITIONERS_PER_PAGE = 21;
 
 const LocationSearch = ({ value, onChange, disabled }) => {
   const [open, setOpen] = useState(false);
