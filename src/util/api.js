@@ -9,6 +9,7 @@ Airtable.configure({
 const base = Airtable.base(__AIRTABLE_BASE__);
 
 /// configuration ///
+const practitionerViewName =  'Grid view'  //'Accepted Practitioners' // 'Grid view'
 
 const normalizeRec = (rec, fieldMap) => {
   const result = {};
@@ -69,7 +70,7 @@ export const fetchPractitioner = (practitionerId, setPractitioner) => {
   base('Practitioner')
     .select({
       maxRecords: 1,
-      view: 'Grid view',
+      view: practitionerViewName,
       filterByFormula: `{Airtable Record ID} = '${practitionerId}'`,
       fields: practFetchFields,
     })
@@ -85,17 +86,17 @@ export const fetchPractitioner = (practitionerId, setPractitioner) => {
 };
 
 export const fetchFilteredPractitioners = (filters, setPractitioners) => {
-  // If no filters, return empty array
   if (!Object.values(filters).some((val) => val && val.length)) {
     setPractitioners([]);
     return;
   }
 
+  let allRecords = [];
+
   base('Practitioner')
     .select({
-      view: 'Grid view',
+      view: practitionerViewName,
       fields: practFetchFields,
-      // Sort by organization name
       sort: [{ field: 'Organization Name', direction: 'asc' }],
     })
     .eachPage(
@@ -103,9 +104,7 @@ export const fetchFilteredPractitioners = (filters, setPractitioners) => {
         const recs = records
           .map((rawRec) => rawRec.fields)
           .map((rec) => normalizeRec(rec, practitionerFieldMap))
-          // Only include Accepted practitioners
           .filter((rec) => rec.status === 'Accepted')
-          // Filter based on provided criteria
           .filter((rec) => {
             let matches = true;
 
@@ -127,7 +126,6 @@ export const fetchFilteredPractitioners = (filters, setPractitioners) => {
 
             return matches;
           })
-          // Calculate match score
           .map((rec) => {
             let matchCount = 0;
 
@@ -136,25 +134,21 @@ export const fetchFilteredPractitioners = (filters, setPractitioners) => {
                 if (rec.state.includes(state)) matchCount++;
               });
             }
-
             if (filters.activities?.length) {
               filters.activities.forEach((activity) => {
                 if (rec.activities.includes(activity)) matchCount++;
               });
             }
-
             if (filters.sectors?.length) {
               filters.sectors.forEach((sector) => {
                 if (rec.sectors.includes(sector)) matchCount++;
               });
             }
-
             if (filters.hazards?.length) {
               filters.hazards.forEach((hazard) => {
                 if (rec.hazards.includes(hazard)) matchCount++;
               });
             }
-
             if (filters.size?.length) {
               filters.size.forEach((size) => {
                 if (rec.size.includes(size)) matchCount++;
@@ -163,17 +157,23 @@ export const fetchFilteredPractitioners = (filters, setPractitioners) => {
 
             rec.matchScore = matchCount;
             return rec;
-          })
-          // Sort by match score (highest first)
-          .sort((a, b) => b.matchScore - a.matchScore);
+          });
 
-        setPractitioners(recs);
+        // Collect filtered records into allRecords
+        allRecords = [...allRecords, ...recs];
+        fetchNextPage(); // Fetch next page if available
       },
       function done(err) {
         if (err) {
           console.error(err);
           return;
         }
+
+        // Sort once all records are fetched
+        allRecords.sort((a, b) => b.matchScore - a.matchScore);
+
+        // Set state after all pages are fetched
+        setPractitioners(allRecords);
       }
     );
 };
@@ -208,7 +208,7 @@ export const fetchAllCommunities = (setAllCommunities) => {
   const communities = [];
   base('Community')
     .select({
-      view: 'Grid view',
+      view: 'Grid View',
       fields: communityFetchFields,
     })
     .eachPage(
@@ -231,7 +231,7 @@ export const fetchAllPractitioners = (setAllPractitioners) => {
   const practitioners = [];
   base('Practitioner')
     .select({
-      view: 'Grid view',
+      view: practitionerViewName,
       fields: practFetchFields,
       // Sort by organization name
       sort: [{ field: 'Organization Name', direction: 'asc' }],
@@ -283,7 +283,7 @@ export const fetchPractitionersForCommunity = (communityId, setPractitioners) =>
       base('Practitioner')
         .select({
           // maxRecords: 5,
-          view: 'Grid view',
+          view: practitionerViewName,
           filterByFormula: formula,
           fields: practFetchFields,
         })
@@ -401,64 +401,63 @@ export const fetchPractitionersByFilters = (selectedOptions, setPractitioners) =
     return;
   }
 
+  let allRecords = [];
+
   base('Practitioner')
     .select({
-      view: 'Grid view',
+      view: practitionerViewName,
       fields: practFetchFields,
     })
-    .firstPage(function (err, records) {
-      if (err) {
-        console.error(err);
-        return;
+    .eachPage(
+      function page(records, fetchNextPage) {
+        const recs = records
+          .map((rawRec) => rawRec.fields)
+          .map((rec) => normalizeRec(rec, practitionerFieldMap))
+          .filter((rec) => rec.status === 'Accepted');
+
+        allRecords = [...allRecords, ...recs];
+
+        fetchNextPage(); // Fetch next page if available
+      },
+      function done(err) {
+        if (err) {
+          console.error(err);
+          return;
+        }
+
+        // After all pages are fetched, calculate match scores
+        const filteredRecords = allRecords
+          .map((rec) => {
+            let matchCount = 0;
+
+            // Count each individual match for all categories
+            selectedOptions.state.forEach((state) => {
+              if (rec.state.includes(state)) matchCount++;
+            });
+
+            selectedOptions.activities.forEach((activity) => {
+              if (rec.activities.includes(activity)) matchCount++;
+            });
+
+            selectedOptions.sectors.forEach((sector) => {
+              if (rec.sectors.includes(sector)) matchCount++;
+            });
+
+            selectedOptions.hazards.forEach((hazard) => {
+              if (rec.hazards.includes(hazard)) matchCount++;
+            });
+
+            selectedOptions.size.forEach((size) => {
+              if (rec.size.includes(size)) matchCount++;
+            });
+
+            rec.matchScore = matchCount;
+            return rec;
+          })
+          // Sort by match score (descending)
+          .sort((a, b) => b.matchScore - a.matchScore);
+
+        setPractitioners(filteredRecords);
       }
-
-      console.log('Setting practitioners to');
-      const recs = records
-        .map((rawRec) => rawRec.fields)
-        .map((rec) => normalizeRec(rec, practitionerFieldMap))
-        // Only include Accepted practitioners
-        .filter((rec) => rec.status === 'Accepted')
-        // Calculate match score based on count of all matching items
-        .map((rec) => {
-          let matchCount = 0;
-
-          // Count each individual match for all categories
-          selectedOptions.state.forEach((state) => {
-            if (rec.state.includes(state)) {
-              matchCount++;
-            }
-          });
-
-          selectedOptions.activities.forEach((activity) => {
-            if (rec.activities.includes(activity)) {
-              matchCount++;
-            }
-          });
-
-          selectedOptions.sectors.forEach((sector) => {
-            if (rec.sectors.includes(sector)) {
-              matchCount++;
-            }
-          });
-
-          selectedOptions.hazards.forEach((hazard) => {
-            if (rec.hazards.includes(hazard)) {
-              matchCount++;
-            }
-          });
-
-          selectedOptions.size.forEach((size) => {
-            if (rec.size.includes(size)) {
-              matchCount++;
-            }
-          });
-
-          rec.matchScore = matchCount;
-          return rec;
-        })
-        // Sort by match score (descending)
-        .sort((r1, r2) => r2.matchScore - r1.matchScore);
-
-      setPractitioners(recs);
-    });
+    );
 };
