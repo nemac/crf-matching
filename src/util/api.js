@@ -103,26 +103,32 @@ export const fetchFilteredPractitioners = (filters, setPractitioners) => {
           .filter((rec) => {
             let matches = true;
 
+            // --- Filtering Logic: "AND" within all multi-select categories ---
+            // A practitioner's record MUST contain ALL of the selected values from each active filter category.
+
             if (filters.state?.length) {
-              matches = matches && rec.state.some((s) => filters.state.includes(s));
+              matches = matches && filters.state.every((s) => rec.state.includes(s));
             }
             if (filters.activities?.length) {
-              matches = matches && rec.activities.some((a) => filters.activities.includes(a));
+              matches = matches && filters.activities.every((a) => rec.activities.includes(a));
             }
             if (filters.sectors?.length) {
-              matches = matches && rec.sectors.some((s) => filters.sectors.includes(s));
+              matches = matches && filters.sectors.every((s) => rec.sectors.includes(s));
             }
             if (filters.hazards?.length) {
-              matches = matches && rec.hazards.some((h) => filters.hazards.includes(h));
+              matches = matches && filters.hazards.every((h) => rec.hazards.includes(h));
             }
             if (filters.size?.length) {
-              matches = matches && rec.size.some((s) => filters.size.includes(s));
+              matches = matches && filters.size.every((s) => rec.size.includes(s));
             }
 
             return matches;
           })
           .map((rec) => {
             let matchCount = 0;
+
+            // --- Match Scoring Logic ---
+            // Scoring counts individual matches for relevance, even with "AND" filtering.
 
             if (filters.state?.length) {
               filters.state.forEach((state) => {
