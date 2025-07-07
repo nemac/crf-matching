@@ -27,28 +27,25 @@ const normalizeRec = (rec, fieldMap) => {
 
 // map to airtable fields
 const practitionerFieldMap = {
-  airtableRecId: 'Airtable Record ID',
-  state: 'State',
-  size: 'Size',
-  activities: 'Activities',
-  sectors: 'Sectors',
-  hazards: 'Hazards',
-  name: 'Name',
-  org: 'Organization Name',
-  website: 'Organization Website',
-  status: 'Status',
-  linkedIn: 'LinkedIn URL',
-  email: 'Email',
-  phone: 'Phone Number',
-  strTrained:
-    'Are There Members From Your Organization (Or Team) Who Have Completed The N O A A Steps To Resilience Training?',
-  info: "Please Submit A Brief Description Of Your Organization (Or Team) To Be Displayed On Your Registry Profile Page",
-  organizationType: 'Organization Type',
-  additionalInformation:
-    "Please Submit A Brief Description Of Your Organization (Or Team) To Be Displayed On Your Registry Profile Page",
-  specificTypesOfCommunities:
-    'Does Your Organization Specialize In Specific Types Of Communities? (E - G - , Size, Geography, Economic Or Sociological Profile)',
-  languageFluencies: 'Are Members Of Your Organization (Or Team) Fluent In Any Languages Other Than English?',
+  airtableRecId: 'org_airtable_record_id',
+  state: 'org_states_territories',
+  size: 'org_comm_size',
+  activities: 'org_services_provided_other',
+  sectors: 'org_sectors',
+  hazards: 'org_climate_hazards',
+  name: 'org_name',
+  org: 'org_name',
+  website: 'org_website',
+  status: 'org_status',
+  linkedIn: 'org_linkedin',
+  email: 'org_contact_email',
+  phone: 'org_contact_phone',
+  strTrained: 'org_str',
+  info: "org_description",
+  organizationType: 'org_type',
+  additionalInformation: 'org_description',
+  specificTypesOfCommunities: 'org_comm_specialization',
+  languageFluencies: 'org_languages',
 };
 
 const communityFieldMap = {
@@ -67,20 +64,18 @@ const communityFetchFields = Object.values(communityFieldMap);
 /// api ///
 
 export const fetchPractitioner = (practitionerId, setPractitioner) => {
-  base('Practitioner')
+  base('Organization')
     .select({
       maxRecords: 1,
       view: practitionerViewName,
-      filterByFormula: `{Airtable Record ID} = '${practitionerId}'`,
+      filterByFormula: `{org_airtable_record_id} = '${practitionerId}'`,
       fields: practFetchFields,
     })
     .firstPage(function (err, records) {
       if (err) {
         console.error(err);
       }
-      console.log('Setting practitioner to');
       const rec = records.map((rawRec) => rawRec.fields).map((rec) => normalizeRec(rec, practitionerFieldMap))[0];
-      console.log(rec);
       setPractitioner(rec);
     });
 };
@@ -93,11 +88,11 @@ export const fetchFilteredPractitioners = (filters, setPractitioners) => {
 
   let allRecords = [];
 
-  base('Practitioner')
+  base('Organization')
     .select({
       view: practitionerViewName,
       fields: practFetchFields,
-      sort: [{ field: 'Organization Name', direction: 'asc' }],
+      sort: [{ field: 'org_name', direction: 'asc' }],
     })
     .eachPage(
       function page(records, fetchNextPage) {
@@ -190,7 +185,6 @@ export const fetchCommunity = (communityId, setCommunity) => {
       if (err) {
         console.error(err);
       }
-      console.log('Setting community to');
       const rec = records
         .map((rawRec) => rawRec.fields)
         .map((rec) => normalizeRec(rec, communityFieldMap))
@@ -199,7 +193,6 @@ export const fetchCommunity = (communityId, setCommunity) => {
           rec.totalCategories = rec.activities.length + rec.sectors.length + rec.hazards.length + 2; // size + state
           return rec;
         })[0];
-      console.log(rec);
       setCommunity(rec);
     });
 };
@@ -229,12 +222,12 @@ export const fetchAllCommunities = (setAllCommunities) => {
 
 export const fetchAllPractitioners = (setAllPractitioners) => {
   const practitioners = [];
-  base('Practitioner')
+  base('Organization')
     .select({
       view: practitionerViewName,
       fields: practFetchFields,
       // Sort by organization name
-      sort: [{ field: 'Organization Name', direction: 'asc' }],
+      sort: [{ field: 'org_name', direction: 'asc' }],
     })
     .eachPage(
       function page(records, fetchNextPage) {
@@ -269,7 +262,6 @@ export const fetchPractitionersForCommunity = (communityId, setPractitioners) =>
       fields: ['practitioner-airtable-id', 'match score'],
     })
     .firstPage(function (err, matchRecs) {
-      console.log('jeff match recs', matchRecs);
       matchRecs = matchRecs.map((rec) => rec.fields);
       if (err) {
         console.error(err);
@@ -292,7 +284,6 @@ export const fetchPractitionersForCommunity = (communityId, setPractitioners) =>
             console.error(err);
           }
 
-          console.log('Setting practitioners to');
           const recs = pracRecs
             .map((rawRec) => rawRec.fields)
             .map((rec) => normalizeRec(rec, practitionerFieldMap))
@@ -307,8 +298,6 @@ export const fetchPractitionersForCommunity = (communityId, setPractitioners) =>
             })
             // sort by match score (descending)
             .sort((r1, r2) => r2.matchScore - r1.matchScore);
-
-          console.log(recs);
 
           // for testing - shuffle result
           // shuffle(recs)
