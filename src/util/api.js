@@ -46,6 +46,10 @@ const practitionerFieldMap = {
   additionalInformation: 'org_description',
   specificTypesOfCommunities: 'org_comm_specialization',
   languageFluencies: 'org_languages',
+  org_street: 'org_street',
+  org_city: 'org_city',
+  org_state: 'org_state',
+  org_zip: 'org_zip'
 };
 
 const communityFieldMap = {
