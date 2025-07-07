@@ -8,6 +8,7 @@ export default function PractitionerCard({ practitioner, onComparisonSelect, isS
   const description = practitioner.info || 'No description available';
   const truncatedDescription = description.length > 200 ? description.substring(0, 200) + '...' : description;
   const displayedActivities = practitioner.activities.slice(0, 3);
+  console.log('practitioner', practitioner.info)
 
   return (
     <Box sx={{ height: '100%' }}>
