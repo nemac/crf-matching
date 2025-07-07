@@ -1034,6 +1034,7 @@ export default function Registry() {
                       key={index}
                     >
                       <PractitionerCard
+                        filters={searchParams}
                         practitioner={practitioner}
                         onComparisonSelect={handleComparisonSelect}
                         isSelectedForComparison={selectedForComparison.has(practitioner.airtableRecId)}
