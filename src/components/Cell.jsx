@@ -25,7 +25,7 @@ export default function Cell({ label, type, key, isSelectable, onRemove }) {
         >
           {label}
         </Typography>
-        {isSelectable && (
+        {/* {isSelectable && (
           <button
             onClick={() => onRemove(label)}
             style={{
@@ -39,7 +39,7 @@ export default function Cell({ label, type, key, isSelectable, onRemove }) {
           >
             ×
           </button>
-        )}
+        )} */}
       </Box>
     );
   } else {

@@ -43,7 +43,7 @@ export default function Section({
         {cells}
       </Stack>
 
-      {isSelectable && (
+      {/* {isSelectable && (
         <Box
           sx={{
             mt: 2,
@@ -58,7 +58,7 @@ export default function Section({
             option={header}
           />
         </Box>
-      )}
+      )} */}
     </Box>
   );
 }

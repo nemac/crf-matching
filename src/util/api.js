@@ -49,7 +49,8 @@ const practitionerFieldMap = {
   org_street: 'org_street',
   org_city: 'org_city',
   org_state: 'org_state',
-  org_zip: 'org_zip'
+  org_zip: 'org_zip',
+  org_registry_category: 'org_registry_category',
 };
 
 const communityFieldMap = {
@@ -103,7 +104,7 @@ export const fetchFilteredPractitioners = (filters, setPractitioners) => {
         const recs = records
           .map((rawRec) => rawRec.fields)
           .map((rec) => normalizeRec(rec, practitionerFieldMap))
-          .filter((rec) => rec.status === 'Accepted')
+          .filter((rec) => rec.status === 'Accepted' ) // && rec.org_registry_category != 'Specialist'
           .filter((rec) => {
             let matches = true;
 
@@ -245,7 +246,7 @@ export const fetchAllPractitioners = (setAllPractitioners) => {
           .map((rawRec) => rawRec.fields)
           .map((rec) => normalizeRec(rec, practitionerFieldMap))
           // Only include Accepted practitioners
-          .filter((rec) => rec.status === 'Accepted');
+          .filter((rec) => rec.status === 'Accepted') // && rec.org_registry_category != 'Specialist'
         practitioners.push(...recs);
         fetchNextPage();
       },
@@ -412,8 +413,7 @@ export const fetchPractitionersByFilters = (selectedOptions, setPractitioners) =
         const recs = records
           .map((rawRec) => rawRec.fields)
           .map((rec) => normalizeRec(rec, practitionerFieldMap))
-          .filter((rec) => rec.status === 'Accepted');
-
+          .filter((rec) => rec.status === 'Accepted') // && rec.org_registry_category != 'Specialist'
         allRecords = [...allRecords, ...recs];
 
         fetchNextPage(); // Fetch next page if available

@@ -4,7 +4,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import climatePracLogo from '../assets/climate_prac.png';
 import theme from '../theme';
 
-export default function PractitionerCard({ filters, practitioner, onComparisonSelect, isSelectedForComparison }) {
+export default function PractitionerCard({ filters, practitioner, onComparisonSelect, isSelectedForComparison, showBrowseAll }) {
   const urlFilters = filters
   const description = practitioner.info || 'No description available';
   const truncatedDescription = description.length > 200 ? description.substring(0, 200) + '...' : description;
@@ -98,6 +98,22 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
                   {activity}
                 </Box>
               ))}
+              <Box
+                  key={4}
+                  sx={{
+                    border: `1px solid ${theme.palette.primary.midBlue}`,
+                    borderRadius: 6,
+                    color: theme.palette.primary.main,
+                    alignContent: 'center',
+                    textAlign: 'center',
+                    fontSize: '0.75rem',
+                    p: 1.325,
+                    m: 0.5,
+                    minWidth: '25px',
+                  }}
+                >
+                  ...
+                </Box>
             </Box>
           </Box>
 
@@ -121,27 +137,29 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
               Full Practitioner Org Profile
             </Button>
 
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={isSelectedForComparison}
-                  onChange={(e) => onComparisonSelect(practitioner.airtableRecId, e.target.checked)}
-                  sx={{
-                    color: theme.palette.primary.main,
-                    '&.Mui-checked': {
+            {showBrowseAll && (
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={isSelectedForComparison}
+                    onChange={(e) => onComparisonSelect(practitioner.airtableRecId, e.target.checked)}
+                    sx={{
                       color: theme.palette.primary.main,
-                    },
-                  }}
-                />
-              }
-              label="Compare this practitioner"
-              sx={{
-                '& .MuiFormControlLabel-label': {
-                  fontSize: '0.875rem',
-                  color: theme.palette.primary.main,
-                },
-              }}
-            />
+                      '&.Mui-checked': {
+                        color: theme.palette.primary.main,
+                      },
+                    }}
+                  />
+                }
+                label="Compare this practitioner"
+                sx={{
+                  '& .MuiFormControlLabel-label': {
+                    fontSize: '0.875rem',
+                    color: theme.palette.primary.main,
+                  },
+                }}
+              />
+            )}
           </Box>
         </CardContent>
       </Card>

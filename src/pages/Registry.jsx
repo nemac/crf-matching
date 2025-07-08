@@ -313,7 +313,7 @@ const FilterSection = ({ title, description, type, selected, availableOptions, o
   );
 };
 
-const ViewToggle = ({ view, onViewChange, selectedCount, onClearSelected }) => {
+const ViewToggle = ({ view, onViewChange, selectedCount, onClearSelected, showBrowseAll}) => {
   return (
     <Box
       sx={{
@@ -326,61 +326,64 @@ const ViewToggle = ({ view, onViewChange, selectedCount, onClearSelected }) => {
         position: 'relative', // For absolute positioning of clear button
       }}
     >
-      <Box
-        sx={{
-          bgcolor: view === 'cards' ? 'primary.main' : 'white',
-          color: view === 'cards' ? 'primary.white' : 'primary.main',
-          borderRadius: '20px',
-          cursor: 'pointer',
-          minWidth: '120px',
-          p: 1,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexBasis: {
-            // So the clear button wraps in mobile
-            xs: '40%',
-            md: 'auto',
-          },
-          boxShadow: view === 'cards' ? 2 : 1,
-          transition: 'all 0.2s ease-in-out',
-          '&:hover': {
-            bgcolor: view === 'cards' ? 'primary.dark' : 'grey.100',
-          },
-        }}
-        onClick={() => onViewChange(null, 'cards')}
-      >
-        <WindowIcon sx={{ mr: 1, fontSize: '1.2rem' }} />
-        Grid
-      </Box>
-      <Box
-        sx={{
-          bgcolor: view === 'compare' ? 'primary.main' : 'primary.white',
-          color: view === 'compare' ? 'primary.white' : 'primary.main',
-          borderRadius: '20px',
-          cursor: 'pointer',
-          minWidth: '120px',
-          p: 1,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexBasis: {
-            // So the clear button wraps in mobile
-            xs: '40%',
-            md: 'auto',
-          },
-          boxShadow: view === 'compare' ? 2 : 1,
-          transition: 'all 0.2s ease-in-out',
-          '&:hover': {
-            bgcolor: view === 'compare' ? 'primary.dark' : 'grey.100',
-          },
-        }}
-        onClick={() => onViewChange(null, 'compare')}
-      >
-        <CompareArrowsIcon sx={{ mr: 1, fontSize: '1.2rem' }} />
-        Compare
-      </Box>
-
+    {showBrowseAll && (
+    <React.Fragment>
+        <Box
+          sx={{
+            bgcolor: view === 'cards' ? 'primary.main' : 'white',
+            color: view === 'cards' ? 'primary.white' : 'primary.main',
+            borderRadius: '20px',
+            cursor: 'pointer',
+            minWidth: '120px',
+            p: 1,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexBasis: {
+              // So the clear button wraps in mobile
+              xs: '40%',
+              md: 'auto',
+            },
+            boxShadow: view === 'cards' ? 2 : 1,
+            transition: 'all 0.2s ease-in-out',
+            '&:hover': {
+              bgcolor: view === 'cards' ? 'primary.dark' : 'grey.100',
+            },
+          }}
+          onClick={() => onViewChange(null, 'cards')}
+        >
+          <WindowIcon sx={{ mr: 1, fontSize: '1.2rem' }} />
+          Grid
+        </Box>
+        <Box
+          sx={{
+            bgcolor: view === 'compare' ? 'primary.main' : 'primary.white',
+            color: view === 'compare' ? 'primary.white' : 'primary.main',
+            borderRadius: '20px',
+            cursor: 'pointer',
+            minWidth: '120px',
+            p: 1,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexBasis: {
+              // So the clear button wraps in mobile
+              xs: '40%',
+              md: 'auto',
+            },
+            boxShadow: view === 'compare' ? 2 : 1,
+            transition: 'all 0.2s ease-in-out',
+            '&:hover': {
+              bgcolor: view === 'compare' ? 'primary.dark' : 'grey.100',
+            },
+          }}
+          onClick={() => onViewChange(null, 'compare')}
+        >
+          <CompareArrowsIcon sx={{ mr: 1, fontSize: '1.2rem' }} />
+          Compare
+        </Box>
+       </React.Fragment>
+      )}
       {/* Clear Selected Button - Only show when there are selected practitioners */}
       {selectedCount > 0 && (
         <Button
@@ -414,6 +417,8 @@ const ViewToggle = ({ view, onViewChange, selectedCount, onClearSelected }) => {
 export default function Registry() {
   const theme = useTheme();
   const [toastOpen, setToastOpen] = useState(false);
+  const [showBrowseAll, setShowBrowseAll] = useState(false);
+  const [filterCount, setFilterCount] = useState(0);
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedState, setSelectedState] = useState('');
   const [practitioners, setPractitioners] = useState([]);
@@ -476,6 +481,14 @@ export default function Registry() {
   useEffect(() => {
     const params = filtersToSearchParams(filters, selectedLocation, currentView, Array.from(selectedForComparison));
     setSearchParams(params);
+
+    const loc = !selectedLocation  ? 0 : 1;
+    const activeFilterCount =  filters.activities.length + filters.sectors.length + filters.hazards.length + filters.size.length + loc
+    setFilterCount(activeFilterCount);
+    activeFilterCount === 0 ? setShowBrowseAll(true) : setShowBrowseAll(false);
+    activeFilterCount > 0 && setCurrentView('cards') 
+
+    
   }, [filters, selectedLocation, currentView, selectedForComparison]);
 
   useEffect(() => {
@@ -791,11 +804,11 @@ export default function Registry() {
                 },
               }}
             >
-              Filter practitioners
+              Filter practitioners ({filterCount})
             </Button>
             <Box sx={{ display: 'flex', gap: 2 }}>
               {/* Only show browse all when no community is selected */}
-              {!selectedLocation && (
+              {showBrowseAll && (
                 <Button
                   onClick={() => {
                     // Fetch all practitioners
@@ -831,10 +844,7 @@ export default function Registry() {
               )}
 
               {/* Only show clear button if there are filters applied */}
-              {(filters.activities.length > 0 ||
-                filters.sectors.length > 0 ||
-                filters.hazards.length > 0 ||
-                filters.size.length > 0) && (
+              {(filterCount > 0) && (
                 <Button
                   startIcon={<ClearAllIcon />}
                   onClick={(e) => {
@@ -944,7 +954,7 @@ export default function Registry() {
                   },
                 }}
               >
-                Share Community
+                Share
               </Button>
 
               <Toast
@@ -958,6 +968,7 @@ export default function Registry() {
               onViewChange={handleViewChange}
               selectedCount={selectedForComparison.size}
               onClearSelected={handleClearSelectedPractitioners}
+              showBrowseAll={showBrowseAll}
             />
             {currentView === 'cards' ? (
               <>
@@ -974,9 +985,8 @@ export default function Registry() {
                     variant="body1"
                     sx={{ mb: 3, color: 'text.secondary' }}
                   >
-                    {visiblePractitioners.length} out of {practitioners.length} practitioners selected from{' '}
-                    {totalPractitioners} available in the Registry of Adaptation Practitioners
-                    {/* <a
+                    Showing <strong >{visiblePractitioners.length}</strong> of {totalPractitioners} Adaptation Practitioners
+                    {/* <a 
                       href="https://climatesmartcommunity.org/registry/"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -988,7 +998,7 @@ export default function Registry() {
                       the Registry of Adaptation Practitioners
                     </a> */}
                   </Typography>
-                  {selectedState === 'BrowseAll' && (
+                  {showBrowseAll  && (
                     <Button
                       startIcon={<SortByAlphaIcon />}
                       sx={{
@@ -1038,6 +1048,7 @@ export default function Registry() {
                         practitioner={practitioner}
                         onComparisonSelect={handleComparisonSelect}
                         isSelectedForComparison={selectedForComparison.has(practitioner.airtableRecId)}
+                        showBrowseAll={showBrowseAll}
                       />
                     </Grid>
                   ))}
