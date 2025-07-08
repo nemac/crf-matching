@@ -76,7 +76,7 @@ function MatchBadge({ label, key, filters, objKey }) {
     <Box
       key={key}
       sx={{
-        backgroundColor: filters[objKey].includes(label) ? '#FFEED2' : 'unset',
+        backgroundColor: filters[objKey].includes(encodeURIComponent(label)) ? '#FFEED2' : 'unset',
         border: `1px solid ${theme.palette.primary.midBlue}`,
         borderRadius: 6,
         color: theme.palette.primary.main,
@@ -90,7 +90,7 @@ function MatchBadge({ label, key, filters, objKey }) {
         minWidth: '75px',
       }}
     >
-      { filters[objKey].includes(label)  &&  (<CheckCircleIcon key={key} sx={{ mr: 0.5, fontSize: '1.1rem' }}/>)}
+      { filters[objKey].includes(encodeURIComponent(label))  &&  (<CheckCircleIcon key={key} sx={{ mr: 0.5, fontSize: '1.1rem' }}/>)}
       {label}
     </Box>
   );
@@ -325,17 +325,6 @@ function PractitionerPageLoaded({ practitioner }) {
           </Box>
         </Box>
         <Box>
-          <SectionHeader title="Completed Steps to Resilience Training"></SectionHeader>
-          <Box
-            sx={{
-              pb: 1,
-              mb: 1,
-            }}
-          >
-            {practitioner.strTrained || 'N/A'}
-          </Box>
-        </Box>
-        <Box>
           <SectionHeader title="Organization Type"></SectionHeader>
           <Box
             sx={{
@@ -344,6 +333,17 @@ function PractitionerPageLoaded({ practitioner }) {
             }}
           >
             {practitioner.organizationType || 'N/A'}
+          </Box>
+        </Box>
+        <Box>
+          <SectionHeader title="Completed Steps to Resilience Training"></SectionHeader>
+          <Box
+            sx={{
+              pb: 1,
+              mb: 1,
+            }}
+          >
+            {practitioner.strTrained || 'N/A'}
           </Box>
         </Box>
         {sections.map((data, index) => {
