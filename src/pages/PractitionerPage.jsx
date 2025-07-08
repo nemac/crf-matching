@@ -357,7 +357,7 @@ function PractitionerPageLoaded({ practitioner }) {
           >
             {practitioner.strTrained || 'N/A'}
           </Box>
-        </Box>        
+        </Box>
         {sections.map((data, index) => {
           return (
             <MatchSection
