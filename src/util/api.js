@@ -121,7 +121,7 @@ export const fetchFilteredPractitioners = (filters, setPractitioners) => {
               matches = matches && filters.sectors.every((s) => rec.sectors.includes(s));
             }
             if (filters.hazards?.length) {
-              matches = matches && filters.hazards.every((h) => rec.hazards.includes(h));
+              matches = matches && filters.hazards.every(h => rec.hazards.includes(h));
             }
             if (filters.size?.length) {
               matches = matches && filters.size.every((s) => rec.size.includes(s));
