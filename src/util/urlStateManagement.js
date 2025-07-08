@@ -20,9 +20,10 @@ export const filtersToSearchParams = (filters, selectedLocation, view, selectedP
   // Handle filter arrays
   Object.entries(filters).forEach(([key, values]) => {
     if (values && values.length > 0) {
-      params.set(key, values.join(','));
+      const encoded = values.map(v => encodeURIComponent(v)).join(',');
+      params.set(key, encoded);
     }
-  });
+    });
 
   return params;
 };
@@ -45,13 +46,16 @@ export const searchParamsToFilters = async (searchParams) => {
 
   // Parse selected practitioners
   const selectedParam = searchParams.get('selected');
-  const selectedPractitioners = selectedParam ? selectedParam.split(',') : [];
+  // const selectedPractitioners = selectedParam ? selectedParam.split(',') : [];
+  const selectedPractitioners = selectedParam
+    ? selectedParam.split(',').map(decodeURIComponent)
+    : [];  
 
-  // Parse each filter type
+  // Parse each filter type with decoding
   Object.keys(filters).forEach((key) => {
     const param = searchParams.get(key);
     if (param) {
-      filters[key] = param.split(',');
+      filters[key] = param.split(',').map(decodeURIComponent);
     }
   });
 
@@ -79,6 +83,7 @@ export const searchParamsToFilters = async (searchParams) => {
 
 export const generateShareableUrl = (filters, selectedLocation, view, selectedPractitioners) => {
   const params = filtersToSearchParams(filters, selectedLocation, view, selectedPractitioners);
+  
   const baseUrl = window.location.origin.replace(/\/$/, '');
   return `${baseUrl}?${params.toString()}`;
 };
