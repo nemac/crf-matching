@@ -212,16 +212,15 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
   );
 }
 
-export default function PractitionerPane({ community, practitioner, poppedPractitioner, setPoppedPractitioner }) {
+export default function PractitionerPane({ community, practitioner, poppedPractitioner, setPoppedPractitioner, availableOptions={availableOptions} }) {
   // Determine if we're on SelfServicePage by checking if community.name is "Self Service"
   const isSelfService = community.name === 'My Community' || community.name.includes(',');
-
   const sections = [
-    [community.state, practitioner.state],
-    [community.activities, practitioner.activities],
-    [community.sectors, practitioner.sectors],
-    [community.hazards, practitioner.hazards],
-    [community.size, practitioner.size],
+    [availableOptions?.activities, practitioner.activities],
+    [availableOptions?.sectors, practitioner.sectors],
+    [availableOptions?.hazards, practitioner.hazards],
+    [availableOptions?.size, practitioner.size],
+    [availableOptions?.state, practitioner.state],
   ]
     .map(([commCats, practCats]) => matchVals(commCats, practCats))
     .map((matches, index) => {
@@ -248,7 +247,7 @@ export default function PractitionerPane({ community, practitioner, poppedPracti
         {sections.map((section, index) => (
           <div key={section.id}>
             <Section {...section} />
-            {isSelfService && (
+            {/* {isSelfService && (
               <Box
                 sx={{
                   height: '51px',
@@ -256,12 +255,12 @@ export default function PractitionerPane({ community, practitioner, poppedPracti
                   visibility: 'hidden',
                 }}
               />
-            )}
+            )} */}
           </div>
         ))}
-        <ScoreSection style={{ justifyContent: 'center' }}>
+        {/* <ScoreSection style={{ justifyContent: 'center' }}>
           <Box>{practitioner.matchScore}</Box>
-        </ScoreSection>
+        </ScoreSection> */}
       </Pane>
     </Box>
   );

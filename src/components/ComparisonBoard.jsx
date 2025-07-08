@@ -129,6 +129,7 @@ export default function ComparisonBoard({
                         practitioner={pract}
                         poppedPractitioner={poppedPractitioner}
                         setPoppedPractitioner={setPoppedPractitioner}
+                        availableOptions={availableOptions}
                       />
                     </Box>
                   ))}
