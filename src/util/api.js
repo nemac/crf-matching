@@ -51,6 +51,15 @@ const practitionerFieldMap = {
   org_state: 'org_state',
   org_zip: 'org_zip',
   org_registry_category: 'org_registry_category',
+  example1_title: 'example1_title',
+  example1_description: 'example1_description',
+  example1_links: 'example1_links',
+  example2_title: 'example2_title',
+  example2_description: 'example2_description',
+  example2_links: 'example2_links',
+  example3_title: 'example3_title',
+  example3_description: 'example3_description',
+  example3_links: 'example3_links',
 };
 
 const communityFieldMap = {
