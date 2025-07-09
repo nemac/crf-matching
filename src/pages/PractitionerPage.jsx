@@ -13,7 +13,7 @@ import ContactRow from '../components/ContactRow';
 import SectionHeader from '../components/SectionHeader';
 import WorkExamples from '../components/WorkExamples';
 import Logo from '../components/Logo';
-import Link from '@mui/material/Link';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 
 
 // API
@@ -42,25 +42,6 @@ const sections = [
   },  
 ];
 
-
-
-// function StrTrainedRow({ isTrained }) {
-//   if (!isTrained) {
-//     return '';
-//   }
-//   return (
-//     <Box
-//       sx={{
-//         display: 'inline-flex',
-//         alignItems: 'center',
-//         gap: 2,
-//       }}
-//     >
-//       <SchoolIcon />
-//       <span>Steps to Resilience certified</span>
-//     </Box>
-//   );
-// }
 
 function MatchBadge({ label, key, filters, objKey }) {
   return (
@@ -238,15 +219,22 @@ function PractitionerPageLoaded({ practitioner }) {
         {/* Header */}
         {/* <SectionHeader title="Registry of Adaptation Practitioner Profile"></SectionHeader>       */}
       
+        {practitioner.org_registry_category === 'Specialist' && (
+          <Box sx={{ width: 'fit-content', my: 2, pl: 4, pr: 10, py: 1,  borderRadius: 3, backgroundColor: theme.palette.primary.tan }}>
+
+              <Typography variant="subtitle1">
+                  <AutoAwesomeIcon sx={{ fontSize: '1.0rem', mr: 0.5, color: 'primary.main' }}/> {practitioner.org_registry_category}
+              </Typography>
+          </Box>
+        )}
+
         <Typography
           variant="h3"
-          fontWeight={800}
-          sx={{
-            mb: 3,
-          }}
-        >
+          fontWeight={800} 
+          sx={{ mb: 3 }}>
           {practitioner.org}
         </Typography>
+
         {/* Contact & Training Row */}
         <Grid
           container

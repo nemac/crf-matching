@@ -3,7 +3,6 @@ import { Typography, Box, Link } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import { useTheme } from '@mui/material/styles';
 import SectionHeader from './SectionHeader';
-import PersonIcon from '@mui/icons-material/Person';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 
 export default function WorkExamples({ practitioner }) {
