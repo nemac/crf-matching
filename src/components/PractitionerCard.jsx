@@ -119,7 +119,6 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
 
           <Box sx={{ mt: 'auto' }}>
             <Button
-              fullWidth
               variant="contained"
               href={`/practitioner/${practitioner.airtableRecId}?${urlFilters}`}
               rel="noopener noreferrer"
@@ -128,13 +127,14 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
                 backgroundColor: theme.palette.primary.midBlue,
                 borderRadius: 8,
                 textTransform: 'none',
+                mt: 6,
                 mb: 2,
                 '&:hover': {
                   backgroundColor: theme.palette.primary.main,
                 },
               }}
             >
-              Full Practitioner Org Profile
+              Practitioner Profile
             </Button>
 
             {showBrowseAll && (
