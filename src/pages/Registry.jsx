@@ -758,25 +758,6 @@ export default function Registry() {
               onChange={handleLocationSelect}
               disabled={false}
             />
-
-            {selectedLocation && (
-              <Button
-                variant="contained"
-                size="small"
-                startIcon={<AddIcon />}
-                onClick={handleResetCommunity}
-                sx={{
-                  bgcolor: 'grey.400',
-                  textTransform: 'none',
-                  whiteSpace: 'nowrap',
-                  '&:hover': {
-                    bgcolor: 'grey.500',
-                  },
-                }}
-              >
-                Change the community
-              </Button>
-            )}
           </Box>
 
           {/* Filter Toggle */}

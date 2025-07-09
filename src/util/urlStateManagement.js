@@ -59,10 +59,22 @@ export const searchParamsToFilters = async (searchParams) => {
     }
   });
 
-  // Handle location separately
-  const city = decodeURIComponent(searchParams.get('city'));
-  const state = decodeURIComponent(searchParams.get('state'));
+  let city = searchParams.get('city');
+  let state = searchParams.get('state');
 
+  // Decode the values only if they exist and are not the string "null"
+  if (city !== null && city !== 'null') {
+    city = decodeURIComponent(city);
+  } else {
+    city = null; // Or an empty string, depending on your desired default
+  }
+
+  if (state !== null && state !== 'null') {
+    state = decodeURIComponent(state);
+  } else {
+    state = null; // Or an empty string
+  }
+  
   if (city && state) {
     const locationDetails = {
       city,
