@@ -8,7 +8,6 @@ import PersonIcon from '@mui/icons-material/Person';
 export default function RecommendSpecialist({ practitionerSpecialists, filters }) {
   const urlFilters = filters
   const theme = useTheme();
-  console.log('practitionerSpecialists', practitionerSpecialists);
   return (
       <Box
         sx={{

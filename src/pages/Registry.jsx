@@ -809,7 +809,7 @@ export default function Registry() {
                 },
               }}
             >
-              Filter practitioners ({filterCount})
+              Filter ({filterCount})
             </Button>
             <Box sx={{ display: 'flex', gap: 2 }}>
               {/* Only show browse all when no community is selected */}
@@ -1083,7 +1083,7 @@ export default function Registry() {
                     </Button>
                   </Box>
                 )}
-                {practitionerSpecialists && (
+                {practitionerSpecialists.length > 0 && (
                   <RecommendSpecialist practitionerSpecialists={practitionerSpecialists} filters={searchParams}/>
                 )}
               </>
