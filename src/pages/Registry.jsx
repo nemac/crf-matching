@@ -809,7 +809,7 @@ export default function Registry() {
                 },
               }}
             >
-              Filter ({filterCount})
+              Filters ({filterCount})
             </Button>
             <Box sx={{ display: 'flex', gap: 2 }}>
               {/* Only show browse all when no community is selected */}

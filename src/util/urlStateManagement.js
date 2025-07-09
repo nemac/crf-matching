@@ -60,8 +60,8 @@ export const searchParamsToFilters = async (searchParams) => {
   });
 
   // Handle location separately
-  const city = searchParams.get('city');
-  const state = searchParams.get('state');
+  const city = decodeURIComponent(searchParams.get('city'));
+  const state = decodeURIComponent(searchParams.get('state'));
 
   if (city && state) {
     const locationDetails = {
