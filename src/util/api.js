@@ -104,7 +104,7 @@ export const fetchFilteredPractitioners = (filters, setPractitioners) => {
         const recs = records
           .map((rawRec) => rawRec.fields)
           .map((rec) => normalizeRec(rec, practitionerFieldMap))
-          .filter((rec) => rec.status === 'Accepted' ) // && rec.org_registry_category != 'Specialist'
+          .filter((rec) => rec.status === 'Accepted' && rec.org_registry_category != 'Specialist' ) 
           .filter((rec) => {
             let matches = true;
 
@@ -246,7 +246,7 @@ export const fetchAllPractitioners = (setAllPractitioners) => {
           .map((rawRec) => rawRec.fields)
           .map((rec) => normalizeRec(rec, practitionerFieldMap))
           // Only include Accepted practitioners
-          .filter((rec) => rec.status === 'Accepted') // && rec.org_registry_category != 'Specialist'
+          .filter((rec) => rec.status === 'Accepted' && rec.org_registry_category != 'Specialist') 
         practitioners.push(...recs);
         fetchNextPage();
       },
@@ -413,7 +413,7 @@ export const fetchPractitionersByFilters = (selectedOptions, setPractitioners) =
         const recs = records
           .map((rawRec) => rawRec.fields)
           .map((rec) => normalizeRec(rec, practitionerFieldMap))
-          .filter((rec) => rec.status === 'Accepted') // && rec.org_registry_category != 'Specialist'
+          .filter((rec) => rec.status === 'Accepted' && rec.org_registry_category != 'Specialist') 
         allRecords = [...allRecords, ...recs];
 
         fetchNextPage(); // Fetch next page if available
@@ -457,6 +457,117 @@ export const fetchPractitionersByFilters = (selectedOptions, setPractitioners) =
           .sort((a, b) => b.matchScore - a.matchScore);
 
         setPractitioners(filteredRecords);
+      }
+    );
+};
+
+
+export const fetchFilteredPractitionerSpecialist = (filters, setPractitionerSpecialist) => {
+  if (!Object.values(filters).some((val) => val && val.length)) {
+    setPractitionerSpecialist([]);
+    return;
+  }
+
+  let allRecords = [];
+
+  base('Organization')
+    .select({
+      view: practitionerViewName,
+      fields: practFetchFields,
+      sort: [{ field: 'org_name', direction: 'asc' }],
+    })
+    .eachPage(
+      function page(records, fetchNextPage) {
+        const recs = records
+          .map((rawRec) => rawRec.fields)
+          .map((rec) => normalizeRec(rec, practitionerFieldMap))
+          .filter((rec) => rec.status === 'Accepted' && rec.org_registry_category === 'Specialist' ) 
+          .filter((rec) => {
+            let matches = false;
+
+            // --- Filtering Logic: "AND" within all multi-select categories ---
+            // A practitioner's record MUST contain ALL of the selected values from each active filter category.
+
+            if (filters.state?.length) {
+              matches = matches || filters.state?.some((s) => rec.state.includes(s));
+              // const activitiesMatch = filters.activities?.some((s) => rec.activities.includes(s));
+              // console.log("state filter result:", activitiesMatch, "matches", matches, "Rec state:", rec.state, "Filter state:", filters.state);
+            }
+            if (filters.activities?.length) {
+              matches = matches || filters.activities?.some((s) => rec.activities.includes(s))
+              // const activitiesMatch = filters.activities?.some((s) => rec.activities.includes(s)); 
+              // console.log("activities filter result:", activitiesMatch, "matches", matches, "Rec activities:", rec.activities, "Filter activities:", filters.activities);
+            }
+            if (filters.sectors?.length) {
+              matches = matches || filters.sectors?.some((s) => rec.sectors.includes(s));
+              // const sectorsMatch = filters.sectors?.some((s) => rec.sectors.includes(s));
+              // console.log("sectors filter result:", sectorsMatch, "matches", matches, "Rec sectors:", rec.sectors, "Filter sectors:", filters.sectors);
+            }
+            if (filters.hazards?.length) {
+              matches = matches || filters.hazards?.some((s) => rec.hazards.includes(s));
+              // const hazardsMatch = filters.hazards?.some((s) => rec.hazards.includes(s));
+              // console.log("hazards filter result:", hazardsMatch, "matches", matches, "Rec sectors:", rec.hazards, "Filter sectors:", filters.hazards);
+            }
+            if (filters.size?.length) {
+              matches = matches || filters.size?.some((s) => rec.size.includes(s));
+              // const sizeMatch = filters.size?.some((s) => rec.size.includes(s));
+              // console.log("size filter result:", sizeMatch, "matches", matches, "Rec size:", rec.size, "Filter size:", filters.size);
+            }
+
+            // console.log("Filter result:", matches, "Rec states:", rec.state, "Filter states:", filters.state);
+            return matches;
+          })
+          .map((rec) => {
+            let matchCount = 0;
+
+            // --- Match Scoring Logic ---
+            // Scoring counts individual matches for relevance, even with "AND" filtering.
+
+            if (filters.state?.length) {
+              filters.state.forEach((state) => {
+                if (rec.state.includes(state)) matchCount++;
+              });
+            }
+            if (filters.activities?.length) {
+              filters.activities.forEach((activity) => {
+                if (rec.activities.includes(activity)) matchCount++;
+              });
+            }
+            if (filters.sectors?.length) {
+              filters.sectors.forEach((sector) => {
+                if (rec.sectors.includes(sector)) matchCount++;
+              });
+            }
+            if (filters.hazards?.length) {
+              filters.hazards.forEach((hazard) => {
+                if (rec.hazards.includes(hazard)) matchCount++;
+              });
+            }
+            if (filters.size?.length) {
+              filters.size.forEach((size) => {
+                if (rec.size.includes(size)) matchCount++;
+              });
+            }
+
+            rec.matchScore = matchCount;
+            return rec;
+          });
+
+        // Collect filtered records into allRecords
+        allRecords = [...allRecords, ...recs];
+        fetchNextPage(); // Fetch next page if available
+      },
+      function done(err) {
+        if (err) {
+          console.error(err);
+          return;
+        }
+
+        // Sort once all records are fetched
+        allRecords.sort((a, b) => b.matchScore - a.matchScore);
+
+        // Set state after all pages are fetched
+        setPractitionerSpecialist(allRecords);
       }
     );
 };

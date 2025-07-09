@@ -10,6 +10,7 @@ import PlaceIcon from '@mui/icons-material/Place';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import FullPageSpinner from '../components/FullPageSpinner';
 import ContactRow from '../components/ContactRow';
+import SectionHeader from '../components/SectionHeader';
 import Logo from '../components/Logo';
 
 // API
@@ -38,20 +39,7 @@ const sections = [
   },  
 ];
 
-function SectionHeader({ title, style }) {
-  return (
-    <Typography
-      variant="h6"
-      sx={{
-        fontWeight: 700,
-        color: 'primary.main',
-        ...style,
-      }}
-    >
-      {title}
-    </Typography>
-  );
-}
+
 
 // function StrTrainedRow({ isTrained }) {
 //   if (!isTrained) {

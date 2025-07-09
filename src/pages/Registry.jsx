@@ -28,10 +28,11 @@ import { FormatListBulleted } from '@mui/icons-material';
 import CancelIcon from '@mui/icons-material/Cancel';
 import IconButton from '@mui/material/IconButton';
 import SortByAlphaIcon from '@mui/icons-material/SortByAlpha';
-import { fetchFilteredPractitioners, fetchOptionsFromAirtable, fetchAllPractitioners } from '../util/api';
+import { fetchFilteredPractitioners, fetchOptionsFromAirtable, fetchAllPractitioners, fetchFilteredPractitionerSpecialist } from '../util/api';
 import Toast from '../components/Toast';
 import ComparisonBoard from '../components/ComparisonBoard';
 import PractitionerCard from '../components/PractitionerCard';
+import RecommendSpecialist from '../components/RecommendSpecialist';
 import { searchLocations, getLocationDetails } from '../util/geocoding';
 import { filtersToSearchParams, searchParamsToFilters, generateShareableUrl } from '../util/urlStateManagement';
 import { lightBlue } from '@mui/material/colors';
@@ -422,6 +423,7 @@ export default function Registry() {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedState, setSelectedState] = useState('');
   const [practitioners, setPractitioners] = useState([]);
+  const [practitionerSpecialists, setPractitionerSpecialists,] = useState([]);
   const [totalPractitioners, setTotalPractitioners] = useState(0);
   const [showFilters, setShowFilters] = useState(false);
   const [currentView, setCurrentView] = useState('cards');
@@ -505,8 +507,10 @@ export default function Registry() {
   useEffect(() => {
     if (Object.values(filters).some((arr) => arr.length > 0)) {
       fetchFilteredPractitioners(filters, setPractitioners);
+      fetchFilteredPractitionerSpecialist(filters, setPractitionerSpecialists);
     } else {
       setPractitioners([]);
+      setPractitionerSpecialists([]);
     }
   }, [filters]);
 
@@ -649,8 +653,9 @@ export default function Registry() {
       state: [],
     });
 
-    // Reset practitioners
+    // Reset practitioners and specialists
     setPractitioners([]);
+    setPractitionerSpecialists()
 
     // Reset display count back to initial value
     setDisplayCount(PRACTITIONERS_PER_PAGE);
@@ -1077,6 +1082,9 @@ export default function Registry() {
                       Load more practitioners
                     </Button>
                   </Box>
+                )}
+                {practitionerSpecialists && (
+                  <RecommendSpecialist practitionerSpecialists={practitionerSpecialists} filters={searchParams}/>
                 )}
               </>
             ) : (
