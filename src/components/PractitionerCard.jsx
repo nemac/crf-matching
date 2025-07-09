@@ -66,6 +66,7 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
             {truncatedDescription}
           </Typography>
 
+          {showBrowseAll && (
           <Box sx={{ mb: 2 }}>
             <Typography
               variant="subtitle2"
@@ -116,7 +117,8 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
                 </Box>
             </Box>
           </Box>
-
+          )}
+          
           <Box sx={{ mt: 'auto' }}>
             <Button
               variant="contained"
