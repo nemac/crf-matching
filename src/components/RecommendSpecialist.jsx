@@ -54,8 +54,8 @@ export default function RecommendSpecialist({ practitionerSpecialists, filters }
                 <Box sx={{ px: 2, mb: 0.5 }}>
                   <AutoAwesomeIcon sx={{ color: 'primary.main' }}/>
                 </Box>
-                <Box sx={{ px: 2, mb: 0.5 }}>
-                  <Typography variant="h7" sx={{ fontWeight: 700, color: 'primary.main', mb: 1 }}>
+                <Box sx={{ px: 2, mb: 0.5, maxWidth: { xs: '300px', sm: '300px', md: '400px'}, }}>
+                  <Typography variant="h7" sx={{ fontWeight: 700, color: 'primary.main', mb: 1, maxWidth: { xs: '300px', sm: '300px', md: '400px'}, }}>
                     {practSpec.name}
                   </Typography>
                 </Box>
