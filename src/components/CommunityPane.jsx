@@ -53,7 +53,6 @@ export default function CommunityPane({
 }) {
   const sectionData = getSectionData(community, isSelectable, availableOptions, onSelectionChange);
 
-  console.log(availableOptions)
   return (
     <Box
       sx={{

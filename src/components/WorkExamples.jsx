@@ -12,16 +12,9 @@ export default function WorkExamples({ practitioner }) {
     return match ? match[0] : '';
   };
 
-    console.log('practitioner', practitioner.example1_links);
-
   practitioner.example1_links = extractUrl(practitioner.example1_links);
   practitioner.example2_links = extractUrl(practitioner.example2_links);
   practitioner.example3_links = extractUrl(practitioner.example3_links);
-
-  console.log('practitioner1', practitioner.example1_links);
-  console.log('practitioner2', practitioner.example2_links);
-  console.log('practitioner3', practitioner.example3_links);
-
 
   const theme = useTheme();
   return (
