@@ -11,6 +11,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import FullPageSpinner from '../components/FullPageSpinner';
 import ContactRow from '../components/ContactRow';
 import SectionHeader from '../components/SectionHeader';
+import WorkExamples from '../components/WorkExamples';
 import Logo from '../components/Logo';
 import Link from '@mui/material/Link';
 
@@ -357,85 +358,8 @@ function PractitionerPageLoaded({ practitioner }) {
             ></MatchSection>
           );
         })}
-         <Grid container spacing={4} sx={{ backgroundColor: theme.palette.primary.white, borderRadius: 3, p: 2, my: 4,  border: `1px solid ${theme.palette.primary.lightBlue}`, }}>
-           
-           <Grid xs={12}>
-              <SectionHeader title="Examples of our work"></SectionHeader>
-           </Grid>
+        <WorkExamples practitioner={practitioner} />
 
-          {practitioner.example1_description.length > 0 && practitioner.example1_description.toLowerCase() !== 'not answered' && (
-            <Grid xs={12} md={exampleWidth}>
-                <Box sx={{ mb: 0.5 }}>
-                  <Typography variant="h7" sx={{ fontWeight: 700, color: 'primary.main', mb: 1 }}>
-                    {practitioner.example1_title}
-                  </Typography>
-                </Box>
-                <Box>            
-                  <Typography variant="body2" 
-                  sx={{
-                      display: '-webkit-box',
-                      overflow: 'hidden',
-                      WebkitBoxOrient: 'vertical',
-                      WebkitLineClamp: 8,
-                    }}>
-                    {practitioner.example1_description}
-                  </Typography>
-                </Box>
-                <Box sx={{ py: 2 }}>
-                  <Link href={practitioner.example1_links} target="_blank" sx={{ fontSize: '0.9rem'}}>Learn More </Link>
-                </Box>              
-            </Grid>
-          )}
-
-          {practitioner.example2_description.length > 0 && practitioner.example2_description.toLowerCase() !== 'not answered' &&  (
-            <Grid xs={12} md={exampleWidth}>
-                <Box sx={{ mb: 0.5 }}>
-                  <Typography variant="h7" sx={{ fontWeight: 700, color: 'primary.main', mb: 1 }}>
-                    {practitioner.example2_title}
-                  </Typography>
-                </Box>
-                <Box>
-                  <Typography variant="body2" 
-                  sx={{
-                      display: '-webkit-box',
-                      overflow: 'hidden',
-                      WebkitBoxOrient: 'vertical',
-                      WebkitLineClamp: 8,
-                    }}>
-                    {practitioner.example2_description}
-                  </Typography>
-                </Box>
-                <Box sx={{ py: 2 }}>
-                  <Link href={practitioner.example2_links} target="_blank" sx={{ fontSize: '0.9rem'}}>Learn More </Link>
-                </Box>              
-            </Grid>
-          )}
-
-          {practitioner.example3_description.length > 0 && practitioner.example3_description.toLowerCase() !== 'not answered' &&  (
-            <Grid xs={12} md={exampleWidth}>
-                <Box sx={{ mb: 0.5 }}>
-                  <Typography variant="h7" sx={{ fontWeight: 700, color: 'primary.main', mb: 1 }}>
-                    {practitioner.example3_title}
-                  </Typography>
-                </Box>
-                <Box>
-                  <Typography variant="body2" 
-                  sx={{
-                      display: '-webkit-box',
-                      overflow: 'hidden',
-                      WebkitBoxOrient: 'vertical',
-                      WebkitLineClamp: 8,
-                    }}>
-                    {practitioner.example3_description}
-                  </Typography>
-                </Box>
-                <Box sx={{ py: 2 }}>
-                  <Link href={practitioner.example3_links} target="_blank" sx={{ fontSize: '0.9rem'}}>Learn More </Link>
-                </Box>
-            </Grid>
-          )}
-                        
-         </Grid>
       </Container>
     </ThemeProvider>
   );

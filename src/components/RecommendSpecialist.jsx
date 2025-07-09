@@ -4,6 +4,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { useTheme } from '@mui/material/styles';
 import SectionHeader from './SectionHeader';
 import PersonIcon from '@mui/icons-material/Person';
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 
 export default function RecommendSpecialist({ practitionerSpecialists, filters }) {
   const urlFilters = filters
@@ -50,6 +51,9 @@ export default function RecommendSpecialist({ practitionerSpecialists, filters }
                 borderRadius: 3,
                 border: `1px solid ${theme.palette.primary.lightBlue}`,
               }}>
+                <Box sx={{ px: 2, mb: 0.5 }}>
+                  <AutoAwesomeIcon sx={{ color: 'primary.main' }}/>
+                </Box>
                 <Box sx={{ px: 2, mb: 0.5 }}>
                   <Typography variant="h7" sx={{ fontWeight: 700, color: 'primary.main', mb: 1 }}>
                     {practSpec.name}
