@@ -71,8 +71,8 @@ export default function WorkExamples({ practitioner }) {
                   <Box sx={{ px: 2, mb: 0.5 }}>
                     <MenuBookIcon sx={{ color: 'primary.main' }}/>
                   </Box>
-                  <Box sx={{ px: 2, mb: 0.5,  maxWidth: { xs: '300px', sm: '300px', md: '400px'}, }}>
-                    <Typography variant="h7" sx={{ fontWeight: 700, color: 'primary.main', mb: 1, maxWidth: { xs: '300px', sm: '300px', md: '400px'} }}>
+                  <Box sx={{ px: 2, mb: 0.5,  maxWidth: { xs: '300px', sm: '300px', md: '400px'}, minHeight:  { xs: '70px', sm: '70px', md: '60px' }}}>
+                    <Typography variant="h7" sx={{ fontWeight: 700, color: 'primary.main', mb: 1, maxWidth: { xs: '300px', sm: '300px', md: '400px'}, minHeight:  { xs: '70px', sm: '70px', md: '60px' } }}>
                       {practitioner.example1_title}
                     </Typography>
                   </Box>
@@ -123,8 +123,8 @@ export default function WorkExamples({ practitioner }) {
                   <Box sx={{ px: 2, mb: 0.5 }}>
                     <MenuBookIcon sx={{ color: 'primary.main' }}/>
                   </Box>
-                  <Box sx={{ px: 2, mb: 0.5, maxWidth: { xs: '300px', sm: '300px', md: '400px'}, } }>
-                    <Typography variant="h7" sx={{ fontWeight: 700, color: 'primary.main', mb: 1, maxWidth: { xs: '300px', sm: '300px', md: '400px'}  }}>
+                  <Box sx={{ px: 2, mb: 0.5, maxWidth: { xs: '300px', sm: '300px', md: '400px'}, minHeight:  { xs: '70px', sm: '70px', md: '60px' } } }>
+                    <Typography variant="h7" sx={{ fontWeight: 700, color: 'primary.main', mb: 1, maxWidth: { xs: '300px', sm: '300px', md: '400px'}, minHeight:  { xs: '70px', sm: '70px', md: '60px' }  }}>
                       {practitioner.example2_title}
                     </Typography>
                   </Box>
@@ -173,8 +173,8 @@ export default function WorkExamples({ practitioner }) {
                   <Box sx={{ px: 2, mb: 0.5 }}>
                     <MenuBookIcon sx={{ color: 'primary.main' }}/>
                   </Box>
-                  <Box sx={{ px: 2, mb: 0.5, maxWidth: { xs: '300px', sm: '300px', md: '400px'}  }}>
-                    <Typography variant="h7" sx={{ fontWeight: 700, color: 'primary.main', mb: 1, maxWidth: { xs: '300px', sm: '300px', md: '400px'}  }}>
+                  <Box sx={{ px: 2, mb: 0.5, maxWidth: { xs: '300px', sm: '300px', md: '400px'}, minHeight:  { xs: '70px', sm: '70px', md: '60px' } }}>
+                    <Typography variant="h7" sx={{ fontWeight: 700, color: 'primary.main', mb: 1, maxWidth: { xs: '300px', sm: '300px', md: '400px'}, minHeight:  { xs: '70px', sm: '70px', md: '60px' } }}>
                       {practitioner.example3_title}
                     </Typography>
                   </Box>
