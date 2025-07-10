@@ -3,10 +3,13 @@ import Box from '@mui/material/Box';
 import csciLogo from '../assets/Registry_Logo_primary_RGB.jpg';
 import theme from '../theme.jsx';
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { Link } from 'react-router-dom';
+
 
 export default function Logo () {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
   const logoWidth = isSmallScreen ? 150 : 180;
+  const params = window.location.search || '';
   return (
     <Box
           sx={{
@@ -17,7 +20,7 @@ export default function Logo () {
             p: 2
           }}
         >
-          <a href="/Registry">
+          <Link to={'/Registry' + params}>
             <img
               src={csciLogo}
               alt="Registry of Adaptation Practitioners Logo"
@@ -27,7 +30,7 @@ export default function Logo () {
                 width: `${logoWidth}px`,
               }}
             />
-          </a>
+          </Link>
         </Box>
   )
 }

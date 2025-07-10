@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -15,6 +15,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Logo from '../components/Logo.jsx';
 import theme from '../theme';
+import { searchParamsToFilters } from '../util/urlStateManagement';
 
 const drawerWidth = 240;
 const navItems = [
@@ -38,6 +39,9 @@ export default function NavBar() {
     setMobileOpen((prevState) => !prevState);
   };
 
+
+  const params = window.location.search || '';
+  
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', color: 'primary.main', }}>
       <Logo />
@@ -86,7 +90,7 @@ export default function NavBar() {
             {navItems.map((item, i) => (
               <Button
                 component={Link}
-                to={item.url}
+                to={item.url + params}
                 key={i}
                 onClick={() => {setPageSelect(`${item.url}`);}}
                 sx={{ 

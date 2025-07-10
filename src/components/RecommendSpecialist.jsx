@@ -86,7 +86,7 @@ export default function RecommendSpecialist({ practitionerSpecialists, filters }
                     sx={{
                       color: theme.palette.primary.main,
                       backgroundColor: theme.palette.primary.white,
-                      border: `1px solid ${theme.palette.primary.main}`,
+                      border: `1px solid ${theme.palette.primary.borderGray}`,
                       borderRadius: 8,
                       textTransform: 'none',
                       mt: 6,
