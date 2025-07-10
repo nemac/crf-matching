@@ -51,8 +51,10 @@ export default function RecommendSpecialist({ practitionerSpecialists, filters }
                 borderRadius: 3,
                 border: `1px solid ${theme.palette.primary.lightBlue}`,
               }}>
-                <Box sx={{ px: 2, mb: 0.5 }}>
-                  <AutoAwesomeIcon sx={{ color: 'primary.main' }}/>
+                <Box sx={{ width: 'fit-content', m: 2, pl: 2, pr: 8, py: 1,  borderRadius: 3, backgroundColor: theme.palette.primary.tan }}>
+                    <Typography variant="subtitle1">
+                        <AutoAwesomeIcon sx={{ fontSize: '1.0rem', mr: 0.5, color: 'primary.main' }}/> {practSpec.org_registry_category}
+                    </Typography>
                 </Box>
                 <Box sx={{ px: 2, mb: 0.5, maxWidth: { xs: '300px', sm: '300px', md: '400px'}, minHeight:  { xs: '70px', sm: '70px', md: '60px' } }}>
                   <Typography variant="h7" sx={{ fontWeight: 700, color: 'primary.main', mb: 1, maxWidth: { xs: '300px', sm: '300px', md: '400px'}, }}>
