@@ -96,6 +96,7 @@ export default function NavBar() {
                 key={i}
                 onClick={() => {setPageSelect(`${item.url}`);}}
                 sx={{ 
+                  borderRadius: 9999,
                   px: 2.5,
                   marginRight: theme.spacing(2),
                   color: 'primary.main', 
