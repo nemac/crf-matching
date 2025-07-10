@@ -48,7 +48,7 @@ export default function NavBar() {
       <Divider />
       <List>
         {navItems.map((item, i) => (
-          <ListItem key={i} to={item.url} component={Link} disablePadding onClick={() => {setPageSelect(`${item.url}`);}}>
+          <ListItem key={i} to={item.url + params} component={Link} disablePadding onClick={() => {setPageSelect(`${item.url}`);}}>
             <ListItemButton >
               <ListItemText
                 disableTypography={true}
