@@ -708,7 +708,7 @@ export default function Registry() {
             }}
           >
             Registry of Adaptation Practitioners
-            <Chip sx={{display:{  xs: 'flex',  sm: 'inline-flex', md: 'inline-flex' }, maxWidth: '100px', mb: 6, backgroundColor: lightBlue[700], color: '#FFFFFF'  }} label='Beta version'  size="small" />
+            <Chip sx={{display:{  xs: 'flex',  sm: 'inline-flex', md: 'inline-flex' }, maxWidth: '150px', mx: 2, mb: 6, p: 2, backgroundColor: lightBlue[400], color: 'primary.main'  }} label='Beta version'  size="small" />
           </Typography>
           <Typography
             sx={{
