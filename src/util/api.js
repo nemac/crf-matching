@@ -469,6 +469,34 @@ export const fetchPractitionersByFilters = (selectedOptions, setPractitioners) =
       }
     );
 };
+export const fetchAllPractitionerSpecialist = (setPractitionerSpecialist) => {
+  const practitioners = [];
+  base('Organization')
+    .select({
+      view: practitionerViewName,
+      fields: practFetchFields,
+      // Sort by organization name
+      sort: [{ field: 'org_name', direction: 'asc' }],
+    })
+    .eachPage(
+      function page(records, fetchNextPage) {
+        const recs = records
+          .map((rawRec) => rawRec.fields)
+          .map((rec) => normalizeRec(rec, practitionerFieldMap))
+          // Only include Accepted practitioners
+          .filter((rec) => rec.status === 'Accepted' && rec.org_registry_category === 'Specialist') 
+        practitioners.push(...recs);
+        fetchNextPage();
+      },
+      function done(err) {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        setPractitionerSpecialist(practitioners);
+      }
+    );
+};
 
 
 export const fetchFilteredPractitionerSpecialist = (filters, setPractitionerSpecialist) => {

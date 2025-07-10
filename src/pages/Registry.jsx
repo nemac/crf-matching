@@ -28,7 +28,13 @@ import { FormatListBulleted } from '@mui/icons-material';
 import CancelIcon from '@mui/icons-material/Cancel';
 import IconButton from '@mui/material/IconButton';
 import SortByAlphaIcon from '@mui/icons-material/SortByAlpha';
-import { fetchFilteredPractitioners, fetchOptionsFromAirtable, fetchAllPractitioners, fetchFilteredPractitionerSpecialist } from '../util/api';
+import { 
+  fetchFilteredPractitioners,
+  fetchOptionsFromAirtable,
+  fetchAllPractitioners,
+  fetchFilteredPractitionerSpecialist,
+  fetchAllPractitionerSpecialist 
+} from '../util/api';
 import Toast from '../components/Toast';
 import ComparisonBoard from '../components/ComparisonBoard';
 import PractitionerCard from '../components/PractitionerCard';
@@ -809,6 +815,8 @@ export default function Registry() {
                         setCurrentView('cards');
                         // Set selected state to something so comparison board shows
                         setSelectedState('BrowseAll');
+
+                        fetchAllPractitionerSpecialist(setPractitionerSpecialists);
                       });
                     }}
                     startIcon={<FormatListBulleted />}
