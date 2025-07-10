@@ -5,6 +5,7 @@ import crf_logo from '../assets/CRF_logo.jpg';
 import ecoadapt_logo from '../assets/EcoAdapt_logo_cmyk.jpg';
 import geos_logo from '../assets/geos_logo.jpg';
 import nemac_logo from '../assets/nemac_logo.png';
+import NavBar from '../components/NavBar';
 
 const PartnerLogo = ({ name, imgSrc, url }) => (
   <Paper
@@ -90,6 +91,7 @@ const PartnerLogo = ({ name, imgSrc, url }) => (
 export default function AboutPage() {
   return (
     <ThemeProvider theme={theme}>
+      <NavBar />    
       <Container
         maxWidth="lg"
         sx={{ pt: 4, pb: 8, cursor: 'default' }}
@@ -197,7 +199,7 @@ export default function AboutPage() {
         <Box sx={{ 
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center',
+          justifyContent: 'flex-start',
           width: '100%',
           mb: 4,
         }}>

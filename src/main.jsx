@@ -8,23 +8,33 @@ import ReactGA from "react-ga4";
 
 import AboutPage from './pages/AboutPage.jsx';
 import PractitionerPage from './pages/PractitionerPage.jsx';
-import HomePage from './pages/HomePage.jsx';
+// import HomePage from './pages/HomePage.jsx';
+import HowToApplyPage from './pages/HowToApplyPage.jsx';
+import Registry from './pages/Registry.jsx';
 
 ReactGA.initialize("G-V5H6STTJJS"); // Replace with your GA Measurement ID
 ReactGA.send("pageview"); // Send initial pageview
 
 const router = createBrowserRouter([
+    {
+    path: '/Registry',
+    element: <Registry />,
+  },
   {
     path: '/',
-    element: <HomePage />,
+    element: <Registry />,
   },
   {
     path: '/practitioner/:practitionerId',
     element: <PractitionerPage />,
   },
   {
-    path: '/about',
+    path: '/About',
     element: <AboutPage />,
+  },
+  {
+    path: '/Howtoapply',
+    element: <HowToApplyPage />,
   },
 ]);
 

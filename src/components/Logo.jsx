@@ -6,21 +6,23 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 
 export default function Logo () {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const logoWidth = isSmallScreen ? 125 : 175;
+  const logoWidth = isSmallScreen ? 150 : 180;
   return (
     <Box
           sx={{
             display: 'flex',
-            width: 'fit-content',
+            width: '100%',
             alignItems: 'center',
-            pb: 2,
+            justifyContent: {xs: 'center', sm: 'flex-start', md: 'flex-start'},
+            p: 2
           }}
         >
-          <a href="/">
+          <a href="/Registry">
             <img
               src={csciLogo}
               alt="Registry of Adaptation Practitioners Logo"
               style={{
+                margin: '0 auto',
                 height: 'auto',
                 width: `${logoWidth}px`,
               }}

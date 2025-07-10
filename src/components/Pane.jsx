@@ -1,4 +1,3 @@
-
 import { Stack, styled } from '@mui/material'
 
 export default styled(Stack)(({ theme }) => ({
