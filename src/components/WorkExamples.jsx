@@ -16,6 +16,13 @@ export default function WorkExamples({ practitioner }) {
   practitioner.example2_links = extractUrl(practitioner.example2_links);
   practitioner.example3_links = extractUrl(practitioner.example3_links);
 
+  // const notAnswered = 'not answered';
+  // const numExamples = (practitioner.example1_title.trim().length > 0 && practitioner.example1_title.trim().toLowerCase() != notAnswered ? 1 : 0) + 
+  //                     (practitioner.example2_title.trim().length > 0 && practitioner.example2_title.trim().toLowerCase() != notAnswered ? 1 : 0) +
+  //                     (practitioner.example3_title.trim().length > 0 && practitioner.example3_title.trim().toLowerCase() != notAnswered ? 1 : 0);
+
+  // const workExampleWidth = numExamples === 0 ? 12 : numExamples/12;
+
   const theme = useTheme();
   return (
       <Box

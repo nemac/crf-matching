@@ -135,7 +135,7 @@ function PractitionerPageLoaded({ practitioner }) {
 
       <Container
         maxWidth="lg"
-        sx={{ p: 3, cursor: 'default'  }}
+        sx={{ p: 3, pb: 8, cursor: 'default'  }}
       >
         {/* <Logo /> CSCI Logo */}
         {/* Header */}

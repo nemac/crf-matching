@@ -54,11 +54,13 @@ export default function NavBar() {
                 disableTypography={true}
                 primary={item.name}
                  sx={{ 
+                  px: 2.5,
+                  py: 0.5,
                   color: 'primary.main', 
                   textTransform: 'capitalize', 
                   fontSize: '1rem', 
-                  fontWeight: pageSelect === `${item.url}` ? 'bold' : 'none' ,
-                  textDecoration: pageSelect === `${item.url}` ? 'underline' : 'none'}}/>
+                  backgroundColor: pageSelect === `${item.url}` ? 'primary.cellHoverBg' : 'unset' ,
+                  textDecoration: pageSelect === `${item.url}` ? 'none' : 'none' }}/>
             </ListItemButton>
           </ListItem>
         ))}
@@ -94,12 +96,13 @@ export default function NavBar() {
                 key={i}
                 onClick={() => {setPageSelect(`${item.url}`);}}
                 sx={{ 
+                  px: 2.5,
                   marginRight: theme.spacing(2),
                   color: 'primary.main', 
                   textTransform: 'capitalize', 
                   fontSize: '1rem', 
-                  fontWeight: pageSelect === `${item.url}` ? 'bold' : 'none' ,
-                  textDecoration: pageSelect === `${item.url}` ? 'underline' : 'none' }}>
+                  backgroundColor: pageSelect === `${item.url}` ? 'primary.cellHoverBg' : 'unset' ,
+                  textDecoration: pageSelect === `${item.url}` ? 'none' : 'none' }}>
                 {item.name}
               </Button>
             ))}
