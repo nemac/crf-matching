@@ -145,7 +145,7 @@ export default function WorkExamples({ practitioner }) {
                         target='_blank'
                         rel="noreferrer"
                       >
-                        Learn More
+                        Explore Example
                       </Link>
                     )}
 
@@ -208,7 +208,7 @@ export default function WorkExamples({ practitioner }) {
                         target='_blank'
                         rel="noreferrer"
                       >
-                        Learn More
+                        Explore Example
                       </Link>
                     )}
 
@@ -269,7 +269,7 @@ export default function WorkExamples({ practitioner }) {
                         target='_blank'
                         rel="noreferrer"
                       >
-                        Learn More
+                        Explore Example
                       </Link>
                     )}
 
