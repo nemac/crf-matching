@@ -718,8 +718,8 @@ export default function Registry() {
           >
             The Registry of Adaptation Practitioners is a community resource for easy identification of a qualified adaptation practitioner to provide the support you need!
           </Typography>
-          {/* <Typography
-            variant="h4"
+          <Typography
+            variant="h5"
             sx={{
               color: 'primary.main',
               fontWeight: 'bold',
@@ -727,7 +727,7 @@ export default function Registry() {
             }}
           >
             Looking for an adaptation practitioner?
-          </Typography> */}
+          </Typography>
           <Paper
             variant="outlined"
             sx={{
