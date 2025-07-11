@@ -60,12 +60,12 @@ export default function RecommendSpecialist({ practitionerSpecialists, filters }
                 <Grid key={index} sx={{
                   backgroundColor: theme.palette.primary.white,
                   borderRadius: 3,
-                  border: `1px solid ${theme.palette.primary.lightBlue}`,
+                  border: `1px solid ${theme.palette.primary.purple}`,
                 }}>
 
                   <Box sx={{  width: 'fit-content', mx: 1.25, my: 2, pl: 2, pr: 4, py: 1,  borderRadius: 3, color: theme.palette.purple, backgroundColor: theme.palette.primary.cellHoverBg }}>
                     <Typography variant="subtitle2">
-                        <AutoAwesomeIcon sx={{ fontSize: '0.85rem', mr: 0.5, color: 'primary.main' }}/> {practSpec.org_registry_category}
+                        <AutoAwesomeIcon sx={{ fontSize: '0.85rem', mr: 0.5, color: theme.palette.purple  }}/> {practSpec.org_registry_category}
                     </Typography>
                   </Box>
                   <Box sx={{ px: 2, mb: 0.5, maxWidth: { xs: '300px', sm: '300px', md: '400px'}, minHeight:  { xs: '70px', sm: '70px', md: '60px' } }}>
