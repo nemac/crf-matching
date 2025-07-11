@@ -1,9 +1,7 @@
 import React, { useRef, useState, useEffect  } from 'react';
 import { Typography, Box, Link, Button } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
-import { useTheme } from '@mui/material/styles';
-import SectionHeader from './SectionHeader';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
+import { useTheme } from '@mui/material/styles';import MenuBookIcon from '@mui/icons-material/MenuBook';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
@@ -32,7 +30,7 @@ export default function WorkExamplesCard({ title, description, exampleLink }) {
   return (
     <React.Fragment>
       { description.length > 0 && description.toLowerCase() !== 'not answered' && (
-        <Grid key={'workExample1'}
+        <Grid key={title}
           sx={{
             backgroundColor: theme.palette.primary.white,
             borderRadius: 3,

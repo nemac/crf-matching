@@ -1,56 +1,10 @@
-import React, { useRef, useState, useEffect  } from 'react';
-import { Typography, Box, Link, Button } from '@mui/material';
+import {  Box  } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import { useTheme } from '@mui/material/styles';
 import SectionHeader from './SectionHeader';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
 import WorkExamplesCard from '../components/WorkExamplesCard';
 
 export default function WorkExamples({ practitioner }) {
-  const textRef1 = useRef(null);
-  const textRef2 = useRef(null);
-  const textRef3 = useRef(null);
-
-  const [isClamped1, setIsClamped1] = useState(false);
-  const [expanded1, setExpanded1] = useState(false);
-
-  const [isClamped2, setIsClamped2] = useState(false);
-  const [expanded2, setExpanded2] = useState(false);
-
-  const [isClamped3, setIsClamped3] = useState(false);
-  const [expanded3, setExpanded3] = useState(false);
-
-  useEffect(() => {
-    const el = textRef1.current;
-    if (el) {
-      setIsClamped1(el.scrollHeight > el.clientHeight);
-    }
-  }, [practitioner.example1_description ]);
-
-    useEffect(() => {
-    const el = textRef1.current;
-    if (el) {
-      setIsClamped2(el.scrollHeight > el.clientHeight);
-    }
-  }, [practitioner.example2_description ]);
-
-    useEffect(() => {
-    const el = textRef1.current;
-    if (el) {
-      setIsClamped3(el.scrollHeight > el.clientHeight);
-    }
-  }, [practitioner.example3_description ]);
-
-
-  const extractUrl = (input) => {
-  const match = input.match(/https?:\/\/[^\s]+/);
-    return match ? match[0] : '';
-  };
-
-  practitioner.example1_links = extractUrl(practitioner.example1_links);
-  practitioner.example2_links = extractUrl(practitioner.example2_links);
-  practitioner.example3_links = extractUrl(practitioner.example3_links);
-
   const theme = useTheme();
   return (
       <Box
