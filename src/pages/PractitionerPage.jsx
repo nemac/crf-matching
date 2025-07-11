@@ -23,6 +23,10 @@ import { fetchPractitioner } from '../util/api';
 
 const sections = [
   {
+    title: 'What We Do Best',
+    objKey: 'org_services_provided_top',
+  },  
+  {
     title: 'Services Provided',
     objKey: 'activities',
   },
@@ -46,32 +50,39 @@ const sections = [
 
 
 function MatchBadge({ label, key, filters, objKey }) {
+  // fixes for blank top 3
+  const objKeyOveride = objKey === 'org_services_provided_top' ? 'activities' : objKey;
   return (
     <Box
       key={key}
       sx={{
-        backgroundColor: filters[objKey].includes(encodeURIComponent(label)) ? '#FFEED2' : 'unset',
-        border: `1px solid ${theme.palette.primary.midBlue}`,
+        backgroundColor: filters[objKeyOveride].includes(encodeURIComponent(label)) ? objKey === 'org_services_provided_top' ? '#ffd186' : '#FFEED2' : objKey === 'org_services_provided_top' ? theme.palette.primary.lightPurple : 'unset',
+        border: objKey === 'org_services_provided_top' ? `1px solid ${theme.palette.primary.darkPurple}` : `1px solid ${theme.palette.primary.midBlue}`,
         borderRadius: 6,
-        color: theme.palette.primary.main,
+        color: objKey === 'org_services_provided_top' ? theme.palette.primary.darkPurple :  theme.palette.primary.main,
         alignContent: 'center',
         justifyContent: 'center',
         textAlign: 'center',
-        fontSize: '0.75rem',
+        fontSize: objKey === 'org_services_provided_top' ? '0.75rem' : '0.75rem',
         display: 'flex',
-        p: 1.25,
+        py: 1.25,
+        px: 2.5,
         m: 0.5,
+        mb: objKey === 'org_services_provided_top' ? 2 : 0.5,
         minWidth: '75px',
       }}
     >
-      { filters[objKey].includes(encodeURIComponent(label))  &&  (<CheckCircleIcon key={key} sx={{ mr: 0.5, fontSize: '1.1rem' }}/>)}
+     
+      { filters[objKeyOveride].includes(encodeURIComponent(label))  &&  (<CheckCircleIcon key={key} sx={{ mr: 0.5, fontSize: '1.1rem' }}/>)}
       {label}
     </Box>
   );
 }
 
 function MatchSection({ filters, practitioner, title, objKey }) {
-  const matchBadges = practitioner[objKey].map((label, index) => {
+  // fixes for blank top 3
+  const objKeyOveride = practitioner[objKey].length === 0  ? 'activities' : objKey;  
+  const matchBadges = practitioner[objKeyOveride].map((label, index) => {
     return MatchBadge({ label, key: index, filters, objKey });
   });
   
@@ -230,7 +241,7 @@ function PractitionerPageLoaded({ practitioner }) {
           >
             {practitioner.info || 'N/A'}
           </Box>
-        </Box>
+        </Box>      
         <Box>
           <SectionHeader title="Community Specializations"></SectionHeader>
           <Box
@@ -263,7 +274,7 @@ function PractitionerPageLoaded({ practitioner }) {
           >
             {practitioner.strTrained || 'N/A'}
           </Box>
-        </Box>
+        </Box>          
         {sections.map((data, index) => {
           return (
             <MatchSection
