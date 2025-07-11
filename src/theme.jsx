@@ -12,6 +12,7 @@ let theme = createTheme({
     primary: {
       main: '#2D3F5D',
       tan: '#FFEED2',
+      darkTan: '#845200',
       white: '#FFFFFF',
       lightGray: '#FAFAFA',
       borderGray: '#D9D9D9',

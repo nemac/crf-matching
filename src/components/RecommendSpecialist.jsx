@@ -63,7 +63,7 @@ export default function RecommendSpecialist({ practitionerSpecialists, filters }
                   border: `1px solid ${theme.palette.primary.lightBlue}`,
                 }}>
 
-                  <Box sx={{  width: 'fit-content', mx: 1.25, my: 2, pl: 2, pr: 4, py: 1,  borderRadius: 3, backgroundColor: theme.palette.primary.cellHoverBg }}>
+                  <Box sx={{  width: 'fit-content', mx: 1.25, my: 2, pl: 2, pr: 4, py: 1,  borderRadius: 3, color: theme.palette.purple, backgroundColor: theme.palette.primary.cellHoverBg }}>
                     <Typography variant="subtitle2">
                         <AutoAwesomeIcon sx={{ fontSize: '0.85rem', mr: 0.5, color: 'primary.main' }}/> {practSpec.org_registry_category}
                     </Typography>
