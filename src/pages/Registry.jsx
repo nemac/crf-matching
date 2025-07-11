@@ -916,7 +916,7 @@ export default function Registry() {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  mb: 4,
+                  mb: 1,
                   gap: 1,
                   flexDirection: {
                     xs: 'column',
