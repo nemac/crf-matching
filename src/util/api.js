@@ -51,6 +51,8 @@ const practitionerFieldMap = {
   org_state: 'org_state',
   org_zip: 'org_zip',
   org_registry_category: 'org_registry_category',
+  org_registry_category_specialist: 'org_registry_category_specialist',
+  org_services_provided_top: 'org_services_provided_top',
   example1_title: 'example1_title',
   example1_description: 'example1_description',
   example1_links: 'example1_links',
