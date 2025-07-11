@@ -15,6 +15,7 @@ import WorkExamples from '../components/WorkExamples';
 import Logo from '../components/Logo';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import NavBar from '../components/NavBar';
+import HubIcon from '@mui/icons-material/Hub';
 
 
 // API
@@ -134,18 +135,24 @@ function PractitionerPageLoaded({ practitioner }) {
       <NavBar />
 
       <Container
-        maxWidth="lg"
+        maxWidth="xl"
         sx={{ p: 3, pb: 8, cursor: 'default'  }}
       >
         {/* <Logo /> CSCI Logo */}
         {/* Header */}
         {/* <SectionHeader title="Registry of Adaptation Practitioner Profile"></SectionHeader>       */}
       
-        {practitioner.org_registry_category === 'Specialist' && (
+        {practitioner.org_registry_category === 'Specialist' ? (
           <Box sx={{ width: 'fit-content', my: 2, pl: 4, pr: 10, py: 1,  borderRadius: 3, backgroundColor: theme.palette.primary.tan }}>
 
               <Typography variant="subtitle1">
                   <AutoAwesomeIcon sx={{ fontSize: '1.0rem', mr: 0.5, color: 'primary.main' }}/> {practitioner.org_registry_category}
+              </Typography>
+          </Box>
+        ) : (
+          <Box sx={{  width: 'fit-content', my: 2, pl: 2, pr: 4, py: 1,  borderRadius: 3, backgroundColor: theme.palette.primary.cellHoverBg }}>
+              <Typography variant="subtitle2">
+                  <HubIcon sx={{ fontSize: '0.85rem', mr: 0.5, color: 'primary.main' }}/>  {practitioner.org_registry_category || 'Broad service provider'}
               </Typography>
           </Box>
         )}

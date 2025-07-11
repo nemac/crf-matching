@@ -21,8 +21,8 @@ export default function HomePage() {
           borderBottom: `1px solid ${theme.palette.primary.borderGray}`,
         }}
       >
-      <Container maxWidth="lg"> 
-        <Toolbar sx={{ gap: 3, maxWidth: "lg"}}>
+      <Container maxWidth="xl"> 
+        <Toolbar sx={{ gap: 3, maxWidth: "xl"}}>
           {/* Logo */}
           <Box
             sx={{

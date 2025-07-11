@@ -8,7 +8,7 @@ export default function HowToApplyPage() {
     <ThemeProvider theme={theme}>
       <NavBar />
       <Container
-        maxWidth="lg"
+        maxWidth="xl"
         sx={{ pt: 4, pb: 8, cursor: 'default' }}
       >
         {/* Main Title Section */}

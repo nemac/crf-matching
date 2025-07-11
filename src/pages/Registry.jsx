@@ -694,7 +694,7 @@ export default function Registry() {
     <React.Fragment>
       <NavBar />
       <Container
-        maxWidth="lg"
+        maxWidth="xl"
         sx={{ mt: 4, mb: 4, cursor: 'default' }}
       >
         {/* <Logo /> CSCI Logo */}
@@ -825,7 +825,7 @@ export default function Registry() {
                       bgcolor: lightBlue[50],
                       color: 'primary.main',
                       textTransform: 'none',
-                      borderRadius: 2,
+                      borderRadius: 9999,                      
                       px: 2,
                       '&:hover': {
                         bgcolor: lightBlue[100],
@@ -851,6 +851,8 @@ export default function Registry() {
                     sx={{
                       color: 'primary.main',
                       textTransform: 'none',
+                      borderRadius: 9999,
+                      px: 2,
                       '&:hover': {
                         bgcolor: 'primary.tan',
                       },
@@ -1005,6 +1007,7 @@ export default function Registry() {
                           borderColor: 'primary.borderGray',
                           borderRadius: '20px',
                           boxShadow: 1,
+                          px: 2,
                           textTransform: 'none',
                           whiteSpace: 'nowrap',
                           '&:hover': {
