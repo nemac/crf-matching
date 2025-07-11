@@ -150,7 +150,7 @@ function PractitionerPageLoaded({ practitioner }) {
               </Typography>
           </Box>
         ) : (
-          <Box sx={{  width: 'fit-content', my: 2, pl: 4, pr: 10, py: 1,  borderRadius: 3, backgroundColor: theme.palette.primary.cellHoverBg }}>
+          <Box sx={{  width: 'fit-content', my: 2, pl: 4, pr: 10, py: 1,  borderRadius: 3, backgroundColor: theme.palette.primary.tan }}>
               <Typography variant="subtitle1">
                   <HubIcon sx={{ fontSize: '1.0rem', mr: 1.0, color: 'primary.main' }}/>  {practitioner.org_registry_category || 'Broad service provider'}
               </Typography>

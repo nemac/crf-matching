@@ -51,7 +51,7 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
             />
           </Box>
 
-          <Box sx={{  width: 'fit-content', my: 2, pl: 2, pr: 4, py: 1,  borderRadius: 3, backgroundColor: theme.palette.primary.cellHoverBg }}>
+          <Box sx={{  width: 'fit-content', my: 2, pl: 2, pr: 4, py: 1,  borderRadius: 3, backgroundColor: theme.palette.primary.tan }}>
               <Typography variant="subtitle2">
                   <HubIcon sx={{ fontSize: '0.85rem', mr: 0.5, color: 'primary.main' }}/>  {practitioner.org_registry_category || 'Broad service provider'}
               </Typography>
