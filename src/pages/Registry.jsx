@@ -128,8 +128,7 @@ const LocationSearch = ({ value, onChange, disabled }) => {
       renderInput={(params) => (
         <TextField
           {...params}
-          // placeholder="Enter the community location"
-          placeholder="Where is the community"
+          placeholder="Enter the community location"
           sx={{
             bgcolor: 'primary.white',
             borderRadius: 1,
