@@ -6,6 +6,7 @@ import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import PersonIcon from '@mui/icons-material/Person';
+import PractitionerTypeChip from '../components/PractitionerTypeChip';
 
 export default function RecommendSpecialistCard({ specialist, urlFilters, index}) {
   const title = specialist.name;
@@ -33,17 +34,13 @@ export default function RecommendSpecialistCard({ specialist, urlFilters, index}
           borderRadius: 3,
           border: `1px solid ${theme.palette.primary.purple}`,
           minWidth: { xs: '325px', sm: '325px', md: '450px'},
+          maxWidth: { xs: '350px', sm: '350px', md: '500px'},
         }}>
-        <Box sx={{  width: 'fit-content', mx: 1.25, my: 2, pl: 2, pr: 4, py: 1,  borderRadius: 3, color: theme.palette.purple, backgroundColor: theme.palette.primary.cellHoverBg }}>
-          <Typography variant="subtitle2">
-              <AutoAwesomeIcon sx={{ color: theme.palette.purple, fontSize: '0.85rem', mr: 0.5, color: 'primary.main' }}/> {category}
-          </Typography>        
-        </Box>
-        <Box sx={{ px: 2, mb: 0.5, maxWidth: { xs: '300px', sm: '300px', md: '400px'}, minHeight:  { xs: '70px', sm: '70px', md: '60px' } }}>
-          <Typography variant="h7" sx={{ fontWeight: 700, color: theme.palette.purple, mb: 1, maxWidth: { xs: '300px', sm: '300px', md: '400px'}, }}>
-            {title}
-          </Typography>
-        </Box>
+          <PractitionerTypeChip 
+            type={category} 
+            label={category}
+            list={specialty}
+          size={'small'}/>
         <Box
           sx={{ 
             px: 2,
@@ -74,16 +71,7 @@ export default function RecommendSpecialistCard({ specialist, urlFilters, index}
               </Button>
             )}
         </Box>
-        <Box sx={{ maxWidth: { xs: '300px', sm: '300px', md: '400px'}, m: 2, px: 2, py: 1  }}>
-          {/* color: theme.palette.purple, backgroundColor: theme.palette.primary.cellHoverBg, borderRadius: 3, backgroundColor: theme.palette.primary.medGray */}
-          <Typography variant="subtitle2" component={'div'} sx={{ fontWeight: 600, mb: 1}} >
-              Specializes in:
-          </Typography>               
-          <Typography variant="subtitle2">
-              {specialty}
-          </Typography>
-        </Box>        
-        <Box sx={{ p: 2 }}>
+        <Box sx={{ display: 'flex', alignItems: 'flex-end', p: 2 }}>
           <Button
             variant="contained"
             href={profileLink}

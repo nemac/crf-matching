@@ -4,6 +4,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import climatePracLogo from '../assets/climate_prac.png';
 import HubIcon from '@mui/icons-material/Hub';
 import theme from '../theme';
+import PractitionerTypeChip from '../components/PractitionerTypeChip';
 
 export default function PractitionerCard({ filters, practitioner, onComparisonSelect, isSelectedForComparison, showBrowseAll }) {
   const urlFilters = filters
@@ -51,12 +52,12 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
             />
           </Box>
 
-          <Box sx={{ verticalAlign: 'middle', width: 'fit-content', my: 2, pl: 2, pr: 4, py: 1,  borderRadius: 3, color: theme.palette.primary.darkTan, backgroundColor: theme.palette.primary.tan }}>
-              <Typography variant="subtitle2" sx={{ verticalAlign: 'middle' }} >
-                  <HubIcon sx={{ fontSize: '0.75rem', mr: 0.5, color: theme.palette.primary.darkTan }}/>  {practitioner.org_registry_category || 'Broad service provider'}
-              </Typography>
-          </Box>
-
+        <PractitionerTypeChip 
+          type={practitioner.org_registry_category} 
+          label={practitioner.org_registry_category}
+          list={practitioner.org_registry_category_specialist}
+          size={'small'}/>
+          
           <Typography
             variant="h6"
             component="div"

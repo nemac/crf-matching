@@ -27,13 +27,13 @@ export default function ContactRow({ type, practitioner }) {
   }
   let icon
   if (type === 'linkedIn') {
-    icon = <LinkedInIcon />
+    icon = <LinkedInIcon sx={{ verticalAlign: 'middle' }} />
   } else if (type === 'website') {
-    icon = <LanguageIcon />
+    icon = <LanguageIcon sx={{ verticalAlign: 'middle' }} />
   } else if (type === 'email') {
-    icon = <EmailIcon />
+    icon = <EmailIcon sx={{ verticalAlign: 'middle' }} />
   } else if (type === 'phone') {
-    icon = <PhoneIcon />
+    icon = <PhoneIcon sx={{ verticalAlign: 'middle' }} />
   }
 
 

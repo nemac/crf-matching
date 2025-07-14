@@ -1,7 +1,7 @@
 import { useState, useLayoutEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
-import { CssBaseline, Stack, Container, Box, Typography, styled, AppBar, Toolbar, Button } from '@mui/material';
+import { CssBaseline, Stack, Container, Box, Typography, styled } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import useMediaQuery from "@mui/material/useMediaQuery";
 
@@ -12,11 +12,8 @@ import FullPageSpinner from '../components/FullPageSpinner';
 import ContactRow from '../components/ContactRow';
 import SectionHeader from '../components/SectionHeader';
 import WorkExamples from '../components/WorkExamples';
-import Logo from '../components/Logo';
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import PractitionerTypeChip from '../components/PractitionerTypeChip';
 import NavBar from '../components/NavBar';
-import HubIcon from '@mui/icons-material/Hub';
-
 
 // API
 import { fetchPractitioner } from '../util/api';
@@ -57,7 +54,6 @@ function MatchBadge({ label, key, filters, objKey }) {
       key={key}
       sx={{
         backgroundColor: filters[objKeyTopFilter].includes(encodeURIComponent(label)) ? matchChipColor : 'unset',
-        // objKey === 'org_services_provided_top' ? '#FFEED2' : '#FFEED2' : objKey === 'org_services_provided_top' ? theme.palette.primary.lightPurple : 'unset',
         border: objKey === 'org_services_provided_top' ? `1px solid ${theme.palette.primary.darkPurple}` : `1px solid ${theme.palette.primary.midBlue}`,
         borderRadius: 6,
         color: objKey === 'org_services_provided_top' ? theme.palette.primary.darkPurple :  theme.palette.primary.main,
@@ -147,7 +143,7 @@ function PractitionerPageLoaded({ practitioner }) {
 
   const countExamples = getCountExamples(practitioner);
   const exampleWidth = countExamples > 0 ? 12/countExamples : 0;
-
+  const specialty = practitioner.org_registry_category_specialist;
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -157,24 +153,11 @@ function PractitionerPageLoaded({ practitioner }) {
         maxWidth="xl"
         sx={{ p: 3, pb: 8, cursor: 'default'  }}
       >
-        {/* <Logo /> CSCI Logo */}
-        {/* Header */}
-        {/* <SectionHeader title="Registry of Adaptation Practitioner Profile"></SectionHeader>       */}
-      
-        {practitioner.org_registry_category === 'Specialist' ? (
-          <Box sx={{ width: 'fit-content', my: 2, pl: 4, pr: 10, py: 1,  borderRadius: 3, color: theme.palette.purple, backgroundColor: theme.palette.primary.cellHoverBg }}>
-
-              <Typography variant="subtitle1">
-                  <AutoAwesomeIcon sx={{ fontSize: '1.0rem', mr: 0.5, color: 'primary.main' }}/> {practitioner.org_registry_category}
-              </Typography>
-          </Box>
-        ) : (
-          <Box sx={{  width: 'fit-content', my: 2, pl: 4, pr: 10, py: 1,  borderRadius: 3, color: theme.palette.primary.darkTan, backgroundColor: theme.palette.primary.tan }}>
-              <Typography variant="subtitle1">
-                  <HubIcon sx={{ fontSize: '1.0rem', mr: 1.0, color: theme.palette.primary.darkTan}}/>  {practitioner.org_registry_category || 'Broad service provider'}
-              </Typography>
-          </Box>
-        )}
+        <PractitionerTypeChip 
+          type={practitioner.org_registry_category} 
+          label={practitioner.org_registry_category}
+          list={specialty}
+          size={'large'}/>
 
         <Typography
           variant="h3"
