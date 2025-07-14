@@ -68,7 +68,7 @@ export default function PractitionerTypeChip({ type, label, list, size }) {
           <Box 
             key={index}
             sx={{ 
-              display: åsize === 'large' ? 'unset' : 'none',
+              display: size === 'large' ? 'unset' : 'none',
               textTransform: 'capitalize', 
               my: 0.5, 
               mx: 0.25, 
