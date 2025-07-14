@@ -23,7 +23,7 @@ import { fetchPractitioner } from '../util/api';
 
 const sections = [
   {
-    title: 'What We Do Best',
+    title: 'Our top 3 services',
     objKey: 'org_services_provided_top',
   },  
   {
@@ -50,13 +50,14 @@ const sections = [
 
 
 function MatchBadge({ label, key, filters, objKey }) {
-  // fixes for blank top 3
-  const objKeyOveride = objKey === 'org_services_provided_top' ? 'activities' : objKey;
+  const objKeyTopFilter = objKey === 'org_services_provided_top' ? 'activities' : objKey;
+  const matchChipColor = objKey === 'org_services_provided_top' ? theme.palette.primary.lightPurple : theme.palette.primary.tan
   return (
     <Box
       key={key}
       sx={{
-        backgroundColor: filters[objKeyOveride].includes(encodeURIComponent(label)) ? objKey === 'org_services_provided_top' ? '#ffd186' : '#FFEED2' : objKey === 'org_services_provided_top' ? theme.palette.primary.lightPurple : 'unset',
+        backgroundColor: filters[objKeyTopFilter].includes(encodeURIComponent(label)) ? matchChipColor : 'unset',
+        // objKey === 'org_services_provided_top' ? '#FFEED2' : '#FFEED2' : objKey === 'org_services_provided_top' ? theme.palette.primary.lightPurple : 'unset',
         border: objKey === 'org_services_provided_top' ? `1px solid ${theme.palette.primary.darkPurple}` : `1px solid ${theme.palette.primary.midBlue}`,
         borderRadius: 6,
         color: objKey === 'org_services_provided_top' ? theme.palette.primary.darkPurple :  theme.palette.primary.main,
@@ -73,7 +74,7 @@ function MatchBadge({ label, key, filters, objKey }) {
       }}
     >
      
-      { filters[objKeyOveride].includes(encodeURIComponent(label))  &&  (<CheckCircleIcon key={key} sx={{ mr: 0.5, fontSize: '1.1rem' }}/>)}
+      { filters[objKeyTopFilter].includes(encodeURIComponent(label))  &&  (<CheckCircleIcon key={key} sx={{ mr: 0.5, fontSize: '1.1rem' }}/>)}
       {label}
     </Box>
   );
@@ -81,9 +82,16 @@ function MatchBadge({ label, key, filters, objKey }) {
 
 function MatchSection({ filters, practitioner, title, objKey }) {
   // fixes for blank top 3
-  const objKeyOveride = practitioner[objKey].length === 0  ? 'activities' : objKey;  
-  const matchBadges = practitioner[objKeyOveride].map((label, index) => {
-    return MatchBadge({ label, key: index, filters, objKey });
+  const items = Array.isArray(practitioner[objKey]) ? practitioner[objKey] : [];
+  const activeFilters = Array.isArray(filters[objKey]) ? filters[objKey] : [];
+
+    // Return nothing if items is null, undefined, or not an array
+  if (!Array.isArray(items) || items.length === 0) {
+    return <></>;
+  }
+
+  const matchBadges = items.map((label, index) => {
+    return MatchBadge({ label, key: index, filters: { ...filters, [objKey]: activeFilters }, objKey });
   });
   
   return (

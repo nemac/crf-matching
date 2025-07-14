@@ -98,7 +98,7 @@ export default function RecommendSpecialistCard({ specialist, urlFilters, index}
               mt: 6,
               mb: 2,
               '&:hover': {
-                backgroundColor: theme.palette.primary.lightBlue,
+                backgroundColor: theme.palette.primary.lightGray,
               },
             }}
           >

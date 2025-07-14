@@ -19,6 +19,7 @@ let theme = createTheme({
       medGray: '#F5F5F5',
       borderGray: '#D9D9D9',
       lightBlue: '#D1E9FF',
+      lightBlueHover: '#9ed1ff',
       midBlue: '#52A6FF',
       purple: '#6E8EAA',
       lightPurple: '#eaeff2',

@@ -143,7 +143,7 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
                 mt: 6,
                 mb: 2,
                 '&:hover': {
-                  backgroundColor: theme.palette.primary.midBlue,
+                  backgroundColor: theme.palette.primary.lightBlueHover,
                 },
               }}
             >
