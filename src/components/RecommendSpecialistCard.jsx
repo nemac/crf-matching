@@ -67,10 +67,10 @@ export default function RecommendSpecialistCard({ specialist, urlFilters, index}
               <Button
                 onClick={() => setExpanded((prev) => !prev)}
                 size="small"
-                sx={{ mt: -0.25, textTransform: 'none' }}
+                sx={{ mt: -0.25, textTransform: 'none', fontSize: '0.65rem' }}
               >
                 {expanded ? 'Less' : 'More'}
-                {expanded ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon /> }
+                {expanded ? <KeyboardArrowUpIcon  sx={{ fontSize: '0.65rem' }} /> : <KeyboardArrowDownIcon  sx={{ fontSize: '0.65rem' }} /> }
               </Button>
             )}
         </Box>
