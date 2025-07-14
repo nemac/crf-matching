@@ -41,6 +41,12 @@ export default function RecommendSpecialistCard({ specialist, urlFilters, index}
             label={category}
             list={specialty}
           size={'small'}/>
+
+       <Box sx={{ px: 2, mb: 0.25, maxWidth: { xs: '300px', sm: '300px', md: '400px'}, minHeight:  { xs: '70px', sm: '70px', md: '60px' } }}>
+          <Typography variant="h7" sx={{ fontWeight: 700, color: theme.palette.purple, mb: 1, maxWidth: { xs: '300px', sm: '300px', md: '400px'}, }}>
+            {title}
+          </Typography>
+        </Box>
         <Box
           sx={{ 
             px: 2,
