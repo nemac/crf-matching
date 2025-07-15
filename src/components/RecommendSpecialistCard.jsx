@@ -14,6 +14,7 @@ export default function RecommendSpecialistCard({ specialist, urlFilters, index}
   const profileLink = `/practitioner/${specialist.airtableRecId}?${urlFilters}`;
   const category = specialist.org_registry_category;
   const specialty = specialist.org_registry_category_specialist;
+  const expertiseArray = specialty ? specialty.split(',') : [];
 
   const textRef = useRef(null);
   const [isClamped, setIsClamped] = useState(false);
@@ -28,8 +29,12 @@ export default function RecommendSpecialistCard({ specialist, urlFilters, index}
   
   const theme = useTheme();
   return (
-      <Grid key={`${index}-${title}`}
+      <Grid 
+        key={`${index}-${title}`}
         sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
           backgroundColor: theme.palette.primary.white,
           borderRadius: 3,
           border: `1px solid ${theme.palette.primary.purple}`,
@@ -42,7 +47,7 @@ export default function RecommendSpecialistCard({ specialist, urlFilters, index}
             list={specialty}
           size={'small'}/>
 
-       <Box sx={{ px: 2, mb: 0.25, maxWidth: { xs: '300px', sm: '300px', md: '400px'}, minHeight:  { xs: '70px', sm: '70px', md: '60px' } }}>
+        <Box sx={{ px: 2, mb: 0.25, maxWidth: { xs: '300px', sm: '300px', md: '400px'}, minHeight:  { xs: '70px', sm: '70px', md: '60px' } }}>
           <Typography variant="h7" sx={{ fontWeight: 700, color: theme.palette.purple, mb: 1, maxWidth: { xs: '300px', sm: '300px', md: '400px'}, }}>
             {title}
           </Typography>
@@ -77,7 +82,24 @@ export default function RecommendSpecialistCard({ specialist, urlFilters, index}
               </Button>
             )}
         </Box>
-        <Box sx={{ display: 'flex', alignItems: 'flex-end', p: 2 }}>
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', p: 1}}>
+          {expertiseArray.map((expertise, index) => 
+            <Box 
+              key={index}
+              sx={{ 
+                textTransform: 'capitalize', 
+                width: 'fit-content',
+                my: 0.5, 
+                mx: 0.25, 
+                px: 2, 
+                py: 0.25,
+                borderRadius: 9999,
+                fontSize: '0.75rem',
+                backgroundColor: theme.palette.primary.lightTan }}>
+                { expertise }
+          </Box>)}
+        </Box>  
+        <Box sx={{ display: 'flex', alignItems: 'flex-end', p: 2, mt: 'auto'}}>
           <Button
             variant="contained"
             href={profileLink}
@@ -89,8 +111,6 @@ export default function RecommendSpecialistCard({ specialist, urlFilters, index}
               border: `1px solid ${theme.palette.primary.borderGray}`,
               borderRadius: 8,
               textTransform: 'none',
-              mt: 6,
-              mb: 2,
               '&:hover': {
                 backgroundColor: theme.palette.primary.lightGray,
               },

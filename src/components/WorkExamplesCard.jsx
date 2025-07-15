@@ -32,6 +32,9 @@ export default function WorkExamplesCard({ title, description, exampleLink }) {
       { description.length > 0 && description.toLowerCase() !== 'not answered' && (
         <Grid key={title}
           sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',            
             backgroundColor: theme.palette.primary.white,
             borderRadius: 3,
             border: `1px solid ${theme.palette.primary.purple}`,
@@ -74,8 +77,8 @@ export default function WorkExamplesCard({ title, description, exampleLink }) {
                 </Button>
               )}
           </Box>
-          <Box sx={{ p: 2 }}>
-
+        <Box sx={{ display: 'flex', alignItems: 'flex-end', p: 2, mt: 'auto'}}>
+          
             {exampleLink.length > 0 && (
               <Link
                 href={exampleLink}
