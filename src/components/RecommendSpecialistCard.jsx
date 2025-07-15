@@ -41,11 +41,14 @@ export default function RecommendSpecialistCard({ specialist, urlFilters, index}
           minWidth: { xs: '325px', sm: '325px', md: '450px'},
           maxWidth: { xs: '350px', sm: '350px', md: '500px'},
         }}>
+
+        <Box sx={{ px: 2 }} >
           <PractitionerTypeChip 
             type={category} 
             label={category}
             list={specialty}
-          size={'small'}/>
+            size={'small'}/>
+        </Box>
 
         <Box sx={{ px: 2, mb: 0.25, maxWidth: { xs: '300px', sm: '300px', md: '400px'}, minHeight:  { xs: '70px', sm: '70px', md: '60px' } }}>
           <Typography variant="h7" sx={{ fontWeight: 700, color: theme.palette.purple, mb: 1, maxWidth: { xs: '300px', sm: '300px', md: '400px'}, }}>
@@ -92,7 +95,7 @@ export default function RecommendSpecialistCard({ specialist, urlFilters, index}
                 my: 0.5, 
                 mx: 0.5, 
                 px: 2, 
-                py: 0.5,
+                py: 0.25,
                 borderRadius: 9999,
                 fontSize: '0.75rem',
                 backgroundColor: theme.palette.primary.lightTan }}>
