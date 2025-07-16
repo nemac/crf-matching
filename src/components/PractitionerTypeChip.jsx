@@ -72,8 +72,8 @@ export default function PractitionerTypeChip({ type, label, list, size }) {
               textTransform: 'capitalize', 
               my: 0.5, 
               mx: 0.25, 
-              px: 2, 
-              py: 0.25, 
+              px: 3, 
+              py: 1,
               borderRadius: 9999,
               backgroundColor: aTagBackgroundColor }}>
               { expertise }
