@@ -18,7 +18,7 @@ export default function WorkExamples({ practitioner }) {
           px: 6,
           py: 4,
           my: 8,
-          backgroundColor: theme.palette.primary.cellHoverBg,
+          backgroundColor: theme.palette.primary.lightPurple,
         }}
       >
         <SectionHeader title="Examples of Our Work"></SectionHeader>
