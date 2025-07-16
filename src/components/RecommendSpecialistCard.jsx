@@ -86,6 +86,8 @@ export default function RecommendSpecialistCard({ specialist, urlFilters, index}
             )}
         </Box>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', p: 1}}>
+          <Box sx={{ width: '100%', mt: 0.5 }}><Typography variant="subtitle2" >Specialty:</Typography></Box>
+          
           {expertiseArray.map((expertise, index) => 
             <Box 
               key={index}
