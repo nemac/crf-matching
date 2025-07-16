@@ -96,8 +96,8 @@ export default function RecommendSpecialistCard({ specialist, urlFilters, index}
                 width: 'fit-content',
                 my: 0.5, 
                 mx: 0.5, 
-                px: 2, 
-                py: 0.25,
+                px: 3, 
+                py: 1,
                 borderRadius: 9999,
                 fontSize: '0.75rem',
                 backgroundColor: theme.palette.primary.lightTan }}>
