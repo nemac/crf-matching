@@ -36,6 +36,7 @@ export default function RecommendSpecialistCard({ specialist, urlFilters, index}
           flexDirection: 'column',
           justifyContent: 'space-between',
           backgroundColor: theme.palette.primary.white,
+          color: theme.palette.purple,
           borderRadius: 3,
           border: `1px solid ${theme.palette.primary.purple}`,
           minWidth: { xs: '325px', sm: '325px', md: '450px'},
@@ -86,7 +87,7 @@ export default function RecommendSpecialistCard({ specialist, urlFilters, index}
             )}
         </Box>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', p: 1}}>
-          <Box sx={{ width: '100%', mt: 0.5 }}><Typography variant="subtitle2" >Specialty:</Typography></Box>
+          <Box sx={{ width: '100%', mt: 0.5, color: theme.palette.purple }}><Typography variant="subtitle2" >Specialty:</Typography></Box>
           
           {expertiseArray.map((expertise, index) => 
             <Box 
