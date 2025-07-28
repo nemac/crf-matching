@@ -22,12 +22,15 @@ const navItems = [
   {
     name: 'Registry of Adaptation Practitioners',
     url: '/Registry',
+    matches : ['/Registry', '/practitionerworkexamplepage', '/practitioner'],
   }, {
     name: 'How to apply',
     url: '/Howtoapply',
+    matches: ['/Howtoapply'],
   },{
     name: 'About',
-    url: '/About',    
+    url: '/About',
+    matches: ['/About'],
   }, 
 ]
 
@@ -39,9 +42,8 @@ export default function NavBar() {
     setMobileOpen((prevState) => !prevState);
   };
 
-
   const params = window.location.search || '';
-  
+
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', color: 'primary.main', }}>
       <Logo />
@@ -59,8 +61,8 @@ export default function NavBar() {
                   color: 'primary.main', 
                   textTransform: 'capitalize', 
                   fontSize: '1rem', 
-                  backgroundColor: pageSelect === `${item.url}` ? 'primary.cellHoverBg' : 'unset' ,
-                  textDecoration: pageSelect === `${item.url}` ? 'none' : 'none' }}/>
+                  backgroundColor: item.matches.includes(`/${pageSelect?.split('?')[0]?.split('#')[0]?.split('/')[1]}`) ? 'primary.cellHoverBg' : 'unset',
+                  textDecoration: item.matches.includes(`/${pageSelect?.split('?')[0]?.split('#')[0]?.split('/')[1]}`) ?  'none' : 'none' }}/>
             </ListItemButton>
           </ListItem>
         ))}
@@ -102,8 +104,8 @@ export default function NavBar() {
                   color: 'primary.main', 
                   textTransform: 'capitalize', 
                   fontSize: '1rem', 
-                  backgroundColor: pageSelect === `${item.url}` ? 'primary.cellHoverBg' : 'unset' ,
-                  textDecoration: pageSelect === `${item.url}` ? 'none' : 'none' }}>
+                  backgroundColor: item.matches.includes(`/${pageSelect?.split('?')[0]?.split('#')[0]?.split('/')[1]}`) ? 'primary.cellHoverBg' : 'unset',
+                  textDecoration: item.matches.includes(`/${pageSelect?.split('?')[0]?.split('#')[0]?.split('/')[1]}`) ?  'none' : 'none' }}>
                 {item.name}
               </Button>
             ))}

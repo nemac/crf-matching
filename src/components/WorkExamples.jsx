@@ -4,8 +4,10 @@ import { useTheme } from '@mui/material/styles';
 import SectionHeader from './SectionHeader';
 import WorkExamplesCard from '../components/WorkExamplesCard';
 
-export default function WorkExamples({ practitioner }) {
+export default function WorkExamples({ practitioner, filters }) {
   const theme = useTheme();
+  const workExampleLink = `/practitionerworkexamplepage/${practitioner.airtableRecId}${filters}`;
+
   return (
       <Box
         sx={{
@@ -41,11 +43,9 @@ export default function WorkExamples({ practitioner }) {
               width: 'max-content',
             }}>
 
-
-            <WorkExamplesCard title={practitioner.example1_title} description={practitioner.example1_description} exampleLink={practitioner.example1_links} />
-            <WorkExamplesCard title={practitioner.example2_title} description={practitioner.example2_description} exampleLink={practitioner.example2_links} />
-            <WorkExamplesCard title={practitioner.example3_title} description={practitioner.example3_description} exampleLink={practitioner.example3_links} />
-
+            <WorkExamplesCard title={practitioner.example1_title} description={practitioner.example1_description} exampleLink={workExampleLink} workedExampleIndex={1} filters={filters}/>
+            <WorkExamplesCard title={practitioner.example2_title} description={practitioner.example2_description} exampleLink={workExampleLink} workedExampleIndex={2} filters={filters}/>
+            <WorkExamplesCard title={practitioner.example3_title} description={practitioner.example3_description} exampleLink={workExampleLink} workedExampleIndex={3} filters={filters}/>
 
           </Grid>
         </Box>

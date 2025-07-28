@@ -56,11 +56,22 @@ const practitionerFieldMap = {
   example1_title: 'example1_title',
   example1_description: 'example1_description',
   example1_links: 'example1_links',
+  example1_location: 'example1_location',
+  example1_engagement: 'example1_engagement',
+  example1_equity: 'example1_equity',
+
   example2_title: 'example2_title',
   example2_description: 'example2_description',
+  example2_location: 'example2_location',
+  example2_engagement: 'example2_engagement',
+  example2_equity: 'example2_equity',
   example2_links: 'example2_links',
+
   example3_title: 'example3_title',
   example3_description: 'example3_description',
+  example3_location: 'example3_location',
+  example3_engagement: 'example3_engagement',
+  example3_equity: 'example3_equity',
   example3_links: 'example3_links',
   org_Registry_public: 'org_Registry_public',
 };

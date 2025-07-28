@@ -2,31 +2,10 @@ import React, { useRef, useState, useEffect  } from 'react';
 import { Typography, Box, Link, Button } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import { useTheme } from '@mui/material/styles';import MenuBookIcon from '@mui/icons-material/MenuBook';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-export default function WorkExamplesCard({ title, description, exampleLink }) {
+export default function WorkExamplesCard({ title, description, exampleLink, workedExampleIndex }) {
   const textRef = useRef(null);
-
-  const [isClamped, setIsClamped] = useState(false);
-  const [expanded, setExpanded] = useState(false);
-
-  useEffect(() => {
-    const el = textRef.current;
-    if (el) {
-      setIsClamped(el.scrollHeight > el.clientHeight);
-    }
-  }, [description]);
-
-  const extractUrl = (input) => {
-  const match = input.match(/https?:\/\/[^\s]+/);
-    return match ? match[0] : '';
-  };
-
-  exampleLink = extractUrl(exampleLink);
-    // const profileLink = `/practitioner/${specialist.airtableRecId}?${urlFilters}`;
-
-
+  const urlLink = exampleLink + `&workedExampleIndex=${workedExampleIndex}`;
   const theme = useTheme();
   
   return (
@@ -63,48 +42,25 @@ export default function WorkExamplesCard({ title, description, exampleLink }) {
                   overflow: 'hidden',
                   WebkitBoxOrient: 'vertical',
                   maxWidth: { xs: '300px', sm: '300px', md: '400px'},
-                  WebkitLineClamp: expanded ? 'none' : 4,
-                  whiteSpace: expanded ? 'normal' : undefined,
+                  WebkitLineClamp: 4,
               }}>
               {description}
             </Typography>
-              {/* {isClamped && (
-                <Button
-                  onClick={() => setExpanded((prev) => !prev)}
-                  size="small"
-                  sx={{ 
-                    mt: 0.5,
-                    px: 2,
-                    py: 0.5,
-                    borderRadius: 9999,
-                    backgroundColor: theme.palette.primary.lightPurple,
-                    textTransform: 'none',
-                    fontSize: '0.65rem',
-                    display: 'flex',
-                    justifySelf: 'end',
-                    '&:hover': {
-                      backgroundColor: theme.palette.primary.lightGray,
-                    },
-                  }}
-                >
-                  {expanded ? 'Less' : 'More'}
-                  {expanded ? <KeyboardArrowUpIcon sx={{ fontSize: '0.65rem' }} /> : <KeyboardArrowDownIcon sx={{ fontSize: '0.65rem' }} /> }
-                </Button>
-              )} */}
           </Box>
         <Box sx={{ display: 'flex', alignItems: 'flex-end', p: 2, mt: 'auto'}}>
           <Button
             variant="contained"
-            href={exampleLink}
+            href={urlLink}
             rel="noopener noreferrer"
             sx={{
+              boxShadow: '0px 1px 1px -1px',
               color: theme.palette.primary.main,
               backgroundColor: theme.palette.primary.lightPurple,
-              // border: `1px solid ${theme.palette.primary.borderGray}`,
-              borderRadius: 8,
+              borderRadius: 8,              
               textTransform: 'none',
               '&:hover': {
                 backgroundColor: theme.palette.primary.lightGray,
+                boxShadow: '0px 2px 2px -2px',
               },
             }}
           >

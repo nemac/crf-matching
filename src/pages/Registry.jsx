@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import {
   Autocomplete,
   TextField,
@@ -699,7 +699,7 @@ export default function Registry() {
           mt: 4,
           mb: 4,
           cursor: 'default',
-          px: { xs: 4, sm: 4, md: 4, lg: 2 },
+          px: { xs: 4, sm: 4, md: 4, lg: 3 },
         }}
       >
         {/* <Logo /> CSCI Logo */}

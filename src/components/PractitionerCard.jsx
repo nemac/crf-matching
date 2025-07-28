@@ -2,7 +2,6 @@ import React from 'react';
 import { Card, CardContent, Typography, Box, Button, Stack, Checkbox, FormControlLabel } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import climatePracLogo from '../assets/climate_prac.png';
-import HubIcon from '@mui/icons-material/Hub';
 import theme from '../theme';
 import PractitionerTypeChip from '../components/PractitionerTypeChip';
 
@@ -150,8 +149,8 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
             >
               Practitioner Profile
             </Button>
-
             {showBrowseAll && (
+              <Box>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -173,6 +172,7 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
                   },
                 }}
               />
+              </Box>
             )}
           </Box>
         </CardContent>

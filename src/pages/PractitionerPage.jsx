@@ -3,14 +3,13 @@ import { useParams } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline, Stack, Container, Box, Typography, styled } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
-import useMediaQuery from "@mui/material/useMediaQuery";
 
 import theme from '../theme';
 import PlaceIcon from '@mui/icons-material/Place';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import FullPageSpinner from '../components/FullPageSpinner';
 import ContactRow from '../components/ContactRow';
 import SectionHeader from '../components/SectionHeader';
+import MatchSection from '../components/MatchSection';
 import WorkExamples from '../components/WorkExamples';
 import PractitionerTypeChip from '../components/PractitionerTypeChip';
 import NavBar from '../components/NavBar';
@@ -45,67 +44,6 @@ const sections = [
   },  
 ];
 
-
-function MatchBadge({ label, key, filters, objKey }) {
-  const objKeyTopFilter = objKey === 'org_services_provided_top' ? 'activities' : objKey;
-  const matchChipColor = objKey === 'org_services_provided_top' ? theme.palette.primary.lightPurple : theme.palette.primary.tan
-  return (
-    <Box
-      key={key}
-      sx={{
-        backgroundColor: filters[objKeyTopFilter].includes(encodeURIComponent(label)) ? matchChipColor : 'unset',
-        border: objKey === 'org_services_provided_top' ? `1px solid ${theme.palette.primary.darkPurple}` : `1px solid ${theme.palette.primary.midBlue}`,
-        borderRadius: 6,
-        color: objKey === 'org_services_provided_top' ? theme.palette.primary.darkPurple :  theme.palette.primary.main,
-        alignContent: 'center',
-        justifyContent: 'center',
-        textAlign: 'center',
-        fontSize: objKey === 'org_services_provided_top' ? '0.75rem' : '0.75rem',
-        display: 'flex',
-        py: 1.25,
-        px: 2.5,
-        m: 0.5,
-        mb: objKey === 'org_services_provided_top' ? 2 : 0.5,
-        minWidth: '75px',
-      }}
-    >
-     
-      { filters[objKeyTopFilter].includes(encodeURIComponent(label))  &&  (<CheckCircleIcon key={key} sx={{ mr: 0.5, fontSize: '1.1rem' }}/>)}
-      {label}
-    </Box>
-  );
-}
-
-function MatchSection({ filters, practitioner, title, objKey }) {
-  // fixes for blank top 3
-  const items = Array.isArray(practitioner[objKey]) ? practitioner[objKey] : [];
-  const activeFilters = Array.isArray(filters[objKey]) ? filters[objKey] : [];
-
-    // Return nothing if items is null, undefined, or not an array
-  if (!Array.isArray(items) || items.length === 0) {
-    return <></>;
-  }
-
-  const matchBadges = items.map((label, index) => {
-    return MatchBadge({ label, key: index, filters: { ...filters, [objKey]: activeFilters }, objKey });
-  });
-  
-  return (
-    <Box sx={{ mb: 2, }}>
-      <SectionHeader title={title}></SectionHeader>
-      <Box
-        sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          minHeight: '50px',
-        }}
-      >
-        {matchBadges}
-      </Box>
-    </Box>
-  );
-}
-
 const ContactAndTrainingBox = styled(Grid)(({ theme }) => ({
   borderRadius: theme.spacing(3),
   padding: theme.spacing(3),
@@ -113,10 +51,8 @@ const ContactAndTrainingBox = styled(Grid)(({ theme }) => ({
 }));
 
 function PractitionerPageLoaded({ practitioner }) {
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const logoWidth = isSmallScreen ? 125 : 180;
-  const [pageSelect, setPageSelect] = useState('registry');
-
+  const currentParams = window.location.search || '';
+  
   const params = new URLSearchParams(window.location.search);
   const filters = {
     activities: [],
@@ -134,16 +70,8 @@ function PractitionerPageLoaded({ practitioner }) {
     }
   });
 
-  const getCountExamples = (practitioner) =>
-  ['example1_description', 'example2_description', 'example3_description']
-    .filter(key => {
-      const val = practitioner[key]?.trim();
-      return val && val.length > 1 && val.toLowerCase() !== 'not answered';
-    }).length;
-
-  const countExamples = getCountExamples(practitioner);
-  const exampleWidth = countExamples > 0 ? 12/countExamples : 0;
   const specialty = practitioner.org_registry_category_specialist;
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -155,7 +83,7 @@ function PractitionerPageLoaded({ practitioner }) {
           p: 3,
           pb: 8,
           cursor: 'default',
-          px: { xs: 4, sm: 4, md: 4, lg: 2 },
+          px: { xs: 4, sm: 4, md: 4, lg: 4 },
         }}
       >
         <PractitionerTypeChip 
@@ -208,10 +136,6 @@ function PractitionerPageLoaded({ practitioner }) {
               ></ContactRow>              
             </Stack>
           </ContactAndTrainingBox>
-          {/* Training */}
-          {/* <ContactAndTrainingBox xs={12} lg={5} >
-            <StrTrainedRow isTrained={practitioner.strTrained === 'Yes' ? true : false}></StrTrainedRow>
-          </ContactAndTrainingBox>            */}
         </Grid>
         <Box>
           <SectionHeader title="Organization Location"></SectionHeader>
@@ -282,7 +206,7 @@ function PractitionerPageLoaded({ practitioner }) {
             ></MatchSection>
           );
         })}
-        <WorkExamples practitioner={practitioner} />
+        <WorkExamples practitioner={practitioner} filters={currentParams}/>
 
       </Container>
     </ThemeProvider>
@@ -290,7 +214,6 @@ function PractitionerPageLoaded({ practitioner }) {
 }
 
 /// Practitioner Page ///
-
 function PractitionerPage() {
   const { practitionerId } = useParams();
 

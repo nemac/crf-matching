@@ -98,7 +98,7 @@ export default function AboutPage() {
           pt: 4, 
           pb: 8, 
           cursor: 'default',
-          px: { xs: 4, sm: 4, md: 4, lg: 2 },
+          px: { xs: 4, sm: 4, md: 4, lg: 3 },
         }}
       >
         {/* Main Title Section */}
