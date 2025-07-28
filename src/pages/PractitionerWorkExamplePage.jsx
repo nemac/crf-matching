@@ -130,7 +130,7 @@ function PractitionerWorkExamplePageLoaded({ practitioner }) {
           </Box>
         </Box>        
         <Box>
-          <SectionHeader title="Work Organization Description"></SectionHeader>
+          <SectionHeader title="Project Description"></SectionHeader>
           <Box
             sx={{
               pb: 1,
@@ -141,7 +141,7 @@ function PractitionerWorkExamplePageLoaded({ practitioner }) {
           </Box>
         </Box>      
         <Box>
-          <SectionHeader title="How We Did Stakeholder Engagement"></SectionHeader>
+          <SectionHeader title="Projects Approach to Stakeholder Engagement"></SectionHeader>
           <Box
             sx={{
               pb: 1,
@@ -152,7 +152,7 @@ function PractitionerWorkExamplePageLoaded({ practitioner }) {
           </Box>
         </Box>
         <Box>
-          <SectionHeader title="How We Did Equity"></SectionHeader>
+          <SectionHeader title="Approach to Balance in this Project"></SectionHeader>
           <Box
             sx={{
               pb: 1,
