@@ -695,7 +695,12 @@ export default function Registry() {
       <NavBar />
       <Container
         maxWidth="xl"
-        sx={{ mt: 4, mb: 4, cursor: 'default' }}
+        sx={{ 
+          mt: 4,
+          mb: 4,
+          cursor: 'default',
+          px: { xs: 4, sm: 4, md: 4, lg: 2 },
+        }}
       >
         {/* <Logo /> CSCI Logo */}
         <Box sx={{ mb: 6 }}>
@@ -708,7 +713,18 @@ export default function Registry() {
             }}
           >
             Registry of Adaptation Practitioners
-            <Chip sx={{display:{  xs: 'flex',  sm: 'inline-flex', md: 'inline-flex' }, maxWidth: '150px', mx: 2, mb: 6, p: 2, backgroundColor: 'primary.lightBlue', color: 'primary.purple'  }} label='Beta version'  size="small" />
+            <Chip sx={{
+                display:{  xs: 'flex',  sm: 'inline-flex', md: 'inline-flex' }, 
+                maxWidth: '150px', 
+                mt: { xs: 1, sm: 1, md: 1, lg: 0 },
+                mx: 2, 
+                mb: 6,          
+                p: 2,                 
+                backgroundColor: 'primary.lightBlue', 
+                color: 'primary.purple'  
+              }} 
+              label='Beta version'  
+              size="small" />
           </Typography>
           <Typography
             sx={{

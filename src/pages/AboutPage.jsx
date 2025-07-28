@@ -94,7 +94,12 @@ export default function AboutPage() {
       <NavBar />    
       <Container
         maxWidth="xl"
-        sx={{ pt: 4, pb: 8, cursor: 'default' }}
+        sx={{ 
+          pt: 4, 
+          pb: 8, 
+          cursor: 'default',
+          px: { xs: 4, sm: 4, md: 4, lg: 2 },
+        }}
       >
         {/* Main Title Section */}
         <Typography

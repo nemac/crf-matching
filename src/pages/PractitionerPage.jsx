@@ -151,7 +151,12 @@ function PractitionerPageLoaded({ practitioner }) {
 
       <Container
         maxWidth="xl"
-        sx={{ p: 3, pb: 8, cursor: 'default'  }}
+        sx={{ 
+          p: 3,
+          pb: 8,
+          cursor: 'default',
+          px: { xs: 4, sm: 4, md: 4, lg: 2 },
+        }}
       >
         <PractitionerTypeChip 
           type={practitioner.org_registry_category} 
