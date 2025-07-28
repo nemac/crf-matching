@@ -152,7 +152,7 @@ function PractitionerWorkExamplePageLoaded({ practitioner }) {
           </Box>
         </Box>
         <Box>
-          <SectionHeader title="Approach to Balance in this Project"></SectionHeader>
+          <SectionHeader title="Approach to Equity in this Project"></SectionHeader>
           <Box
             sx={{
               pb: 1,
