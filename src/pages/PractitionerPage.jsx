@@ -40,7 +40,7 @@ const sections = [
     objKey: 'size',
   },
   {
-    title: 'Where we work',
+    title: 'Where We Work',
     objKey: 'state',
   },  
 ];
@@ -255,7 +255,7 @@ function PractitionerPageLoaded({ practitioner }) {
             {practitioner.organizationType || 'N/A'}
           </Box>
         </Box>
-        <Box>
+        {/* <Box>
           <SectionHeader title="Completed Steps to Resilience Training"></SectionHeader>
           <Box
             sx={{
@@ -265,7 +265,7 @@ function PractitionerPageLoaded({ practitioner }) {
           >
             {practitioner.strTrained || 'N/A'}
           </Box>
-        </Box>          
+        </Box>           */}
         {sections.map((data, index) => {
           return (
             <MatchSection
