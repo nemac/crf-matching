@@ -79,7 +79,20 @@ export default function RecommendSpecialistCard({ specialist, urlFilters, index}
               <Button
                 onClick={() => setExpanded((prev) => !prev)}
                 size="small"
-                sx={{ mt: -0.25, textTransform: 'none', fontSize: '0.65rem' }}
+                sx={{ 
+                    mt: 0.5,
+                    px: 2,
+                    py: 0.5,
+                    borderRadius: 9999,
+                    textTransform: 'none',
+                    fontSize: '0.65rem',
+                    display: 'flex',
+                    justifySelf: 'end',
+                    backgroundColor: theme.palette.primary.lightGray,
+                    '&:hover': {
+                      backgroundColor: theme.palette.primary.cellHoverBg,
+                    },
+                 }}
               >
                 {expanded ? 'Less' : 'More'}
                 {expanded ? <KeyboardArrowUpIcon  sx={{ fontSize: '0.65rem' }} /> : <KeyboardArrowDownIcon  sx={{ fontSize: '0.65rem' }} /> }
