@@ -24,6 +24,8 @@ export default function WorkExamplesCard({ title, description, exampleLink }) {
   };
 
   exampleLink = extractUrl(exampleLink);
+    // const profileLink = `/practitioner/${specialist.airtableRecId}?${urlFilters}`;
+
 
   const theme = useTheme();
   
@@ -66,29 +68,48 @@ export default function WorkExamplesCard({ title, description, exampleLink }) {
               }}>
               {description}
             </Typography>
-              {isClamped && (
+              {/* {isClamped && (
                 <Button
                   onClick={() => setExpanded((prev) => !prev)}
                   size="small"
-                  sx={{ mt: -0.25, textTransform: 'none', fontSize: '0.65rem' }}
+                  sx={{ 
+                    mt: 0.5,
+                    px: 2,
+                    py: 0.5,
+                    borderRadius: 9999,
+                    backgroundColor: theme.palette.primary.lightPurple,
+                    textTransform: 'none',
+                    fontSize: '0.65rem',
+                    display: 'flex',
+                    justifySelf: 'end',
+                    '&:hover': {
+                      backgroundColor: theme.palette.primary.lightGray,
+                    },
+                  }}
                 >
                   {expanded ? 'Less' : 'More'}
                   {expanded ? <KeyboardArrowUpIcon sx={{ fontSize: '0.65rem' }} /> : <KeyboardArrowDownIcon sx={{ fontSize: '0.65rem' }} /> }
                 </Button>
-              )}
+              )} */}
           </Box>
         <Box sx={{ display: 'flex', alignItems: 'flex-end', p: 2, mt: 'auto'}}>
-          
-            {exampleLink.length > 0 && (
-              <Link
-                href={exampleLink}
-                target='_blank'
-                rel="noreferrer"
-              >
-                Explore example
-              </Link>
-            )}
-
+          <Button
+            variant="contained"
+            href={exampleLink}
+            rel="noopener noreferrer"
+            sx={{
+              color: theme.palette.primary.main,
+              backgroundColor: theme.palette.primary.lightPurple,
+              // border: `1px solid ${theme.palette.primary.borderGray}`,
+              borderRadius: 8,
+              textTransform: 'none',
+              '&:hover': {
+                backgroundColor: theme.palette.primary.lightGray,
+              },
+            }}
+          >
+            Work Example Details
+          </Button>
           </Box>
         </Grid>
       )}
