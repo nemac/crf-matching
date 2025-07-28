@@ -8,7 +8,7 @@ import ReactGA from "react-ga4";
 
 import AboutPage from './pages/AboutPage.jsx';
 import PractitionerPage from './pages/PractitionerPage.jsx';
-// import HomePage from './pages/HomePage.jsx';
+import PractitionerWorkExamplePage from './pages/PractitionerWorkExamplePage.jsx';
 import HowToApplyPage from './pages/HowToApplyPage.jsx';
 import Registry from './pages/Registry.jsx';
 
@@ -28,6 +28,11 @@ const router = createBrowserRouter([
     path: '/practitioner/:practitionerId',
     element: <PractitionerPage />,
   },
+  {
+    // path: '/practitionerworkexamplepage/:practitionerId:workExampleId',
+    path: '/practitionerworkexamplepage/:practitionerId',
+    element: <PractitionerWorkExamplePage />,
+  },  
   {
     path: '/About',
     element: <AboutPage />,
