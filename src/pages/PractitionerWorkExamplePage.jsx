@@ -141,7 +141,7 @@ function PractitionerWorkExamplePageLoaded({ practitioner }) {
           </Box>
         </Box>      
         <Box>
-          <SectionHeader title="Projects Approach to Stakeholder Engagement"></SectionHeader>
+          <SectionHeader title="Approach to Stakeholder Engagement in this Project"></SectionHeader>
           <Box
             sx={{
               pb: 1,
