@@ -10,7 +10,7 @@ import FullPageSpinner from '../components/FullPageSpinner';
 import ContactRow from '../components/ContactRow';
 import SectionHeader from '../components/SectionHeader';
 import MatchSection from '../components/MatchSection';
-import WorkExamples from '../components/WorkExamples';
+// import WorkExamples from '../components/WorkExamples';
 import PractitionerTypeChip from '../components/PractitionerTypeChip';
 import NavBar from '../components/NavBar';
 
@@ -206,7 +206,7 @@ function PractitionerPageLoaded({ practitioner }) {
             ></MatchSection>
           );
         })}
-        <WorkExamples practitioner={practitioner} filters={currentParams}/>
+        {/* <WorkExamples practitioner={practitioner} filters={currentParams}/> */}
 
       </Container>
     </ThemeProvider>
