@@ -21,8 +21,8 @@ export default function HomePage() {
           borderBottom: `1px solid ${theme.palette.primary.borderGray}`,
         }}
       >
-      <Container maxWidth="lg"> 
-        <Toolbar sx={{ gap: 3, maxWidth: "lg"}}>
+      <Container maxWidth="xl"> 
+        <Toolbar sx={{ gap: 3, maxWidth: "xl"}}>
           {/* Logo */}
           <Box
             sx={{
@@ -69,8 +69,8 @@ export default function HomePage() {
             </Button>
 
             <Button
-              //component={Link}
-              //to="/about"
+              component={Link}
+              to="/about"
               sx={{
                 color: 'primary.main',
                 textTransform: 'none',
@@ -90,6 +90,31 @@ export default function HomePage() {
             >
               About
             </Button>
+
+            <Button
+              component={Link}
+              to="/about"
+              sx={{
+                color: 'primary.main',
+                textTransform: 'none',
+                fontSize: '1rem',
+                padding: 0,
+                minWidth: 0,
+                textDecoration: pageSelect === 'howtoapply' ? 'underline' : 'none',
+                fontWeight: pageSelect === 'howtoapply' ? 'bold' : 'normal',
+                '&:hover': {
+                  bgcolor: 'transparent',
+                  textDecoration: 'underline',
+                },
+              }}
+              onClick={() => {
+                setPageSelect('howtoapply');
+
+              }}
+            >
+              How to Apply
+            </Button>
+            
           </Box>
         </Toolbar>
         </Container> 

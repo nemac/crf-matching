@@ -1,21 +1,27 @@
 import { useState, useLayoutEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
-import { CssBaseline, Stack, Container, Box, Typography, styled, AppBar, Toolbar, Button } from '@mui/material';
+import { CssBaseline, Stack, Container, Box, Typography, styled } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
-import useMediaQuery from "@mui/material/useMediaQuery";
 
 import theme from '../theme';
 import PlaceIcon from '@mui/icons-material/Place';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import FullPageSpinner from '../components/FullPageSpinner';
 import ContactRow from '../components/ContactRow';
-import Logo from '../components/Logo';
+import SectionHeader from '../components/SectionHeader';
+import MatchSection from '../components/MatchSection';
+// import WorkExamples from '../components/WorkExamples';
+import PractitionerTypeChip from '../components/PractitionerTypeChip';
+import NavBar from '../components/NavBar';
 
 // API
 import { fetchPractitioner } from '../util/api';
 
 const sections = [
+  {
+    title: 'Our top 3 services',
+    objKey: 'org_services_provided_top',
+  },  
   {
     title: 'Services Provided',
     objKey: 'activities',
@@ -33,89 +39,10 @@ const sections = [
     objKey: 'size',
   },
   {
-    title: 'Where we work',
+    title: 'Where We Work',
     objKey: 'state',
   },  
 ];
-
-function SectionHeader({ title, style }) {
-  return (
-    <Typography
-      variant="h6"
-      sx={{
-        fontWeight: 700,
-        color: 'primary.main',
-        ...style,
-      }}
-    >
-      {title}
-    </Typography>
-  );
-}
-
-// function StrTrainedRow({ isTrained }) {
-//   if (!isTrained) {
-//     return '';
-//   }
-//   return (
-//     <Box
-//       sx={{
-//         display: 'inline-flex',
-//         alignItems: 'center',
-//         gap: 2,
-//       }}
-//     >
-//       <SchoolIcon />
-//       <span>Steps to Resilience certified</span>
-//     </Box>
-//   );
-// }
-
-function MatchBadge({ label, key, filters, objKey }) {
-  return (
-    <Box
-      key={key}
-      sx={{
-        backgroundColor: filters[objKey].includes(encodeURIComponent(label)) ? '#FFEED2' : 'unset',
-        border: `1px solid ${theme.palette.primary.midBlue}`,
-        borderRadius: 6,
-        color: theme.palette.primary.main,
-        alignContent: 'center',
-        justifyContent: 'center',
-        textAlign: 'center',
-        fontSize: '0.75rem',
-        display: 'flex',
-        p: 1.25,
-        m: 0.5,
-        minWidth: '75px',
-      }}
-    >
-      { filters[objKey].includes(encodeURIComponent(label))  &&  (<CheckCircleIcon key={key} sx={{ mr: 0.5, fontSize: '1.1rem' }}/>)}
-      {label}
-    </Box>
-  );
-}
-
-function MatchSection({ filters, practitioner, title, objKey }) {
-  const matchBadges = practitioner[objKey].map((label, index) => {
-    return MatchBadge({ label, key: index, filters, objKey });
-  });
-  
-  return (
-    <Box sx={{ mb: 2, }}>
-      <SectionHeader title={title}></SectionHeader>
-      <Box
-        sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          minHeight: '50px',
-        }}
-      >
-        {matchBadges}
-      </Box>
-    </Box>
-  );
-}
 
 const ContactAndTrainingBox = styled(Grid)(({ theme }) => ({
   borderRadius: theme.spacing(3),
@@ -124,10 +51,8 @@ const ContactAndTrainingBox = styled(Grid)(({ theme }) => ({
 }));
 
 function PractitionerPageLoaded({ practitioner }) {
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const logoWidth = isSmallScreen ? 125 : 180;
-  const [pageSelect, setPageSelect] = useState('registry');
-
+  const currentParams = window.location.search || '';
+  
   const params = new URLSearchParams(window.location.search);
   const filters = {
     activities: [],
@@ -136,7 +61,7 @@ function PractitionerPageLoaded({ practitioner }) {
     size: [],
     state: [],
   };
-
+  
     // Parse each filter type
   Object.keys(filters).forEach((key) => {
     const param = params.get(key);
@@ -145,107 +70,35 @@ function PractitionerPageLoaded({ practitioner }) {
     }
   });
 
+  const specialty = practitioner.org_registry_category_specialist;
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppBar
-        position="static"
-        sx={{
-          bgcolor: 'primary.white',
-          boxShadow: 1,
-          borderBottom: `1px solid ${theme.palette.primary.borderGray}`,
+      <NavBar />
+
+      <Container
+        maxWidth="xl"
+        sx={{ 
+          p: 3,
+          pb: 8,
+          cursor: 'default',
+          px: { xs: 4, sm: 4, md: 4, lg: 4 },
         }}
       >
-      <Container maxWidth="lg"> 
-        <Toolbar sx={{ gap: 3, maxWidth: "lg"}}>
-          {/* Logo */}
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',              
-              width: `${logoWidth}px`,
-              py: 1,
-              pt: 2,
-              pb: 1,
-            }}
-          >
-            <Logo />
-          </Box>
+        <PractitionerTypeChip 
+          type={practitioner.org_registry_category} 
+          label={practitioner.org_registry_category}
+          list={specialty}
+          size={'large'}/>
 
-          {/* Navigation Links */}
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 3,
-            }}
-          >
-            <Button
-              //component={Link}
-              //to="/"
-              sx={{
-                color: 'primary.main',
-                textTransform: 'none',
-                fontSize: '1rem',
-                padding: 0,
-                minWidth: 0,
-                textDecoration: pageSelect === 'registry' ? 'underline' : 'none',
-                fontWeight: pageSelect === 'registry' ? 'bold' : 'normal',
-                '&:hover': {
-                  bgcolor: 'transparent',
-                  textDecoration: 'underline',
-                },
-              }}
-              onClick={() => {
-                setPageSelect('registry');
-              }}
-            >
-              {isSmallScreen ? ( 'Registry' ) : ( 'Registry of Adaptation Practitioners' )}
-            </Button>
-
-            <Button
-              //component={Link}
-              //to="/about"
-              sx={{
-                color: 'primary.main',
-                textTransform: 'none',
-                fontSize: '1rem',
-                padding: 0,
-                minWidth: 0,
-                textDecoration: pageSelect === 'about' ? 'underline' : 'none',
-                fontWeight: pageSelect === 'about' ? 'bold' : 'normal',
-                '&:hover': {
-                  bgcolor: 'transparent',
-                  textDecoration: 'underline',
-                },
-              }}
-              onClick={() => {
-                setPageSelect('about');
-              }}
-            >
-              About
-            </Button>
-          </Box>
-        </Toolbar>
-        </Container> 
-      </AppBar>         
-      <Container
-        maxWidth="lg"
-        sx={{ p: 3, cursor: 'default'  }}
-      >
-        {/* <Logo /> CSCI Logo */}
-        {/* Header */}
-        {/* <SectionHeader title="Registry of Adaptation Practitioner Profile"></SectionHeader>       */}
-      
         <Typography
           variant="h3"
-          fontWeight={800}
-          sx={{
-            mb: 3,
-          }}
-        >
+          fontWeight={800} 
+          sx={{ mb: 3 }}>
           {practitioner.org}
         </Typography>
+
         {/* Contact & Training Row */}
         <Grid
           container
@@ -283,10 +136,6 @@ function PractitionerPageLoaded({ practitioner }) {
               ></ContactRow>              
             </Stack>
           </ContactAndTrainingBox>
-          {/* Training */}
-          {/* <ContactAndTrainingBox xs={12} lg={5} >
-            <StrTrainedRow isTrained={practitioner.strTrained === 'Yes' ? true : false}></StrTrainedRow>
-          </ContactAndTrainingBox>            */}
         </Grid>
         <Box>
           <SectionHeader title="Organization Location"></SectionHeader>
@@ -312,7 +161,7 @@ function PractitionerPageLoaded({ practitioner }) {
           >
             {practitioner.info || 'N/A'}
           </Box>
-        </Box>
+        </Box>      
         <Box>
           <SectionHeader title="Community Specializations"></SectionHeader>
           <Box
@@ -335,7 +184,7 @@ function PractitionerPageLoaded({ practitioner }) {
             {practitioner.organizationType || 'N/A'}
           </Box>
         </Box>
-        <Box>
+        {/* <Box>
           <SectionHeader title="Completed Steps to Resilience Training"></SectionHeader>
           <Box
             sx={{
@@ -345,7 +194,7 @@ function PractitionerPageLoaded({ practitioner }) {
           >
             {practitioner.strTrained || 'N/A'}
           </Box>
-        </Box>
+        </Box>           */}
         {sections.map((data, index) => {
           return (
             <MatchSection
@@ -357,13 +206,14 @@ function PractitionerPageLoaded({ practitioner }) {
             ></MatchSection>
           );
         })}
+        {/* <WorkExamples practitioner={practitioner} filters={currentParams}/> */}
+
       </Container>
     </ThemeProvider>
   );
 }
 
 /// Practitioner Page ///
-
 function PractitionerPage() {
   const { practitionerId } = useParams();
 

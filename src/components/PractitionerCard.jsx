@@ -3,6 +3,7 @@ import { Card, CardContent, Typography, Box, Button, Stack, Checkbox, FormContro
 import PersonIcon from '@mui/icons-material/Person';
 import climatePracLogo from '../assets/climate_prac.png';
 import theme from '../theme';
+import PractitionerTypeChip from '../components/PractitionerTypeChip';
 
 export default function PractitionerCard({ filters, practitioner, onComparisonSelect, isSelectedForComparison, showBrowseAll }) {
   const urlFilters = filters
@@ -50,6 +51,12 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
             />
           </Box>
 
+        <PractitionerTypeChip 
+          type={practitioner.org_registry_category} 
+          label={practitioner.org_registry_category}
+          list={practitioner.org_registry_category_specialist}
+          size={'small'}/>
+          
           <Typography
             variant="h6"
             component="div"
@@ -66,78 +73,84 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
             {truncatedDescription}
           </Typography>
 
-          <Box sx={{ mb: 2 }}>
-            <Typography
-              variant="subtitle2"
-              sx={{ mb: 1, fontWeight: 'bold' }}
-            >
-              Services Provided
-            </Typography>
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-              }}
-            >
-              {displayedActivities.map((activity, index) => (
-                <Box
-                  key={index}
-                  sx={{
-                    border: `1px solid ${theme.palette.primary.midBlue}`,
-                    borderRadius: 6,
-                    color: theme.palette.primary.main,
-                    alignContent: 'center',
-                    textAlign: 'center',
-                    fontSize: '0.75rem',
-                    p: 1.325,
-                    m: 0.5,
-                    minWidth: '75px',
-                  }}
-                >
-                  {activity}
-                </Box>
-              ))}
+          {showBrowseAll && (
+            <Box sx={{ mb: 2 }}>
+              <Typography
+                variant="subtitle2"
+                sx={{ mb: 1, fontWeight: 'bold' }}
+              >
+                Services Provided
+              </Typography>
               <Box
-                  key={4}
-                  sx={{
-                    border: `1px solid ${theme.palette.primary.midBlue}`,
-                    borderRadius: 6,
-                    color: theme.palette.primary.main,
-                    alignContent: 'center',
-                    textAlign: 'center',
-                    fontSize: '0.75rem',
-                    p: 1.325,
-                    m: 0.5,
-                    minWidth: '25px',
-                  }}
-                >
-                  ...
-                </Box>
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  flexWrap: 'wrap',
+                }}
+              >
+                {displayedActivities && displayedActivities.map((activity, index) => (
+                  <Box
+                    key={index}
+                    sx={{
+                      border: `1px solid ${theme.palette.primary.lightBlue}`,
+                      backgroundColor: theme.palette.primary.lightGray,
+                      borderRadius: 6,
+                      color: theme.palette.primary.main,
+                      alignContent: 'center',
+                      textAlign: 'center',
+                      fontSize: '0.75rem',
+                      py: 0.75,
+                      px: 2,
+                      m: 0.5,
+                      minWidth: '75px',
+                    }}
+                  >
+                    {activity}
+                  </Box>
+                ))}
+                <Box
+                    key={4}
+                    sx={{
+                      border: `1px solid ${theme.palette.primary.lightBlue}`,
+                      backgroundColor: theme.palette.primary.lightGray,
+                      borderRadius: 6,
+                      color: theme.palette.primary.main,
+                      alignContent: 'center',
+                      textAlign: 'center',
+                      fontSize: '0.75rem',
+                      p: 1.325,
+                      m: 0.5,
+                      minWidth: '25px',
+                    }}
+                  >
+                    ...
+                  </Box>
+              </Box>
             </Box>
-          </Box>
-
+          )}
+          
           <Box sx={{ mt: 'auto' }}>
             <Button
-              fullWidth
               variant="contained"
               href={`/practitioner/${practitioner.airtableRecId}?${urlFilters}`}
               rel="noopener noreferrer"
               startIcon={<PersonIcon />}
               sx={{
-                backgroundColor: theme.palette.primary.midBlue,
+                color: theme.palette.primary.main,
+                backgroundColor: theme.palette.primary.lightBlue,
                 borderRadius: 8,
                 textTransform: 'none',
+                mt: 6,
                 mb: 2,
                 '&:hover': {
-                  backgroundColor: theme.palette.primary.main,
+                  backgroundColor: theme.palette.primary.lightBlueHover,
                 },
               }}
             >
-              Full Practitioner Org Profile
+              Practitioner Profile
             </Button>
-
             {showBrowseAll && (
+              <Box>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -159,6 +172,7 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
                   },
                 }}
               />
+              </Box>
             )}
           </Box>
         </CardContent>
