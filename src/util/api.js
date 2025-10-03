@@ -9,7 +9,7 @@ Airtable.configure({
 const base = Airtable.base(__AIRTABLE_BASE__);
 
 /// configuration ///
-const practitionerViewName =  'Grid view'  //'Accepted Practitioners' // 'Grid view'
+const practitionerViewName =  'RegistryToolView'  //'RegistryToolView' // 'Grid view'
 
 const normalizeRec = (rec, fieldMap) => {
   const result = {};
