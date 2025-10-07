@@ -1,4 +1,5 @@
 // Airtable
+import { Category } from '@mui/icons-material';
 import Airtable from 'airtable';
 
 // set up airtable
@@ -9,7 +10,9 @@ Airtable.configure({
 const base = Airtable.base(__AIRTABLE_BASE__);
 
 /// configuration ///
-const practitionerViewName =  'RegistryToolView'  //'RegistryToolView' // 'Grid view'
+const practitionerViewName =  'RegistryPractitionerToolView'  //'RegistryToolView' // 'Grid view'
+const specialistsViewName =  'RegistrySpecialistToolView'  //'RegistryToolView' // 'Grid view'
+const PractitionerPageViewName = 'RegistryForPractitionerPageToolView' // 'Grid view'
 
 const normalizeRec = (rec, fieldMap) => {
   const result = {};
@@ -87,19 +90,55 @@ const communityFieldMap = {
 };
 
 const practFetchFields = Object.values(practitionerFieldMap);
-const communityFetchFields = Object.values(communityFieldMap);
+
+function buildAirtableFilterFormula(criteriaObject, fieldMap, operator = 'AND') {
+    const mainConditions = [];
+
+    // Loop through each key (activities, sectors, etc.) in the criteria object
+    for (const [criteriaKey, valuesArray] of Object.entries(criteriaObject)) {
+        
+        // 1. Get the actual Airtable field ID using the map
+        const airtableFieldId = fieldMap[criteriaKey];
+
+        // Skip if the array is empty OR if the key doesn't exist in the map
+        if (!airtableFieldId || !Array.isArray(valuesArray) || valuesArray.length === 0) {
+            continue;
+        }
+
+        // Build the AND condition for all values within this field
+        const conditions = valuesArray.map(value => {
+            const quotedValue = `"${value}"`; 
+            
+            // Generate the FIND condition using the actual airtableFieldId
+            // The padding with commas ("," & {Field} & ",") is crucial for look-up/multiple-select fields
+            return `FIND(${quotedValue}, "," & {${airtableFieldId}} & ",")`;
+        });
+
+        // Combine all checks for this field using operator (AND/OR)
+        const fieldCondition = `${operator}(${conditions.join(", ")})`;
+        
+        mainConditions.push(fieldCondition);
+    }
+
+    // If no conditions were generated, return an empty string (no filter)
+    if (mainConditions.length === 0) {
+        return '';
+    }
+
+    // Combine all field conditions using AND()
+    return `AND(${mainConditions.join(", ")})`;
+}
+
 
 /// api ///
-
 export const fetchPractitioner = (practitionerId, setPractitioner) => {
-  console.log("Fetching practitioner with ID:", practitionerId);
+  console.log('Fetching fetchPractitioner from Airtable...');
   base('Organization')
     .select({
       maxRecords: 1,
-      view: practitionerViewName,
+      view: PractitionerPageViewName,
       filterByFormula: `{org_airtable_record_id} = '${practitionerId}'`,
       fields: practFetchFields,
-      maxRecords: 200, // Only fetch up to 200 records
     })
     .firstPage(function (err, records) {
       if (err) {
@@ -110,141 +149,94 @@ export const fetchPractitioner = (practitionerId, setPractitioner) => {
     });
 };
 
-export const fetchFilteredPractitioners = (filters, setPractitioners) => {
-    console.log("Fetching practioners with filters:", filters);
-
-  if (!Object.values(filters).some((val) => val && val.length)) {
-    setPractitioners([]);
-    return;
+export const fetchTotalPractitionerCount = (setCount) => {
+    console.log('Fetching total practitioner count from Airtable...');
+    base('Organization')
+        .select({
+            view: practitionerViewName,
+            fields: []
+        })
+        .all() 
+        .then(records => {
+            // The result is ready here, so we call the setter function.
+            setCount(records.length);
+        })
+        .catch(err => {
+            console.error('An error occurred while fetching the total record count:', err);
+            // On error, set the count to 0 or handle as needed.
+            setCount(0);
+        });
   }
 
-  let allRecords = [];
+  export const fetchFilteredSpecialist = (filters, setPractitioners) => {
+  console.log('Fetching fetchFilteredSpecialist from Airtable...');
+  const filterFormula = buildAirtableFilterFormula(filters, practitionerFieldMap, 'OR');
+
+  base('Organization')
+    .select({
+      view: specialistsViewName,
+      fields: practFetchFields,
+      sort: [{ field: 'org_name', direction: 'asc' }],
+      filterByFormula: filterFormula
+    }).all() 
+      .then(records => {
+          const categoryFieldKey = practitionerFieldMap['org_registry_category'];
+
+          // Initialize the separation objects
+          const specialists = [];
+
+          // Process each record
+          records.forEach(record => {
+              const normalizedRecord = normalizeRec(record.fields, practitionerFieldMap);
+              
+              // Determine the category value using the mapped field key
+              const recordCategory = record.fields[categoryFieldKey];
+              // Separate based on category
+              specialists.push(normalizedRecord);
+          }); 
+          setPractitioners(specialists);
+      })
+      .catch(err => {
+          console.error('An error occurred while fetching all pages:', err);
+          setPractitioners([]);
+      });
+}
+
+export const fetchFilteredPractitioners = (filters, setPractitioners) => {
+  console.log('Fetching fetchFilteredPractitioners from Airtable...');
+  const filterFormula = buildAirtableFilterFormula(filters, practitionerFieldMap);
 
   base('Organization')
     .select({
       view: practitionerViewName,
       fields: practFetchFields,
       sort: [{ field: 'org_name', direction: 'asc' }],
-      maxRecords: 200, // Only fetch up to 200 records
-    })
-    .eachPage(
-      function page(records, fetchNextPage) {
-        const recs = records
-          .map((rawRec) => rawRec.fields)
-          .map((rec) => normalizeRec(rec, practitionerFieldMap))
-          .filter((rec) => rec.org_Registry_public === 'Yes' && rec.org_registry_category != 'Specialist' ) 
-          .filter((rec) => {
-            let matches = true;
+      filterByFormula: filterFormula
+    }).all() 
+      .then(records => {
+          const categoryFieldKey = practitionerFieldMap['org_registry_category'];
 
-            // --- Filtering Logic: "AND" within all multi-select categories ---
-            // A practitioner's record MUST contain ALL of the selected values from each active filter category.
+          // Initialize the separation objects
+          const broadServiceProviders = [];
 
-            if (filters.state?.length) {
-              matches = matches && filters.state.every((s) => rec.state.includes(s));
-            }
-            if (filters.activities?.length) {
-              matches = matches && filters.activities.every((a) => rec.activities.includes(a));
-            }
-            if (filters.sectors?.length) {
-              matches = matches && filters.sectors.every((s) => rec.sectors.includes(s));
-            }
-            if (filters.hazards?.length) {
-              matches = matches && filters.hazards.every(h => rec.hazards.includes(h));
-            }
-            if (filters.size?.length) {
-              matches = matches && filters.size.every((s) => rec.size.includes(s));
-            }
-
-            return matches;
-          })
-          .map((rec) => {
-            let matchCount = 0;
-
-            // --- Match Scoring Logic ---
-            // Scoring counts individual matches for relevance, even with "AND" filtering.
-
-            if (filters.state?.length) {
-              filters.state.forEach((state) => {
-                if (rec.state.includes(state)) matchCount++;
-              });
-            }
-            if (filters.activities?.length) {
-              filters.activities.forEach((activity) => {
-                if (rec.activities.includes(activity)) matchCount++;
-              });
-            }
-            if (filters.sectors?.length) {
-              filters.sectors.forEach((sector) => {
-                if (rec.sectors.includes(sector)) matchCount++;
-              });
-            }
-            if (filters.hazards?.length) {
-              filters.hazards.forEach((hazard) => {
-                if (rec.hazards.includes(hazard)) matchCount++;
-              });
-            }
-            if (filters.size?.length) {
-              filters.size.forEach((size) => {
-                if (rec.size.includes(size)) matchCount++;
-              });
-            }
-
-            rec.matchScore = matchCount;
-            return rec;
-          });
-
-        // Collect filtered records into allRecords
-        allRecords = [...allRecords, ...recs];
-        fetchNextPage(); // Fetch next page if available
-      },
-      function done(err) {
-        if (err) {
-          console.error(err);
-          return;
-        }
-
-        // Sort once all records are fetched
-        allRecords.sort((a, b) => b.matchScore - a.matchScore);
-
-        // Set state after all pages are fetched
-        setPractitioners(allRecords);
-      }
-    );
-};
-
-export const fetchAllPractitioners = (setAllPractitioners) => {
-  console.log("Fetching all practitioners ");
-  const practitioners = [];
-  base('Organization')
-    .select({
-      view: practitionerViewName,
-      fields: practFetchFields,
-      // Sort by organization name
-      sort: [{ field: 'org_name', direction: 'asc' }],
-      maxRecords: 200, // Only fetch up to 200 records
-    })
-    .eachPage(
-      function page(records, fetchNextPage) {
-        const recs = records
-          .map((rawRec) => rawRec.fields)
-          .map((rec) => normalizeRec(rec, practitionerFieldMap))
-          // Only include Accepted practitioners
-          .filter((rec) => rec.org_Registry_public === 'Yes' && rec.org_registry_category != 'Specialist') 
-        practitioners.push(...recs);
-        fetchNextPage();
-      },
-      function done(err) {
-        if (err) {
-          console.error(err);
-          return;
-        }
-        setAllPractitioners(practitioners);
-      }
-    );
-};
+          // Process each record
+          records.forEach(record => {
+              const normalizedRecord = normalizeRec(record.fields, practitionerFieldMap);
+              
+              // Determine the category value using the mapped field key
+              const recordCategory = record.fields[categoryFieldKey];
+              // Separate based on category
+              broadServiceProviders.push(normalizedRecord);
+          }); 
+          setPractitioners(broadServiceProviders);
+      })
+      .catch(err => {
+          console.error('An error occurred while fetching all pages:', err);
+          setPractitioners([]);
+      });
+}
 
 export const fetchOptionsFromAirtable = (setOptions) => {
-  console.log("Fetching all options for filters");
   base('Options')
     .select({
       view: 'Grid view',
@@ -317,135 +309,3 @@ export const fetchOptionsFromAirtable = (setOptions) => {
       setOptions(options);
     });
 };
-
-export const fetchAllPractitionerSpecialist = (setPractitionerSpecialist) => {
-      console.log("Fetching all specialist ");
-  const practitioners = [];
-  base('Organization')
-    .select({
-      view: practitionerViewName,
-      fields: practFetchFields,
-      // Sort by organization name
-      sort: [{ field: 'org_name', direction: 'asc' }],
-      maxRecords: 200, // Only fetch up to 200 records
-    })
-    .eachPage(
-      function page(records, fetchNextPage) {
-        const recs = records
-          .map((rawRec) => rawRec.fields)
-          .map((rec) => normalizeRec(rec, practitionerFieldMap))
-          // Only include Accepted practitioners
-          .filter((rec) => rec.org_Registry_public === 'Yes' && rec.org_registry_category === 'Specialist') 
-        practitioners.push(...recs);
-        fetchNextPage();
-      },
-      function done(err) {
-        if (err) {
-          console.error(err);
-          return;
-        }
-        setPractitionerSpecialist(practitioners);
-      }
-    );
-};
-
-
-export const fetchFilteredSpecialist = (filters, setPractitionerSpecialist) => {
-    console.log("Fetching filtered specialist with filters:", filters);
-  if (!Object.values(filters).some((val) => val && val.length)) {
-    setPractitionerSpecialist([]);
-    return;
-  }
-
-  let allRecords = [];
-
-  base('Organization')
-    .select({
-      view: practitionerViewName,
-      fields: practFetchFields,
-      sort: [{ field: 'org_name', direction: 'asc' }],
-      maxRecords: 200, // Only fetch up to 200 records
-    })
-    .eachPage(
-      function page(records, fetchNextPage) {
-        const recs = records
-          .map((rawRec) => rawRec.fields)
-          .map((rec) => normalizeRec(rec, practitionerFieldMap))
-          .filter((rec) => rec.org_Registry_public === 'Yes' && rec.org_registry_category === 'Specialist' ) 
-          .filter((rec) => {
-            let matches = false;
-
-            if (filters.state?.length) {
-              matches = matches || filters.state?.some((s) => rec.state.includes(s));
-            }
-            if (filters.activities?.length) {
-              matches = matches || filters.activities?.some((s) => rec.activities.includes(s))
-            }
-            if (filters.sectors?.length) {
-              matches = matches || filters.sectors?.some((s) => rec.sectors.includes(s));
-            }
-            if (filters.hazards?.length) {
-              matches = matches || filters.hazards?.some((s) => rec.hazards.includes(s));
-            }
-            if (filters.size?.length) {
-              matches = matches || filters.size?.some((s) => rec.size.includes(s));
-            }
-
-            return matches;
-          })
-          .map((rec) => {
-            let matchCount = 0;
-
-            // --- Match Scoring Logic ---
-            // Scoring counts individual matches for relevance, even with "AND" filtering.
-
-            if (filters.state?.length) {
-              filters.state.forEach((state) => {
-                if (rec.state.includes(state)) matchCount++;
-              });
-            }
-            if (filters.activities?.length) {
-              filters.activities.forEach((activity) => {
-                if (rec.activities.includes(activity)) matchCount++;
-              });
-            }
-            if (filters.sectors?.length) {
-              filters.sectors.forEach((sector) => {
-                if (rec.sectors.includes(sector)) matchCount++;
-              });
-            }
-            if (filters.hazards?.length) {
-              filters.hazards.forEach((hazard) => {
-                if (rec.hazards.includes(hazard)) matchCount++;
-              });
-            }
-            if (filters.size?.length) {
-              filters.size.forEach((size) => {
-                if (rec.size.includes(size)) matchCount++;
-              });
-            }
-
-            rec.matchScore = matchCount;
-            return rec;
-          });
-
-        // Collect filtered records into allRecords
-        allRecords = [...allRecords, ...recs];
-        fetchNextPage(); // Fetch next page if available
-      },
-      function done(err) {
-        if (err) {
-          console.error(err);
-          return;
-        }
-
-        // Sort once all records are fetched
-        allRecords.sort((a, b) => b.matchScore - a.matchScore);
-
-        // Set state after all pages are fetched
-        setPractitionerSpecialist(allRecords);
-      }
-    );
-};
-
-

@@ -29,11 +29,14 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import IconButton from '@mui/material/IconButton';
 import SortByAlphaIcon from '@mui/icons-material/SortByAlpha';
 import { 
+  // fetchPractitioners,
+  fetchTotalPractitionerCount,
   fetchFilteredPractitioners,
-  fetchOptionsFromAirtable,
-  fetchAllPractitioners,
   fetchFilteredSpecialist,
-  fetchAllPractitionerSpecialist,
+  fetchOptionsFromAirtable,
+  // fetchAllPractitioners,
+  // fetchFilteredSpecialist,
+  // fetchAllPractitionerSpecialist,
 } from '../util/api';
 import Toast from '../components/Toast';
 import ComparisonBoard from '../components/ComparisonBoard';
@@ -430,7 +433,7 @@ export default function Registry() {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedState, setSelectedState] = useState('');
   const [practitioners, setPractitioners] = useState([]);
-  const [practitionerSpecialists, setPractitionerSpecialists,] = useState([]);
+  const [specialists, setSpecialists,] = useState([]);
   const [totalPractitioners, setTotalPractitioners] = useState(0);
   const [showFilters, setShowFilters] = useState(false);
   const [currentView, setCurrentView] = useState('cards');
@@ -502,19 +505,17 @@ export default function Registry() {
     
   }, [filters, selectedLocation, currentView, selectedForComparison]);
 
-    const debounceRef = useRef();
-    const prevFiltersRef = useRef(JSON.stringify(filters));
-    
-    useEffect(() => {
-      fetchOptionsFromAirtable(setAvailableOptions);
-    }, []);
+  const debounceRef = useRef();
+  const prevFiltersRef = useRef(JSON.stringify(filters));
+  
+  useEffect(() => {
+    fetchOptionsFromAirtable(setAvailableOptions);
+  }, []);
 
-    useEffect(() => {
-      // Get total practitioners count
-      fetchAllPractitioners((practitioners) => {
-        setTotalPractitioners(practitioners.length);
-      });
-    }, []);
+  useEffect(() => {
+    console.log('Registry component mounted') 
+    fetchTotalPractitionerCount(setTotalPractitioners)
+  }, []);
 
 
   useEffect(() => {
@@ -522,7 +523,6 @@ export default function Registry() {
     const filtersString = JSON.stringify(filters);
     if (prevFiltersRef.current === filtersString) return;
     prevFiltersRef.current = filtersString;
-
 
     // Clear previous timer if it exists
     if (debounceRef.current) {
@@ -532,11 +532,10 @@ export default function Registry() {
     debounceRef.current = setTimeout(() => {
       if (filters && Object.values(filters).some((arr) => arr.length > 0)) {
         fetchFilteredPractitioners(filters, setPractitioners);
-        fetchFilteredSpecialist(filters, setPractitionerSpecialists);
-        // fetchFilteredPractitionersAndSpecialists(filters, setPractitioners, setPractitionerSpecialists);
+        fetchFilteredSpecialist(filters, setSpecialists);
       } else {
         setPractitioners([]);
-        setPractitionerSpecialists([]);
+        setSpecialists([]);
       }
     }, 100); // You can adjust the debounce time (ms)
 
@@ -685,7 +684,7 @@ export default function Registry() {
 
     // Reset practitioners and specialists
     setPractitioners([]);
-    setPractitionerSpecialists()
+    setSpecialists([])
 
     // Reset display count back to initial value
     setDisplayCount(PRACTITIONERS_PER_PAGE);
@@ -845,18 +844,11 @@ export default function Registry() {
                 {showBrowseAll && (
                   <Button
                     onClick={() => {
-                      // Fetch all practitioners
-                      fetchAllPractitioners((practitioners) => {
-                        setPractitioners(practitioners.sort(() => Math.random() - 0.5));
-                        // Set display count to show all practitioners
-                        setDisplayCount(practitioners.length);
-                        // Make sure we're in card view
-                        setCurrentView('cards');
-                        // Set selected state to something so comparison board shows
-                        setSelectedState('BrowseAll');
-
-                        fetchAllPractitionerSpecialist(setPractitionerSpecialists);
-                      });
+                      fetchFilteredPractitioners(filters, setPractitioners);
+                      fetchFilteredSpecialist(filters, setSpecialists);
+                      setCurrentView('cards');
+                      setSelectedState('BrowseAll');
+                      setDisplayCount(totalPractitioners);                      
                     }}
                     startIcon={<FormatListBulleted />}
                     sx={{
@@ -1117,8 +1109,8 @@ export default function Registry() {
                       </Button>
                     </Box>
                   )}
-                  {practitionerSpecialists.length > 0 && (
-                    <RecommendSpecialist practitionerSpecialists={practitionerSpecialists} filters={searchParams}/>
+                  {specialists.length > 0 && (
+                    <RecommendSpecialist practitionerSpecialists={specialists} filters={searchParams}/>
                   )}
                 </>
               ) : (

@@ -16,12 +16,12 @@ ReactGA.initialize("G-V5H6STTJJS"); // Replace with your GA Measurement ID
 ReactGA.send("pageview"); // Send initial pageview
 
 const router = createBrowserRouter([
-    {
-    path: '/Registry',
+  {
+    path: '/',
     element: <Registry />,
   },
   {
-    path: '/',
+    path: '/Registry',
     element: <Registry />,
   },
   {
