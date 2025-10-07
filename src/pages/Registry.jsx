@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
   Autocomplete,
@@ -32,8 +32,8 @@ import {
   fetchFilteredPractitioners,
   fetchOptionsFromAirtable,
   fetchAllPractitioners,
-  fetchFilteredPractitionerSpecialist,
-  fetchAllPractitionerSpecialist 
+  fetchFilteredSpecialist,
+  fetchAllPractitionerSpecialist,
 } from '../util/api';
 import Toast from '../components/Toast';
 import ComparisonBoard from '../components/ComparisonBoard';
@@ -462,16 +462,17 @@ export default function Registry() {
           selectedPractitioners,
         } = await searchParamsToFilters(searchParams);
 
-        // Update all state from URL
-        setFilters(urlFilters);
+        // Batch all state updates in one go
+        setFilters({
+          ...urlFilters,
+          state: location.selectedState ? [location.selectedState] : [],
+        });
         setSelectedLocation(location.selectedLocation);
         setSelectedState(location.selectedState);
 
-        // Set selected practitioners from URL
         if (selectedPractitioners.length > 0) {
           setSelectedForComparison(new Set(selectedPractitioners));
         }
-
         if (view) {
           setCurrentView(view);
         }
@@ -479,8 +480,9 @@ export default function Registry() {
     };
 
     loadStateFromUrl();
+    // Only run once on mount
+    // eslint-disable-next-line
   }, []);
-
   // Helper to check if all filters are empty
   const areFiltersEmpty = () => {
     return Object.values(filters).every((arr) => arr.length === 0);
@@ -500,25 +502,46 @@ export default function Registry() {
     
   }, [filters, selectedLocation, currentView, selectedForComparison]);
 
-  useEffect(() => {
-    fetchOptionsFromAirtable(setAvailableOptions);
-  }, []);
+    const debounceRef = useRef();
+    const prevFiltersRef = useRef(JSON.stringify(filters));
+    
+    useEffect(() => {
+      fetchOptionsFromAirtable(setAvailableOptions);
+    }, []);
+
+    useEffect(() => {
+      // Get total practitioners count
+      fetchAllPractitioners((practitioners) => {
+        setTotalPractitioners(practitioners.length);
+      });
+    }, []);
+
 
   useEffect(() => {
-    // Get total practitioners count
-    fetchAllPractitioners((practitioners) => {
-      setTotalPractitioners(practitioners.length);
-    });
-  }, []);
+    // Only run if filters actually changed
+    const filtersString = JSON.stringify(filters);
+    if (prevFiltersRef.current === filtersString) return;
+    prevFiltersRef.current = filtersString;
 
-  useEffect(() => {
-    if (Object.values(filters).some((arr) => arr.length > 0)) {
-      fetchFilteredPractitioners(filters, setPractitioners);
-      fetchFilteredPractitionerSpecialist(filters, setPractitionerSpecialists);
-    } else {
-      setPractitioners([]);
-      setPractitionerSpecialists([]);
+
+    // Clear previous timer if it exists
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
     }
+
+    debounceRef.current = setTimeout(() => {
+      if (filters && Object.values(filters).some((arr) => arr.length > 0)) {
+        fetchFilteredPractitioners(filters, setPractitioners);
+        fetchFilteredSpecialist(filters, setPractitionerSpecialists);
+        // fetchFilteredPractitionersAndSpecialists(filters, setPractitioners, setPractitionerSpecialists);
+      } else {
+        setPractitioners([]);
+        setPractitionerSpecialists([]);
+      }
+    }, 100); // You can adjust the debounce time (ms)
+
+    // Cleanup on unmount or next filter change
+    return () => clearTimeout(debounceRef.current);
   }, [filters]);
 
   // Get community name based on selection state
@@ -1000,7 +1023,7 @@ export default function Registry() {
                       variant="body1"
                       sx={{ mb: 3, color: 'text.secondary' }}
                     >
-                      Showing <strong >{visiblePractitioners.length}</strong> of {totalPractitioners} Adaptation Practitioners
+                      Showing <strong >{practitioners.length}</strong> of {totalPractitioners} Adaptation Practitioners
                       {/* <a 
                         href="https://climatesmartcommunity.org/registry/"
                         target="_blank"
