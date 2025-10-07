@@ -126,7 +126,7 @@ function buildAirtableFilterFormula(criteriaObject, fieldMap, operator = 'AND') 
     }
 
     // Combine all field conditions using AND()
-    return `AND(${mainConditions.join(", ")})`;
+    return `${operator}(${mainConditions.join(", ")})`;
 }
 
 
