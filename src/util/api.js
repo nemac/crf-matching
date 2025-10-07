@@ -132,7 +132,6 @@ function buildAirtableFilterFormula(criteriaObject, fieldMap, operator = 'AND') 
 
 /// api ///
 export const fetchPractitioner = (practitionerId, setPractitioner) => {
-  console.log('Fetching fetchPractitioner from Airtable...');
   base('Organization')
     .select({
       maxRecords: 1,
@@ -150,7 +149,6 @@ export const fetchPractitioner = (practitionerId, setPractitioner) => {
 };
 
 export const fetchTotalPractitionerCount = (setCount) => {
-    console.log('Fetching total practitioner count from Airtable...');
     base('Organization')
         .select({
             view: practitionerViewName,
@@ -169,7 +167,6 @@ export const fetchTotalPractitionerCount = (setCount) => {
   }
 
   export const fetchFilteredSpecialist = (filters, setPractitioners) => {
-  console.log('Fetching fetchFilteredSpecialist from Airtable...');
   const filterFormula = buildAirtableFilterFormula(filters, practitionerFieldMap, 'OR');
 
   base('Organization')
@@ -203,7 +200,6 @@ export const fetchTotalPractitionerCount = (setCount) => {
 }
 
 export const fetchFilteredPractitioners = (filters, setPractitioners) => {
-  console.log('Fetching fetchFilteredPractitioners from Airtable...');
   const filterFormula = buildAirtableFilterFormula(filters, practitionerFieldMap);
 
   base('Organization')

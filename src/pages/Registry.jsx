@@ -29,14 +29,10 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import IconButton from '@mui/material/IconButton';
 import SortByAlphaIcon from '@mui/icons-material/SortByAlpha';
 import { 
-  // fetchPractitioners,
   fetchTotalPractitionerCount,
   fetchFilteredPractitioners,
   fetchFilteredSpecialist,
   fetchOptionsFromAirtable,
-  // fetchAllPractitioners,
-  // fetchFilteredSpecialist,
-  // fetchAllPractitionerSpecialist,
 } from '../util/api';
 import Toast from '../components/Toast';
 import ComparisonBoard from '../components/ComparisonBoard';
@@ -513,7 +509,6 @@ export default function Registry() {
   }, []);
 
   useEffect(() => {
-    console.log('Registry component mounted') 
     fetchTotalPractitionerCount(setTotalPractitioners)
   }, []);
 
