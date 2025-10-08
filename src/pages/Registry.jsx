@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
   Autocomplete,
@@ -29,11 +29,10 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import IconButton from '@mui/material/IconButton';
 import SortByAlphaIcon from '@mui/icons-material/SortByAlpha';
 import { 
+  fetchTotalPractitionerCount,
   fetchFilteredPractitioners,
+  fetchFilteredSpecialist,
   fetchOptionsFromAirtable,
-  fetchAllPractitioners,
-  fetchFilteredPractitionerSpecialist,
-  fetchAllPractitionerSpecialist 
 } from '../util/api';
 import Toast from '../components/Toast';
 import ComparisonBoard from '../components/ComparisonBoard';
@@ -430,7 +429,7 @@ export default function Registry() {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedState, setSelectedState] = useState('');
   const [practitioners, setPractitioners] = useState([]);
-  const [practitionerSpecialists, setPractitionerSpecialists,] = useState([]);
+  const [specialists, setSpecialists,] = useState([]);
   const [totalPractitioners, setTotalPractitioners] = useState(0);
   const [showFilters, setShowFilters] = useState(false);
   const [currentView, setCurrentView] = useState('cards');
@@ -462,16 +461,17 @@ export default function Registry() {
           selectedPractitioners,
         } = await searchParamsToFilters(searchParams);
 
-        // Update all state from URL
-        setFilters(urlFilters);
+        // Batch all state updates in one go
+        setFilters({
+          ...urlFilters,
+          state: location.selectedState ? [location.selectedState] : [],
+        });
         setSelectedLocation(location.selectedLocation);
         setSelectedState(location.selectedState);
 
-        // Set selected practitioners from URL
         if (selectedPractitioners.length > 0) {
           setSelectedForComparison(new Set(selectedPractitioners));
         }
-
         if (view) {
           setCurrentView(view);
         }
@@ -479,8 +479,9 @@ export default function Registry() {
     };
 
     loadStateFromUrl();
+    // Only run once on mount
+    // eslint-disable-next-line
   }, []);
-
   // Helper to check if all filters are empty
   const areFiltersEmpty = () => {
     return Object.values(filters).every((arr) => arr.length === 0);
@@ -500,25 +501,41 @@ export default function Registry() {
     
   }, [filters, selectedLocation, currentView, selectedForComparison]);
 
+  const debounceRef = useRef();
+  const prevFiltersRef = useRef(JSON.stringify(filters));
+  
   useEffect(() => {
     fetchOptionsFromAirtable(setAvailableOptions);
   }, []);
 
   useEffect(() => {
-    // Get total practitioners count
-    fetchAllPractitioners((practitioners) => {
-      setTotalPractitioners(practitioners.length);
-    });
+    fetchTotalPractitionerCount(setTotalPractitioners)
   }, []);
 
+
   useEffect(() => {
-    if (Object.values(filters).some((arr) => arr.length > 0)) {
-      fetchFilteredPractitioners(filters, setPractitioners);
-      fetchFilteredPractitionerSpecialist(filters, setPractitionerSpecialists);
-    } else {
-      setPractitioners([]);
-      setPractitionerSpecialists([]);
+    // Only run if filters actually changed
+    const filtersString = JSON.stringify(filters);
+    if (prevFiltersRef.current === filtersString) return;
+    prevFiltersRef.current = filtersString;
+
+    // Clear previous timer if it exists
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
     }
+
+    debounceRef.current = setTimeout(() => {
+      if (filters && Object.values(filters).some((arr) => arr.length > 0)) {
+        fetchFilteredPractitioners(filters, setPractitioners);
+        fetchFilteredSpecialist(filters, setSpecialists);
+      } else {
+        setPractitioners([]);
+        setSpecialists([]);
+      }
+    }, 100); // You can adjust the debounce time (ms)
+
+    // Cleanup on unmount or next filter change
+    return () => clearTimeout(debounceRef.current);
   }, [filters]);
 
   // Get community name based on selection state
@@ -662,7 +679,7 @@ export default function Registry() {
 
     // Reset practitioners and specialists
     setPractitioners([]);
-    setPractitionerSpecialists()
+    setSpecialists([])
 
     // Reset display count back to initial value
     setDisplayCount(PRACTITIONERS_PER_PAGE);
@@ -822,18 +839,11 @@ export default function Registry() {
                 {showBrowseAll && (
                   <Button
                     onClick={() => {
-                      // Fetch all practitioners
-                      fetchAllPractitioners((practitioners) => {
-                        setPractitioners(practitioners.sort(() => Math.random() - 0.5));
-                        // Set display count to show all practitioners
-                        setDisplayCount(practitioners.length);
-                        // Make sure we're in card view
-                        setCurrentView('cards');
-                        // Set selected state to something so comparison board shows
-                        setSelectedState('BrowseAll');
-
-                        fetchAllPractitionerSpecialist(setPractitionerSpecialists);
-                      });
+                      fetchFilteredPractitioners(filters, setPractitioners);
+                      fetchFilteredSpecialist(filters, setSpecialists);
+                      setCurrentView('cards');
+                      setSelectedState('BrowseAll');
+                      setDisplayCount(totalPractitioners);                      
                     }}
                     startIcon={<FormatListBulleted />}
                     sx={{
@@ -1000,7 +1010,7 @@ export default function Registry() {
                       variant="body1"
                       sx={{ mb: 3, color: 'text.secondary' }}
                     >
-                      Showing <strong >{visiblePractitioners.length}</strong> of {totalPractitioners} Adaptation Practitioners
+                      Showing <strong >{practitioners.length}</strong> of {totalPractitioners} Adaptation Practitioners
                       {/* <a 
                         href="https://climatesmartcommunity.org/registry/"
                         target="_blank"
@@ -1094,8 +1104,8 @@ export default function Registry() {
                       </Button>
                     </Box>
                   )}
-                  {practitionerSpecialists.length > 0 && (
-                    <RecommendSpecialist practitionerSpecialists={practitionerSpecialists} filters={searchParams}/>
+                  {specialists.length > 0 && (
+                    <RecommendSpecialist practitionerSpecialists={specialists} filters={searchParams}/>
                   )}
                 </>
               ) : (
