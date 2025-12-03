@@ -11,6 +11,7 @@ import PractitionerPage from './pages/PractitionerPage.jsx';
 // import PractitionerWorkExamplePage from './pages/PractitionerWorkExamplePage.jsx';
 import HowToApplyPage from './pages/HowToApplyPage.jsx';
 import Registry from './pages/Registry.jsx';
+import UpdateDataPage from './pages/UpdateDataPage.jsx';
 
 ReactGA.initialize("G-V5H6STTJJS"); // Replace with your GA Measurement ID
 ReactGA.send("pageview"); // Send initial pageview
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
   {
     path: '/Howtoapply',
     element: <HowToApplyPage />,
+  },
+  {
+    path: '/updatedata',
+    element: <UpdateDataPage />,
   },
 ]);
 
