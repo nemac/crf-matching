@@ -11,6 +11,7 @@ import PractitionerPage from './pages/PractitionerPage.jsx';
 // import PractitionerWorkExamplePage from './pages/PractitionerWorkExamplePage.jsx';
 import HowToApplyPage from './pages/HowToApplyPage.jsx';
 import Registry from './pages/Registry.jsx';
+import RequestUpdatePage from './pages/RequestUpdatePage.jsx';
 import UpdateDataPage from './pages/UpdateDataPage.jsx';
 
 ReactGA.initialize("G-V5H6STTJJS"); // Replace with your GA Measurement ID
@@ -43,7 +44,11 @@ const router = createBrowserRouter([
     element: <HowToApplyPage />,
   },
   {
-    path: '/updatedata',
+    path: '/request-update',
+    element: <RequestUpdatePage />,
+  },
+  {
+    path: '/update-data',
     element: <UpdateDataPage />,
   },
 ]);
