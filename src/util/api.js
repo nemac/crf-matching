@@ -41,6 +41,8 @@ const practitionerFieldMap = {
   website: 'org_website',
   status: 'org_status',
   linkedIn: 'org_linkedin',
+  firstName: 'org_contact_first_name',
+  lastName: 'org_contact_last_name',
   email: 'org_contact_email',
   phone: 'org_contact_phone',
   strTrained: 'org_str',
