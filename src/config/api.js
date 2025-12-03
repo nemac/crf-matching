@@ -50,8 +50,9 @@ export async function generateMagicLink(email) {
  */
 export async function validateToken(token) {
   try {
-    const response = await fetch(`${API_ENDPOINTS.validateToken}?token=${encodeURIComponent(token)}`, {
-      method: 'GET',
+    // const response = await fetch(`${API_ENDPOINTS.validateToken}?token=${encodeURIComponent(token)}`, {
+    const response = await fetch(`https://tp6l7ijupqjlm7ersk3frn57ki0oiowo.lambda-url.us-east-1.on.aws?token=${encodeURIComponent(token)}`, {
+    method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -78,7 +79,7 @@ export async function validateToken(token) {
  */
 export async function updateOrganization(token, updates) {
   try {
-    const response = await fetch(API_ENDPOINTS.updateOrganization, {
+    const response = await fetch("https://v5w7xgghkdlnrtxpxkygc2ef2i0vuxfg.lambda-url.us-east-1.on.aws/", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
