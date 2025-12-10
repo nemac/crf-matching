@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Container, Typography, Box, Switch, FormControlLabel, CircularProgress, Alert, Button } from '@mui/material';
+import { Container, Typography, Box, CircularProgress, Alert, Button } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { useSearchParams, useNavigate } from 'react-router-dom';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import theme from '../theme';
 import NavBar from '../components/NavBar';
 import UpdateData from '../components/updateData/UpdateData.jsx';
@@ -201,38 +203,43 @@ export default function UpdateDataPage() {
           px: { xs: 4, sm: 4, md: 4, lg: 3 },
         }}
       >
-        {/* Title and Toggle Section */}
-        <Box sx={{ mb: 4, mt: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Typography
-            variant="h2"
-            component="h1"
-            sx={{
-              color: 'primary.main',
-              fontWeight: 'bold',
-            }}
-          >
-            {formData.organizationName}
-          </Typography>
+        {/* Title Section */}
+        <Typography
+          variant="h2"
+          component="h1"
+          sx={{
+            color: 'primary.main',
+            fontWeight: 'bold',
+            mt: 4,
+            mb: 2,
+          }}
+        >
+          {formData.organizationName}
+        </Typography>
 
-          <FormControlLabel
-            control={
-              <Switch
-                checked={isPreview}
-                onChange={handleToggle}
-                color="primary"
-              />
-            }
-            label={isPreview ? 'Preview' : 'Edit'}
-            labelPlacement="start"
-            sx={{
-              m: 0,
-              '& .MuiFormControlLabel-label': {
-                fontWeight: 500,
-                mr: 1,
-              },
-            }}
-          />
-        </Box>
+        {/* Preview/Edit Button */}
+        <Button
+          variant="contained"
+          startIcon={isPreview ? <ArrowBackIcon /> : <VisibilityIcon />}
+          onClick={handleToggle}
+          sx={{
+            bgcolor: '#F5E6D3',
+            color: '#3D3D3D',
+            textTransform: 'none',
+            fontWeight: 500,
+            px: 3,
+            py: 1,
+            mb: 4,
+            borderRadius: '8px',
+            boxShadow: 'none',
+            '&:hover': {
+              bgcolor: '#E8D5BD',
+              boxShadow: 'none',
+            },
+          }}
+        >
+          {isPreview ? 'Back to Edit' : 'Preview Profile Page'}
+        </Button>
 
         {/* Render based on mode */}
         <Box sx={{ mb: 4 }}>
