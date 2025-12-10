@@ -2,6 +2,26 @@ import { Box, Typography, Button, Grid, Alert, CircularProgress } from '@mui/mat
 import FormTextField from './FormTextField';
 import PropTypes from 'prop-types';
 
+function SectionHeader({ children, sx = {} }) {
+  return (
+    <Typography
+      variant="h4"
+      sx={{
+        fontWeight: 'bold',
+        mb: 1,
+        ...sx,
+      }}
+    >
+      {children}
+    </Typography>
+  );
+}
+
+SectionHeader.propTypes = {
+  children: PropTypes.node.isRequired,
+  sx: PropTypes.object,
+};
+
 export default function UpdateData({ formData, handleChange, handleSubmit, submitting, error, success, isDevMode }) {
   return (
     <Box sx={{ maxWidth: '1200px' }}>
@@ -35,108 +55,179 @@ export default function UpdateData({ formData, handleChange, handleSubmit, submi
         </Alert>
       )}
 
-      {/* Organization Contact Section */}
-      <Typography
-        variant="h4"
-        sx={{
-          fontWeight: 'bold',
-          mb: 3,
-        }}
-      >
-        Organization Contact
-      </Typography>
+      <SectionHeader>Organization Contact</SectionHeader>
 
-      {/* First Name and Last Name Row */}
-      <Grid
-        container
-        spacing={2}
-        sx={{ mb: 2 }}
-      >
+      <Box sx={{ ml: 2, mb: 8 }}>
         <Grid
-          item
-          xs={12}
-          md={6}
+          container
+          spacing={2}
+          sx={{ mb: 2 }}
         >
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
+            <Box>
+              <FormTextField
+                label="First Name"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                fullWidth
+              />
+            </Box>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
+            <Box>
+              <FormTextField
+                label="Last Name"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                fullWidth
+              />
+            </Box>
+          </Grid>
+        </Grid>
+
+        <Box sx={{ mb: 2, maxWidth: '583px' }}>
           <FormTextField
-            label="First Name"
-            name="firstName"
-            value={formData.firstName}
+            label="Phone Number"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            type="tel"
+            fullWidth
+          />
+        </Box>
+
+        <Box sx={{ mb: 2, maxWidth: '583px' }}>
+          <FormTextField
+            label="Email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            type="email"
+            fullWidth
+          />
+        </Box>
+
+        <Box sx={{ mb: 2, maxWidth: '583px' }}>
+          <FormTextField
+            label="Website"
+            name="website"
+            value={formData.website}
+            onChange={handleChange}
+            type="website"
+            fullWidth
+          />
+        </Box>
+      </Box>
+
+      <SectionHeader>Organization Name</SectionHeader>
+      <Box sx={{ ml: 2, mb: 8 }}>
+        <Box sx={{ mb: 4, maxWidth: '350px' }}>
+          <FormTextField
+            label="Organization Name"
+            name="organizationName"
+            value={formData.organizationName}
             onChange={handleChange}
             fullWidth
           />
-        </Grid>
+        </Box>
+      </Box>
+
+      <SectionHeader>Organization Location</SectionHeader>
+
+      <Box sx={{ ml: 2, mb: 8 }}>
         <Grid
-          item
-          xs={12}
-          md={6}
+          container
+          spacing={2}
+          sx={{ mb: 2 }}
         >
+          <Grid
+            item
+            xs={12}
+            md={4}
+          >
+            <Box mr={2}>
+              <FormTextField
+                label="City"
+                name="city"
+                value={formData.city}
+                onChange={handleChange}
+                fullWidth
+              />
+            </Box>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            md={4}
+          >
+            <Box mr={2}>
+              <FormTextField
+                label="State"
+                name="state"
+                value={formData.state}
+                onChange={handleChange}
+                fullWidth
+              />
+            </Box>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            md={4}
+          >
+            <Box mr={2}>
+              <FormTextField
+                label="Country"
+                name="country"
+                value={formData.country}
+                onChange={handleChange}
+                fullWidth
+              />
+            </Box>
+          </Grid>
+        </Grid>
+      </Box>
+
+      <SectionHeader>LinkedIN</SectionHeader>
+
+      <Box sx={{ ml: 2, mb: 8 }}>
+        <Box sx={{ mb: 4, maxWidth: '350px' }}>
           <FormTextField
-            label="Last Name"
-            name="lastName"
-            value={formData.lastName}
+            label="LinkedIN"
+            name="linkedIN"
+            value={formData.linkedIN}
             onChange={handleChange}
             fullWidth
           />
-        </Grid>
-      </Grid>
-
-      {/* Phone Number Row */}
-      <Box sx={{ mb: 2, maxWidth: '578px' }}>
-        <FormTextField
-          label="Phone Number"
-          name="phone"
-          value={formData.phone}
-          onChange={handleChange}
-          type="tel"
-          fullWidth
-        />
+        </Box>
       </Box>
 
-      {/* Email Row */}
-      <Box sx={{ mb: 2, maxWidth: '578px' }}>
-        <FormTextField
-          label="Email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          type="email"
-          fullWidth
-        />
-      </Box>
-
-      {/* Website Row */}
-      <Box sx={{ mb: 2, maxWidth: '578px' }}>
-        <FormTextField
-          label="Website"
-          name="website"
-          value={formData.website}
-          onChange={handleChange}
-          type="website"
-          fullWidth
-        />
-      </Box>
-
-      {/* Organization Name Section */}
-      <Typography
-        variant="h4"
-        sx={{
-          fontWeight: 'bold',
-          mb: 3,
-          mt: 4,
-        }}
-      >
-        Organization Name
-      </Typography>
-
-      <Box sx={{ mb: 4, maxWidth: '350px' }}>
-        <FormTextField
-          label="Organization Name"
-          name="organizationName"
-          value={formData.organizationName}
-          onChange={handleChange}
-          fullWidth
-        />
-      </Box>
+      <SectionHeader>Organization Description</SectionHeader>
+      <SectionHeader>Community Specializations</SectionHeader>
+      <SectionHeader>Organization Type</SectionHeader>
+      <SectionHeader>Organization Size</SectionHeader>
+      <SectionHeader>SBA Category</SectionHeader>
+      <SectionHeader>Trainings</SectionHeader>
+      <SectionHeader>Years doing adaptation</SectionHeader>
+      <SectionHeader>Languages</SectionHeader>
+      <SectionHeader>Include on registry</SectionHeader>
+      <SectionHeader>Terms and conditions</SectionHeader>
+      <SectionHeader>Top Services</SectionHeader>
+      <SectionHeader>Services Provided</SectionHeader>
+      <SectionHeader>Hazard Expertise</SectionHeader>
+      <SectionHeader>Sector Expertise</SectionHeader>
+      <SectionHeader>Size of Communities Your Organization Works With</SectionHeader>
+      <SectionHeader>Where Your Organization Works</SectionHeader>
 
       {/* Submit Button */}
       <Button
