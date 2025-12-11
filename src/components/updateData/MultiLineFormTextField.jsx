@@ -1,9 +1,10 @@
 import { Box, TextField, InputAdornment } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import PropTypes from 'prop-types';
 
-export default function FormTextField({ label, value, onChange, name, type = 'text', fullWidth = false }) {
+export default function MultiLineFormTextField({ label, value, onChange, name, rows = 3, placeholder }) {
   return (
-    <Box sx={{ minWidth: fullWidth ? '100%' : '240px', flex: fullWidth ? 1 : 'none' }}>
+    <Box sx={{ minWidth: '240px', maxWidth: '856px', width: '100%' }}>
       <Box
         component="label"
         sx={{
@@ -17,14 +18,20 @@ export default function FormTextField({ label, value, onChange, name, type = 'te
       </Box>
       <TextField
         name={name}
-        type={type}
         value={value}
         onChange={onChange}
-        placeholder={label}
+        placeholder={placeholder || label}
         fullWidth
+        multiline
+        rows={rows}
         InputProps={{
           endAdornment: (
-            <InputAdornment position="end">
+            <InputAdornment
+              position="end"
+              sx={{
+                alignSelf: 'center',
+              }}
+            >
               <Box
                 sx={{
                   bgcolor: '#0066CC',
@@ -44,7 +51,8 @@ export default function FormTextField({ label, value, onChange, name, type = 'te
           sx: {
             bgcolor: '#F9FAFB',
             borderRadius: '4px',
-            height: '43px',
+            minHeight: '81px',
+            alignItems: 'flex-start',
             '& .MuiOutlinedInput-notchedOutline': {
               borderColor: '#0066CC',
               borderWidth: '1px',
@@ -56,10 +64,8 @@ export default function FormTextField({ label, value, onChange, name, type = 'te
               borderColor: '#0066CC',
               borderWidth: '1px',
             },
-            '& input': {
+            '& textarea': {
               padding: '4px 8px',
-              height: '100%',
-              boxSizing: 'border-box',
             },
           },
         }}
@@ -67,9 +73,21 @@ export default function FormTextField({ label, value, onChange, name, type = 'te
           '& .MuiInputBase-root': {
             gap: '12px',
             paddingRight: '8px',
+            paddingTop: '4px',
+            paddingBottom: '4px',
+            paddingLeft: '8px',
           },
         }}
       />
     </Box>
   );
 }
+
+MultiLineFormTextField.propTypes = {
+  label: PropTypes.string.isRequired,
+  value: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  rows: PropTypes.number,
+  placeholder: PropTypes.string,
+};

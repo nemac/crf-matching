@@ -10,9 +10,9 @@ Airtable.configure({
 const base = Airtable.base(__AIRTABLE_BASE__);
 
 /// configuration ///
-const practitionerViewName =  'RegistryPractitionerToolView'  //'RegistryToolView' // 'Grid view'
-const specialistsViewName =  'RegistrySpecialistToolView'  //'RegistryToolView' // 'Grid view'
-const PractitionerPageViewName = 'RegistryForPractitionerPageToolView' // 'Grid view'
+const practitionerViewName = 'RegistryPractitionerToolView'; //'RegistryToolView' // 'Grid view'
+const specialistsViewName = 'RegistrySpecialistToolView'; //'RegistryToolView' // 'Grid view'
+const PractitionerPageViewName = 'RegistryForPractitionerPageToolView'; // 'Grid view'
 
 const normalizeRec = (rec, fieldMap) => {
   const result = {};
@@ -46,9 +46,8 @@ const practitionerFieldMap = {
   email: 'org_contact_email',
   phone: 'org_contact_phone',
   strTrained: 'org_str',
-  info: "org_description",
+  info: 'org_description',
   organizationType: 'org_type',
-  additionalInformation: 'org_description',
   specificTypesOfCommunities: 'org_comm_specialization',
   languageFluencies: 'org_languages',
   org_street: 'org_street',
@@ -119,43 +118,41 @@ const communityFieldMap = {
 const practFetchFields = Object.values(practitionerFieldMap);
 
 function buildAirtableFilterFormula(criteriaObject, fieldMap, operator = 'AND') {
-    const mainConditions = [];
+  const mainConditions = [];
 
-    // Loop through each key (activities, sectors, etc.) in the criteria object
-    for (const [criteriaKey, valuesArray] of Object.entries(criteriaObject)) {
-        
-        // 1. Get the actual Airtable field ID using the map
-        const airtableFieldId = fieldMap[criteriaKey];
+  // Loop through each key (activities, sectors, etc.) in the criteria object
+  for (const [criteriaKey, valuesArray] of Object.entries(criteriaObject)) {
+    // 1. Get the actual Airtable field ID using the map
+    const airtableFieldId = fieldMap[criteriaKey];
 
-        // Skip if the array is empty OR if the key doesn't exist in the map
-        if (!airtableFieldId || !Array.isArray(valuesArray) || valuesArray.length === 0) {
-            continue;
-        }
-
-        // Build the AND condition for all values within this field
-        const conditions = valuesArray.map(value => {
-            const quotedValue = `"${value}"`; 
-            
-            // Generate the FIND condition using the actual airtableFieldId
-            // The padding with commas ("," & {Field} & ",") is crucial for look-up/multiple-select fields
-            return `FIND(${quotedValue}, "," & {${airtableFieldId}} & ",")`;
-        });
-
-        // Combine all checks for this field using operator (AND/OR)
-        const fieldCondition = `${operator}(${conditions.join(", ")})`;
-        
-        mainConditions.push(fieldCondition);
+    // Skip if the array is empty OR if the key doesn't exist in the map
+    if (!airtableFieldId || !Array.isArray(valuesArray) || valuesArray.length === 0) {
+      continue;
     }
 
-    // If no conditions were generated, return an empty string (no filter)
-    if (mainConditions.length === 0) {
-        return '';
-    }
+    // Build the AND condition for all values within this field
+    const conditions = valuesArray.map((value) => {
+      const quotedValue = `"${value}"`;
 
-    // Combine all field conditions using AND()
-    return `${operator}(${mainConditions.join(", ")})`;
+      // Generate the FIND condition using the actual airtableFieldId
+      // The padding with commas ("," & {Field} & ",") is crucial for look-up/multiple-select fields
+      return `FIND(${quotedValue}, "," & {${airtableFieldId}} & ",")`;
+    });
+
+    // Combine all checks for this field using operator (AND/OR)
+    const fieldCondition = `${operator}(${conditions.join(', ')})`;
+
+    mainConditions.push(fieldCondition);
+  }
+
+  // If no conditions were generated, return an empty string (no filter)
+  if (mainConditions.length === 0) {
+    return '';
+  }
+
+  // Combine all field conditions using AND()
+  return `${operator}(${mainConditions.join(', ')})`;
 }
-
 
 /// api ///
 export const fetchPractitioner = (practitionerId, setPractitioner) => {
@@ -176,24 +173,24 @@ export const fetchPractitioner = (practitionerId, setPractitioner) => {
 };
 
 export const fetchTotalPractitionerCount = (setCount) => {
-    base('Organization')
-        .select({
-            view: practitionerViewName,
-            fields: []
-        })
-        .all() 
-        .then(records => {
-            // The result is ready here, so we call the setter function.
-            setCount(records.length);
-        })
-        .catch(err => {
-            console.error('An error occurred while fetching the total record count:', err);
-            // On error, set the count to 0 or handle as needed.
-            setCount(0);
-        });
-  }
+  base('Organization')
+    .select({
+      view: practitionerViewName,
+      fields: [],
+    })
+    .all()
+    .then((records) => {
+      // The result is ready here, so we call the setter function.
+      setCount(records.length);
+    })
+    .catch((err) => {
+      console.error('An error occurred while fetching the total record count:', err);
+      // On error, set the count to 0 or handle as needed.
+      setCount(0);
+    });
+};
 
-  export const fetchFilteredSpecialist = (filters, setPractitioners) => {
+export const fetchFilteredSpecialist = (filters, setPractitioners) => {
   const filterFormula = buildAirtableFilterFormula(filters, practitionerFieldMap, 'OR');
 
   base('Organization')
@@ -201,30 +198,31 @@ export const fetchTotalPractitionerCount = (setCount) => {
       view: specialistsViewName,
       fields: practFetchFields,
       sort: [{ field: 'org_name', direction: 'asc' }],
-      filterByFormula: filterFormula
-    }).all() 
-      .then(records => {
-          const categoryFieldKey = practitionerFieldMap['org_registry_category'];
+      filterByFormula: filterFormula,
+    })
+    .all()
+    .then((records) => {
+      const categoryFieldKey = practitionerFieldMap['org_registry_category'];
 
-          // Initialize the separation objects
-          const specialists = [];
+      // Initialize the separation objects
+      const specialists = [];
 
-          // Process each record
-          records.forEach(record => {
-              const normalizedRecord = normalizeRec(record.fields, practitionerFieldMap);
-              
-              // Determine the category value using the mapped field key
-              const recordCategory = record.fields[categoryFieldKey];
-              // Separate based on category
-              specialists.push(normalizedRecord);
-          }); 
-          setPractitioners(specialists);
-      })
-      .catch(err => {
-          console.error('An error occurred while fetching all pages:', err);
-          setPractitioners([]);
+      // Process each record
+      records.forEach((record) => {
+        const normalizedRecord = normalizeRec(record.fields, practitionerFieldMap);
+
+        // Determine the category value using the mapped field key
+        const recordCategory = record.fields[categoryFieldKey];
+        // Separate based on category
+        specialists.push(normalizedRecord);
       });
-}
+      setPractitioners(specialists);
+    })
+    .catch((err) => {
+      console.error('An error occurred while fetching all pages:', err);
+      setPractitioners([]);
+    });
+};
 
 export const fetchFilteredPractitioners = (filters, setPractitioners) => {
   const filterFormula = buildAirtableFilterFormula(filters, practitionerFieldMap);
@@ -234,30 +232,31 @@ export const fetchFilteredPractitioners = (filters, setPractitioners) => {
       view: practitionerViewName,
       fields: practFetchFields,
       sort: [{ field: 'org_name', direction: 'asc' }],
-      filterByFormula: filterFormula
-    }).all() 
-      .then(records => {
-          const categoryFieldKey = practitionerFieldMap['org_registry_category'];
+      filterByFormula: filterFormula,
+    })
+    .all()
+    .then((records) => {
+      const categoryFieldKey = practitionerFieldMap['org_registry_category'];
 
-          // Initialize the separation objects
-          const broadServiceProviders = [];
+      // Initialize the separation objects
+      const broadServiceProviders = [];
 
-          // Process each record
-          records.forEach(record => {
-              const normalizedRecord = normalizeRec(record.fields, practitionerFieldMap);
-              
-              // Determine the category value using the mapped field key
-              const recordCategory = record.fields[categoryFieldKey];
-              // Separate based on category
-              broadServiceProviders.push(normalizedRecord);
-          }); 
-          setPractitioners(broadServiceProviders);
-      })
-      .catch(err => {
-          console.error('An error occurred while fetching all pages:', err);
-          setPractitioners([]);
+      // Process each record
+      records.forEach((record) => {
+        const normalizedRecord = normalizeRec(record.fields, practitionerFieldMap);
+
+        // Determine the category value using the mapped field key
+        const recordCategory = record.fields[categoryFieldKey];
+        // Separate based on category
+        broadServiceProviders.push(normalizedRecord);
       });
-}
+      setPractitioners(broadServiceProviders);
+    })
+    .catch((err) => {
+      console.error('An error occurred while fetching all pages:', err);
+      setPractitioners([]);
+    });
+};
 
 export const fetchOptionsFromAirtable = (setOptions) => {
   base('Options')

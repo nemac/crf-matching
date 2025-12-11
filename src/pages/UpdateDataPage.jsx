@@ -21,11 +21,32 @@ export default function UpdateDataPage() {
     phone: 'xxx-xxx-xxxx',
     email: 'jeff@jeff.jeff',
     website: 'https://jeff.jeff.jeff',
-    organizationName: 'Jeff Corp',
-    city: 'JeffTown',
-    state: 'Jeff Carolina',
-    linkedIN: '',
-    organizationDescription: '',
+    org: 'Jeff Corp',
+    org_city: 'JeffTown',
+    org_state: 'Jeff Carolina',
+    linkedIn: '',
+    info: 'info about jeff jeff jeff corp. Here is a buncha info you can make about jeff corp. Hello. La di da di da di da. Hi hi hi hi hi',
+    example1_title: 'Jeff Work Example 1',
+    example1_description: 'Jeff Work Example 1 Text.',
+    example1_links: '',
+    example1_location: '',
+    example1_engagement: 'This is Jeff Work Example 1 Approach to Stakeholder Engagement',
+    example1_equity: 'This is Jeff Work Example 1 Approach to Equity',
+    example1_lead: 'Sir Jeff of Jeffington',
+    example2_title: 'Jeff Work Example 2',
+    example2_description: 'Jeff Work Example 2 Text.',
+    example2_links: '',
+    example2_location: '',
+    example2_engagement: 'This is Jeff Work Example 2 Approach to Stakeholder Engagement',
+    example2_equity: 'This is Jeff Work Example 2 Approach to Equity',
+    example2_lead: 'Sir Jeffrey',
+    example3_title: 'Dave Work Example',
+    example3_description: 'Dave Work Example Text.',
+    example3_links: '',
+    example3_location: '',
+    example3_engagement: 'This is Dave Work Example Approach to Stakeholder Engagement',
+    example3_equity: 'This is Dave Work Example Approach to Equity',
+    example3_lead: 'King David',
   });
 
   const [isPreview, setIsPreview] = useState(false);
@@ -55,13 +76,38 @@ export default function UpdateDataPage() {
         const result = await validateToken(token);
 
         if (result.success && result.data) {
-          // Prefill form with data from Airtable
           setFormData({
             firstName: result.data.firstName || '',
             lastName: result.data.lastName || '',
             phone: result.data.phone || '',
             email: result.data.email || '',
-            organizationName: result.data.organizationName || '',
+            website: result.data.website || '',
+            org: result.data.org || '',
+            org_city: result.data.org_city || '',
+            org_state: result.data.org_state || '',
+            linkedIn: result.data.linkedIn || '',
+            info: result.data.info || '',
+            example1_title: result.data.example1_title || '',
+            example1_description: result.data.example1_description || '',
+            example1_links: result.data.example1_links || '',
+            example1_location: result.data.example1_location || '',
+            example1_engagement: result.data.example1_engagement || '',
+            example1_equity: result.data.example1_equity || '',
+            example1_lead: result.data.example1_lead || '',
+            example2_title: result.data.example2_title || '',
+            example2_description: result.data.example2_description || '',
+            example2_links: result.data.example2_links || '',
+            example2_location: result.data.example2_location || '',
+            example2_engagement: result.data.example2_engagement || '',
+            example2_equity: result.data.example2_equity || '',
+            example2_lead: result.data.example2_lead || '',
+            example3_title: result.data.example3_title || '',
+            example3_description: result.data.example3_description || '',
+            example3_links: result.data.example3_links || '',
+            example3_location: result.data.example3_location || '',
+            example3_engagement: result.data.example3_engagement || '',
+            example3_equity: result.data.example3_equity || '',
+            example3_lead: result.data.example3_lead || '',
           });
           setTokenValid(true);
         } else {
@@ -214,7 +260,7 @@ export default function UpdateDataPage() {
             mb: 2,
           }}
         >
-          {formData.organizationName}
+          {formData.org}
         </Typography>
 
         {/* Preview/Edit Button */}

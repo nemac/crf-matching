@@ -1,6 +1,125 @@
-import { Box, Typography, Button, Grid, Alert, CircularProgress } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Button,
+  Grid,
+  Alert,
+  CircularProgress,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from '@mui/material';
 import FormTextField from './FormTextField';
+import WorkExampleCard from './WorkExampleCard';
 import PropTypes from 'prop-types';
+import MultiLineFormTextField from './MultiLineFormTextField.jsx';
+
+const validSectors = [
+  'Agriculture and food',
+  'Biodiversity and ecosystems',
+  'Buildings and infrastructure',
+  'Business and economy',
+  'Emergency preparedness',
+  'Energy',
+  'Equity',
+  'Fisheries and aquaculture',
+  'Forestry',
+  'Land use planning',
+  'Policy',
+  'Public health',
+  'Tourism and recreation',
+  'Transportation',
+  'Water',
+];
+
+const validSize = ['Under 10k', '10k-50k', '50k-100k', '100k-200k', '200k-300k', '300k-400k', '400k-500k', 'Over 500k'];
+
+const validHazards = [
+  'Extreme heat',
+  'Changes in seasons',
+  'Drought',
+  'Extreme precipitation',
+  'Sea level rise and coastal erosion',
+  'Flooding',
+  'Hurricanes and other storms',
+  'Severe winter weather',
+  'Shifting species/habitats/ecosystems',
+  'Vector-borne disease',
+  'Water quality',
+  'Air quality',
+  'Wildfire',
+];
+
+const validActivities = [
+  'Vulnerability assessment',
+  'Adaptation planning',
+  'Project implementation',
+  'Communicating and engaging',
+  'Changing policy and law',
+  'Integrating equity',
+  'Financing resilience projects and programs',
+];
+
+const validStates = [
+  'Alabama',
+  'Alaska',
+  'Arizona',
+  'Arkansas',
+  'California',
+  'Colorado',
+  'Connecticut',
+  'Delaware',
+  'District of Columbia (DC)',
+  'Florida',
+  'Georgia',
+  'Hawaii',
+  'Idaho',
+  'Illinois',
+  'Indiana',
+  'Iowa',
+  'Kansas',
+  'Kentucky',
+  'Louisiana',
+  'Maine',
+  'Maryland',
+  'Massachusetts',
+  'Michigan',
+  'Minnesota',
+  'Mississippi',
+  'Missouri',
+  'Montana',
+  'Nebraska',
+  'Nevada',
+  'New Hampshire',
+  'New Jersey',
+  'New Mexico',
+  'New York',
+  'North Carolina',
+  'North Dakota',
+  'Ohio',
+  'Oklahoma',
+  'Oregon',
+  'Pennsylvania',
+  'Rhode Island',
+  'South Carolina',
+  'South Dakota',
+  'Tennessee',
+  'Texas',
+  'Utah',
+  'Vermont',
+  'Virginia',
+  'Washington',
+  'West Virginia',
+  'Wisconsin',
+  'Wyoming',
+  'American Samoa',
+  'Guam',
+  'Northern Mariana Islands',
+  'Puerto Rico',
+  'U.S. Virgin Islands',
+  'Outside the U.S.',
+];
 
 function SectionHeader({ children, sx = {} }) {
   return (
@@ -134,8 +253,8 @@ export default function UpdateData({ formData, handleChange, handleSubmit, submi
         <Box sx={{ mb: 4, maxWidth: '350px' }}>
           <FormTextField
             label="Organization Name"
-            name="organizationName"
-            value={formData.organizationName}
+            name="org"
+            value={formData.org}
             onChange={handleChange}
             fullWidth
           />
@@ -158,8 +277,8 @@ export default function UpdateData({ formData, handleChange, handleSubmit, submi
             <Box mr={2}>
               <FormTextField
                 label="City"
-                name="city"
-                value={formData.city}
+                name="org_city"
+                value={formData.org_city}
                 onChange={handleChange}
                 fullWidth
               />
@@ -173,8 +292,8 @@ export default function UpdateData({ formData, handleChange, handleSubmit, submi
             <Box mr={2}>
               <FormTextField
                 label="State"
-                name="state"
-                value={formData.state}
+                name="org_state"
+                value={formData.org_state}
                 onChange={handleChange}
                 fullWidth
               />
@@ -204,8 +323,8 @@ export default function UpdateData({ formData, handleChange, handleSubmit, submi
         <Box sx={{ mb: 4, maxWidth: '350px' }}>
           <FormTextField
             label="LinkedIN"
-            name="linkedIN"
-            value={formData.linkedIN}
+            name="linkedIn"
+            value={formData.linkedIn}
             onChange={handleChange}
             fullWidth
           />
@@ -213,9 +332,46 @@ export default function UpdateData({ formData, handleChange, handleSubmit, submi
       </Box>
 
       <SectionHeader>Organization Description</SectionHeader>
+      <Box sx={{ ml: 2, mb: 8 }}>
+        <Box sx={{ mb: 4, maxWidth: '100%' }}>
+          <MultiLineFormTextField
+            label="Organization Description"
+            name="info"
+            value={formData.info}
+            onChange={handleChange}
+            placeholder="Showcase your skills and experience to a targeted audience of communities and organizations actively seeking adaptation support. Joining the registry enhances your visibility and connects you with meaningful projects that make a real-world impact."
+          />
+        </Box>
+      </Box>
+
       <SectionHeader>Community Specializations</SectionHeader>
       <SectionHeader>Organization Type</SectionHeader>
+
       <SectionHeader>Organization Size</SectionHeader>
+      <Box sx={{ ml: 2, mb: 8 }}>
+        <Box sx={{ mb: 4, maxWidth: '350px' }}>
+          <FormControl fullWidth>
+            <InputLabel>Organization Size</InputLabel>
+            <Select
+              variant="outlined"
+              name="organizationSize"
+              value={formData.organizationSize || ''}
+              onChange={handleChange}
+              label="Organization Size"
+            >
+              {validSize.map((size) => (
+                <MenuItem
+                  key={size}
+                  value={size}
+                >
+                  {size}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
+      </Box>
+
       <SectionHeader>SBA Category</SectionHeader>
       <SectionHeader>Trainings</SectionHeader>
       <SectionHeader>Years doing adaptation</SectionHeader>
@@ -267,6 +423,86 @@ export default function UpdateData({ formData, handleChange, handleSubmit, submi
           'Save'
         )}
       </Button>
+
+      <Box
+        sx={{
+          width: '100vw',
+          position: 'relative',
+          left: '50%',
+          right: '50%',
+          marginLeft: '-50vw',
+          marginRight: '-50vw',
+          backgroundColor: '#F9F3FF',
+          py: 6,
+          mt: 8,
+        }}
+      >
+        <Box sx={{ maxWidth: '1200px', margin: '0 auto', px: { xs: 4, md: 8 } }}>
+          <SectionHeader sx={{ mb: 4 }}>Examples of Our Work</SectionHeader>
+        </Box>
+
+        <Box
+          sx={{
+            overflowX: 'auto',
+            px: { xs: 4, md: 8 },
+            pb: 2,
+            '&::-webkit-scrollbar': {
+              height: '8px',
+            },
+            '&::-webkit-scrollbar-track': {
+              backgroundColor: 'transparent',
+            },
+            '&::-webkit-scrollbar-thumb': {
+              backgroundColor: '#D1D5DB',
+              borderRadius: '4px',
+            },
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              gap: 3,
+              maxWidth: '1200px',
+              margin: '0 auto',
+              width: 'fit-content',
+            }}
+          >
+            <WorkExampleCard
+              title={formData.example1_title}
+              description={formData.example1_description}
+              links={formData.example1_links}
+              location={formData.example1_location}
+              engagement={formData.example1_engagement}
+              equity={formData.example1_equity}
+              lead={formData.example1_lead}
+              exampleNumber={1}
+              handleChange={handleChange}
+            />
+            <WorkExampleCard
+              title={formData.example2_title}
+              description={formData.example2_description}
+              links={formData.example2_links}
+              location={formData.example2_location}
+              engagement={formData.example2_engagement}
+              equity={formData.example2_equity}
+              lead={formData.example2_lead}
+              exampleNumber={2}
+              handleChange={handleChange}
+            />
+            <WorkExampleCard
+              title={formData.example3_title}
+              description={formData.example3_description}
+              links={formData.example3_links}
+              location={formData.example3_location}
+              engagement={formData.example3_engagement}
+              equity={formData.example3_equity}
+              lead={formData.example3_lead}
+              exampleNumber={3}
+              handleChange={handleChange}
+            />
+          </Box>
+        </Box>
+      </Box>
     </Box>
   );
 }
