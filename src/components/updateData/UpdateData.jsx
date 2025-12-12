@@ -1,19 +1,9 @@
-import {
-  Box,
-  Typography,
-  Button,
-  Grid,
-  Alert,
-  CircularProgress,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-} from '@mui/material';
-import FormTextField from './FormTextField';
+import { Box, Typography, Button, Grid, Alert, CircularProgress } from '@mui/material';
+import FormTextField from '../baseComponents/FormTextField.jsx';
+import FormSelect from '../baseComponents/FormSelect.jsx';
 import WorkExampleCard from './WorkExampleCard';
 import PropTypes from 'prop-types';
-import MultiLineFormTextField from './MultiLineFormTextField.jsx';
+import MultiLineFormTextField from '../baseComponents/MultiLineFormTextField.jsx';
 
 const validSectors = [
   'Agriculture and food',
@@ -119,6 +109,55 @@ const validStates = [
   'Puerto Rico',
   'U.S. Virgin Islands',
   'Outside the U.S.',
+];
+
+const validLanguages = [
+  'English',
+  'Spanish',
+  'Mandarin Chinese',
+  'Hindi',
+  'Arabic',
+  'Bengali',
+  'Portuguese',
+  'Russian',
+  'Japanese',
+  'Punjabi',
+  'German',
+  'Javanese',
+  'Korean',
+  'French',
+  'Telugu',
+  'Marathi',
+  'Turkish',
+  'Tamil',
+  'Vietnamese',
+  'Urdu',
+  'Italian',
+  'Cantonese',
+  'Thai',
+  'Gujarati',
+  'Polish',
+  'Ukrainian',
+  'Malayalam',
+  'Kannada',
+  'Oriya',
+  'Burmese',
+  'Hakka',
+  'Pashto',
+  'Sundanese',
+  'Hausa',
+  'Persian',
+  'Swahili',
+  'Romanian',
+  'Dutch',
+  'Greek',
+  'Czech',
+  'Swedish',
+  'Hungarian',
+  'Tagalog',
+  'Amharic',
+  'Yoruba',
+  'Other',
 ];
 
 function SectionHeader({ children, sx = {} }) {
@@ -350,25 +389,14 @@ export default function UpdateData({ formData, handleChange, handleSubmit, submi
       <SectionHeader>Organization Size</SectionHeader>
       <Box sx={{ ml: 2, mb: 8 }}>
         <Box sx={{ mb: 4, maxWidth: '350px' }}>
-          <FormControl fullWidth>
-            <InputLabel>Organization Size</InputLabel>
-            <Select
-              variant="outlined"
-              name="organizationSize"
-              value={formData.organizationSize || ''}
-              onChange={handleChange}
-              label="Organization Size"
-            >
-              {validSize.map((size) => (
-                <MenuItem
-                  key={size}
-                  value={size}
-                >
-                  {size}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <FormSelect
+            label="Organization Size"
+            name="organizationSize"
+            value={formData.organizationSize}
+            onChange={handleChange}
+            options={validSize}
+            fullWidth
+          />
         </Box>
       </Box>
 
@@ -376,6 +404,16 @@ export default function UpdateData({ formData, handleChange, handleSubmit, submi
       <SectionHeader>Trainings</SectionHeader>
       <SectionHeader>Years doing adaptation</SectionHeader>
       <SectionHeader>Languages</SectionHeader>
+      <Box sx={{ mb: 4, maxWidth: '350px' }}>
+        <FormSelect
+          label="Change Languages"
+          name="languages"
+          value={formData.languageFluencies}
+          onChange={handleChange}
+          options={validLanguages}
+          fullWidth
+        />
+      </Box>
       <SectionHeader>Include on registry</SectionHeader>
       <SectionHeader>Terms and conditions</SectionHeader>
       <SectionHeader>Top Services</SectionHeader>

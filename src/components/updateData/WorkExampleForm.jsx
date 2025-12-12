@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import { useEffect } from 'react';
-import FormTextField from './FormTextField.jsx';
-import MultiLineFormTextField from './MultiLineFormTextField.jsx';
+import FormTextField from '../baseComponents/FormTextField.jsx';
+import MultiLineFormTextField from '../baseComponents/MultiLineFormTextField.jsx';
 const WorkExampleForm = (props) => {
   const { title, description, links, location, engagement, equity, lead, exampleNumber, onClose, handleChange } = props;
 

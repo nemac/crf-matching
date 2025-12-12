@@ -1,7 +1,8 @@
 import { Box, TextField, InputAdornment } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 
-export default function FormTextField({ label, value, onChange, name, type = 'text', fullWidth = false }) {
+export default function FormTextField(props) {
+  const { label, value, onChange, name, type = 'text', fullWidth = false } = props;
   return (
     <Box sx={{ minWidth: fullWidth ? '100%' : '240px', flex: fullWidth ? 1 : 'none' }}>
       <Box
