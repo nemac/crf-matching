@@ -48,19 +48,17 @@ const WorkExampleForm = (props) => {
       </Box>
       <SectionHeader>Project Location</SectionHeader>
       <Box sx={{ ml: 2, mb: 4 }}>TODO: NEED TO ADD INDIVIDUAL FIELDS HERE FOR CITY AND STATE</Box>
-      <SectionHeader>
-        <Box sx={{ ml: 2, mb: 4 }}>
-          <Box>
-            <FormTextField
-              label="Project Lead"
-              name="lead"
-              value={lead}
-              onChange={handleChange}
-              fullWidth
-            />
-          </Box>
+      <Box sx={{ ml: 2, mb: 4 }}>
+        <Box>
+          <FormTextField
+            label="Project Lead"
+            name="lead"
+            value={lead}
+            onChange={handleChange}
+            fullWidth
+          />
         </Box>
-      </SectionHeader>
+      </Box>
       <SectionHeader>Project Description</SectionHeader>
       <Box sx={{ ml: 2, mb: 4 }}>
         <Box>

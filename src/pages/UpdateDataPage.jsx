@@ -56,7 +56,6 @@ export default function UpdateDataPage() {
   const [success, setSuccess] = useState(false);
   const [tokenValid, setTokenValid] = useState(false);
 
-  // Validate token and fetch data on component mount
   useEffect(() => {
     async function fetchData() {
       if (!token) {
@@ -65,7 +64,6 @@ export default function UpdateDataPage() {
         return;
       }
 
-      // Skip validation for dev token
       if (token === 'dev') {
         setTokenValid(true);
         setLoading(false);
@@ -126,6 +124,23 @@ export default function UpdateDataPage() {
 
     fetchData();
   }, [token]);
+
+  useEffect(() => {
+    const handleMessage = (event) => {
+      if (event.origin !== window.location.origin) return;
+
+      if (event.data.type === 'updateWorkExample') {
+        const { name, value } = event.data;
+        setFormData((prev) => ({
+          ...prev,
+          [name]: value,
+        }));
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

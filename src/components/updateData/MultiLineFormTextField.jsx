@@ -2,7 +2,7 @@ import { Box, TextField, InputAdornment } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import PropTypes from 'prop-types';
 
-export default function MultiLineFormTextField({ label, value, onChange, name, rows = 3, placeholder }) {
+export default function MultiLineFormTextField({ label, value, onChange, name, minRows = 3, placeholder }) {
   return (
     <Box sx={{ minWidth: '240px', maxWidth: '856px', width: '100%' }}>
       <Box
@@ -23,7 +23,7 @@ export default function MultiLineFormTextField({ label, value, onChange, name, r
         placeholder={placeholder || label}
         fullWidth
         multiline
-        rows={rows}
+        minRows={minRows}
         InputProps={{
           endAdornment: (
             <InputAdornment
@@ -88,6 +88,6 @@ MultiLineFormTextField.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
-  rows: PropTypes.number,
+  minRows: PropTypes.number,
   placeholder: PropTypes.string,
 };

@@ -1,19 +1,25 @@
-import { Box, Typography, Button, Modal } from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { useState } from 'react';
 import PropTypes from 'prop-types';
-import WorkExampleForm from './WorkExampleForm';
 
 const WorkExampleCard = (props) => {
-  const { title, description, links, location, engagement, equity, lead, exampleNumber, handleChange } = props;
-  const [modalOpen, setModalOpen] = useState(false);
+  const { title, description, links, location, engagement, equity, lead, exampleNumber } = props;
 
-  const handleOpenModal = () => {
-    setModalOpen(true);
-  };
+  const handleOpenInNewTab = () => {
+    const workExampleData = {
+      exampleNumber,
+      title,
+      description,
+      links,
+      location,
+      engagement,
+      equity,
+      lead,
+    };
 
-  const handleCloseModal = () => {
-    setModalOpen(false);
+    sessionStorage.setItem('workExampleData', JSON.stringify(workExampleData));
+
+    window.open('/work-example', '_blank');
   };
 
   return (
@@ -76,7 +82,7 @@ const WorkExampleCard = (props) => {
           }}
         >
           <Button
-            onClick={handleOpenModal}
+            onClick={handleOpenInNewTab}
             endIcon={<ArrowForwardIcon sx={{ color: '#003366' }} />}
             sx={{
               textTransform: 'none',
@@ -95,42 +101,6 @@ const WorkExampleCard = (props) => {
           </Button>
         </Box>
       </Box>
-
-      <Modal
-        open={modalOpen}
-        onClose={handleCloseModal}
-        aria-labelledby="work-example-modal"
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Box
-          sx={{
-            backgroundColor: '#FFFFFF',
-            borderRadius: '8px',
-            padding: 4,
-            maxWidth: '800px',
-            width: '90%',
-            maxHeight: '90vh',
-            overflow: 'auto',
-          }}
-        >
-          <WorkExampleForm
-            exampleNumber={exampleNumber}
-            title={title}
-            description={description}
-            links={links}
-            location={location}
-            engagement={engagement}
-            equity={equity}
-            lead={lead}
-            handleChange={handleChange}
-            onClose={handleCloseModal}
-          />
-        </Box>
-      </Modal>
     </>
   );
 };
