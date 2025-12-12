@@ -13,6 +13,7 @@ import HowToApplyPage from './pages/HowToApplyPage.jsx';
 import Registry from './pages/Registry.jsx';
 import RequestUpdatePage from './pages/RequestUpdatePage.jsx';
 import UpdateDataPage from './pages/UpdateDataPage.jsx';
+import WorkExamplePage from './pages/WorkExamplePage.jsx';
 import { DevSupport } from '@react-buddy/ide-toolbox';
 import { ComponentPreviews, useInitial } from './dev/index.js';
 
