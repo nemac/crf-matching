@@ -1,9 +1,22 @@
-import { Box, Grid, Typography } from '@mui/material';
-import { useState } from 'react';
+import { Box, Typography } from '@mui/material';
+import { useEffect } from 'react';
 import FormTextField from './FormTextField.jsx';
 import MultiLineFormTextField from './MultiLineFormTextField.jsx';
 const WorkExampleForm = (props) => {
   const { title, description, links, location, engagement, equity, lead, exampleNumber, onClose, handleChange } = props;
+
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      e.preventDefault();
+      e.returnValue = '';
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
 
   function SectionHeader({ children, sx = {} }) {
     return (
@@ -47,7 +60,16 @@ const WorkExampleForm = (props) => {
         </Box>
       </Box>
       <SectionHeader>Project Location</SectionHeader>
-      <Box sx={{ ml: 2, mb: 4 }}>TODO: NEED TO ADD INDIVIDUAL FIELDS HERE FOR CITY AND STATE</Box>
+      <Box sx={{ ml: 2, mb: 4 }}>
+        <FormTextField
+          label="Project Location"
+          name="location"
+          value={location}
+          onChange={handleChange}
+          fullWidth
+        />
+      </Box>
+      <SectionHeader>Project Lead</SectionHeader>
       <Box sx={{ ml: 2, mb: 4 }}>
         <Box>
           <FormTextField
