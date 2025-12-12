@@ -53,6 +53,10 @@ const router = createBrowserRouter([
     path: '/update-data',
     element: <UpdateDataPage />,
   },
+  {
+    path: '/work-example',
+    element: <WorkExamplePage />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
