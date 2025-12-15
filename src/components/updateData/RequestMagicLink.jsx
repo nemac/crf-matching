@@ -56,21 +56,26 @@ export default function RequestMagicLink() {
           lineHeight: 1.6,
         }}
       >
-        Enter your organization contact email to receive a secure link to update your information.
-        The link will be valid for 1 hour.
+        Enter your organization contact email to receive a secure link to update your information. The link will be
+        valid for 24 hours.
       </Typography>
 
       {success && (
-        <Alert severity="success" sx={{ mb: 3 }}>
+        <Alert
+          severity="success"
+          sx={{ mb: 3 }}
+        >
           <strong>Check your email!</strong>
           <br />
-          We've sent a secure link to <strong>{email}</strong>.
-          The link will expire in 1 hour.
+          We've sent a secure link to <strong>{email}</strong>. The link will expire in 24 hours.
         </Alert>
       )}
 
       {error && (
-        <Alert severity="error" sx={{ mb: 3 }}>
+        <Alert
+          severity="error"
+          sx={{ mb: 3 }}
+        >
           {error}
         </Alert>
       )}
@@ -148,7 +153,10 @@ export default function RequestMagicLink() {
         >
           {loading ? (
             <>
-              <CircularProgress size={20} sx={{ mr: 1, color: 'white' }} />
+              <CircularProgress
+                size={20}
+                sx={{ mr: 1, color: 'white' }}
+              />
               Sending...
             </>
           ) : (
@@ -166,17 +174,23 @@ export default function RequestMagicLink() {
           borderRadius: '4px',
         }}
       >
-        <Typography variant="body2" sx={{ fontWeight: 500, mb: 1 }}>
+        <Typography
+          variant="body2"
+          sx={{ fontWeight: 500, mb: 1 }}
+        >
           📧 What happens next?
         </Typography>
-        <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.6 }}>
+        <Typography
+          variant="body2"
+          sx={{ color: 'text.secondary', lineHeight: 1.6 }}
+        >
           1. You'll receive an email with a secure link
           <br />
           2. Click the link to access your organization's information
           <br />
           3. Update your details and submit
           <br />
-          4. The link expires after 1 hour for security
+          4. The link expires after 24 hours for security
         </Typography>
       </Box>
     </Box>
