@@ -34,7 +34,7 @@ export default function UpdateDataPage() {
     linkedIn: 'N/A',
     specificTypesOfCommunities: '',
     organizationType: 'Consultant agency',
-    info: 'info about jeff jeff jeff corp. Here is a buncha info you can make about jeff corp. Hello. La di da di da di da. Hi hi hi hi hi',
+    info: 'info about jeff jeff jeff corp. Here is some info you can make about jeff corp. Hello. La di da di da di da. Hi hi hi hi hi',
     communitySize: ['Under 10k'],
     organizationSize: 'Self-employed',
     sbaCategory: 'None of the above',
