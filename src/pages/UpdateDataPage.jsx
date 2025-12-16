@@ -1,5 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Container, Typography, Box, CircularProgress, Alert, Button } from '@mui/material';
+import {
+  Container,
+  Typography,
+  Box,
+  CircularProgress,
+  Alert,
+  Button,
+} from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -22,29 +29,63 @@ export default function UpdateDataPage() {
     email: 'jeff@jeff.jeff',
     website: 'https://jeff.jeff.jeff',
     org: 'Jeff Corp',
-    org_city: 'JeffTown',
-    org_state: 'Jeff Carolina',
-    linkedIn: '',
+    city: 'Asheville',
+    state: 'North Carolina',
+    linkedIn: 'N/A',
+    specificTypesOfCommunities: '',
+    organizationType: 'Consultant agency',
     info: 'info about jeff jeff jeff corp. Here is a buncha info you can make about jeff corp. Hello. La di da di da di da. Hi hi hi hi hi',
+    communitySize: ['Under 10k'],
+    organizationSize: 'Self-employed',
+    sbaCategory: 'None of the above',
+    adaptationYears: 15,
+    languageFluencies: ['Spanish', 'French'],
+    includeOnRegistry: 'Yes',
+    termsAndConditions: 'No',
+    topServicesProvided: [
+      'Adaptation planning',
+      'Changing policy and law',
+      'Communicating and engaging',
+    ],
+    activities: [
+      'Adaptation planning',
+      'Changing policy and law',
+      'Communicating and engaging',
+      'Financing resilience projects and programs',
+      'Integrating Equity',
+      'Project implementation',
+      'Vulnerability. assessment',
+    ],
+    hazards: ['Extreme heat', 'Changes in seasons', 'Drought'],
+    sectors: [
+      'Agriculture and food',
+      'Biodiversity and ecosystems',
+      'Buildings and infrastructure',
+      'Business and economy',
+    ],
+    whereOrganizationWorks: ['Illinois', 'New York', 'North Carolina'],
     example1_title: 'Jeff Work Example 1',
     example1_description: 'Jeff Work Example 1 Text.',
     example1_links: '',
     example1_location: 'City and State Example 1',
-    example1_engagement: 'This is Jeff Work Example 1 Approach to Stakeholder Engagement',
+    example1_engagement:
+      'This is Jeff Work Example 1 Approach to Stakeholder Engagement',
     example1_equity: 'This is Jeff Work Example 1 Approach to Equity',
     example1_lead: 'Sir Jeff of Jeffington',
     example2_title: 'Jeff Work Example 2',
     example2_description: 'Jeff Work Example 2 Text.',
     example2_links: '',
     example2_location: 'City and State Example 2',
-    example2_engagement: 'This is Jeff Work Example 2 Approach to Stakeholder Engagement',
+    example2_engagement:
+      'This is Jeff Work Example 2 Approach to Stakeholder Engagement',
     example2_equity: 'This is Jeff Work Example 2 Approach to Equity',
     example2_lead: 'Sir Jeffrey',
     example3_title: 'Dave Work Example',
     example3_description: 'Dave Work Example Text.',
     example3_links: '',
     example3_location: 'City and State Example 3',
-    example3_engagement: 'This is Dave Work Example Approach to Stakeholder Engagement',
+    example3_engagement:
+      'This is Dave Work Example Approach to Stakeholder Engagement',
     example3_equity: 'This is Dave Work Example Approach to Equity',
     example3_lead: 'King David',
   });
@@ -126,12 +167,12 @@ export default function UpdateDataPage() {
   }, [token]);
 
   useEffect(() => {
-    const handleMessage = (event) => {
+    const handleMessage = event => {
       if (event.origin !== window.location.origin) return;
 
       if (event.data.type === 'updateWorkExample') {
         const { name, value } = event.data;
-        setFormData((prev) => ({
+        setFormData(prev => ({
           ...prev,
           [name]: value,
         }));
@@ -142,15 +183,15 @@ export default function UpdateDataPage() {
     return () => window.removeEventListener('message', handleMessage);
   }, []);
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
+    setFormData(prev => ({
       ...prev,
       [name]: value,
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     setError('');
     setSuccess(false);
@@ -198,9 +239,19 @@ export default function UpdateDataPage() {
             px: { xs: 4, sm: 4, md: 4, lg: 3 },
           }}
         >
-          <Box sx={{ maxWidth: '1200px', display: 'flex', flexDirection: 'column', alignItems: 'center', py: 8 }}>
+          <Box
+            sx={{
+              maxWidth: '1200px',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              py: 8,
+            }}
+          >
             <CircularProgress size={50} />
-            <Typography sx={{ mt: 2, color: 'text.secondary' }}>Validating your link...</Typography>
+            <Typography sx={{ mt: 2, color: 'text.secondary' }}>
+              Validating your link...
+            </Typography>
           </Box>
         </Container>
       </ThemeProvider>
@@ -222,13 +273,11 @@ export default function UpdateDataPage() {
           }}
         >
           <Box sx={{ maxWidth: '600px' }}>
-            <Alert
-              severity="error"
-              sx={{ mb: 3 }}
-            >
+            <Alert severity="error" sx={{ mb: 3 }}>
               <strong>Invalid or Expired Link</strong>
               <br />
-              {error || 'This link is no longer valid. Please request a new magic link.'}
+              {error ||
+                'This link is no longer valid. Please request a new magic link.'}
             </Alert>
             <Button
               variant="contained"

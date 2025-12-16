@@ -1,9 +1,28 @@
-import { Box, FormControl, Select, MenuItem, InputAdornment } from '@mui/material';
+import {
+  Box,
+  FormControl,
+  Select,
+  MenuItem,
+  InputAdornment,
+} from '@mui/material';
 import PropTypes from 'prop-types';
 
-export default function FormSelect({ label, value, onChange, name, options, fullWidth = false }) {
+export default function FormSelect({
+  label,
+  value,
+  onChange,
+  name,
+  options,
+  fullWidth = false,
+  multiple = false,
+}) {
   return (
-    <Box sx={{ minWidth: fullWidth ? '100%' : '240px', flex: fullWidth ? 1 : 'none' }}>
+    <Box
+      sx={{
+        minWidth: fullWidth ? '100%' : '240px',
+        flex: fullWidth ? 1 : 'none',
+      }}
+    >
       <Box
         component="label"
         sx={{
@@ -19,9 +38,16 @@ export default function FormSelect({ label, value, onChange, name, options, full
         <Select
           variant="outlined"
           name={name}
-          value={value || ''}
+          value={multiple ? value || [] : value || ''}
           onChange={onChange}
           displayEmpty
+          multiple={multiple}
+          renderValue={
+            multiple
+              ? selected =>
+                  selected.length === 0 ? 'Add selection' : 'Add selection'
+              : undefined
+          }
           sx={{
             bgcolor: '#F9FAFB',
             borderRadius: '4px',
@@ -46,11 +72,8 @@ export default function FormSelect({ label, value, onChange, name, options, full
             gap: '12px',
           }}
         >
-          {options.map((option) => (
-            <MenuItem
-              key={option}
-              value={option}
-            >
+          {options.map(option => (
+            <MenuItem key={option} value={option}>
               {option}
             </MenuItem>
           ))}
@@ -62,9 +85,13 @@ export default function FormSelect({ label, value, onChange, name, options, full
 
 FormSelect.propTypes = {
   label: PropTypes.string.isRequired,
-  value: PropTypes.string,
+  value: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
   onChange: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
   fullWidth: PropTypes.bool,
+  multiple: PropTypes.bool,
 };

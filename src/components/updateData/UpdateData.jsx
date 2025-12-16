@@ -1,9 +1,30 @@
-import { Box, Typography, Button, Grid, Alert, CircularProgress } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Button,
+  Grid,
+  Alert,
+  CircularProgress,
+  Chip,
+  IconButton,
+} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import FormTextField from '../baseComponents/FormTextField.jsx';
 import FormSelect from '../baseComponents/FormSelect.jsx';
+import ToggleSwitch from '../baseComponents/ToggleSwitch.jsx';
 import WorkExampleCard from './WorkExampleCard';
 import PropTypes from 'prop-types';
 import MultiLineFormTextField from '../baseComponents/MultiLineFormTextField.jsx';
+
+const validServices = [
+  'Adaptation planning',
+  'Changing policy and law',
+  'Communicating and engaging',
+  'Financing resilience projects and programs',
+  'Integrating Equity',
+  'Project implementation',
+  'Vulnerability. assessment',
+];
 
 const validSectors = [
   'Agriculture and food',
@@ -23,7 +44,26 @@ const validSectors = [
   'Water',
 ];
 
-const validSize = ['Under 10k', '10k-50k', '50k-100k', '100k-200k', '200k-300k', '300k-400k', '400k-500k', 'Over 500k'];
+const validCommunitySize = [
+  'Under 10k',
+  '10k-50k',
+  '50k-100k',
+  '100k-200k',
+  '200k-300k',
+  '300k-400k',
+  '400k-500k',
+  'Over 500k',
+];
+
+const validOrganizationSize = [
+  'Self-employed',
+  '1-10 employees',
+  '11-50 employees',
+  '51-200 employees',
+  '201-500 employees',
+  '501-1,000 employees',
+  '1,001+ employees',
+];
 
 const validHazards = [
   'Extreme heat',
@@ -39,16 +79,6 @@ const validHazards = [
   'Water quality',
   'Air quality',
   'Wildfire',
-];
-
-const validActivities = [
-  'Vulnerability assessment',
-  'Adaptation planning',
-  'Project implementation',
-  'Communicating and engaging',
-  'Changing policy and law',
-  'Integrating equity',
-  'Financing resilience projects and programs',
 ];
 
 const validStates = [
@@ -111,8 +141,24 @@ const validStates = [
   'Outside the U.S.',
 ];
 
+const validOrganizationTypes = [
+  'Independent contractor or sole propietor',
+  'Non-profit organization',
+  'Consultant agency',
+  'Local or regional government(s)',
+  'Academic institution or associated program',
+  'Other',
+];
+
+const validSBATypes = [
+  'Women-owned small business',
+  'Small business in a HUBZone',
+  'Small disadvantaged business',
+  "I don't know",
+  'None of the above',
+];
+
 const validLanguages = [
-  'English',
   'Spanish',
   'Mandarin Chinese',
   'Hindi',
@@ -158,6 +204,7 @@ const validLanguages = [
   'Amharic',
   'Yoruba',
   'Other',
+  'No other languages',
 ];
 
 function SectionHeader({ children, sx = {} }) {
@@ -180,35 +227,54 @@ SectionHeader.propTypes = {
   sx: PropTypes.object,
 };
 
-export default function UpdateData({ formData, handleChange, handleSubmit, submitting, error, success, isDevMode }) {
+export default function UpdateData({
+  formData,
+  handleChange,
+  handleSubmit,
+  submitting,
+  error,
+  success,
+  isDevMode,
+}) {
+  const handleClearAll = name => {
+    handleChange({
+      target: {
+        name,
+        value: [],
+      },
+    });
+  };
+
+  const handleRemoveItem = (fieldName, itemToRemove) => {
+    const currentArray = formData[fieldName] || [];
+    const updatedArray = currentArray.filter(item => item !== itemToRemove);
+    handleChange({
+      target: {
+        name: fieldName,
+        value: updatedArray,
+      },
+    });
+  };
+
   return (
     <Box sx={{ maxWidth: '1200px' }}>
       {/* Dev Mode Message */}
       {isDevMode && (
-        <Alert
-          severity="warning"
-          sx={{ mb: 3 }}
-        >
+        <Alert severity="warning" sx={{ mb: 3 }}>
           Save is disabled on dev
         </Alert>
       )}
 
       {/* Success Message */}
       {success && (
-        <Alert
-          severity="success"
-          sx={{ mb: 3 }}
-        >
+        <Alert severity="success" sx={{ mb: 3 }}>
           <strong>Success!</strong> Your information has been updated.
         </Alert>
       )}
 
       {/* Error Message */}
       {error && (
-        <Alert
-          severity="error"
-          sx={{ mb: 3 }}
-        >
+        <Alert severity="error" sx={{ mb: 3 }}>
           {error}
         </Alert>
       )}
@@ -216,16 +282,8 @@ export default function UpdateData({ formData, handleChange, handleSubmit, submi
       <SectionHeader>Organization Contact</SectionHeader>
 
       <Box sx={{ ml: 2, mb: 8 }}>
-        <Grid
-          container
-          spacing={2}
-          sx={{ mb: 2 }}
-        >
-          <Grid
-            item
-            xs={12}
-            md={6}
-          >
+        <Grid container spacing={2} sx={{ mb: 2 }}>
+          <Grid item xs={12} md={6}>
             <Box>
               <FormTextField
                 label="First Name"
@@ -236,11 +294,7 @@ export default function UpdateData({ formData, handleChange, handleSubmit, submi
               />
             </Box>
           </Grid>
-          <Grid
-            item
-            xs={12}
-            md={6}
-          >
+          <Grid item xs={12} md={6}>
             <Box>
               <FormTextField
                 label="Last Name"
@@ -303,46 +357,31 @@ export default function UpdateData({ formData, handleChange, handleSubmit, submi
       <SectionHeader>Organization Location</SectionHeader>
 
       <Box sx={{ ml: 2, mb: 8 }}>
-        <Grid
-          container
-          spacing={2}
-          sx={{ mb: 2 }}
-        >
-          <Grid
-            item
-            xs={12}
-            md={4}
-          >
+        <Grid container spacing={2} sx={{ mb: 2 }}>
+          <Grid item xs={12} md={4}>
             <Box mr={2}>
               <FormTextField
                 label="City"
                 name="org_city"
-                value={formData.org_city}
+                value={formData.city}
                 onChange={handleChange}
                 fullWidth
               />
             </Box>
           </Grid>
-          <Grid
-            item
-            xs={12}
-            md={4}
-          >
+          <Grid item xs={12} md={4}>
             <Box mr={2}>
-              <FormTextField
+              <FormSelect
                 label="State"
-                name="org_state"
-                value={formData.org_state}
+                name="state"
+                value={formData.state}
                 onChange={handleChange}
+                options={validStates}
                 fullWidth
               />
             </Box>
           </Grid>
-          <Grid
-            item
-            xs={12}
-            md={4}
-          >
+          <Grid item xs={12} md={4}>
             <Box mr={2}>
               <FormTextField
                 label="Country"
@@ -370,6 +409,19 @@ export default function UpdateData({ formData, handleChange, handleSubmit, submi
         </Box>
       </Box>
 
+      <SectionHeader>Community Specializations</SectionHeader>
+      <Box sx={{ ml: 2, mb: 8 }}>
+        <Box sx={{ mb: 4, maxWidth: '350px' }}>
+          <FormTextField
+            label="Community Specializations"
+            name="specificTypesOfCommunities"
+            value={formData.specificTypesOfCommunities}
+            onChange={handleChange}
+            fullWidth
+          />
+        </Box>
+      </Box>
+
       <SectionHeader>Organization Description</SectionHeader>
       <Box sx={{ ml: 2, mb: 8 }}>
         <Box sx={{ mb: 4, maxWidth: '100%' }}>
@@ -383,8 +435,19 @@ export default function UpdateData({ formData, handleChange, handleSubmit, submi
         </Box>
       </Box>
 
-      <SectionHeader>Community Specializations</SectionHeader>
       <SectionHeader>Organization Type</SectionHeader>
+      <Box sx={{ ml: 2, mb: 8 }}>
+        <Box sx={{ mb: 4, maxWidth: '350px' }}>
+          <FormSelect
+            label="Organization Type"
+            name="organizationType"
+            value={formData.organizationType}
+            onChange={handleChange}
+            options={validOrganizationTypes}
+            fullWidth
+          />
+        </Box>
+      </Box>
 
       <SectionHeader>Organization Size</SectionHeader>
       <Box sx={{ ml: 2, mb: 8 }}>
@@ -394,34 +457,598 @@ export default function UpdateData({ formData, handleChange, handleSubmit, submi
             name="organizationSize"
             value={formData.organizationSize}
             onChange={handleChange}
-            options={validSize}
+            options={validOrganizationSize}
             fullWidth
           />
         </Box>
       </Box>
 
       <SectionHeader>SBA Category</SectionHeader>
-      <SectionHeader>Trainings</SectionHeader>
-      <SectionHeader>Years doing adaptation</SectionHeader>
-      <SectionHeader>Languages</SectionHeader>
-      <Box sx={{ mb: 4, maxWidth: '350px' }}>
-        <FormSelect
-          label="Change Languages"
-          name="languages"
-          value={formData.languageFluencies}
-          onChange={handleChange}
-          options={validLanguages}
-          fullWidth
-        />
+      <Box sx={{ ml: 2, mb: 8 }}>
+        <Box sx={{ mb: 4, maxWidth: '350px' }}>
+          <FormSelect
+            label="SBA Category"
+            name="sbaCategory"
+            value={formData.sbaCategory}
+            onChange={handleChange}
+            options={validSBATypes}
+            fullWidth
+          />
+        </Box>
       </Box>
+
+      {/*TODO: Need to implement this*/}
+      {/*<SectionHeader>Trainings</SectionHeader>*/}
+
+      <SectionHeader>Years doing adaptation</SectionHeader>
+      <Box sx={{ ml: 2, mb: 8 }}>
+        <Box sx={{ mb: 4, maxWidth: '350px' }}>
+          <FormTextField
+            label="Years doing adaptation"
+            name="adaptationYears"
+            value={formData.adaptationYears}
+            onChange={handleChange}
+            fullWidth
+          />
+        </Box>
+      </Box>
+
+      <SectionHeader>Languages</SectionHeader>
+      <Box sx={{ ml: 2, mb: 8 }}>
+        <Box sx={{ mb: 2, maxWidth: '350px' }}>
+          <FormSelect
+            label="Change Languages"
+            name="languageFluencies"
+            value={formData.languageFluencies}
+            onChange={handleChange}
+            options={validLanguages}
+            fullWidth
+            multiple
+          />
+        </Box>
+
+        {formData.languageFluencies &&
+          formData.languageFluencies.length > 0 && (
+            <>
+              <Button
+                onClick={() => handleClearAll('languageFluencies')}
+                sx={{
+                  fontFamily: 'Roboto',
+                  fontWeight: 400,
+                  fontSize: '14px',
+                  lineHeight: '100%',
+                  textTransform: 'none',
+                  color: '#0066CC',
+                  mb: 1,
+                  px: 2,
+                  py: 0.5,
+                }}
+              >
+                Clear All
+              </Button>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                {formData.languageFluencies.map(language => (
+                  <Chip
+                    key={language}
+                    label={language}
+                    onDelete={() =>
+                      handleRemoveItem('languageFluencies', language)
+                    }
+                    deleteIcon={
+                      <IconButton
+                        size="small"
+                        sx={{
+                          fontFamily: 'Roboto',
+                          fontWeight: 700,
+                          fontSize: '10px',
+                          lineHeight: '100%',
+                          bgcolor: '#F9FAFB',
+                          '&:hover': {
+                            bgcolor: '#E5E7EB',
+                          },
+                        }}
+                      >
+                        <CloseIcon sx={{ fontSize: '10px' }} />
+                      </IconButton>
+                    }
+                    sx={{
+                      height: '33px',
+                      borderRadius: '9999px',
+                      border: '1px solid #0066CC',
+                      bgcolor: '#F9FAFB',
+                    }}
+                  />
+                ))}
+              </Box>
+            </>
+          )}
+      </Box>
+
       <SectionHeader>Include on registry</SectionHeader>
+      <Box sx={{ ml: 2, mb: 8 }}>
+        <Box sx={{ mb: 4, maxWidth: '350px' }}>
+          <ToggleSwitch
+            label=""
+            name="includeOnRegistry"
+            value={formData.includeOnRegistry}
+            onChange={handleChange}
+          />
+        </Box>
+      </Box>
+
       <SectionHeader>Terms and conditions</SectionHeader>
+      <Box sx={{ ml: 2, mb: 8 }}>
+        <Box sx={{ mb: 4, maxWidth: '350px' }}>
+          <ToggleSwitch
+            label=""
+            name="termsAndConditions"
+            value={formData.termsAndConditions}
+            onChange={handleChange}
+          />
+        </Box>
+      </Box>
+
       <SectionHeader>Top Services</SectionHeader>
+      <Box sx={{ ml: 2, mb: 8 }}>
+        <Box sx={{ mb: 2, maxWidth: '350px' }}>
+          <FormSelect
+            label=""
+            name="topServicesProvided"
+            value={formData.topServicesProvided}
+            onChange={handleChange}
+            options={validServices}
+            fullWidth
+            multiple
+          />
+        </Box>
+
+        {formData.topServicesProvided &&
+          formData.topServicesProvided.length > 0 && (
+            <>
+              <Button
+                onClick={() => handleClearAll('topServicesProvided')}
+                sx={{
+                  fontFamily: 'Roboto',
+                  fontWeight: 400,
+                  fontSize: '14px',
+                  lineHeight: '100%',
+                  textTransform: 'none',
+                  color: '#0066CC',
+                  mb: 1,
+                  px: 2,
+                  py: 0.5,
+                }}
+              >
+                Clear All
+              </Button>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                {formData.topServicesProvided.map(service => (
+                  <Chip
+                    key={service}
+                    label={service}
+                    onDelete={() =>
+                      handleRemoveItem('topServicesProvided', service)
+                    }
+                    deleteIcon={
+                      <IconButton
+                        size="small"
+                        sx={{
+                          fontFamily: 'Roboto',
+                          fontWeight: 700,
+                          fontSize: '10px',
+                          lineHeight: '100%',
+                          bgcolor: '#F9FAFB',
+                          '&:hover': {
+                            bgcolor: '#E5E7EB',
+                          },
+                        }}
+                      >
+                        <CloseIcon sx={{ fontSize: '10px' }} />
+                      </IconButton>
+                    }
+                    sx={{
+                      height: '33px',
+                      borderRadius: '9999px',
+                      border: '1px solid #0066CC',
+                      bgcolor: '#F9FAFB',
+                    }}
+                  />
+                ))}
+              </Box>
+            </>
+          )}
+      </Box>
+
       <SectionHeader>Services Provided</SectionHeader>
+      <Box sx={{ ml: 2, mb: 8 }}>
+        <Box sx={{ mb: 2, maxWidth: '350px' }}>
+          <FormSelect
+            label=""
+            name="activities"
+            value={formData.activities}
+            onChange={handleChange}
+            options={validServices}
+            fullWidth
+            multiple
+          />
+        </Box>
+
+        {formData.activities && formData.activities.length > 0 && (
+          <>
+            <Button
+              onClick={() => handleClearAll('activities')}
+              sx={{
+                fontFamily: 'Roboto',
+                fontWeight: 400,
+                fontSize: '14px',
+                lineHeight: '100%',
+                textTransform: 'none',
+                color: '#0066CC',
+                mb: 1,
+                px: 2,
+                py: 0.5,
+              }}
+            >
+              Clear All
+            </Button>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+              {formData.activities.map(service => (
+                <Chip
+                  key={service}
+                  label={service}
+                  onDelete={() => handleRemoveItem('activities', service)}
+                  deleteIcon={
+                    <IconButton
+                      size="small"
+                      sx={{
+                        fontFamily: 'Roboto',
+                        fontWeight: 700,
+                        fontSize: '10px',
+                        lineHeight: '100%',
+                        bgcolor: '#F9FAFB',
+                        '&:hover': {
+                          bgcolor: '#E5E7EB',
+                        },
+                      }}
+                    >
+                      <CloseIcon sx={{ fontSize: '10px' }} />
+                    </IconButton>
+                  }
+                  sx={{
+                    height: '33px',
+                    borderRadius: '9999px',
+                    border: '1px solid #0066CC',
+                    bgcolor: '#F9FAFB',
+                  }}
+                />
+              ))}
+            </Box>
+          </>
+        )}
+      </Box>
+
       <SectionHeader>Hazard Expertise</SectionHeader>
+      <Box sx={{ ml: 2, mb: 8 }}>
+        <Box sx={{ mb: 2, maxWidth: '350px' }}>
+          <FormSelect
+            label=""
+            name="hazards"
+            value={formData.hazards}
+            onChange={handleChange}
+            options={validHazards}
+            fullWidth
+            multiple
+          />
+        </Box>
+
+        {formData.hazards && formData.hazards.length > 0 && (
+          <>
+            <Button
+              onClick={() => handleClearAll('hazards')}
+              sx={{
+                fontFamily: 'Roboto',
+                fontWeight: 400,
+                fontSize: '14px',
+                lineHeight: '100%',
+                textTransform: 'none',
+                color: '#0066CC',
+                mb: 1,
+                px: 2,
+                py: 0.5,
+              }}
+            >
+              Clear All
+            </Button>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+              {formData.hazards.map(hazard => (
+                <Chip
+                  key={hazard}
+                  label={hazard}
+                  onDelete={() => handleRemoveItem('hazards', hazard)}
+                  deleteIcon={
+                    <IconButton
+                      size="small"
+                      sx={{
+                        fontFamily: 'Roboto',
+                        fontWeight: 700,
+                        fontSize: '10px',
+                        lineHeight: '100%',
+                        bgcolor: '#F9FAFB',
+                        '&:hover': {
+                          bgcolor: '#E5E7EB',
+                        },
+                      }}
+                    >
+                      <CloseIcon sx={{ fontSize: '10px' }} />
+                    </IconButton>
+                  }
+                  sx={{
+                    height: '33px',
+                    borderRadius: '9999px',
+                    border: '1px solid #0066CC',
+                    bgcolor: '#F9FAFB',
+                  }}
+                />
+              ))}
+            </Box>
+          </>
+        )}
+      </Box>
+
       <SectionHeader>Sector Expertise</SectionHeader>
-      <SectionHeader>Size of Communities Your Organization Works With</SectionHeader>
+      <Box sx={{ ml: 2, mb: 8 }}>
+        <Box sx={{ mb: 2, maxWidth: '350px' }}>
+          <FormSelect
+            label=""
+            name="sectors"
+            value={formData.sectors}
+            onChange={handleChange}
+            options={validSectors}
+            fullWidth
+            multiple
+          />
+        </Box>
+
+        {formData.sectors && formData.sectors.length > 0 && (
+          <>
+            <Button
+              onClick={() => handleClearAll('sectors')}
+              sx={{
+                fontFamily: 'Roboto',
+                fontWeight: 400,
+                fontSize: '14px',
+                lineHeight: '100%',
+                textTransform: 'none',
+                color: '#0066CC',
+                mb: 1,
+                px: 2,
+                py: 0.5,
+              }}
+            >
+              Clear All
+            </Button>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+              {formData.sectors.map(sector => (
+                <Chip
+                  key={sector}
+                  label={sector}
+                  onDelete={() => handleRemoveItem('sectors', sector)}
+                  deleteIcon={
+                    <IconButton
+                      size="small"
+                      sx={{
+                        fontFamily: 'Roboto',
+                        fontWeight: 700,
+                        fontSize: '10px',
+                        lineHeight: '100%',
+                        bgcolor: '#F9FAFB',
+                        '&:hover': {
+                          bgcolor: '#E5E7EB',
+                        },
+                      }}
+                    >
+                      <CloseIcon sx={{ fontSize: '10px' }} />
+                    </IconButton>
+                  }
+                  sx={{
+                    height: '33px',
+                    borderRadius: '9999px',
+                    border: '1px solid #0066CC',
+                    bgcolor: '#F9FAFB',
+                  }}
+                />
+              ))}
+            </Box>
+          </>
+        )}
+      </Box>
+
+      <SectionHeader>
+        Size of Communities Your Organization Works With
+      </SectionHeader>
+      <Box sx={{ ml: 2, mb: 8 }}>
+        <Box sx={{ mb: 2, maxWidth: '350px' }}>
+          <FormSelect
+            label=""
+            name="communitySize"
+            value={formData.communitySize}
+            onChange={handleChange}
+            options={validCommunitySize}
+            fullWidth
+            multiple
+          />
+        </Box>
+
+        <Box sx={{ display: 'flex', gap: 1, mb: 1 }}>
+          <Button
+            onClick={() => handleClearAll('communitySize')}
+            sx={{
+              fontFamily: 'Roboto',
+              fontWeight: 400,
+              fontSize: '14px',
+              lineHeight: '100%',
+              textTransform: 'none',
+              color: '#0066CC',
+              px: 2,
+              py: 0.5,
+            }}
+          >
+            Clear All
+          </Button>
+          <Button
+            onClick={() =>
+              handleChange({
+                target: {
+                  name: 'communitySize',
+                  value: validCommunitySize,
+                },
+              })
+            }
+            sx={{
+              fontFamily: 'Roboto',
+              fontWeight: 400,
+              fontSize: '14px',
+              lineHeight: '100%',
+              textTransform: 'none',
+              color: '#0066CC',
+              px: 2,
+              py: 0.5,
+            }}
+          >
+            Add All
+          </Button>
+        </Box>
+        {formData.communitySize && formData.communitySize.length > 0 && (
+          <>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+              {formData.communitySize.map(size => (
+                <Chip
+                  key={size}
+                  label={size}
+                  onDelete={() => handleRemoveItem('communitySize', size)}
+                  deleteIcon={
+                    <IconButton
+                      size="small"
+                      sx={{
+                        fontFamily: 'Roboto',
+                        fontWeight: 700,
+                        fontSize: '10px',
+                        lineHeight: '100%',
+                        bgcolor: '#F9FAFB',
+                        '&:hover': {
+                          bgcolor: '#E5E7EB',
+                        },
+                      }}
+                    >
+                      <CloseIcon sx={{ fontSize: '10px' }} />
+                    </IconButton>
+                  }
+                  sx={{
+                    height: '33px',
+                    borderRadius: '9999px',
+                    border: '1px solid #0066CC',
+                    bgcolor: '#F9FAFB',
+                  }}
+                />
+              ))}
+            </Box>
+          </>
+        )}
+      </Box>
+
       <SectionHeader>Where Your Organization Works</SectionHeader>
+      <Box sx={{ ml: 2, mb: 8 }}>
+        <Box sx={{ mb: 2, maxWidth: '350px' }}>
+          <FormSelect
+            label=""
+            name="whereOrganizationWorks"
+            value={formData.whereOrganizationWorks}
+            onChange={handleChange}
+            options={validStates}
+            fullWidth
+            multiple
+          />
+        </Box>
+
+        <Box sx={{ display: 'flex', gap: 1, mb: 1 }}>
+          <Button
+            onClick={() => handleClearAll('whereOrganizationWorks')}
+            sx={{
+              fontFamily: 'Roboto',
+              fontWeight: 400,
+              fontSize: '14px',
+              lineHeight: '100%',
+              textTransform: 'none',
+              color: '#0066CC',
+              px: 2,
+              py: 0.5,
+            }}
+          >
+            Clear All
+          </Button>
+          <Button
+            onClick={() =>
+              handleChange({
+                target: {
+                  name: 'whereOrganizationWorks',
+                  value: validStates,
+                },
+              })
+            }
+            sx={{
+              fontFamily: 'Roboto',
+              fontWeight: 400,
+              fontSize: '14px',
+              lineHeight: '100%',
+              textTransform: 'none',
+              color: '#0066CC',
+              px: 2,
+              py: 0.5,
+            }}
+          >
+            Add All
+          </Button>
+        </Box>
+        {formData.whereOrganizationWorks &&
+          formData.whereOrganizationWorks.length > 0 && (
+            <>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                {formData.whereOrganizationWorks.map(state => (
+                  <Chip
+                    key={state}
+                    label={state}
+                    onDelete={() =>
+                      handleRemoveItem('whereOrganizationWorks', state)
+                    }
+                    deleteIcon={
+                      <IconButton
+                        size="small"
+                        sx={{
+                          fontFamily: 'Roboto',
+                          fontWeight: 700,
+                          fontSize: '10px',
+                          lineHeight: '100%',
+                          bgcolor: '#F9FAFB',
+                          '&:hover': {
+                            bgcolor: '#E5E7EB',
+                          },
+                        }}
+                      >
+                        <CloseIcon sx={{ fontSize: '10px' }} />
+                      </IconButton>
+                    }
+                    sx={{
+                      height: '33px',
+                      borderRadius: '9999px',
+                      border: '1px solid #0066CC',
+                      bgcolor: '#F9FAFB',
+                    }}
+                  />
+                ))}
+              </Box>
+            </>
+          )}
+      </Box>
 
       {/* Submit Button */}
       <Button
@@ -449,10 +1076,7 @@ export default function UpdateData({ formData, handleChange, handleSubmit, submi
       >
         {submitting ? (
           <>
-            <CircularProgress
-              size={16}
-              sx={{ mr: 1, color: 'white' }}
-            />
+            <CircularProgress size={16} sx={{ mr: 1, color: 'white' }} />
             Saving...
           </>
         ) : success ? (
@@ -475,7 +1099,9 @@ export default function UpdateData({ formData, handleChange, handleSubmit, submi
           mt: 8,
         }}
       >
-        <Box sx={{ maxWidth: '1200px', margin: '0 auto', px: { xs: 4, md: 8 } }}>
+        <Box
+          sx={{ maxWidth: '1200px', margin: '0 auto', px: { xs: 4, md: 8 } }}
+        >
           <SectionHeader sx={{ mb: 4 }}>Examples of Our Work</SectionHeader>
         </Box>
 

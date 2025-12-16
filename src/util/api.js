@@ -20,7 +20,11 @@ const normalizeRec = (rec, fieldMap) => {
     // For communities, ensure every field is an array
     if (fieldMap === communityFieldMap) {
       // If the field exists but isn't an array, wrap it
-      result[normKey] = rec[airKey] ? (Array.isArray(rec[airKey]) ? rec[airKey] : [rec[airKey]]) : []; // If field doesn't exist, return empty array
+      result[normKey] = rec[airKey]
+        ? Array.isArray(rec[airKey])
+          ? rec[airKey]
+          : [rec[airKey]]
+        : []; // If field doesn't exist, return empty array
     } else {
       result[normKey] = rec[airKey] || '';
     }
@@ -31,8 +35,7 @@ const normalizeRec = (rec, fieldMap) => {
 // map to airtable fields
 const practitionerFieldMap = {
   airtableRecId: 'org_airtable_record_id',
-  state: 'org_states_territories',
-  size: 'org_comm_size',
+  communitySize: 'org_comm_size',
   activities: 'org_services_provided_other',
   sectors: 'org_sectors',
   hazards: 'org_climate_hazards',
@@ -51,11 +54,12 @@ const practitionerFieldMap = {
   specificTypesOfCommunities: 'org_comm_specialization',
   languageFluencies: 'org_languages',
   org_street: 'org_street',
-  org_city: 'org_city',
-  org_state: 'org_state',
+  city: 'org_city',
+  state: 'org_state',
+  whereOrganizationWorks: 'org_states_territories',
   org_zip: 'org_zip',
   org_registry_category: 'org_registry_category',
-  org_services_provided_top: 'org_services_provided_top',
+  topServicesProvided: 'org_services_provided_top',
   org_contact_position: 'org_contact_position',
   org_adaptation_staff: 'org_adaptation_staff',
   org_adaptation_years: 'org_adaptation_years',
@@ -68,14 +72,14 @@ const practitionerFieldMap = {
   org_equity_approach: 'org_equity_approach',
   org_languages_other_specify: 'org_languages_other_specify',
   org_other_approach_info: 'org_other_approach_info',
-  org_sba_category: 'org_sba_category',
+  sbaCategory: 'org_sba_category',
   org_trainings: 'org_trainings',
   org_trainings_name_year: 'org_trainings_name_year',
   org_uncertainty_approach: 'org_uncertainty_approach',
   org_unintended_consequences_approach: 'org_unintended_consequences_approach',
   surveymonkey_responseid: 'surveymonkey_responseid',
-  terms_conditions: 'terms_conditions',
-  org_Registry_public: 'org_Registry_public',
+  termsAndConditions: 'terms_conditions',
+  includeOnRegistry: 'org_Registry_public',
 
   // Work Example 1
   example1_title: 'example1_title',
@@ -117,7 +121,11 @@ const communityFieldMap = {
 
 const practFetchFields = Object.values(practitionerFieldMap);
 
-function buildAirtableFilterFormula(criteriaObject, fieldMap, operator = 'AND') {
+function buildAirtableFilterFormula(
+  criteriaObject,
+  fieldMap,
+  operator = 'AND'
+) {
   const mainConditions = [];
 
   // Loop through each key (activities, sectors, etc.) in the criteria object
@@ -126,12 +134,16 @@ function buildAirtableFilterFormula(criteriaObject, fieldMap, operator = 'AND') 
     const airtableFieldId = fieldMap[criteriaKey];
 
     // Skip if the array is empty OR if the key doesn't exist in the map
-    if (!airtableFieldId || !Array.isArray(valuesArray) || valuesArray.length === 0) {
+    if (
+      !airtableFieldId ||
+      !Array.isArray(valuesArray) ||
+      valuesArray.length === 0
+    ) {
       continue;
     }
 
     // Build the AND condition for all values within this field
-    const conditions = valuesArray.map((value) => {
+    const conditions = valuesArray.map(value => {
       const quotedValue = `"${value}"`;
 
       // Generate the FIND condition using the actual airtableFieldId
@@ -163,35 +175,44 @@ export const fetchPractitioner = (practitionerId, setPractitioner) => {
       filterByFormula: `{org_airtable_record_id} = '${practitionerId}'`,
       fields: practFetchFields,
     })
-    .firstPage(function (err, records) {
+    .firstPage((err, records) => {
       if (err) {
         console.error(err);
       }
-      const rec = records.map((rawRec) => rawRec.fields).map((rec) => normalizeRec(rec, practitionerFieldMap))[0];
+      const rec = records
+        .map(rawRec => rawRec.fields)
+        .map(rec => normalizeRec(rec, practitionerFieldMap))[0];
       setPractitioner(rec);
     });
 };
 
-export const fetchTotalPractitionerCount = (setCount) => {
+export const fetchTotalPractitionerCount = setCount => {
   base('Organization')
     .select({
       view: practitionerViewName,
       fields: [],
     })
     .all()
-    .then((records) => {
+    .then(records => {
       // The result is ready here, so we call the setter function.
       setCount(records.length);
     })
-    .catch((err) => {
-      console.error('An error occurred while fetching the total record count:', err);
+    .catch(err => {
+      console.error(
+        'An error occurred while fetching the total record count:',
+        err
+      );
       // On error, set the count to 0 or handle as needed.
       setCount(0);
     });
 };
 
 export const fetchFilteredSpecialist = (filters, setPractitioners) => {
-  const filterFormula = buildAirtableFilterFormula(filters, practitionerFieldMap, 'OR');
+  const filterFormula = buildAirtableFilterFormula(
+    filters,
+    practitionerFieldMap,
+    'OR'
+  );
 
   base('Organization')
     .select({
@@ -201,15 +222,18 @@ export const fetchFilteredSpecialist = (filters, setPractitioners) => {
       filterByFormula: filterFormula,
     })
     .all()
-    .then((records) => {
+    .then(records => {
       const categoryFieldKey = practitionerFieldMap['org_registry_category'];
 
       // Initialize the separation objects
       const specialists = [];
 
       // Process each record
-      records.forEach((record) => {
-        const normalizedRecord = normalizeRec(record.fields, practitionerFieldMap);
+      records.forEach(record => {
+        const normalizedRecord = normalizeRec(
+          record.fields,
+          practitionerFieldMap
+        );
 
         // Determine the category value using the mapped field key
         const recordCategory = record.fields[categoryFieldKey];
@@ -218,14 +242,17 @@ export const fetchFilteredSpecialist = (filters, setPractitioners) => {
       });
       setPractitioners(specialists);
     })
-    .catch((err) => {
+    .catch(err => {
       console.error('An error occurred while fetching all pages:', err);
       setPractitioners([]);
     });
 };
 
 export const fetchFilteredPractitioners = (filters, setPractitioners) => {
-  const filterFormula = buildAirtableFilterFormula(filters, practitionerFieldMap);
+  const filterFormula = buildAirtableFilterFormula(
+    filters,
+    practitionerFieldMap
+  );
 
   base('Organization')
     .select({
@@ -235,15 +262,18 @@ export const fetchFilteredPractitioners = (filters, setPractitioners) => {
       filterByFormula: filterFormula,
     })
     .all()
-    .then((records) => {
+    .then(records => {
       const categoryFieldKey = practitionerFieldMap['org_registry_category'];
 
       // Initialize the separation objects
       const broadServiceProviders = [];
 
       // Process each record
-      records.forEach((record) => {
-        const normalizedRecord = normalizeRec(record.fields, practitionerFieldMap);
+      records.forEach(record => {
+        const normalizedRecord = normalizeRec(
+          record.fields,
+          practitionerFieldMap
+        );
 
         // Determine the category value using the mapped field key
         const recordCategory = record.fields[categoryFieldKey];
@@ -252,20 +282,20 @@ export const fetchFilteredPractitioners = (filters, setPractitioners) => {
       });
       setPractitioners(broadServiceProviders);
     })
-    .catch((err) => {
+    .catch(err => {
       console.error('An error occurred while fetching all pages:', err);
       setPractitioners([]);
     });
 };
 
-export const fetchOptionsFromAirtable = (setOptions) => {
+export const fetchOptionsFromAirtable = setOptions => {
   base('Options')
     .select({
       view: 'Grid view',
       fields: ['State', 'Activities', 'Hazards', 'Size', 'Sectors'],
       maxRecords: 200, // Only fetch up to 200 records
     })
-    .firstPage(function (err, records) {
+    .firstPage((err, records) => {
       if (err) {
         console.error(err);
         return;
@@ -281,26 +311,29 @@ export const fetchOptionsFromAirtable = (setOptions) => {
       };
 
       // Process records
-      records.forEach((record) => {
-        const fields = record.fields;
+      records.forEach(record => {
+        const { fields } = record;
 
         // Add values to respective sets if they exist
         if (fields.State) availableOptions.state.add(fields.State);
         if (fields.Activities) {
-          (Array.isArray(fields.Activities) ? fields.Activities : [fields.Activities]).forEach((activity) =>
-            availableOptions.activities.add(activity)
-          );
+          (Array.isArray(fields.Activities)
+            ? fields.Activities
+            : [fields.Activities]
+          ).forEach(activity => availableOptions.activities.add(activity));
         }
         if (fields.Hazards) {
-          (Array.isArray(fields.Hazards) ? fields.Hazards : [fields.Hazards]).forEach((hazard) =>
-            availableOptions.hazards.add(hazard)
-          );
+          (Array.isArray(fields.Hazards)
+            ? fields.Hazards
+            : [fields.Hazards]
+          ).forEach(hazard => availableOptions.hazards.add(hazard));
         }
         if (fields.Size) availableOptions.size.add(fields.Size);
         if (fields.Sectors) {
-          (Array.isArray(fields.Sectors) ? fields.Sectors : [fields.Sectors]).forEach((sector) =>
-            availableOptions.sectors.add(sector)
-          );
+          (Array.isArray(fields.Sectors)
+            ? fields.Sectors
+            : [fields.Sectors]
+          ).forEach(sector => availableOptions.sectors.add(sector));
         }
       });
 
