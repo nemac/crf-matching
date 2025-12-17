@@ -6,7 +6,8 @@
 
 // TODO: Replace this with your actual API Gateway URL after deployment
 // Example: https://abc123def.execute-api.us-east-1.amazonaws.com/prod
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://YOUR_API_GATEWAY_URL/prod';
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || 'https://YOUR_API_GATEWAY_URL/prod';
 
 export const API_ENDPOINTS = {
   generateMagicLink: `${API_BASE_URL}/generate-link`,
@@ -22,13 +23,16 @@ export const API_ENDPOINTS = {
 export async function generateMagicLink(email) {
   try {
     // const response = await fetch(API_ENDPOINTS.generateMagicLink, {
-    const response = await fetch("https://f3dbs4mb2n3ghocrg2co2d5wcy0npmby.lambda-url.us-east-1.on.aws/", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email }),
-    });
+    const response = await fetch(
+      'https://f3dbs4mb2n3ghocrg2co2d5wcy0npmby.lambda-url.us-east-1.on.aws/',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      }
+    );
 
     const data = await response.json();
 
@@ -51,12 +55,15 @@ export async function generateMagicLink(email) {
 export async function validateToken(token) {
   try {
     // const response = await fetch(`${API_ENDPOINTS.validateToken}?token=${encodeURIComponent(token)}`, {
-    const response = await fetch(`https://tp6l7ijupqjlm7ersk3frn57ki0oiowo.lambda-url.us-east-1.on.aws?token=${encodeURIComponent(token)}`, {
-    method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await fetch(
+      `https://tp6l7ijupqjlm7ersk3frn57ki0oiowo.lambda-url.us-east-1.on.aws?token=${encodeURIComponent(token)}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
 
     const data = await response.json();
 
@@ -79,13 +86,16 @@ export async function validateToken(token) {
  */
 export async function updateOrganization(token, updates) {
   try {
-    const response = await fetch("https://v5w7xgghkdlnrtxpxkygc2ef2i0vuxfg.lambda-url.us-east-1.on.aws/", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ token, updates }),
-    });
+    const response = await fetch(
+      'https://v5w7xgghkdlnrtxpxkygc2ef2i0vuxfg.lambda-url.us-east-1.on.aws/',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ token, updates }),
+      }
+    );
 
     const data = await response.json();
 
