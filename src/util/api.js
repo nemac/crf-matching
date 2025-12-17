@@ -1,6 +1,7 @@
 // Airtable
 import { Category } from '@mui/icons-material';
 import Airtable from 'airtable';
+import { practitionerFieldMap } from '../config/config.js';
 
 // set up airtable
 Airtable.configure({
@@ -30,83 +31,6 @@ const normalizeRec = (rec, fieldMap) => {
     }
   }
   return result;
-};
-
-// map to airtable fields
-const practitionerFieldMap = {
-  airtableRecId: 'org_airtable_record_id',
-  communitySize: 'org_comm_size',
-  activities: 'org_services_provided_other',
-  sectors: 'org_sectors',
-  hazards: 'org_climate_hazards',
-  name: 'org_name',
-  org: 'org_name',
-  website: 'org_website',
-  status: 'org_status',
-  linkedIn: 'org_linkedin',
-  firstName: 'org_contact_first_name',
-  lastName: 'org_contact_last_name',
-  email: 'org_contact_email',
-  phone: 'org_contact_phone',
-  strTrained: 'org_str',
-  info: 'org_description',
-  organizationType: 'org_type',
-  specificTypesOfCommunities: 'org_comm_specialization',
-  languageFluencies: 'org_languages',
-  org_street: 'org_street',
-  city: 'org_city',
-  state: 'org_state',
-  whereOrganizationWorks: 'org_states_territories',
-  org_zip: 'org_zip',
-  org_registry_category: 'org_registry_category',
-  topServicesProvided: 'org_services_provided_top',
-  org_contact_position: 'org_contact_position',
-  org_adaptation_staff: 'org_adaptation_staff',
-  org_adaptation_years: 'org_adaptation_years',
-  org_addl_background_info: 'org_addl_background_info',
-  org_app_created: 'org_app_created',
-  org_app_modified: 'org_app_modified',
-  org_app_notified_of_determination: 'org_app_notified_of_determination',
-  org_app_reviews: 'org_app_reviews',
-  org_engagement_approach: 'org_engagement_approach',
-  org_equity_approach: 'org_equity_approach',
-  org_languages_other_specify: 'org_languages_other_specify',
-  org_other_approach_info: 'org_other_approach_info',
-  sbaCategory: 'org_sba_category',
-  org_trainings: 'org_trainings',
-  org_trainings_name_year: 'org_trainings_name_year',
-  org_uncertainty_approach: 'org_uncertainty_approach',
-  org_unintended_consequences_approach: 'org_unintended_consequences_approach',
-  surveymonkey_responseid: 'surveymonkey_responseid',
-  termsAndConditions: 'terms_conditions',
-  includeOnRegistry: 'org_Registry_public',
-
-  // Work Example 1
-  example1_title: 'example1_title',
-  example1_description: 'example1_description',
-  example1_links: 'example1_links',
-  example1_location: 'example1_location',
-  example1_engagement: 'example1_engagement',
-  example1_equity: 'example1_equity',
-  example1_lead: 'example1_lead',
-
-  // Work Example 2
-  example2_title: 'example2_title',
-  example2_description: 'example2_description',
-  example2_location: 'example2_location',
-  example2_engagement: 'example2_engagement',
-  example2_equity: 'example2_equity',
-  example2_links: 'example2_links',
-  example2_lead: 'example2_lead',
-
-  // Work Example 3
-  example3_title: 'example3_title',
-  example3_description: 'example3_description',
-  example3_location: 'example3_location',
-  example3_engagement: 'example3_engagement',
-  example3_equity: 'example3_equity',
-  example3_links: 'example3_links',
-  example3_lead: 'example3_lead',
 };
 
 const communityFieldMap = {
