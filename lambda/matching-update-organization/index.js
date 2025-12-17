@@ -13,6 +13,7 @@ import {
   SecretsManagerClient,
   GetSecretValueCommand,
 } from '@aws-sdk/client-secrets-manager';
+import { practitionerFieldMap } from '../../src/config/config.js';
 
 const dynamoClient = new DynamoDBClient({ region: 'us-east-1' });
 const docClient = DynamoDBDocumentClient.from(dynamoClient);
@@ -74,26 +75,10 @@ async function updateOrganizationData(recordId, updates, apiKey, baseId) {
 
   const airtableFields = {};
 
-  if (updates.firstName !== undefined) {
-    airtableFields.org_contact_first_name = updates.firstName;
-  }
-  if (updates.lastName !== undefined) {
-    airtableFields.org_contact_last_name = updates.lastName;
-  }
-  if (updates.email !== undefined) {
-    airtableFields.org_contact_email = updates.email;
-  }
-  if (updates.phone !== undefined) {
-    airtableFields.org_contact_phone = updates.phone;
-  }
-  if (updates.organizationName !== undefined) {
-    airtableFields.org_name = updates.organizationName;
-  }
-  if (updates.city !== undefined) {
-    airtableFields.org_city = updates.city;
-  }
-  if (updates.state !== undefined) {
-    airtableFields.org_state = updates.state;
+  for (const [fieldName, fieldValue] of Object.entries(updates)) {
+    if (fieldValue !== undefined && practitionerFieldMap[fieldName]) {
+      airtableFields[practitionerFieldMap[fieldName]] = fieldValue;
+    }
   }
 
   const response = await fetch(url, {
