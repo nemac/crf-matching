@@ -16,6 +16,7 @@ import NavBar from '../components/NavBar';
 import UpdateData from '../components/updateData/UpdateData.jsx';
 import NewPractitionerLayout from '../components/updateData/NewPractitionerLayout.jsx';
 import { validateToken, updateOrganization } from '../config/api';
+import { practitionerFieldMap } from '../config/config';
 
 export default function UpdateDataPage() {
   const [searchParams] = useSearchParams();
@@ -115,39 +116,18 @@ export default function UpdateDataPage() {
         const result = await validateToken(token);
 
         if (result.success && result.data) {
-          setFormData({
-            firstName: result.data.firstName || '',
-            lastName: result.data.lastName || '',
-            phone: result.data.phone || '',
-            email: result.data.email || '',
-            website: result.data.website || '',
-            org: result.data.org || '',
-            org_city: result.data.org_city || '',
-            org_state: result.data.org_state || '',
-            linkedIn: result.data.linkedIn || '',
-            info: result.data.info || '',
-            example1_title: result.data.example1_title || '',
-            example1_description: result.data.example1_description || '',
-            example1_links: result.data.example1_links || '',
-            example1_location: result.data.example1_location || '',
-            example1_engagement: result.data.example1_engagement || '',
-            example1_equity: result.data.example1_equity || '',
-            example1_lead: result.data.example1_lead || '',
-            example2_title: result.data.example2_title || '',
-            example2_description: result.data.example2_description || '',
-            example2_links: result.data.example2_links || '',
-            example2_location: result.data.example2_location || '',
-            example2_engagement: result.data.example2_engagement || '',
-            example2_equity: result.data.example2_equity || '',
-            example2_lead: result.data.example2_lead || '',
-            example3_title: result.data.example3_title || '',
-            example3_description: result.data.example3_description || '',
-            example3_links: result.data.example3_links || '',
-            example3_location: result.data.example3_location || '',
-            example3_engagement: result.data.example3_engagement || '',
-            example3_equity: result.data.example3_equity || '',
-            example3_lead: result.data.example3_lead || '',
+          const updatedFormData = {};
+
+          Object.keys(practitionerFieldMap).forEach(frontendField => {
+            if (result.data[frontendField] !== undefined) {
+              updatedFormData[frontendField] = result.data[frontendField];
+            }
           });
+
+          setFormData(prevData => ({
+            ...prevData,
+            ...updatedFormData,
+          }));
           setTokenValid(true);
         } else {
           setError('Invalid token. Please request a new magic link.');
