@@ -10,8 +10,11 @@
 
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
 import { DynamoDBDocumentClient, GetCommand } from '@aws-sdk/lib-dynamodb';
-import { SecretsManagerClient, GetSecretValueCommand } from '@aws-sdk/client-secrets-manager';
-import { practitionerFieldMap } from '../../src/config/config.js';
+import {
+  SecretsManagerClient,
+  GetSecretValueCommand,
+} from '@aws-sdk/client-secrets-manager';
+import { practitionerFieldMap } from './config.js';
 
 // Initialize AWS clients
 const dynamoClient = new DynamoDBClient({ region: 'us-east-1' });
@@ -45,7 +48,7 @@ async function validateToken(token) {
   const params = {
     TableName: process.env.DYNAMODB_TABLE,
     Key: {
-      token: token,
+      token,
     },
   };
 
@@ -76,13 +79,15 @@ async function fetchOrganizationData(recordId, apiKey, baseId) {
 
   const response = await fetch(url, {
     headers: {
-      'Authorization': `Bearer ${apiKey}`,
+      Authorization: `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
     },
   });
 
   if (!response.ok) {
-    throw new Error(`Airtable API error: ${response.status} ${response.statusText}`);
+    throw new Error(
+      `Airtable API error: ${response.status} ${response.statusText}`
+    );
   }
 
   const data = await response.json();
@@ -92,7 +97,7 @@ async function fetchOrganizationData(recordId, apiKey, baseId) {
 /**
  * Lambda handler
  */
-export const handler = async (event) => {
+export const handler = async event => {
   console.log('Event:', JSON.stringify(event, null, 2));
 
   // Enable CORS
@@ -103,8 +108,8 @@ export const handler = async (event) => {
     'Content-Type': 'application/json',
   };
 
-   // Handle OPTIONS preflight request for Lambda Function URLs
-   const httpMethod = event.requestContext?.http?.method || event.httpMethod;
+  // Handle OPTIONS preflight request for Lambda Function URLs
+  const httpMethod = event.requestContext?.http?.method || event.httpMethod;
 
   // Handle OPTIONS preflight request
   if (httpMethod === 'OPTIONS') {
@@ -130,7 +135,10 @@ export const handler = async (event) => {
       };
     }
 
-    console.log('Validating token (first 10 chars):', token.substring(0, 10) + '...');
+    console.log(
+      'Validating token (first 10 chars):',
+      `${token.substring(0, 10)}...`
+    );
 
     // Validate token in DynamoDB
     const validation = await validateToken(token);
@@ -150,7 +158,8 @@ export const handler = async (event) => {
     console.log('Token valid. Record ID:', validation.recordId);
 
     // Get Airtable credentials
-    const { AIRTABLE_API_KEY, AIRTABLE_BASE_ID } = await getAirtableCredentials();
+    const { AIRTABLE_API_KEY, AIRTABLE_BASE_ID } =
+      await getAirtableCredentials();
 
     // Fetch organization data from Airtable
     const organization = await fetchOrganizationData(
@@ -163,7 +172,9 @@ export const handler = async (event) => {
 
     const frontendData = { recordId: organization.id };
 
-    for (const [frontendField, airtableField] of Object.entries(practitionerFieldMap)) {
+    for (const [frontendField, airtableField] of Object.entries(
+      practitionerFieldMap
+    )) {
       if (organization.fields[airtableField] !== undefined) {
         frontendData[frontendField] = organization.fields[airtableField];
       }
@@ -177,7 +188,6 @@ export const handler = async (event) => {
         data: frontendData,
       }),
     };
-
   } catch (error) {
     console.error('Error:', error);
 
