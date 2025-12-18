@@ -4,8 +4,9 @@ import LanguageIcon from '@mui/icons-material/Language';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
-function SectionHeader({ children, sx = {} }) {
+const SectionHeader = ({ children, sx = {} }) => {
   return (
     <Typography
       variant="h4"
@@ -18,9 +19,60 @@ function SectionHeader({ children, sx = {} }) {
       {children}
     </Typography>
   );
-}
+};
 
-export default function NewPractitionerLayout({ formData }) {
+const MultiSelectionDisplay = ({ selected = [], validOptions }) => {
+  return (
+    <Box sx={{ display: 'flex', gap: '12px', flexWrap: 'wrap', ml: 2, mb: 8 }}>
+      {selected.map((item, index) => (
+        <Chip
+          key={`selected-${index}`}
+          label={item}
+          icon={<CheckCircleIcon sx={{ color: '#0066CC !important' }} />}
+          sx={{
+            borderRadius: '9999px',
+            border: '1px solid #0066CC',
+            padding: '5px 12px',
+            color: '#0066CC',
+            bgcolor: '#66CCFF',
+            '& .MuiChip-icon': {
+              marginLeft: '12px',
+              marginRight: '-6px',
+            },
+          }}
+        />
+      ))}
+      {validOptions.map((item, index) => (
+        <Chip
+          key={`valid-${index}`}
+          label={item}
+          sx={{
+            borderRadius: '9999px',
+            border: '1px solid #0066CC',
+            padding: '6px 12px',
+            bgcolor: '#F9FAFB',
+            color: '#000',
+          }}
+        />
+      ))}
+    </Box>
+  );
+};
+
+MultiSelectionDisplay.propTypes = {
+  selected: PropTypes.array.isRequired,
+  validOptions: PropTypes.array.isRequired,
+};
+
+const NewPractitionerLayout = props => {
+  const {
+    formData,
+    validServices,
+    validHazards,
+    validSectors,
+    validCommunitySize,
+    validStates,
+  } = props;
   return (
     <Box sx={{ maxWidth: '1200px' }}>
       <Box sx={{ mb: 4, display: 'flex', gap: 2, flexWrap: 'wrap' }}>
@@ -103,20 +155,51 @@ export default function NewPractitionerLayout({ formData }) {
       <Divider sx={{ mb: 4 }} />
 
       <SectionHeader>Top Services</SectionHeader>
+      <MultiSelectionDisplay
+        selected={formData.topServicesProvided}
+        validOptions={validServices}
+      />
       <Divider sx={{ mb: 4 }} />
+
       <SectionHeader>Services Provided</SectionHeader>
+      <MultiSelectionDisplay
+        selected={formData.activities}
+        validOptions={validServices}
+      />
       <Divider sx={{ mb: 4 }} />
+
       <SectionHeader>Hazard Expertise</SectionHeader>
+      <MultiSelectionDisplay
+        selected={formData.hazards}
+        validOptions={validHazards}
+      />
       <Divider sx={{ mb: 4 }} />
+
       <SectionHeader>Sector Expertise</SectionHeader>
+      <MultiSelectionDisplay
+        selected={formData.sectors}
+        validOptions={validSectors}
+      />
       <Divider sx={{ mb: 4 }} />
+
       <SectionHeader>Size of Communities We Work With</SectionHeader>
+      <MultiSelectionDisplay
+        selected={formData.communitySize}
+        validOptions={validCommunitySize}
+      />
       <Divider sx={{ mb: 4 }} />
+
       <SectionHeader>Where We Work</SectionHeader>
+      <MultiSelectionDisplay
+        selected={formData.whereOrganizationWorks}
+        validOptions={validStates}
+      />
       <Divider sx={{ mb: 4 }} />
     </Box>
   );
-}
+};
+
+export default NewPractitionerLayout;
 
 NewPractitionerLayout.propTypes = {
   formData: PropTypes.object.isRequired,
