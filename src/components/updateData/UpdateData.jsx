@@ -138,7 +138,7 @@ const validStates = [
   'Northern Mariana Islands',
   'Puerto Rico',
   'Virgin Islands',
-  'Outside the U.S.',
+  // 'Outside the U.S.', TODO: add this as allowable choice
 ];
 
 const validOrganizationTypes = [
