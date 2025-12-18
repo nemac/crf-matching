@@ -22,6 +22,10 @@ const SectionHeader = ({ children, sx = {} }) => {
 };
 
 const MultiSelectionDisplay = ({ selected = [], validOptions }) => {
+  const unselectedOptions = validOptions.filter(
+    option => !selected.includes(option)
+  );
+
   return (
     <Box sx={{ display: 'flex', gap: '12px', flexWrap: 'wrap', ml: 2, mb: 8 }}>
       {selected.map((item, index) => (
@@ -42,7 +46,7 @@ const MultiSelectionDisplay = ({ selected = [], validOptions }) => {
           }}
         />
       ))}
-      {validOptions.map((item, index) => (
+      {unselectedOptions.map((item, index) => (
         <Chip
           key={`valid-${index}`}
           label={item}
