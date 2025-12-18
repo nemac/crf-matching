@@ -7,6 +7,7 @@ import {
   CircularProgress,
   Chip,
   IconButton,
+  Divider,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import FormTextField from '../baseComponents/FormTextField.jsx';
@@ -588,6 +589,7 @@ export default function UpdateData({
         </Box>
       </Box>
 
+      <Divider sx={{ mb: 4 }} />
       <SectionHeader>Top Services</SectionHeader>
       <Box sx={{ ml: 2, mb: 8 }}>
         <Box sx={{ mb: 2, maxWidth: '350px' }}>
@@ -659,6 +661,7 @@ export default function UpdateData({
           )}
       </Box>
 
+      <Divider sx={{ mb: 4 }} />
       <SectionHeader>Services Provided</SectionHeader>
       <Box sx={{ ml: 2, mb: 8 }}>
         <Box sx={{ mb: 2, maxWidth: '350px' }}>
@@ -727,6 +730,7 @@ export default function UpdateData({
         )}
       </Box>
 
+      <Divider sx={{ mb: 4 }} />
       <SectionHeader>Hazard Expertise</SectionHeader>
       <Box sx={{ ml: 2, mb: 8 }}>
         <Box sx={{ mb: 2, maxWidth: '350px' }}>
@@ -795,6 +799,7 @@ export default function UpdateData({
         )}
       </Box>
 
+      <Divider sx={{ mb: 4 }} />
       <SectionHeader>Sector Expertise</SectionHeader>
       <Box sx={{ ml: 2, mb: 8 }}>
         <Box sx={{ mb: 2, maxWidth: '350px' }}>
@@ -863,6 +868,7 @@ export default function UpdateData({
         )}
       </Box>
 
+      <Divider sx={{ mb: 4 }} />
       <SectionHeader>
         Size of Communities Your Organization Works With
       </SectionHeader>
@@ -956,6 +962,7 @@ export default function UpdateData({
         )}
       </Box>
 
+      <Divider sx={{ mb: 4 }} />
       <SectionHeader>Where Your Organization Works</SectionHeader>
       <Box sx={{ ml: 2, mb: 8 }}>
         <Box sx={{ mb: 2, maxWidth: '350px' }}>

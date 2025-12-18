@@ -5,6 +5,11 @@ import PropTypes from 'prop-types';
 const WorkExampleCard = (props) => {
   const { title, description, links, location, engagement, equity, lead, exampleNumber } = props;
 
+  const truncateText = (text, maxLength) => {
+    if (!text || text.length <= maxLength) return text;
+    return text.substring(0, maxLength).trim() + '...';
+  };
+
   const handleOpenInNewTab = () => {
     const workExampleData = {
       exampleNumber,
@@ -27,6 +32,7 @@ const WorkExampleCard = (props) => {
       <Box
         sx={{
           width: '410px',
+          height: '350px',
           backgroundColor: '#FFFFFF',
           borderRadius: '12px',
           padding: 3,
@@ -34,7 +40,6 @@ const WorkExampleCard = (props) => {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          minHeight: '200px',
         }}
       >
         <Box>
@@ -58,19 +63,14 @@ const WorkExampleCard = (props) => {
               fontFamily: 'Roboto',
               fontWeight: 400,
               fontSize: '16px',
-              lineHeight: '100%',
+              lineHeight: '24px',
               color: '#56657D',
-              width: '410px',
-              height: '38px',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              display: '-webkit-box',
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: 'vertical',
             }}
           >
-            {description ||
-              'Specializes in risk assessment and adaptation planning for coastal communities facing sea-level rise...'}
+            {truncateText(
+              description || 'Specializes in risk assessment and adaptation planning for coastal communities facing sea-level rise',
+              125
+            )}
           </Typography>
         </Box>
 
