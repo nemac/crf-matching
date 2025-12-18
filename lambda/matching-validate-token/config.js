@@ -16,6 +16,7 @@ export const practitionerFieldMap = {
   strTrained: 'org_str',
   info: 'org_description',
   organizationType: 'org_type',
+  organizationSize: 'org_adaptation_staff',
   specificTypesOfCommunities: 'org_comm_specialization',
   languageFluencies: 'org_languages',
   org_street: 'org_street',
