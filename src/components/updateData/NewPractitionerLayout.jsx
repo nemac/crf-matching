@@ -1,13 +1,28 @@
-import { Box, Typography, Chip } from '@mui/material';
+import { Box, Typography, Chip, Divider } from '@mui/material';
 import PropTypes from 'prop-types';
 import LanguageIcon from '@mui/icons-material/Language';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+
+function SectionHeader({ children, sx = {} }) {
+  return (
+    <Typography
+      variant="h4"
+      sx={{
+        fontWeight: 'bold',
+        mb: 1,
+        ...sx,
+      }}
+    >
+      {children}
+    </Typography>
+  );
+}
 
 export default function NewPractitionerLayout({ formData }) {
   return (
     <Box sx={{ maxWidth: '1200px' }}>
-      {/* Tags/Chips */}
       <Box sx={{ mb: 4, display: 'flex', gap: 2, flexWrap: 'wrap' }}>
         <Chip
           label="Adaptation Practitioner"
@@ -33,43 +48,72 @@ export default function NewPractitionerLayout({ formData }) {
         />
       </Box>
 
-      {/* Organization Contact Section */}
-      <Typography
-        variant="h4"
-        sx={{
-          fontWeight: 'bold',
-          mb: 2,
-        }}
-      >
-        Organization Contact
-      </Typography>
+      <SectionHeader>Organization Contact</SectionHeader>
 
-      {/* Contact Details */}
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-        {/* Website */}
+      <Box
+        sx={{ display: 'flex', flexDirection: 'column', gap: 2, ml: 2, mb: 8 }}
+      >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <LanguageIcon sx={{ color: '#666' }} />
           <Typography sx={{ color: '#666' }}>
-            {formData.website || 'Website'}
+            {formData.website || ''}
           </Typography>
         </Box>
 
-        {/* Email */}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <EmailIcon sx={{ color: '#666' }} />
-          <Typography sx={{ color: '#666' }}>
-            {formData.email || 'Email'}
-          </Typography>
+          <Typography sx={{ color: '#666' }}>{formData.email || ''}</Typography>
         </Box>
 
-        {/* Phone Number */}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <PhoneIcon sx={{ color: '#666' }} />
-          <Typography sx={{ color: '#666' }}>
-            {formData.phone || 'Phone Number'}
-          </Typography>
+          <Typography sx={{ color: '#666' }}>{formData.phone || ''}</Typography>
         </Box>
       </Box>
+
+      <SectionHeader>Organization Location</SectionHeader>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, ml: 2, mb: 8 }}>
+        <LocationOnIcon sx={{ color: '#666' }} />
+        <Typography sx={{ color: '#666' }}>
+          {formData.city && formData.state
+            ? `${formData.city}, ${formData.state}`
+            : formData.city || formData.state || ''}
+        </Typography>
+      </Box>
+
+      <SectionHeader>Organization Description</SectionHeader>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, ml: 2, mb: 8 }}>
+        <Typography sx={{ color: '#666' }}>{formData.info || ''}</Typography>
+      </Box>
+
+      <SectionHeader>Community Specializations</SectionHeader>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, ml: 2, mb: 8 }}>
+        <Typography sx={{ color: '#666' }}>
+          {formData.specificTypesOfCommunities || ''}
+        </Typography>
+      </Box>
+
+      <SectionHeader>Organization Type</SectionHeader>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, ml: 2, mb: 8 }}>
+        <Typography sx={{ color: '#666' }}>
+          {formData.organizationType || ''}
+        </Typography>
+      </Box>
+
+      <Divider sx={{ mb: 4 }} />
+
+      <SectionHeader>Top Services</SectionHeader>
+      <Divider sx={{ mb: 4 }} />
+      <SectionHeader>Services Provided</SectionHeader>
+      <Divider sx={{ mb: 4 }} />
+      <SectionHeader>Hazard Expertise</SectionHeader>
+      <Divider sx={{ mb: 4 }} />
+      <SectionHeader>Sector Expertise</SectionHeader>
+      <Divider sx={{ mb: 4 }} />
+      <SectionHeader>Size of Communities We Work With</SectionHeader>
+      <Divider sx={{ mb: 4 }} />
+      <SectionHeader>Where We Work</SectionHeader>
+      <Divider sx={{ mb: 4 }} />
     </Box>
   );
 }
