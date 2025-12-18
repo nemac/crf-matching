@@ -258,7 +258,7 @@ export default function UpdateData({
   };
 
   return (
-    <Box sx={{ maxWidth: '1200px' }}>
+    <Box>
       {/* Dev Mode Message */}
       {isDevMode && (
         <Alert severity="warning" sx={{ mb: 3 }}>

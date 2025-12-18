@@ -2,12 +2,21 @@ import { Box, Typography, Button } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import PropTypes from 'prop-types';
 
-const WorkExampleCard = (props) => {
-  const { title, description, links, location, engagement, equity, lead, exampleNumber } = props;
+const WorkExampleCard = props => {
+  const {
+    title,
+    description,
+    links,
+    location,
+    engagement,
+    equity,
+    lead,
+    exampleNumber,
+  } = props;
 
   const truncateText = (text, maxLength) => {
     if (!text || text.length <= maxLength) return text;
-    return text.substring(0, maxLength).trim() + '...';
+    return `${text.substring(0, maxLength).trim()}...`;
   };
 
   const handleOpenInNewTab = () => {
@@ -31,8 +40,8 @@ const WorkExampleCard = (props) => {
     <>
       <Box
         sx={{
-          width: '410px',
           height: '350px',
+          minWidth: '250px',
           backgroundColor: '#FFFFFF',
           borderRadius: '12px',
           padding: 3,
@@ -50,7 +59,6 @@ const WorkExampleCard = (props) => {
               fontSize: '20px',
               lineHeight: '100%',
               color: '#101828',
-              width: '410px',
               height: '23px',
               mb: 2,
             }}
@@ -68,7 +76,8 @@ const WorkExampleCard = (props) => {
             }}
           >
             {truncateText(
-              description || 'Specializes in risk assessment and adaptation planning for coastal communities facing sea-level rise',
+              description ||
+                'Specializes in risk assessment and adaptation planning for coastal communities facing sea-level rise',
               125
             )}
           </Typography>

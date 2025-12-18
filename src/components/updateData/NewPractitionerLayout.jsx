@@ -49,19 +49,25 @@ export default function NewPractitionerLayout({ formData }) {
         {/* Website */}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <LanguageIcon sx={{ color: '#666' }} />
-          <Typography sx={{ color: '#666' }}>{formData.website || 'Website'}</Typography>
+          <Typography sx={{ color: '#666' }}>
+            {formData.website || 'Website'}
+          </Typography>
         </Box>
 
         {/* Email */}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <EmailIcon sx={{ color: '#666' }} />
-          <Typography sx={{ color: '#666' }}>{formData.email || 'Email'}</Typography>
+          <Typography sx={{ color: '#666' }}>
+            {formData.email || 'Email'}
+          </Typography>
         </Box>
 
         {/* Phone Number */}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <PhoneIcon sx={{ color: '#666' }} />
-          <Typography sx={{ color: '#666' }}>{formData.phone || 'Phone Number'}</Typography>
+          <Typography sx={{ color: '#666' }}>
+            {formData.phone || 'Phone Number'}
+          </Typography>
         </Box>
       </Box>
     </Box>
