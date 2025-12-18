@@ -137,7 +137,7 @@ const validStates = [
   'Guam',
   'Northern Mariana Islands',
   'Puerto Rico',
-  'U.S. Virgin Islands',
+  'Virgin Islands',
   'Outside the U.S.',
 ];
 
@@ -411,8 +411,8 @@ export default function UpdateData({
 
       <SectionHeader>Community Specializations</SectionHeader>
       <Box sx={{ ml: 2, mb: 8 }}>
-        <Box sx={{ mb: 4, maxWidth: '350px' }}>
-          <FormTextField
+        <Box sx={{ mb: 4, maxWidth: '100%' }}>
+          <MultiLineFormTextField
             label="Community Specializations"
             name="specificTypesOfCommunities"
             value={formData.specificTypesOfCommunities}
