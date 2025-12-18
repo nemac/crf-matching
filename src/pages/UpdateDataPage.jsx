@@ -23,73 +23,74 @@ export default function UpdateDataPage() {
   const navigate = useNavigate();
   const token = searchParams.get('token');
 
-  const [formData, setFormData] = useState({
-    firstName: 'Jeff Jeff Jeff',
-    lastName: 'Bliss Bliss Bliss',
-    phone: 'xxx-xxx-xxxx',
-    email: 'jeff@jeff.jeff',
-    website: 'https://jeff.jeff.jeff',
-    org: 'Jeff Corp',
-    city: 'Asheville',
-    state: 'North Carolina',
-    linkedIn: 'N/A',
-    specificTypesOfCommunities: '',
-    organizationType: 'Consultant agency',
-    info: 'info about jeff jeff jeff corp. Here is some info you can make about jeff corp. Hello. La di da di da di da. Hi hi hi hi hi',
-    communitySize: ['Under 10k'],
-    organizationSize: 'Self-employed',
-    sbaCategory: 'None of the above',
-    adaptationYears: 15,
-    languageFluencies: ['Spanish', 'French'],
-    includeOnRegistry: 'Yes',
-    termsAndConditions: 'No',
-    topServicesProvided: [
-      'Adaptation planning',
-      'Changing policy and law',
-      'Communicating and engaging',
-    ],
-    activities: [
-      'Adaptation planning',
-      'Changing policy and law',
-      'Communicating and engaging',
-      'Financing resilience projects and programs',
-      'Integrating Equity',
-      'Project implementation',
-      'Vulnerability. assessment',
-    ],
-    hazards: ['Extreme heat', 'Changes in seasons', 'Drought'],
-    sectors: [
-      'Agriculture and food',
-      'Biodiversity and ecosystems',
-      'Buildings and infrastructure',
-      'Business and economy',
-    ],
-    whereOrganizationWorks: ['Illinois', 'New York', 'North Carolina'],
-    example1_title: 'Jeff Work Example 1',
-    example1_description: 'Jeff Work Example 1 Text.',
-    example1_links: '',
-    example1_location: 'City and State Example 1',
-    example1_engagement:
-      'This is Jeff Work Example 1 Approach to Stakeholder Engagement',
-    example1_equity: 'This is Jeff Work Example 1 Approach to Equity',
-    example1_lead: 'Sir Jeff of Jeffington',
-    example2_title: 'Jeff Work Example 2',
-    example2_description: 'Jeff Work Example 2 Text.',
-    example2_links: '',
-    example2_location: 'City and State Example 2',
-    example2_engagement:
-      'This is Jeff Work Example 2 Approach to Stakeholder Engagement',
-    example2_equity: 'This is Jeff Work Example 2 Approach to Equity',
-    example2_lead: 'Sir Jeffrey',
-    example3_title: 'Dave Work Example',
-    example3_description: 'Dave Work Example Text.',
-    example3_links: '',
-    example3_location: 'City and State Example 3',
-    example3_engagement:
-      'This is Dave Work Example Approach to Stakeholder Engagement',
-    example3_equity: 'This is Dave Work Example Approach to Equity',
-    example3_lead: 'King David',
-  });
+  // const [formData, setFormData] = useState({
+  //   firstName: 'Jeff Jeff Jeff',
+  //   lastName: 'Bliss Bliss Bliss',
+  //   phone: 'xxx-xxx-xxxx',
+  //   email: 'jeff@jeff.jeff',
+  //   website: 'https://jeff.jeff.jeff',
+  //   org: 'Jeff Corp',
+  //   city: 'Asheville',
+  //   state: 'North Carolina',
+  //   linkedIn: 'N/A',
+  //   specificTypesOfCommunities: '',
+  //   organizationType: 'Consultant agency',
+  //   info: 'info about jeff jeff jeff corp. Here is some info you can make about jeff corp. Hello. La di da di da di da. Hi hi hi hi hi',
+  //   communitySize: ['Under 10k'],
+  //   organizationSize: 'Self-employed',
+  //   sbaCategory: 'None of the above',
+  //   adaptationYears: 15,
+  //   languageFluencies: ['Spanish', 'French'],
+  //   includeOnRegistry: 'Yes',
+  //   termsAndConditions: 'No',
+  //   topServicesProvided: [
+  //     'Adaptation planning',
+  //     'Changing policy and law',
+  //     'Communicating and engaging',
+  //   ],
+  //   activities: [
+  //     'Adaptation planning',
+  //     'Changing policy and law',
+  //     'Communicating and engaging',
+  //     'Financing resilience projects and programs',
+  //     'Integrating Equity',
+  //     'Project implementation',
+  //     'Vulnerability. assessment',
+  //   ],
+  //   hazards: ['Extreme heat', 'Changes in seasons', 'Drought'],
+  //   sectors: [
+  //     'Agriculture and food',
+  //     'Biodiversity and ecosystems',
+  //     'Buildings and infrastructure',
+  //     'Business and economy',
+  //   ],
+  //   whereOrganizationWorks: ['Illinois', 'New York', 'North Carolina'],
+  //   example1_title: 'Jeff Work Example 1',
+  //   example1_description: 'Jeff Work Example 1 Text.',
+  //   example1_links: '',
+  //   example1_location: 'City and State Example 1',
+  //   example1_engagement:
+  //     'This is Jeff Work Example 1 Approach to Stakeholder Engagement',
+  //   example1_equity: 'This is Jeff Work Example 1 Approach to Equity',
+  //   example1_lead: 'Sir Jeff of Jeffington',
+  //   example2_title: 'Jeff Work Example 2',
+  //   example2_description: 'Jeff Work Example 2 Text.',
+  //   example2_links: '',
+  //   example2_location: 'City and State Example 2',
+  //   example2_engagement:
+  //     'This is Jeff Work Example 2 Approach to Stakeholder Engagement',
+  //   example2_equity: 'This is Jeff Work Example 2 Approach to Equity',
+  //   example2_lead: 'Sir Jeffrey',
+  //   example3_title: 'Dave Work Example',
+  //   example3_description: 'Dave Work Example Text.',
+  //   example3_links: '',
+  //   example3_location: 'City and State Example 3',
+  //   example3_engagement:
+  //     'This is Dave Work Example Approach to Stakeholder Engagement',
+  //   example3_equity: 'This is Dave Work Example Approach to Equity',
+  //   example3_lead: 'King David',
+  // });
+  const [formData, setFormData] = useState({});
 
   const [isPreview, setIsPreview] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -97,6 +98,8 @@ export default function UpdateDataPage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [tokenValid, setTokenValid] = useState(false);
+
+  console.log('formData in main', formData);
 
   useEffect(() => {
     async function fetchData() {
@@ -123,6 +126,7 @@ export default function UpdateDataPage() {
               updatedFormData[frontendField] = result.data[frontendField];
             }
           });
+          console.log('updated form data', updatedFormData);
 
           setFormData(prevData => ({
             ...prevData,
