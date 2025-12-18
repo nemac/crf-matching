@@ -28,7 +28,7 @@ export const practitionerFieldMap = {
   topServicesProvided: 'org_services_provided_top',
   org_contact_position: 'org_contact_position',
   org_adaptation_staff: 'org_adaptation_staff',
-  org_adaptation_years: 'org_adaptation_years',
+  adaptationYears: 'org_adaptation_years',
   org_addl_background_info: 'org_addl_background_info',
   org_app_created: 'org_app_created',
   org_app_modified: 'org_app_modified',
