@@ -14,6 +14,8 @@ const WorkExampleCard = props => {
     exampleNumber,
     token,
     organizationName,
+    buttonText = 'Edit Work Example',
+    openInPreview = false,
   } = props;
 
   const truncateText = (text, maxLength) => {
@@ -33,6 +35,7 @@ const WorkExampleCard = props => {
       lead,
       token,
       organizationName,
+      openInPreview,
     };
 
     sessionStorage.setItem('workExampleData', JSON.stringify(workExampleData));
@@ -109,7 +112,7 @@ const WorkExampleCard = props => {
               },
             }}
           >
-            Edit Work Example
+            {buttonText}
           </Button>
         </Box>
       </Box>
@@ -128,6 +131,8 @@ WorkExampleCard.propTypes = {
   exampleNumber: PropTypes.number.isRequired,
   token: PropTypes.string,
   organizationName: PropTypes.string,
+  buttonText: PropTypes.string,
+  openInPreview: PropTypes.bool,
 };
 
 export default WorkExampleCard;

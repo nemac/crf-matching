@@ -17,12 +17,13 @@ export default function WorkExamplePage() {
     if (storedData) {
       const data = JSON.parse(storedData);
       setFormData(data);
+      setIsPreview(data.openInPreview);
     }
   }, []);
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
+    setFormData(prev => ({
       ...prev,
       [name]: value,
     }));

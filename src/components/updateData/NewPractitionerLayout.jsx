@@ -5,6 +5,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import WorkExampleCard from './WorkExampleCard';
 
 const SectionHeader = ({ children, sx = {} }) => {
   return (
@@ -78,7 +79,7 @@ const NewPractitionerLayout = props => {
     validStates,
   } = props;
   return (
-    <Box sx={{ maxWidth: '1200px' }}>
+    <Box>
       <Box sx={{ mb: 4, display: 'flex', gap: 2, flexWrap: 'wrap' }}>
         <Chip
           label="Adaptation Practitioner"
@@ -199,6 +200,94 @@ const NewPractitionerLayout = props => {
         validOptions={validStates}
       />
       <Divider sx={{ mb: 4 }} />
+
+      <Box
+        sx={{
+          width: '100vw',
+          position: 'relative',
+          left: '50%',
+          right: '50%',
+          marginLeft: '-50vw',
+          marginRight: '-50vw',
+          backgroundColor: '#F9F3FF',
+          py: 6,
+          mt: 8,
+        }}
+      >
+        <Box
+          sx={{ maxWidth: '1200px', margin: '0 auto', px: { xs: 4, md: 8 } }}
+        >
+          <SectionHeader sx={{ mb: 4 }}>Examples of Our Work</SectionHeader>
+        </Box>
+
+        <Box
+          sx={{
+            overflowX: 'auto',
+            px: { xs: 4, md: 8 },
+            pb: 2,
+            '&::-webkit-scrollbar': {
+              height: '8px',
+            },
+            '&::-webkit-scrollbar-track': {
+              backgroundColor: 'transparent',
+            },
+            '&::-webkit-scrollbar-thumb': {
+              backgroundColor: '#D1D5DB',
+              borderRadius: '4px',
+            },
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              gap: 3,
+              maxWidth: '1200px',
+              margin: '0 auto',
+              width: 'fit-content',
+            }}
+          >
+            <WorkExampleCard
+              title={formData.example1_title}
+              description={formData.example1_description}
+              links={formData.example1_links}
+              location={formData.example1_location}
+              engagement={formData.example1_engagement}
+              equity={formData.example1_equity}
+              lead={formData.example1_lead}
+              exampleNumber={1}
+              organizationName={formData.org}
+              buttonText="Full Work Example"
+              openInPreview
+            />
+            <WorkExampleCard
+              title={formData.example2_title}
+              description={formData.example2_description}
+              links={formData.example2_links}
+              location={formData.example2_location}
+              engagement={formData.example2_engagement}
+              equity={formData.example2_equity}
+              lead={formData.example2_lead}
+              exampleNumber={2}
+              organizationName={formData.org}
+              buttonText="Full Work Example"
+              openInPreview
+            />
+            <WorkExampleCard
+              title={formData.example3_title}
+              description={formData.example3_description}
+              links={formData.example3_links}
+              location={formData.example3_location}
+              engagement={formData.example3_engagement}
+              equity={formData.example3_equity}
+              lead={formData.example3_lead}
+              exampleNumber={3}
+              organizationName={formData.org}
+              buttonText="Full Work Example"
+              openInPreview
+            />
+          </Box>
+        </Box>
+      </Box>
     </Box>
   );
 };
@@ -207,4 +296,9 @@ export default NewPractitionerLayout;
 
 NewPractitionerLayout.propTypes = {
   formData: PropTypes.object.isRequired,
+  validServices: PropTypes.array.isRequired,
+  validHazards: PropTypes.array.isRequired,
+  validSectors: PropTypes.array.isRequired,
+  validCommunitySize: PropTypes.array.isRequired,
+  validStates: PropTypes.array.isRequired,
 };

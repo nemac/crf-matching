@@ -42,9 +42,9 @@ async function getAirtableCredentials() {
 }
 
 /**
- * Query Airtable to find organization by email
+ * Query Airtable to find all organizations by email
  */
-async function findOrganizationByEmail(email, apiKey, baseId) {
+async function findOrganizationsByEmail(email, apiKey, baseId) {
   const url = `https://api.airtable.com/v0/${baseId}/Organization-ForDevWork`;
 
   // Airtable filter formula to find record by email
@@ -64,10 +64,10 @@ async function findOrganizationByEmail(email, apiKey, baseId) {
   const data = await response.json();
 
   if (!data.records || data.records.length === 0) {
-    return null;
+    return [];
   }
 
-  return data.records[0]; // Return first matching record
+  return data.records; // Return all matching records
 }
 
 /**
@@ -258,11 +258,11 @@ export const handler = async (event) => {
     // Get Airtable credentials
     const { AIRTABLE_API_KEY, AIRTABLE_BASE_ID, AIRTABLE_TABLE_ID } = await getAirtableCredentials();
 
-    // Find organization in Airtable
-    console.log('Searching for organization with email:', email);
-    const organization = await findOrganizationByEmail(email, AIRTABLE_API_KEY, AIRTABLE_BASE_ID, AIRTABLE_TABLE_ID);
+    // Find all organizations with this email in Airtable
+    console.log('Searching for organizations with email:', email);
+    const organizations = await findOrganizationsByEmail(email, AIRTABLE_API_KEY, AIRTABLE_BASE_ID, AIRTABLE_TABLE_ID);
 
-    if (!organization) {
+    if (!organizations || organizations.length === 0) {
       return {
         statusCode: 404,
         headers,
@@ -273,32 +273,44 @@ export const handler = async (event) => {
       };
     }
 
-    console.log('Found organization:', organization.id);
+    console.log(`Found ${organizations.length} organization(s) with email ${email}`);
 
-    // Generate secure token
-    const token = generateSecureToken();
-    console.log('Generated token (first 10 chars):', token.substring(0, 10) + '...');
+    // Process each organization
+    const emailsSent = [];
+    for (const organization of organizations) {
+      console.log('Processing organization:', organization.id);
 
-    // Store token in DynamoDB
-    await storeToken(token, email, organization.id);
-    console.log('Token stored in DynamoDB');
+      // Generate unique secure token for this organization
+      const token = generateSecureToken();
+      console.log('Generated token (first 10 chars):', token.substring(0, 10) + '...');
 
-    // Generate magic link
-    const magicLink = `${process.env.FRONTEND_URL}/update-data?token=${token}`;
+      // Store token in DynamoDB
+      await storeToken(token, email, organization.id);
+      console.log('Token stored in DynamoDB');
 
-    // Send email with magic link
-    const organizationName = organization.fields.org_name || '';
-    await sendMagicLinkEmail(email, magicLink, organizationName);
-    console.log('Email sent successfully');
+      // Generate magic link
+      const magicLink = `${process.env.FRONTEND_URL}/update-data?token=${token}`;
+
+      // Send email with magic link
+      const organizationName = organization.fields.org_name || '';
+      await sendMagicLinkEmail(email, magicLink, organizationName);
+      console.log(`Email sent successfully for organization: ${organizationName || organization.id}`);
+
+      emailsSent.push({
+        organizationId: organization.id,
+        organizationName: organizationName,
+      });
+    }
 
     return {
       statusCode: 200,
       headers,
       body: JSON.stringify({
         success: true,
-        message: 'Magic link sent to your email',
-        // Don't expose the token in production, but useful for debugging
-        // token: token,
+        message: organizations.length === 1
+          ? 'Magic link sent to your email'
+          : `${organizations.length} magic links sent to your email (one for each organization)`,
+        organizationsCount: organizations.length,
       }),
     };
   } catch (error) {

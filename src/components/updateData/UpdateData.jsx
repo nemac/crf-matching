@@ -254,7 +254,7 @@ export default function UpdateData({
             <Box mr={2}>
               <FormTextField
                 label="City"
-                name="org_city"
+                name="city"
                 value={formData.city}
                 onChange={handleChange}
                 fullWidth
@@ -273,17 +273,17 @@ export default function UpdateData({
               />
             </Box>
           </Grid>
-          <Grid item xs={12} md={4}>
-            <Box mr={2}>
-              <FormTextField
-                label="Country"
-                name="country"
-                value={formData.country}
-                onChange={handleChange}
-                fullWidth
-              />
-            </Box>
-          </Grid>
+          {/*<Grid item xs={12} md={4}>*/}
+          {/*  <Box mr={2}>*/}
+          {/*    <FormTextField*/}
+          {/*      label="Country"*/}
+          {/*      name="country"*/}
+          {/*      value={formData.country}*/}
+          {/*      onChange={handleChange}*/}
+          {/*      fullWidth*/}
+          {/*    />*/}
+          {/*  </Box>*/}
+          {/*</Grid>*/}
         </Grid>
       </Box>
 
