@@ -76,6 +76,10 @@ const WorkExampleForm = props => {
             );
           });
         }
+
+        setTimeout(() => {
+          window.close();
+        }, 100);
       }
     } catch (err) {
       console.error('Failed to save work example:', err);
@@ -198,7 +202,6 @@ const WorkExampleForm = props => {
           disabled={submitting || saved}
           sx={{
             width: '135px',
-            height: '29px',
             borderRadius: '4px',
             padding: '4px 48px',
             bgcolor: saved ? '#CCCCCC' : '#003366',
@@ -230,7 +233,6 @@ const WorkExampleForm = props => {
         <Button
           sx={{
             width: '95px',
-            height: '29px',
             borderRadius: '4px',
             padding: '4px',
             bgcolor: '#FFFFFF',
