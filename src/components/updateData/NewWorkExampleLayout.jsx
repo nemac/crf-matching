@@ -75,8 +75,7 @@ const NewWorkExampleLayout = props => {
       <SectionHeader>Project Description</SectionHeader>
       <Box sx={{ ml: 2, mb: 4 }}>
         <Typography sx={{ color: '#666' }}>
-          {workExampleData.description ||
-            'Showcase your skills and experience to a targeted audience of communities and organizations actively seeking adaptation support. Joining the registry enhances your visibility and connects you with meaningful projects that make a real-world impact.'}
+          {workExampleData.description || 'Description'}
         </Typography>
       </Box>
 
@@ -85,16 +84,14 @@ const NewWorkExampleLayout = props => {
       </SectionHeader>
       <Box sx={{ ml: 2, mb: 4 }}>
         <Typography sx={{ color: '#666' }}>
-          {workExampleData.engagement ||
-            'Showcase your skills and experience to a targeted audience of communities and organizations actively seeking adaptation support. Joining the registry enhances your visibility and connects you with meaningful projects that make a real-world impact.'}
+          {workExampleData.engagement || 'Description'}
         </Typography>
       </Box>
 
       <SectionHeader>Approach to Equity in this Project</SectionHeader>
       <Box sx={{ ml: 2, mb: 4 }}>
         <Typography sx={{ color: '#666' }}>
-          {workExampleData.equity ||
-            'Showcase your skills and experience to a targeted audience of communities and organizations actively seeking adaptation support. Joining the registry enhances your visibility and connects you with meaningful projects that make a real-world impact.'}
+          {workExampleData.equity || 'Description'}
         </Typography>
       </Box>
     </Box>

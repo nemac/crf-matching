@@ -322,7 +322,7 @@ export default function UpdateData({
             name="info"
             value={formData.info}
             onChange={handleChange}
-            placeholder="Showcase your skills and experience to a targeted audience of communities and organizations actively seeking adaptation support. Joining the registry enhances your visibility and connects you with meaningful projects that make a real-world impact."
+            placeholder="Description"
           />
         </Box>
       </Box>
@@ -776,45 +776,54 @@ export default function UpdateData({
           />
         </Box>
 
-        <Box sx={{ display: 'flex', gap: 1, mb: 1 }}>
-          <Button
-            onClick={() => handleClearAll('communitySize')}
-            sx={{
-              fontFamily: 'Roboto',
-              fontWeight: 400,
-              fontSize: '14px',
-              lineHeight: '100%',
-              textTransform: 'none',
-              color: '#0066CC',
-              px: 2,
-              py: 0.5,
-            }}
-          >
-            Clear All
-          </Button>
-          <Button
-            onClick={() =>
-              handleChange({
-                target: {
-                  name: 'communitySize',
-                  value: validCommunitySize,
-                },
-              })
-            }
-            sx={{
-              fontFamily: 'Roboto',
-              fontWeight: 400,
-              fontSize: '14px',
-              lineHeight: '100%',
-              textTransform: 'none',
-              color: '#0066CC',
-              px: 2,
-              py: 0.5,
-            }}
-          >
-            Add All
-          </Button>
-        </Box>
+        {(formData.communitySize && formData.communitySize.length > 0) ||
+        (formData.communitySize &&
+          formData.communitySize.length < validCommunitySize.length) ? (
+          <Box sx={{ display: 'flex', gap: 1, mb: 1 }}>
+            {formData.communitySize && formData.communitySize.length > 0 && (
+              <Button
+                onClick={() => handleClearAll('communitySize')}
+                sx={{
+                  fontFamily: 'Roboto',
+                  fontWeight: 400,
+                  fontSize: '14px',
+                  lineHeight: '100%',
+                  textTransform: 'none',
+                  color: '#0066CC',
+                  px: 2,
+                  py: 0.5,
+                }}
+              >
+                Clear All
+              </Button>
+            )}
+            {(!formData.communitySize ||
+              formData.communitySize.length < validCommunitySize.length) && (
+              <Button
+                onClick={() =>
+                  handleChange({
+                    target: {
+                      name: 'communitySize',
+                      value: validCommunitySize,
+                    },
+                  })
+                }
+                sx={{
+                  fontFamily: 'Roboto',
+                  fontWeight: 400,
+                  fontSize: '14px',
+                  lineHeight: '100%',
+                  textTransform: 'none',
+                  color: '#0066CC',
+                  px: 2,
+                  py: 0.5,
+                }}
+              >
+                Add All
+              </Button>
+            )}
+          </Box>
+        ) : null}
         {formData.communitySize && formData.communitySize.length > 0 && (
           <>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
@@ -868,45 +877,56 @@ export default function UpdateData({
           />
         </Box>
 
-        <Box sx={{ display: 'flex', gap: 1, mb: 1 }}>
-          <Button
-            onClick={() => handleClearAll('whereOrganizationWorks')}
-            sx={{
-              fontFamily: 'Roboto',
-              fontWeight: 400,
-              fontSize: '14px',
-              lineHeight: '100%',
-              textTransform: 'none',
-              color: '#0066CC',
-              px: 2,
-              py: 0.5,
-            }}
-          >
-            Clear All
-          </Button>
-          <Button
-            onClick={() =>
-              handleChange({
-                target: {
-                  name: 'whereOrganizationWorks',
-                  value: validStates,
-                },
-              })
-            }
-            sx={{
-              fontFamily: 'Roboto',
-              fontWeight: 400,
-              fontSize: '14px',
-              lineHeight: '100%',
-              textTransform: 'none',
-              color: '#0066CC',
-              px: 2,
-              py: 0.5,
-            }}
-          >
-            Add All
-          </Button>
-        </Box>
+        {(formData.whereOrganizationWorks &&
+          formData.whereOrganizationWorks.length > 0) ||
+        (formData.whereOrganizationWorks &&
+          formData.whereOrganizationWorks.length < validStates.length) ? (
+          <Box sx={{ display: 'flex', gap: 1, mb: 1 }}>
+            {formData.whereOrganizationWorks &&
+              formData.whereOrganizationWorks.length > 0 && (
+                <Button
+                  onClick={() => handleClearAll('whereOrganizationWorks')}
+                  sx={{
+                    fontFamily: 'Roboto',
+                    fontWeight: 400,
+                    fontSize: '14px',
+                    lineHeight: '100%',
+                    textTransform: 'none',
+                    color: '#0066CC',
+                    px: 2,
+                    py: 0.5,
+                  }}
+                >
+                  Clear All
+                </Button>
+              )}
+            {(!formData.whereOrganizationWorks ||
+              formData.whereOrganizationWorks.length < validStates.length) && (
+              <Button
+                onClick={() =>
+                  handleChange({
+                    target: {
+                      name: 'whereOrganizationWorks',
+                      value: validStates,
+                    },
+                  })
+                }
+                sx={{
+                  fontFamily: 'Roboto',
+                  fontWeight: 400,
+                  fontSize: '14px',
+                  lineHeight: '100%',
+                  textTransform: 'none',
+                  color: '#0066CC',
+                  px: 2,
+                  py: 0.5,
+                }}
+              >
+                Add All
+              </Button>
+            )}
+          </Box>
+        ) : null}
         {formData.whereOrganizationWorks &&
           formData.whereOrganizationWorks.length > 0 && (
             <>
@@ -961,7 +981,6 @@ export default function UpdateData({
           py: 0.5,
           borderRadius: '4px',
           minWidth: '135px',
-          height: '29px',
           boxShadow: '0px 0px 2px 0px rgba(0, 0, 0, 0.25)',
           '&:hover': {
             bgcolor: '#002244',
