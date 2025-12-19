@@ -59,7 +59,6 @@ const WorkExampleCard = props => {
               fontSize: '20px',
               lineHeight: '100%',
               color: '#101828',
-              height: '23px',
               mb: 2,
             }}
           >
@@ -77,7 +76,7 @@ const WorkExampleCard = props => {
           >
             {truncateText(
               description ||
-                'Specializes in risk assessment and adaptation planning for coastal communities facing sea-level rise',
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
               125
             )}
           </Typography>
