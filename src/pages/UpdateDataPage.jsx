@@ -475,6 +475,7 @@ export default function UpdateDataPage() {
               validSectors={validSectors}
               validCommunitySize={validCommunitySize}
               validStates={validStates}
+              token={token}
             />
           )}
         </Box>

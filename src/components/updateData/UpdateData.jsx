@@ -126,6 +126,7 @@ export default function UpdateData({
   validSectors,
   validCommunitySize,
   validStates,
+  token,
 }) {
   const handleClearAll = name => {
     handleChange({
@@ -1038,6 +1039,8 @@ export default function UpdateData({
               lead={formData.example1_lead}
               exampleNumber={1}
               handleChange={handleChange}
+              token={token}
+              organizationName={formData.org}
             />
             <WorkExampleCard
               title={formData.example2_title}
@@ -1049,6 +1052,8 @@ export default function UpdateData({
               lead={formData.example2_lead}
               exampleNumber={2}
               handleChange={handleChange}
+              token={token}
+              organizationName={formData.org}
             />
             <WorkExampleCard
               title={formData.example3_title}
@@ -1060,6 +1065,8 @@ export default function UpdateData({
               lead={formData.example3_lead}
               exampleNumber={3}
               handleChange={handleChange}
+              token={token}
+              organizationName={formData.org}
             />
           </Box>
         </Box>
@@ -1076,4 +1083,10 @@ UpdateData.propTypes = {
   error: PropTypes.string.isRequired,
   success: PropTypes.bool.isRequired,
   isDevMode: PropTypes.bool,
+  validServices: PropTypes.array.isRequired,
+  validHazards: PropTypes.array.isRequired,
+  validSectors: PropTypes.array.isRequired,
+  validCommunitySize: PropTypes.array.isRequired,
+  validStates: PropTypes.array.isRequired,
+  token: PropTypes.string,
 };

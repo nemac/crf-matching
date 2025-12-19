@@ -12,6 +12,8 @@ const WorkExampleCard = props => {
     equity,
     lead,
     exampleNumber,
+    token,
+    organizationName,
   } = props;
 
   const truncateText = (text, maxLength) => {
@@ -29,6 +31,8 @@ const WorkExampleCard = props => {
       engagement,
       equity,
       lead,
+      token,
+      organizationName,
     };
 
     sessionStorage.setItem('workExampleData', JSON.stringify(workExampleData));
@@ -122,6 +126,8 @@ WorkExampleCard.propTypes = {
   equity: PropTypes.string,
   lead: PropTypes.string,
   exampleNumber: PropTypes.number.isRequired,
+  token: PropTypes.string,
+  organizationName: PropTypes.string,
 };
 
 export default WorkExampleCard;
