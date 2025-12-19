@@ -6,6 +6,7 @@ import {
   InputAdornment,
 } from '@mui/material';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 
 export default function FormSelect({
   label,
@@ -16,6 +17,23 @@ export default function FormSelect({
   fullWidth = false,
   multiple = false,
 }) {
+  const [open, setOpen] = useState(false);
+
+  const handleChange = (event) => {
+    onChange(event);
+    if (multiple) {
+      setOpen(false);
+    }
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
   return (
     <Box
       sx={{
@@ -39,7 +57,10 @@ export default function FormSelect({
           variant="outlined"
           name={name}
           value={multiple ? value || [] : value || ''}
-          onChange={onChange}
+          onChange={handleChange}
+          open={open}
+          onClose={handleClose}
+          onOpen={handleOpen}
           displayEmpty
           multiple={multiple}
           renderValue={
