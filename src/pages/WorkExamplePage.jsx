@@ -78,27 +78,29 @@ export default function WorkExamplePage() {
           px: { xs: 4, sm: 4, md: 4, lg: 3 },
         }}
       >
-        <Box sx={{ mb: 4 }}>
-          <Button
-            variant="contained"
-            onClick={handleToggle}
-            startIcon={isPreview ? <ArrowBackIcon /> : <VisibilityIcon />}
-            sx={{
-              bgcolor: '#003366',
-              color: 'white',
-              textTransform: 'none',
-              px: 3,
-              py: 1,
-              borderRadius: '4px',
-              boxShadow: '0px 0px 2px 0px rgba(0, 0, 0, 0.25)',
-              '&:hover': {
-                bgcolor: '#002244',
-              },
-            }}
-          >
-            {isPreview ? 'Back to Edit' : 'Preview'}
-          </Button>
-        </Box>
+        {!formData.openInPreview && (
+          <Box sx={{ mb: 4 }}>
+            <Button
+              variant="contained"
+              onClick={handleToggle}
+              startIcon={isPreview ? <ArrowBackIcon /> : <VisibilityIcon />}
+              sx={{
+                bgcolor: '#003366',
+                color: 'white',
+                textTransform: 'none',
+                px: 3,
+                py: 1,
+                borderRadius: '4px',
+                boxShadow: '0px 0px 2px 0px rgba(0, 0, 0, 0.25)',
+                '&:hover': {
+                  bgcolor: '#002244',
+                },
+              }}
+            >
+              {isPreview ? 'Back to Edit' : 'Preview'}
+            </Button>
+          </Box>
+        )}
 
         {isPreview ? (
           <NewWorkExampleLayout
