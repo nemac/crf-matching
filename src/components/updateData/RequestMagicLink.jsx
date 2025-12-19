@@ -4,6 +4,7 @@ import { generateMagicLink } from '../../config/api';
 
 export default function RequestMagicLink() {
   const [email, setEmail] = useState('');
+  const [submittedEmail, setSubmittedEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
@@ -18,8 +19,9 @@ export default function RequestMagicLink() {
       const result = await generateMagicLink(email);
 
       if (result.success) {
+        setSubmittedEmail(email);
         setSuccess(true);
-        setEmail(''); // Clear the form
+        setEmail('');
       } else {
         setError(result.error || 'Failed to send magic link');
       }
@@ -67,7 +69,7 @@ export default function RequestMagicLink() {
         >
           <strong>Check your email!</strong>
           <br />
-          We've sent a secure link to <strong>{email}</strong>. The link will expire in 24 hours.
+          We've sent a secure link to <strong>{submittedEmail}</strong>. The link will expire in 24 hours.
         </Alert>
       )}
 
