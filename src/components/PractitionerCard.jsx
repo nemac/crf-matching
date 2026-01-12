@@ -76,7 +76,7 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
             {truncatedDescription}
           </Typography>
 
-          {showBrowseAll && (
+          {/* {showBrowseAll && ( */}
             <Box sx={{ mb: 2 }}>
               <Typography
                 variant="subtitle2"
@@ -157,7 +157,7 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
                 )}
               </Box>
             </Box>
-          )}
+          {/* )} */}
           
           <Box sx={{ mt: 'auto', display: 'flex', flexDirection: 'row' }}>
             <Box sx={{ mt: 'auto', width:'100%'}} >
@@ -171,7 +171,7 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
                   backgroundColor: theme.palette.primary.lightBlue,
                   borderRadius: 8,
                   textTransform: 'none',
-                  mt: 6,
+                  mt: 1,
                   mb: 2,
                   width: 'fit-content',
                   '&:hover': {
@@ -188,7 +188,7 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
                 <Typography
                   variant="body2"
                   color="text.secondary"
-                  sx={{ mt: 6, mr: 2,  mb: 2, display: 'flex', justifyContent: 'flex-end', fontSize: '0.875rem' }}
+                  sx={{ mt: 1, mr: 2,  mb: 2, display: 'flex', justifyContent: 'flex-end', fontSize: '0.875rem' }}
                 >
                   Matched filters: <strong> {practitioner.matchCount}</strong>
                 </Typography>
@@ -213,7 +213,7 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
                 label="Compare this practitioner"
                 labelPlacement="start"
                 sx={{
-                   mt: 6, mb: 2,
+                   mt: 1, mb: 2,
                   '& .MuiFormControlLabel-label': {
                     fontSize: '0.875rem',
                     color: theme.palette.primary.main,
