@@ -173,42 +173,165 @@ export const fetchFilteredSpecialist = (filters, setPractitioners) => {
 };
 
 export const fetchFilteredPractitioners = (filters, setPractitioners) => {
-  const filterFormula = buildAirtableFilterFormula(
+  // Helper function to calculate match count
+  const fieldsToCheck = ['state', 'activities', 'hazards', 'size', 'sectors'];
+  
+  const calculateMatchCount = (practitioner) => {
+    let count = 0;
+    
+    for (const field of fieldsToCheck) {
+      if (filters[field] && filters[field].length > 0) {
+        const practitionerValues = practitioner[field];
+        const practitionerArray = Array.isArray(practitionerValues)
+          ? practitionerValues
+          : (practitionerValues ? [practitionerValues] : []);
+        
+        // Count how many filter values exist in this practitioner's field
+        filters[field].forEach(filterValue => {
+          if (practitionerArray.includes(filterValue)) {
+            count++;
+          }
+        });
+      }
+    }
+    
+    return count;
+  };
+
+  // Helper function to sort and randomize practitioners
+  const sortAndRandomize = (practitioners) => {
+    const practitionersWithCounts = practitioners.map(prac => {
+      const matchCount = calculateMatchCount(prac);
+      return {
+        practitioner: { ...prac, matchCount },
+        matchCount
+      };
+    });
+
+    // Sort by match count descending
+    practitionersWithCounts.sort((a, b) => b.matchCount - a.matchCount);
+
+    // Group by match count and randomize within each group (for ties)
+    const grouped = {};
+    practitionersWithCounts.forEach(item => {
+      if (!grouped[item.matchCount]) {
+        grouped[item.matchCount] = [];
+      }
+      grouped[item.matchCount].push(item);
+    });
+
+    // Randomize each group and flatten back to practitioners
+    return Object.values(grouped)
+      .map(group => group.sort(() => Math.random() - 0.5))
+      .flat()
+      .map(item => item.practitioner);
+  };
+
+  // Fetch specialists with OR operator
+  const specialistsFilterFormula = buildAirtableFilterFormula(
     filters,
-    practitionerFieldMap
+    practitionerFieldMap,
+    'OR'
   );
 
+  // Fetch broad service providers with AND operator
+  const broadFilterFormula = buildAirtableFilterFormula(
+    filters,
+    practitionerFieldMap,
+    'AND'
+  );
+
+  let specialistsData = [];
+  let broadData = [];
+  let completedRequests = 0;
+
+  const combineAndReturn = () => {
+    completedRequests++;
+    if (completedRequests === 2) {
+      // Both requests are done, merge and sort by match count descending
+      const allPractitioners = [...specialistsData, ...broadData];
+      
+      // Sort all practitioners by match count descending
+      allPractitioners.sort((a, b) => {
+        if (b.matchCount !== a.matchCount) {
+          return b.matchCount - a.matchCount;
+        }
+        // For same match count, randomize
+        return Math.random() - 0.5;
+      });
+      
+      setPractitioners(allPractitioners);
+    }
+  };
+
+  // Fetch specialists
   base('Organization')
     .select({
       view: practitionerViewName,
       fields: practFetchFields,
       sort: [{ field: 'org_name', direction: 'asc' }],
-      filterByFormula: filterFormula,
+      filterByFormula: specialistsFilterFormula,
     })
     .all()
     .then(records => {
       const categoryFieldKey = practitionerFieldMap['org_registry_category'];
+      const specialists = [];
 
-      // Initialize the separation objects
-      const broadServiceProviders = [];
-
-      // Process each record
       records.forEach(record => {
         const normalizedRecord = normalizeRec(
           record.fields,
           practitionerFieldMap
         );
 
-        // Determine the category value using the mapped field key
+        // Only include if category is Specialist
         const recordCategory = record.fields[categoryFieldKey];
-        // Separate based on category
-        broadServiceProviders.push(normalizedRecord);
+        if (recordCategory === 'Specialist') {
+          const matchCount = calculateMatchCount(normalizedRecord);
+          specialists.push({ ...normalizedRecord, matchCount });
+        }
       });
-      setPractitioners(broadServiceProviders);
+
+      specialistsData = specialists;
+      combineAndReturn();
     })
     .catch(err => {
-      console.error('An error occurred while fetching all pages:', err);
-      setPractitioners([]);
+      console.error('An error occurred while fetching specialists:', err);
+      combineAndReturn();
+    });
+
+  // Fetch broad service providers
+  base('Organization')
+    .select({
+      view: practitionerViewName,
+      fields: practFetchFields,
+      sort: [{ field: 'org_name', direction: 'asc' }],
+      filterByFormula: broadFilterFormula,
+    })
+    .all()
+    .then(records => {
+      const categoryFieldKey = practitionerFieldMap['org_registry_category'];
+      const broadServiceProviders = [];
+
+      records.forEach(record => {
+        const normalizedRecord = normalizeRec(
+          record.fields,
+          practitionerFieldMap
+        );
+
+        // Only include if category is Broad service provider
+        const recordCategory = record.fields[categoryFieldKey];
+        if (recordCategory === 'Broad service provider') {
+          const matchCount = calculateMatchCount(normalizedRecord);
+          broadServiceProviders.push({ ...normalizedRecord, matchCount });
+        }
+      });
+
+      broadData = broadServiceProviders;
+      combineAndReturn();
+    })
+    .catch(err => {
+      console.error('An error occurred while fetching broad service providers:', err);
+      combineAndReturn();
     });
 };
 
