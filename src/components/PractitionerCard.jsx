@@ -10,6 +10,8 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
   const description = practitioner.info || 'No description available';
   const truncatedDescription = description.length > 200 ? description.substring(0, 200) + '...' : description;
   const displayedActivities = practitioner.activities.slice(0, 3);
+  const specialty = practitioner.org_registry_category_specialist;
+  const expertiseArray = specialty ? specialty.split(',') : [];
  
   return (
     <Box sx={{ height: '100%' }}>
@@ -80,7 +82,9 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
                 variant="subtitle2"
                 sx={{ mb: 1, fontWeight: 'bold' }}
               >
-                Services Provided
+                 {practitioner.org_registry_category === 'Specialist' && ( 'Specialty')}
+                 {practitioner.org_registry_category === 'Broad service provider' && ( 'Services Provided' )}
+                
               </Typography>
               <Box
                 sx={{
@@ -89,7 +93,30 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
                   flexWrap: 'wrap',
                 }}
               >
-                {displayedActivities && displayedActivities.map((activity, index) => (
+
+                {practitioner.org_registry_category === 'Specialist' && (
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', p: 1}}>
+                          { expertiseArray.map((expertise, index) => 
+                            <Box 
+                              key={index}
+                              sx={{ 
+                                border: `1px solid ${theme.palette.primary.tan}`,
+                                backgroundColor: theme.palette.primary.lightTan,
+                                borderRadius: 6,
+                                color: theme.palette.primary.main,
+                                alignContent: 'center',
+                                textAlign: 'center',
+                                fontSize: '0.75rem',
+                                py: 0.75,
+                                px: 2,
+                                m: 0.5,
+                                minWidth: '75px',                                
+                                }}>
+                                { expertise }
+                      </Box>)}
+                    </Box>  
+                )}
+                {practitioner.org_registry_category === 'Broad service provider' && displayedActivities && displayedActivities.map((activity, index) => (
                   <Box
                     key={index}
                     sx={{
@@ -106,9 +133,10 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
                       minWidth: '75px',
                     }}
                   >
-                    {activity}
+                    {activity} 
                   </Box>
                 ))}
+                {practitioner.org_registry_category === 'Broad service provider' && (
                 <Box
                     key={4}
                     sx={{
@@ -126,6 +154,7 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
                   >
                     ...
                   </Box>
+                )}
               </Box>
             </Box>
           )}
