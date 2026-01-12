@@ -11,7 +11,7 @@ Airtable.configure({
 const base = Airtable.base(__AIRTABLE_BASE__);
 
 /// configuration ///
-const practitionerViewName = 'RegistryPractitionerToolView'; //'RegistryToolView' // 'Grid view'
+const practitionerViewName = 'RegistryPractitionerAndSpecialistsToolView'; //'RegistryToolView' // 'Grid view'
 const specialistsViewName = 'RegistrySpecialistToolView'; //'RegistryToolView' // 'Grid view'
 const PractitionerPageViewName = 'RegistryForPractitionerPageToolView'; // 'Grid view'
 
