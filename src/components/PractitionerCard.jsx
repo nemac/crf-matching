@@ -178,7 +178,7 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
               </Button>            
             </Box>
 
-            {!showBrowseAll && 
+            {/* {!showBrowseAll && 
               <Box sx={{ mt: 'auto',  width:'100%', alignContent: 'flex-end', justifyContent: 'flex-end'}} >
                 <Typography
                   variant="body2"
@@ -188,7 +188,7 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
                   Matched filters: <strong> {practitioner.matchCount}</strong>
                 </Typography>
               </Box>
-            }
+            } */}
            
             {showBrowseAll && (
               <Box sx={{ mt: 'auto',  width:'100%', alignContent: 'flex-end', justifyContent: 'flex-end'}} >
