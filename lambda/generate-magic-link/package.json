@@ -1,0 +1,13 @@
+{
+  "name": "crf-matching-generate-magic-link",
+  "version": "1.0.0",
+  "description": "Lambda function to generate magic links for CRF matching",
+  "type": "module",
+  "main": "index.js",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.700.0",
+    "@aws-sdk/lib-dynamodb": "^3.700.0",
+    "@aws-sdk/client-ses": "^3.700.0",
+    "@aws-sdk/client-secrets-manager": "^3.700.0"
+  }
+}

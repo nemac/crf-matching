@@ -1,3 +1,4 @@
+# Environment
 *.env
 
 # Logs
@@ -15,12 +16,13 @@ dist-ssr
 *.local
 
 # Editor directories and files
+.idea/
 .vscode/*
+!.vscode/settings.json
 !.vscode/extensions.json
-.idea
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+
+# CDK
+.cdk.staging
+cdk.out
+cdk.context.json

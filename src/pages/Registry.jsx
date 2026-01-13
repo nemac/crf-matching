@@ -429,7 +429,7 @@ export default function Registry() {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedState, setSelectedState] = useState('');
   const [practitioners, setPractitioners] = useState([]);
-  const [specialists, setSpecialists,] = useState([]);
+  // const [specialists, setSpecialists,] = useState([]);
   const [totalPractitioners, setTotalPractitioners] = useState(0);
   const [showFilters, setShowFilters] = useState(false);
   const [currentView, setCurrentView] = useState('cards');
@@ -527,10 +527,10 @@ export default function Registry() {
     debounceRef.current = setTimeout(() => {
       if (filters && Object.values(filters).some((arr) => arr.length > 0)) {
         fetchFilteredPractitioners(filters, setPractitioners);
-        fetchFilteredSpecialist(filters, setSpecialists);
+        // fetchFilteredSpecialist(filters, setSpecialists);
       } else {
         setPractitioners([]);
-        setSpecialists([]);
+        // setSpecialists([]);
       }
     }, 100); // You can adjust the debounce time (ms)
 
@@ -679,7 +679,7 @@ export default function Registry() {
 
     // Reset practitioners and specialists
     setPractitioners([]);
-    setSpecialists([])
+    // setSpecialists([])
 
     // Reset display count back to initial value
     setDisplayCount(PRACTITIONERS_PER_PAGE);
@@ -840,7 +840,7 @@ export default function Registry() {
                   <Button
                     onClick={() => {
                       fetchFilteredPractitioners(filters, setPractitioners);
-                      fetchFilteredSpecialist(filters, setSpecialists);
+                      // fetchFilteredSpecialist(filters, setSpecialists);
                       setCurrentView('cards');
                       setSelectedState('BrowseAll');
                       setDisplayCount(totalPractitioners);                      
@@ -1104,9 +1104,9 @@ export default function Registry() {
                       </Button>
                     </Box>
                   )}
-                  {specialists.length > 0 && (
+                  {/* {specialists.length > 0 && (
                     <RecommendSpecialist practitionerSpecialists={specialists} filters={searchParams}/>
-                  )}
+                  )} */}
                 </>
               ) : (
                 // Compare view

@@ -71,6 +71,7 @@ function PractitionerPageLoaded({ practitioner }) {
   });
 
   const specialty = practitioner.org_registry_category_specialist;
+  const category = practitioner.org_registry_category;
 
   return (
     <ThemeProvider theme={theme}>
@@ -87,8 +88,8 @@ function PractitionerPageLoaded({ practitioner }) {
         }}
       >
         <PractitionerTypeChip 
-          type={practitioner.org_registry_category} 
-          label={practitioner.org_registry_category}
+          type={category} 
+          label={category}
           list={specialty}
           size={'large'}/>
 
@@ -96,7 +97,7 @@ function PractitionerPageLoaded({ practitioner }) {
           variant="h3"
           fontWeight={800} 
           sx={{ mb: 3 }}>
-          {practitioner.org}
+          {practitioner.org} {specialty}
         </Typography>
 
         {/* Contact & Training Row */}

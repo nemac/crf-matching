@@ -8,7 +8,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import ProfilePopper from './ProfilePopper';
 import HeaderBox from './HeaderBox';
 import Section from './Section';
-import ScoreSection from './ScoreSection';
+// import ScoreSection from './ScoreSection';
 import Pane from './Pane';
 import theme from '../theme';
 

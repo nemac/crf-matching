@@ -1,6 +1,7 @@
 // Airtable
 import { Category } from '@mui/icons-material';
 import Airtable from 'airtable';
+import { practitionerFieldMap } from '../config/config.js';
 
 // set up airtable
 Airtable.configure({
@@ -10,9 +11,9 @@ Airtable.configure({
 const base = Airtable.base(__AIRTABLE_BASE__);
 
 /// configuration ///
-const practitionerViewName =  'RegistryPractitionerToolView'  //'RegistryToolView' // 'Grid view'
-const specialistsViewName =  'RegistrySpecialistToolView'  //'RegistryToolView' // 'Grid view'
-const PractitionerPageViewName = 'RegistryForPractitionerPageToolView' // 'Grid view'
+const practitionerViewName = 'RegistryPractitionerAndSpecialistsToolView'; //'RegistryToolView' // 'Grid view'
+const specialistsViewName = 'RegistrySpecialistToolView'; //'RegistryToolView' // 'Grid view'
+const PractitionerPageViewName = 'RegistryForPractitionerPageToolView'; // 'Grid view'
 
 const normalizeRec = (rec, fieldMap) => {
   const result = {};
@@ -20,63 +21,16 @@ const normalizeRec = (rec, fieldMap) => {
     // For communities, ensure every field is an array
     if (fieldMap === communityFieldMap) {
       // If the field exists but isn't an array, wrap it
-      result[normKey] = rec[airKey] ? (Array.isArray(rec[airKey]) ? rec[airKey] : [rec[airKey]]) : []; // If field doesn't exist, return empty array
+      result[normKey] = rec[airKey]
+        ? Array.isArray(rec[airKey])
+          ? rec[airKey]
+          : [rec[airKey]]
+        : []; // If field doesn't exist, return empty array
     } else {
       result[normKey] = rec[airKey] || '';
     }
   }
   return result;
-};
-
-// map to airtable fields
-const practitionerFieldMap = {
-  airtableRecId: 'org_airtable_record_id',
-  state: 'org_states_territories',
-  size: 'org_comm_size',
-  activities: 'org_services_provided_other',
-  sectors: 'org_sectors',
-  hazards: 'org_climate_hazards',
-  name: 'org_name',
-  org: 'org_name',
-  website: 'org_website',
-  status: 'org_status',
-  linkedIn: 'org_linkedin',
-  email: 'org_contact_email',
-  phone: 'org_contact_phone',
-  strTrained: 'org_str',
-  info: "org_description",
-  organizationType: 'org_type',
-  additionalInformation: 'org_description',
-  specificTypesOfCommunities: 'org_comm_specialization',
-  languageFluencies: 'org_languages',
-  org_street: 'org_street',
-  org_city: 'org_city',
-  org_state: 'org_state',
-  org_zip: 'org_zip',
-  org_registry_category: 'org_registry_category',
-  org_registry_category_specialist: 'org_registry_category_specialist',
-  org_services_provided_top: 'org_services_provided_top',
-  example1_title: 'example1_title',
-  example1_description: 'example1_description',
-  example1_links: 'example1_links',
-  example1_location: 'example1_location',
-  example1_engagement: 'example1_engagement',
-  example1_equity: 'example1_equity',
-
-  example2_title: 'example2_title',
-  example2_description: 'example2_description',
-  example2_location: 'example2_location',
-  example2_engagement: 'example2_engagement',
-  example2_equity: 'example2_equity',
-  example2_links: 'example2_links',
-
-  example3_title: 'example3_title',
-  example3_description: 'example3_description',
-  example3_location: 'example3_location',
-  example3_engagement: 'example3_engagement',
-  example3_equity: 'example3_equity',
-  example3_links: 'example3_links',
-  org_Registry_public: 'org_Registry_public',
 };
 
 const communityFieldMap = {
@@ -91,44 +45,50 @@ const communityFieldMap = {
 
 const practFetchFields = Object.values(practitionerFieldMap);
 
-function buildAirtableFilterFormula(criteriaObject, fieldMap, operator = 'AND') {
-    const mainConditions = [];
+function buildAirtableFilterFormula(
+  criteriaObject,
+  fieldMap,
+  operator = 'AND'
+) {
+  const mainConditions = [];
 
-    // Loop through each key (activities, sectors, etc.) in the criteria object
-    for (const [criteriaKey, valuesArray] of Object.entries(criteriaObject)) {
-        
-        // 1. Get the actual Airtable field ID using the map
-        const airtableFieldId = fieldMap[criteriaKey];
+  // Loop through each key (activities, sectors, etc.) in the criteria object
+  for (const [criteriaKey, valuesArray] of Object.entries(criteriaObject)) {
+    // 1. Get the actual Airtable field ID using the map
+    const airtableFieldId = fieldMap[criteriaKey];
 
-        // Skip if the array is empty OR if the key doesn't exist in the map
-        if (!airtableFieldId || !Array.isArray(valuesArray) || valuesArray.length === 0) {
-            continue;
-        }
-
-        // Build the AND condition for all values within this field
-        const conditions = valuesArray.map(value => {
-            const quotedValue = `"${value}"`; 
-            
-            // Generate the FIND condition using the actual airtableFieldId
-            // The padding with commas ("," & {Field} & ",") is crucial for look-up/multiple-select fields
-            return `FIND(${quotedValue}, "," & {${airtableFieldId}} & ",")`;
-        });
-
-        // Combine all checks for this field using operator (AND/OR)
-        const fieldCondition = `${operator}(${conditions.join(", ")})`;
-        
-        mainConditions.push(fieldCondition);
+    // Skip if the array is empty OR if the key doesn't exist in the map
+    if (
+      !airtableFieldId ||
+      !Array.isArray(valuesArray) ||
+      valuesArray.length === 0
+    ) {
+      continue;
     }
 
-    // If no conditions were generated, return an empty string (no filter)
-    if (mainConditions.length === 0) {
-        return '';
-    }
+    // Build the AND condition for all values within this field
+    const conditions = valuesArray.map(value => {
+      const quotedValue = `"${value}"`;
 
-    // Combine all field conditions using AND()
-    return `${operator}(${mainConditions.join(", ")})`;
+      // Generate the FIND condition using the actual airtableFieldId
+      // The padding with commas ("," & {Field} & ",") is crucial for look-up/multiple-select fields
+      return `FIND(${quotedValue}, "," & {${airtableFieldId}} & ",")`;
+    });
+
+    // Combine all checks for this field using operator (AND/OR)
+    const fieldCondition = `${operator}(${conditions.join(', ')})`;
+
+    mainConditions.push(fieldCondition);
+  }
+
+  // If no conditions were generated, return an empty string (no filter)
+  if (mainConditions.length === 0) {
+    return '';
+  }
+
+  // Combine all field conditions using AND()
+  return `${operator}(${mainConditions.join(', ')})`;
 }
-
 
 /// api ///
 export const fetchPractitioner = (practitionerId, setPractitioner) => {
@@ -139,107 +99,250 @@ export const fetchPractitioner = (practitionerId, setPractitioner) => {
       filterByFormula: `{org_airtable_record_id} = '${practitionerId}'`,
       fields: practFetchFields,
     })
-    .firstPage(function (err, records) {
+    .firstPage((err, records) => {
       if (err) {
         console.error(err);
       }
-      const rec = records.map((rawRec) => rawRec.fields).map((rec) => normalizeRec(rec, practitionerFieldMap))[0];
+      const rec = records
+        .map(rawRec => rawRec.fields)
+        .map(rec => normalizeRec(rec, practitionerFieldMap))[0];
       setPractitioner(rec);
     });
 };
 
-export const fetchTotalPractitionerCount = (setCount) => {
-    base('Organization')
-        .select({
-            view: practitionerViewName,
-            fields: []
-        })
-        .all() 
-        .then(records => {
-            // The result is ready here, so we call the setter function.
-            setCount(records.length);
-        })
-        .catch(err => {
-            console.error('An error occurred while fetching the total record count:', err);
-            // On error, set the count to 0 or handle as needed.
-            setCount(0);
-        });
-  }
+export const fetchTotalPractitionerCount = setCount => {
+  base('Organization')
+    .select({
+      view: practitionerViewName,
+      fields: [],
+    })
+    .all()
+    .then(records => {
+      // The result is ready here, so we call the setter function.
+      setCount(records.length);
+    })
+    .catch(err => {
+      console.error(
+        'An error occurred while fetching the total record count:',
+        err
+      );
+      // On error, set the count to 0 or handle as needed.
+      setCount(0);
+    });
+};
 
-  export const fetchFilteredSpecialist = (filters, setPractitioners) => {
-  const filterFormula = buildAirtableFilterFormula(filters, practitionerFieldMap, 'OR');
+export const fetchFilteredSpecialist = (filters, setPractitioners) => {
+  const filterFormula = buildAirtableFilterFormula(
+    filters,
+    practitionerFieldMap,
+    'OR'
+  );
 
   base('Organization')
     .select({
       view: specialistsViewName,
       fields: practFetchFields,
       sort: [{ field: 'org_name', direction: 'asc' }],
-      filterByFormula: filterFormula
-    }).all() 
-      .then(records => {
-          const categoryFieldKey = practitionerFieldMap['org_registry_category'];
+      filterByFormula: filterFormula,
+    })
+    .all()
+    .then(records => {
+      const categoryFieldKey = practitionerFieldMap['org_registry_category'];
 
-          // Initialize the separation objects
-          const specialists = [];
+      // Initialize the separation objects
+      const specialists = [];
 
-          // Process each record
-          records.forEach(record => {
-              const normalizedRecord = normalizeRec(record.fields, practitionerFieldMap);
-              
-              // Determine the category value using the mapped field key
-              const recordCategory = record.fields[categoryFieldKey];
-              // Separate based on category
-              specialists.push(normalizedRecord);
-          }); 
-          setPractitioners(specialists);
-      })
-      .catch(err => {
-          console.error('An error occurred while fetching all pages:', err);
-          setPractitioners([]);
+      // Process each record
+      records.forEach(record => {
+        const normalizedRecord = normalizeRec(
+          record.fields,
+          practitionerFieldMap
+        );
+
+        // Determine the category value using the mapped field key
+        const recordCategory = record.fields[categoryFieldKey];
+        // Separate based on category
+        specialists.push(normalizedRecord);
       });
-}
+      setPractitioners(specialists);
+    })
+    .catch(err => {
+      console.error('An error occurred while fetching all pages:', err);
+      setPractitioners([]);
+    });
+};
 
 export const fetchFilteredPractitioners = (filters, setPractitioners) => {
-  const filterFormula = buildAirtableFilterFormula(filters, practitionerFieldMap);
+  // Helper function to calculate match count
+  const fieldsToCheck = ['state', 'activities', 'hazards', 'size', 'sectors'];
+  
+  const calculateMatchCount = (practitioner) => {
+    let count = 0;
+    
+    for (const field of fieldsToCheck) {
+      if (filters[field] && filters[field].length > 0) {
+        const practitionerValues = practitioner[field];
+        const practitionerArray = Array.isArray(practitionerValues)
+          ? practitionerValues
+          : (practitionerValues ? [practitionerValues] : []);
+        
+        // Count how many filter values exist in this practitioner's field
+        filters[field].forEach(filterValue => {
+          if (practitionerArray.includes(filterValue)) {
+            count++;
+          }
+        });
+      }
+    }
+    
+    return count;
+  };
 
+  // Helper function to sort and randomize practitioners
+  const sortAndRandomize = (practitioners) => {
+    const practitionersWithCounts = practitioners.map(prac => {
+      const matchCount = calculateMatchCount(prac);
+      return {
+        practitioner: { ...prac, matchCount },
+        matchCount
+      };
+    });
+
+    // Sort by match count descending
+    practitionersWithCounts.sort((a, b) => b.matchCount - a.matchCount);
+
+    // Group by match count and randomize within each group (for ties)
+    const grouped = {};
+    practitionersWithCounts.forEach(item => {
+      if (!grouped[item.matchCount]) {
+        grouped[item.matchCount] = [];
+      }
+      grouped[item.matchCount].push(item);
+    });
+
+    // Randomize each group and flatten back to practitioners
+    return Object.values(grouped)
+      .map(group => group.sort(() => Math.random() - 0.5))
+      .flat()
+      .map(item => item.practitioner);
+  };
+
+  // Fetch specialists with OR operator
+  const specialistsFilterFormula = buildAirtableFilterFormula(
+    filters,
+    practitionerFieldMap,
+    'OR'
+  );
+
+  // Fetch broad service providers with AND operator
+  const broadFilterFormula = buildAirtableFilterFormula(
+    filters,
+    practitionerFieldMap,
+    'AND'
+  );
+
+  let specialistsData = [];
+  let broadData = [];
+  let completedRequests = 0;
+
+  const combineAndReturn = () => {
+    completedRequests++;
+    if (completedRequests === 2) {
+      // Both requests are done, merge and sort by match count descending
+      const allPractitioners = [...specialistsData, ...broadData];
+      
+      // Sort all practitioners by match count descending
+      allPractitioners.sort((a, b) => {
+        if (b.matchCount !== a.matchCount) {
+          return b.matchCount - a.matchCount;
+        }
+        // For same match count, randomize
+        return Math.random() - 0.5;
+      });
+      
+      setPractitioners(allPractitioners);
+    }
+  };
+
+  // Fetch specialists
   base('Organization')
     .select({
       view: practitionerViewName,
       fields: practFetchFields,
       sort: [{ field: 'org_name', direction: 'asc' }],
-      filterByFormula: filterFormula
-    }).all() 
-      .then(records => {
-          const categoryFieldKey = practitionerFieldMap['org_registry_category'];
+      filterByFormula: specialistsFilterFormula,
+    })
+    .all()
+    .then(records => {
+      const categoryFieldKey = practitionerFieldMap['org_registry_category'];
+      const specialists = [];
 
-          // Initialize the separation objects
-          const broadServiceProviders = [];
+      records.forEach(record => {
+        const normalizedRecord = normalizeRec(
+          record.fields,
+          practitionerFieldMap
+        );
 
-          // Process each record
-          records.forEach(record => {
-              const normalizedRecord = normalizeRec(record.fields, practitionerFieldMap);
-              
-              // Determine the category value using the mapped field key
-              const recordCategory = record.fields[categoryFieldKey];
-              // Separate based on category
-              broadServiceProviders.push(normalizedRecord);
-          }); 
-          setPractitioners(broadServiceProviders);
-      })
-      .catch(err => {
-          console.error('An error occurred while fetching all pages:', err);
-          setPractitioners([]);
+        // Only include if category is Specialist
+        const recordCategory = record.fields[categoryFieldKey];
+        if (recordCategory === 'Specialist') {
+          const matchCount = calculateMatchCount(normalizedRecord);
+          specialists.push({ ...normalizedRecord, matchCount });
+        }
       });
-}
 
-export const fetchOptionsFromAirtable = (setOptions) => {
+      specialistsData = specialists;
+      combineAndReturn();
+    })
+    .catch(err => {
+      console.error('An error occurred while fetching specialists:', err);
+      combineAndReturn();
+    });
+
+  // Fetch broad service providers
+  base('Organization')
+    .select({
+      view: practitionerViewName,
+      fields: practFetchFields,
+      sort: [{ field: 'org_name', direction: 'asc' }],
+      filterByFormula: broadFilterFormula,
+    })
+    .all()
+    .then(records => {
+      const categoryFieldKey = practitionerFieldMap['org_registry_category'];
+      const broadServiceProviders = [];
+
+      records.forEach(record => {
+        const normalizedRecord = normalizeRec(
+          record.fields,
+          practitionerFieldMap
+        );
+
+        // Only include if category is Broad service provider
+        const recordCategory = record.fields[categoryFieldKey];
+        if (recordCategory === 'Broad service provider') {
+          const matchCount = calculateMatchCount(normalizedRecord);
+          broadServiceProviders.push({ ...normalizedRecord, matchCount });
+        }
+      });
+
+      broadData = broadServiceProviders;
+      combineAndReturn();
+    })
+    .catch(err => {
+      console.error('An error occurred while fetching broad service providers:', err);
+      combineAndReturn();
+    });
+};
+
+export const fetchOptionsFromAirtable = setOptions => {
   base('Options')
     .select({
       view: 'Grid view',
       fields: ['State', 'Activities', 'Hazards', 'Size', 'Sectors'],
       maxRecords: 200, // Only fetch up to 200 records
     })
-    .firstPage(function (err, records) {
+    .firstPage((err, records) => {
       if (err) {
         console.error(err);
         return;
@@ -255,26 +358,29 @@ export const fetchOptionsFromAirtable = (setOptions) => {
       };
 
       // Process records
-      records.forEach((record) => {
-        const fields = record.fields;
+      records.forEach(record => {
+        const { fields } = record;
 
         // Add values to respective sets if they exist
         if (fields.State) availableOptions.state.add(fields.State);
         if (fields.Activities) {
-          (Array.isArray(fields.Activities) ? fields.Activities : [fields.Activities]).forEach((activity) =>
-            availableOptions.activities.add(activity)
-          );
+          (Array.isArray(fields.Activities)
+            ? fields.Activities
+            : [fields.Activities]
+          ).forEach(activity => availableOptions.activities.add(activity));
         }
         if (fields.Hazards) {
-          (Array.isArray(fields.Hazards) ? fields.Hazards : [fields.Hazards]).forEach((hazard) =>
-            availableOptions.hazards.add(hazard)
-          );
+          (Array.isArray(fields.Hazards)
+            ? fields.Hazards
+            : [fields.Hazards]
+          ).forEach(hazard => availableOptions.hazards.add(hazard));
         }
         if (fields.Size) availableOptions.size.add(fields.Size);
         if (fields.Sectors) {
-          (Array.isArray(fields.Sectors) ? fields.Sectors : [fields.Sectors]).forEach((sector) =>
-            availableOptions.sectors.add(sector)
-          );
+          (Array.isArray(fields.Sectors)
+            ? fields.Sectors
+            : [fields.Sectors]
+          ).forEach(sector => availableOptions.sectors.add(sector));
         }
       });
 

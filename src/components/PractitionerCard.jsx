@@ -10,7 +10,8 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
   const description = practitioner.info || 'No description available';
   const truncatedDescription = description.length > 200 ? description.substring(0, 200) + '...' : description;
   const displayedActivities = practitioner.activities.slice(0, 3);
-
+  const specialty = practitioner.org_registry_category_specialist;
+ 
   return (
     <Box sx={{ height: '100%' }}>
       <Card
@@ -20,9 +21,9 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
           flexDirection: 'column',
           borderRadius: 4,
           boxShadow: 3,
-          bgcolor: isSelectedForComparison ? 'primary.cellHoverBg' : 'background.paper',
+          bgcolor: isSelectedForComparison ? 'primary.cellHoverBg' : practitioner.org_registry_category === 'Specialist' ? 'primary.lightGray' : 'background.paper',
           transition: 'all 0.2s ease',
-          border: isSelectedForComparison ? `1px solid ${theme.palette.primary.main}` : '1px solid transparent',
+          border: isSelectedForComparison  ?  `1px solid ${theme.palette.primary.main}` : practitioner.org_registry_category === 'Specialist' ? `1px solid ${theme.palette.primary.lightTan}` : '1px solid transparent',
           boxSizing: 'border-box',
         }}
       >
@@ -32,8 +33,7 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
               width: '100%',
               height: 140,
               mb: 2,
-              backgroundColor: '#F5F5F5',
-              // display: 'flex',
+              backgroundColor: '#F5F5F5',              
               display: 'none', // remove this and uncomment flex to get the logo back
               justifyContent: 'center',
               alignItems: 'center',
@@ -73,13 +73,15 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
             {truncatedDescription}
           </Typography>
 
-          {showBrowseAll && (
+          {/* {showBrowseAll && ( */}
             <Box sx={{ mb: 2 }}>
               <Typography
                 variant="subtitle2"
-                sx={{ mb: 1, fontWeight: 'bold' }}
+                sx={{ mb: 0.5, fontWeight: 'bold' }}
               >
-                Services Provided
+                 {practitioner.org_registry_category === 'Specialist' && ( 'Specialty')}
+                 {practitioner.org_registry_category === 'Broad service provider' && ( 'Services Provided' )}
+                
               </Typography>
               <Box
                 sx={{
@@ -88,7 +90,28 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
                   flexWrap: 'wrap',
                 }}
               >
-                {displayedActivities && displayedActivities.map((activity, index) => (
+
+                {practitioner.org_registry_category === 'Specialist' && (
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', p: 1}}>
+                            <Box 
+                              sx={{ 
+                                border: `1px solid ${theme.palette.primary.tan}`,
+                                backgroundColor: theme.palette.primary.lightTan,
+                                borderRadius: 1,
+                                color: theme.palette.primary.main,
+                                alignContent: 'start',
+                                textAlign: 'start',
+                                fontSize: '0.75rem',
+                                py: 0.75,
+                                px: 2,
+                                m: 0.5,
+                                minWidth: '75px',                                
+                                }}>
+                                { specialty }
+                      </Box> 
+                    </Box>  
+                )}
+                {practitioner.org_registry_category === 'Broad service provider' && displayedActivities && displayedActivities.map((activity, index) => (
                   <Box
                     key={index}
                     sx={{
@@ -105,9 +128,10 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
                       minWidth: '75px',
                     }}
                   >
-                    {activity}
+                    {activity} 
                   </Box>
                 ))}
+                {practitioner.org_registry_category === 'Broad service provider' && (
                 <Box
                     key={4}
                     sx={{
@@ -125,32 +149,49 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
                   >
                     ...
                   </Box>
+                )}
               </Box>
             </Box>
-          )}
+          {/* )} */}
           
-          <Box sx={{ mt: 'auto' }}>
-            <Button
-              variant="contained"
-              href={`/practitioner/${practitioner.airtableRecId}?${urlFilters}`}
-              rel="noopener noreferrer"
-              startIcon={<PersonIcon />}
-              sx={{
-                color: theme.palette.primary.main,
-                backgroundColor: theme.palette.primary.lightBlue,
-                borderRadius: 8,
-                textTransform: 'none',
-                mt: 6,
-                mb: 2,
-                '&:hover': {
-                  backgroundColor: theme.palette.primary.lightBlueHover,
-                },
-              }}
-            >
-              Practitioner Profile
-            </Button>
+          <Box sx={{ mt: 'auto', display: 'flex', flexDirection: 'row' }}>
+            <Box sx={{ mt: 'auto', width:'100%'}} >
+              <Button
+                variant="contained"
+                href={`/practitioner/${practitioner.airtableRecId}?${urlFilters}`}
+                rel="noopener noreferrer"
+                startIcon={<PersonIcon />}
+                sx={{
+                  color: theme.palette.primary.main,
+                  backgroundColor: theme.palette.primary.lightBlue,
+                  borderRadius: 8,
+                  textTransform: 'none',
+                  mt: 1,
+                  mb: 2,
+                  width: 'fit-content',
+                  '&:hover': {
+                    backgroundColor: theme.palette.primary.lightBlueHover,
+                  },
+                }}
+              >
+                Practitioner Profile
+              </Button>            
+            </Box>
+
+            {/* {!showBrowseAll && 
+              <Box sx={{ mt: 'auto',  width:'100%', alignContent: 'flex-end', justifyContent: 'flex-end'}} >
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ mt: 1, mr: 2,  mb: 2, display: 'flex', justifyContent: 'flex-end', fontSize: '0.875rem' }}
+                >
+                  Matched filters: <strong> {practitioner.matchCount}</strong>
+                </Typography>
+              </Box>
+            } */}
+           
             {showBrowseAll && (
-              <Box>
+              <Box sx={{ mt: 'auto',  width:'100%', alignContent: 'flex-end', justifyContent: 'flex-end'}} >
               <FormControlLabel
                 control={
                   <Checkbox
@@ -165,7 +206,9 @@ export default function PractitionerCard({ filters, practitioner, onComparisonSe
                   />
                 }
                 label="Compare this practitioner"
+                labelPlacement="start"
                 sx={{
+                   mt: 1, mb: 2,
                   '& .MuiFormControlLabel-label': {
                     fontSize: '0.875rem',
                     color: theme.palette.primary.main,

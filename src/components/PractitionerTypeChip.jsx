@@ -13,7 +13,6 @@ import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import HubIcon from '@mui/icons-material/Hub';
 
 export default function PractitionerTypeChip({ type, label, list, size }) {
-  let expertiseArray = list ? list.split(',') : [];
 
   let icon;
   let aBackgroundColor;
@@ -62,22 +61,17 @@ export default function PractitionerTypeChip({ type, label, list, size }) {
           backgroundColor: aBackgroundColor,
         }} 
       >
-        <Box sx={{ display: 'flex',  alignItems: 'center', mr: 2, fontSize: aFontSize}}>{ icon }</Box>
+        <Box sx={{ display: 'flex',  alignItems: 'start', mr: 2, fontSize: aFontSize}}>{ icon }</Box>
         <Box sx={{ fontSize: aFontSize, mr: 1 }}>{ aLabel }</Box>
-        {expertiseArray.map((expertise, index) => 
           <Box 
-            key={index}
             sx={{ 
               display: size === 'large' ? 'unset' : 'none',
               textTransform: 'capitalize', 
-              my: 0.5, 
-              mx: 0.25, 
-              px: 3, 
-              py: 1,
-              borderRadius: 9999,
+              p: 1, 
+              borderRadius: 1,
               backgroundColor: aTagBackgroundColor }}>
-              { expertise }
-          </Box>)}
+              { list }
+          </Box>
       </Box>
   )
 }
