@@ -14,6 +14,7 @@ import Registry from './pages/Registry.jsx';
 import RequestUpdatePage from './pages/RequestUpdatePage.jsx';
 import UpdateDataPage from './pages/UpdateDataPage.jsx';
 import WorkExamplePage from './pages/WorkExamplePage.jsx';
+import AllComponents from './pages/AllComponents.jsx';
 import { DevSupport } from '@react-buddy/ide-toolbox';
 import { ComponentPreviews, useInitial } from './dev/index.js';
 
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
   {
     path: '/work-example',
     element: <WorkExamplePage />,
+  },
+  {
+    path: '/all-components',
+    element: <AllComponents />,
   },
 ]);
 
