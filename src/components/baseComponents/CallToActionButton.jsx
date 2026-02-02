@@ -1,11 +1,13 @@
-import { Box, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
 const CallToActionButton = () => {
   return (
-    <Box>
+    <>
       <Button
         endIcon={<ArrowRightAltOutlinedIcon />}
         sx={{
+          height: '46px',
+          width: '132px',
           color: '#FFFFFF',
           backgroundColor: '#003366',
           '&:hover': {
@@ -15,7 +17,7 @@ const CallToActionButton = () => {
       >
         Action
       </Button>
-    </Box>
+    </>
   );
 };
 
