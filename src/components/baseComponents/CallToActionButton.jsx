@@ -1,8 +1,10 @@
 import { Box, Button } from '@mui/material';
+import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
 const CallToActionButton = () => {
   return (
     <Box>
       <Button
+        endIcon={<ArrowRightAltOutlinedIcon />}
         sx={{
           color: '#FFFFFF',
           backgroundColor: '#003366',
