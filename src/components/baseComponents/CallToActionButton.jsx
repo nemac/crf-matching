@@ -1,5 +1,6 @@
 import { Button } from '@mui/material';
 import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
+console.log("naww");
 const CallToActionButton = () => {
     return (
         <>

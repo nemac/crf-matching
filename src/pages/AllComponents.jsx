@@ -3,6 +3,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from '../theme';
 import NavBar from '../components/NavBar';
 import CallToActionButton from '../components/baseComponents/CallToActionButton';
+import AltButton from '../components/baseComponents/AltButton';
 
 const ComponentDisplay = ({ children }) => (
   <Box>
@@ -35,6 +36,9 @@ export default function AllComponents() {
           <Grid item xs={12} md={3}>
             <ComponentDisplay name="CallToActionButton">
               <CallToActionButton />
+            </ComponentDisplay>
+            <ComponentDisplay name="AltButton">
+            <AltButton/>
             </ComponentDisplay>
           </Grid>
         </Grid>
