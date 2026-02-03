@@ -12,7 +12,7 @@ const AltButton = () =>{
                     p: '8px',
                     gap: '4px',
                     backgroundColor: '#66CCFF',
-                    '&hover':{
+                    '&:hover':{
                         bgcolor: '#99DDFF',
                     },
                     my: '20px',

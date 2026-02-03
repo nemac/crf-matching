@@ -4,6 +4,7 @@ import theme from '../theme';
 import NavBar from '../components/NavBar';
 import CallToActionButton from '../components/baseComponents/CallToActionButton';
 import AltButton from '../components/baseComponents/AltButton';
+import SecondayButton from '../components/baseComponents/SecondaryButton';
 
 const ComponentDisplay = ({ children }) => (
   <Box>
@@ -38,7 +39,10 @@ export default function AllComponents() {
               <CallToActionButton />
             </ComponentDisplay>
             <ComponentDisplay name="AltButton">
-            <AltButton/>
+                <AltButton/>
+            </ComponentDisplay>
+            <ComponentDisplay>
+                <SecondayButton/>
             </ComponentDisplay>
           </Grid>
         </Grid>
