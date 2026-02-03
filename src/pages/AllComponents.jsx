@@ -7,53 +7,59 @@ import AltButton from '../components/baseComponents/AltButton';
 import SecondayButton from '../components/baseComponents/SecondaryButton';
 import TertiaryButton from '../components/baseComponents/TertiaryButton';
 import AltActionButton from '../components/baseComponents/AltActionButton';
+import BroadServiceProvider from '../components/baseComponents/BroadServiceProvider';
 const ComponentDisplay = ({ children }) => (
-  <Box>
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flex: 1,
-      }}
-    >
-      {children}
+    <Box>
+        <Box
+            sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flex: 1,
+            }}
+        >
+            {children}
+        </Box>
     </Box>
-  </Box>
 );
 
 export default function AllComponents() {
-  return (
-    <ThemeProvider theme={theme}>
-      <NavBar />
-      <Container
-        maxWidth="xl"
-        sx={{
-          pt: 4,
-          pb: 8,
-          px: { xs: 4, sm: 4, md: 4, lg: 3 },
-        }}
-      >
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={3}>
-            <ComponentDisplay name="CallToActionButton">
-              <CallToActionButton />
-            </ComponentDisplay>
-            <ComponentDisplay name="AltButton">
-                <AltButton/>
-            </ComponentDisplay>
-            <ComponentDisplay name ="SecondayButton">
-                <SecondayButton/>
-            </ComponentDisplay>
-             <ComponentDisplay name ="TertiaryButton">
-                <TertiaryButton/>
-            </ComponentDisplay>
-            <ComponentDisplay name ="AltActionButton">
-                <AltActionButton/>
-            </ComponentDisplay>
-          </Grid>
-        </Grid>
-      </Container>
-    </ThemeProvider>
-  );
+    return (
+        <ThemeProvider theme={theme}>
+            <NavBar />
+            <Container
+                maxWidth="xl"
+                sx={{
+                    pt: 4,
+                    pb: 8,
+                    px: { xs: 4, sm: 4, md: 4, lg: 3 },
+                }}
+            >
+                <Grid container spacing={3}>
+                    <Grid item xs={12} md={3}>
+                        <ComponentDisplay name="CallToActionButton">
+                            <CallToActionButton />
+                        </ComponentDisplay>
+                        <ComponentDisplay name="AltButton">
+                            <AltButton/>
+                        </ComponentDisplay>
+                        <ComponentDisplay name ="SecondayButton">
+                            <SecondayButton/>
+                        </ComponentDisplay>
+                        <ComponentDisplay name ="TertiaryButton">
+                            <TertiaryButton/>
+                        </ComponentDisplay>
+                        <ComponentDisplay name ="AltActionButton">
+                            <AltActionButton/>
+                        </ComponentDisplay>
+                    </Grid>
+                    <Grid item xs={12} md={3}>
+                        <ComponentDisplay name="BroadServiceProvider">
+                            <BroadServiceProvider/>
+                        </ComponentDisplay>
+                    </Grid>
+                </Grid>
+            </Container>
+        </ThemeProvider>
+    );
 }
