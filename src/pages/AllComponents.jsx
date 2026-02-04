@@ -8,6 +8,7 @@ import SecondayButton from '../components/baseComponents/SecondaryButton';
 import TertiaryButton from '../components/baseComponents/TertiaryButton';
 import AltActionButton from '../components/baseComponents/AltActionButton';
 import BroadServiceProvider from '../components/baseComponents/BroadServiceProvider';
+import SpecialistLabel from '../components/baseComponents/SpecialistLabel';
 const ComponentDisplay = ({ children }) => (
     <Box>
         <Box
@@ -57,6 +58,10 @@ export default function AllComponents() {
                         <ComponentDisplay name="BroadServiceProvider">
                             <BroadServiceProvider/>
                         </ComponentDisplay>
+                        <ComponentDisplay name="SpecialistLabel">
+                            <SpecialistLabel/>
+                        </ComponentDisplay>
+
                     </Grid>
                 </Grid>
             </Container>

@@ -13,6 +13,11 @@ const BroadServiceProvider = () => {
                     pb: '16px',
                     pl : '24px',
                     gap: '4px',
+                   '& .MuiChip-label': {
+                        overflow: 'visible',
+                        textOverflow: 'unset',
+                        whiteSpace: 'nowrap',
+                    },
                     backgroundColor: '#66CCFF',
                     border: 'rounded',
                     borderRadius: '9999px'
