@@ -2,13 +2,16 @@ import { Container, Box, Grid } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../theme';
 import NavBar from '../components/NavBar';
-import CallToActionButton from '../components/baseComponents/CallToActionButton';
-import AltButton from '../components/baseComponents/AltButton';
-import SecondayButton from '../components/baseComponents/SecondaryButton';
-import TertiaryButton from '../components/baseComponents/TertiaryButton';
-import AltActionButton from '../components/baseComponents/AltActionButton';
-import BroadServiceProvider from '../components/baseComponents/BroadServiceProvider';
-import SpecialistLabel from '../components/baseComponents/SpecialistLabel';
+import {
+    CallToActionButton,
+    AltButton,
+    SecondaryButton,
+    TertiaryButton,
+    AltActionButton,
+    BroadServiceProvider,
+    SpecialistLabel,
+    FilterRemove,
+} from '../components/baseComponents';
 const ComponentDisplay = ({ children }) => (
     <Box>
         <Box
@@ -44,8 +47,8 @@ export default function AllComponents() {
                         <ComponentDisplay name="AltButton">
                             <AltButton/>
                         </ComponentDisplay>
-                        <ComponentDisplay name ="SecondayButton">
-                            <SecondayButton/>
+                        <ComponentDisplay name ="SecondaryButton">
+                            <SecondaryButton/>
                         </ComponentDisplay>
                         <ComponentDisplay name ="TertiaryButton">
                             <TertiaryButton/>
@@ -61,7 +64,9 @@ export default function AllComponents() {
                         <ComponentDisplay name="SpecialistLabel">
                             <SpecialistLabel/>
                         </ComponentDisplay>
-
+                        <ComponentDisplay name="FilterRemove">
+                            <FilterRemove/>
+                        </ComponentDisplay>
                     </Grid>
                 </Grid>
             </Container>

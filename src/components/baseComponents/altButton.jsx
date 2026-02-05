@@ -1,7 +1,6 @@
 import { Button } from '@mui/material';
 import VpnKeyOutlinedIcon from '@mui/icons-material/VpnKeyOutlined';
 const AltButton = () =>{
-    console.log("uou see me");
     return(
         <>
             <Button

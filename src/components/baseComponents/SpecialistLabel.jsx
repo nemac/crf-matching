@@ -6,11 +6,6 @@ const SpecialistLabel = () => {
             <Chip
                 sx ={{
                     width: '119px',
-                    '& .MuiChip-label': {
-                        overflow: 'visible',
-                        textOverflow: 'unset',
-                        whiteSpace: 'nowrap',
-                    },
                     height: '51px',
                     pt: '16px',
                     pr: '24px',
@@ -18,6 +13,16 @@ const SpecialistLabel = () => {
                     pl : '24px',
                     gap: '4px',
                     backgroundColor: '#FFDDBB',
+                    '& .MuiChip-label': {
+                        overflow: 'visible',
+                        textOverflow: 'unset',
+                        whiteSpace: 'nowrap',
+                        fontFamily: 'Roboto',
+                        fontWeight: 700,
+                        color: '#1F2C35',
+                        fontSize: 16,
+                    },
+
                     border: 'rounded',
                     borderRadius: '9999px'
                 }}

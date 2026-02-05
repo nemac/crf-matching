@@ -1,7 +1,6 @@
 import {Chip} from '@mui/material';
 
 const BroadServiceProvider = () => {
-    console.log("awooo");
     return(
         <>
             <Chip
@@ -13,16 +12,21 @@ const BroadServiceProvider = () => {
                     pb: '16px',
                     pl : '24px',
                     gap: '4px',
-                   '& .MuiChip-label': {
+                    backgroundColor: '#66CCFF',
+                    '& .MuiChip-label': {
                         overflow: 'visible',
                         textOverflow: 'unset',
                         whiteSpace: 'nowrap',
+
+                        fontFamily: 'Roboto',
+                        fontWeight: '700',
+                        fontSize: 16,
+                        color: '#0066CC',
                     },
-                    backgroundColor: '#66CCFF',
                     border: 'rounded',
                     borderRadius: '9999px'
                 }}
-                label ="Border service provider" />    
+                label ="Broad service provider" />    
         </>
     );
 };
