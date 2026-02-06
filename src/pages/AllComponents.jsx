@@ -11,6 +11,8 @@ import {
     BroadServiceProvider,
     SpecialistLabel,
     FilterRemove,
+    FilterRemoveTwo,
+    HomeDefault,
 } from '../components/baseComponents';
 const ComponentDisplay = ({ children }) => (
     <Box>
@@ -66,6 +68,12 @@ export default function AllComponents() {
                         </ComponentDisplay>
                         <ComponentDisplay name="FilterRemove">
                             <FilterRemove/>
+                        </ComponentDisplay>
+                        <ComponentDisplay>
+                            <FilterRemoveTwo/>
+                        </ComponentDisplay>
+                        <ComponentDisplay>
+                            <HomeDefault/>
                         </ComponentDisplay>
                     </Grid>
                 </Grid>

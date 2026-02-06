@@ -1,6 +1,6 @@
 import Chip from '@mui/material/Chip';
 
-const FilterRemove = () =>{
+const FilterRemoveTwo = () =>{
     const handleDelete = () => {
         console.info('You clicked the delete icon.');
     };
@@ -8,13 +8,12 @@ const FilterRemove = () =>{
         <>
             <Chip 
                 sx = {{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    width: '325px',
+                    width: '136px',
                     height: '31px',
                     borderRadius: '9999px',
                     pt: '6px',
+                    pr: '14px',
+                    pl: '14px',
                     pb: '6px',
                     gap: '9px',
                     backgroundColor: '#FFDDBB',
@@ -24,6 +23,10 @@ const FilterRemove = () =>{
                         color: '#2D3F5D',
                         fontWeight: 400,
                         fontSize: 16,
+                        overflow: 'visible',
+                        textOverflow: 'unset',
+                        whiteSpace: 'nowrap',
+
                     },
                     '& .MuiChip-deleteIcon':{
                         color: '#2D3F5D',
@@ -37,5 +40,5 @@ const FilterRemove = () =>{
     );
 };
 
-export default FilterRemove;
+export default FilterRemoveTwo;
 
