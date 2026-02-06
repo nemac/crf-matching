@@ -13,6 +13,7 @@ import {
     FilterRemove,
     FilterRemoveTwo,
     HomeDefault,
+    HomeActive,
 } from '../components/baseComponents';
 const ComponentDisplay = ({ children }) => (
     <Box>
@@ -74,6 +75,9 @@ export default function AllComponents() {
                         </ComponentDisplay>
                         <ComponentDisplay>
                             <HomeDefault/>
+                        </ComponentDisplay>
+                        <ComponentDisplay>
+                            <HomeActive/>
                         </ComponentDisplay>
                     </Grid>
                 </Grid>

@@ -8,3 +8,4 @@ export { default as SpecialistLabel } from './SpecialistLabel';
 export {default as FilterRemove} from './FilterRemove';
 export {default as FilterRemoveTwo} from './FilterRemoveTwo';
 export {default as HomeDefault} from './HomeDefault';
+export {default as HomeActive} from './HomeActive';
