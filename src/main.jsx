@@ -17,6 +17,7 @@ import WorkExamplePage from './pages/WorkExamplePage.jsx';
 import AllComponents from './pages/AllComponents.jsx';
 import { DevSupport } from '@react-buddy/ide-toolbox';
 import { ComponentPreviews, useInitial } from './dev/index.js';
+import HomePage from './pages/HomePage.jsx';
 
 ReactGA.initialize('G-V5H6STTJJS'); // Replace with your GA Measurement ID
 ReactGA.send('pageview'); // Send initial pageview
@@ -24,7 +25,7 @@ ReactGA.send('pageview'); // Send initial pageview
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Registry />,
+    element: <HomePage />,
   },
   {
     path: '/Registry',
