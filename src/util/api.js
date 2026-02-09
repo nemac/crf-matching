@@ -8,6 +8,8 @@ Airtable.configure({
   endpointUrl: 'https://api.airtable.com',
   apiKey: __AIRTABLE_TOKEN__,
 });
+console.log("__AIRTABLE_BASE__", typeof __AIRTABLE_BASE__, __AIRTABLE_BASE__);
+
 const base = Airtable.base(__AIRTABLE_BASE__);
 
 /// configuration ///
