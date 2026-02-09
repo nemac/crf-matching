@@ -1,8 +1,15 @@
 import { useState, useLayoutEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
-import { CssBaseline, Stack, Container, Box, Typography, styled } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+import {
+  CssBaseline,
+  Stack,
+  Container,
+  Box,
+  Typography,
+  styled,
+} from '@mui/material';
+import Grid from '@mui/material/Grid';
 
 import theme from '../theme';
 import PlaceIcon from '@mui/icons-material/Place';
@@ -21,7 +28,7 @@ const sections = [
   {
     title: 'Our top 3 services',
     objKey: 'org_services_provided_top',
-  },  
+  },
   {
     title: 'Services Provided',
     objKey: 'activities',
@@ -41,7 +48,7 @@ const sections = [
   {
     title: 'Where We Work',
     objKey: 'state',
-  },  
+  },
 ];
 
 const ContactAndTrainingBox = styled(Grid)(({ theme }) => ({
@@ -52,7 +59,7 @@ const ContactAndTrainingBox = styled(Grid)(({ theme }) => ({
 
 function PractitionerPageLoaded({ practitioner }) {
   const currentParams = window.location.search || '';
-  
+
   const params = new URLSearchParams(window.location.search);
   const filters = {
     activities: [],
@@ -61,9 +68,9 @@ function PractitionerPageLoaded({ practitioner }) {
     size: [],
     state: [],
   };
-  
-    // Parse each filter type
-  Object.keys(filters).forEach((key) => {
+
+  // Parse each filter type
+  Object.keys(filters).forEach(key => {
     const param = params.get(key);
     if (param) {
       filters[key] = param.split(',');
@@ -80,33 +87,26 @@ function PractitionerPageLoaded({ practitioner }) {
 
       <Container
         maxWidth="xl"
-        sx={{ 
+        sx={{
           p: 3,
           pb: 8,
           cursor: 'default',
           px: { xs: 4, sm: 4, md: 4, lg: 4 },
         }}
       >
-        <PractitionerTypeChip 
-          type={category} 
+        <PractitionerTypeChip
+          type={category}
           label={category}
           list={specialty}
-          size={'large'}/>
+          size="large"
+        />
 
-        <Typography
-          variant="h3"
-          fontWeight={800} 
-          sx={{ mb: 3 }}>
+        <Typography variant="h3" fontWeight={800} sx={{ mb: 3 }}>
           {practitioner.org} {specialty}
         </Typography>
 
         {/* Contact & Training Row */}
-        <Grid
-          container
-          spacing={1}
-          gap={1}
-          sx={{ mb: 2 }}
-        >
+        <Grid container spacing={1} gap={1} sx={{ mb: 2 }}>
           {/* Contact */}
           <ContactAndTrainingBox
             xs={12}
@@ -117,29 +117,17 @@ function PractitionerPageLoaded({ practitioner }) {
               border: `1px solid ${theme.palette.primary.midBlue}`,
             }}
           >
-            <SectionHeader title="Contact"></SectionHeader>
+            <SectionHeader title="Contact" />
             <Stack spacing={0.5} sx={{ mt: 1 }}>
-              <ContactRow
-                type="website"
-                practitioner={practitioner}
-              ></ContactRow>
-              <ContactRow
-                type="email"
-                practitioner={practitioner}
-              ></ContactRow>
-              <ContactRow
-                type="phone"
-                practitioner={practitioner}
-              ></ContactRow>
-              <ContactRow
-                type="linkedIn"
-                practitioner={practitioner}
-              ></ContactRow>              
+              <ContactRow type="website" practitioner={practitioner} />
+              <ContactRow type="email" practitioner={practitioner} />
+              <ContactRow type="phone" practitioner={practitioner} />
+              <ContactRow type="linkedIn" practitioner={practitioner} />
             </Stack>
           </ContactAndTrainingBox>
         </Grid>
         <Box>
-          <SectionHeader title="Organization Location"></SectionHeader>
+          <SectionHeader title="Organization Location" />
           <Box
             sx={{
               pb: 1,
@@ -149,11 +137,12 @@ function PractitionerPageLoaded({ practitioner }) {
               display: 'flex',
             }}
           >
-            <PlaceIcon sx={{ mr: 1 }} /> {practitioner.org_city || 'N/A'}, {practitioner.org_state || 'N/A'}
+            <PlaceIcon sx={{ mr: 1 }} /> {practitioner.org_city || 'N/A'},{' '}
+            {practitioner.org_state || 'N/A'}
           </Box>
-        </Box>        
+        </Box>
         <Box>
-          <SectionHeader title="Organization Description"></SectionHeader>
+          <SectionHeader title="Organization Description" />
           <Box
             sx={{
               pb: 1,
@@ -162,9 +151,9 @@ function PractitionerPageLoaded({ practitioner }) {
           >
             {practitioner.info || 'N/A'}
           </Box>
-        </Box>      
+        </Box>
         <Box>
-          <SectionHeader title="Community Specializations"></SectionHeader>
+          <SectionHeader title="Community Specializations" />
           <Box
             sx={{
               pb: 1,
@@ -175,7 +164,7 @@ function PractitionerPageLoaded({ practitioner }) {
           </Box>
         </Box>
         <Box>
-          <SectionHeader title="Organization Type"></SectionHeader>
+          <SectionHeader title="Organization Type" />
           <Box
             sx={{
               pb: 1,
@@ -204,11 +193,10 @@ function PractitionerPageLoaded({ practitioner }) {
               title={data.title}
               objKey={data.objKey}
               key={index}
-            ></MatchSection>
+            />
           );
         })}
         {/* <WorkExamples practitioner={practitioner} filters={currentParams}/> */}
-
       </Container>
     </ThemeProvider>
   );

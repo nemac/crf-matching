@@ -15,8 +15,6 @@ import RequestUpdatePage from './pages/RequestUpdatePage.jsx';
 import UpdateDataPage from './pages/UpdateDataPage.jsx';
 import WorkExamplePage from './pages/WorkExamplePage.jsx';
 import AllComponents from './pages/AllComponents.jsx';
-import { DevSupport } from '@react-buddy/ide-toolbox';
-import { ComponentPreviews, useInitial } from './dev/index.js';
 import HomePage from './pages/HomePage.jsx';
 
 ReactGA.initialize('G-V5H6STTJJS'); // Replace with your GA Measurement ID
@@ -70,12 +68,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <DevSupport
-        ComponentPreviews={ComponentPreviews}
-        useInitialHook={useInitial}
-      >
-        <RouterProvider router={router} />
-      </DevSupport>
+      <RouterProvider router={router} />
     </ThemeProvider>
   </React.StrictMode>
 );
