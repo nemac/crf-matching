@@ -16,53 +16,79 @@ import Button from '@mui/material/Button';
 import Logo from '../components/Logo.jsx';
 import theme from '../theme';
 import { searchParamsToFilters } from '../util/urlStateManagement';
+import HeaderLink from './baseComponents/HeaderLink.jsx';
 
 const drawerWidth = 240;
 const navItems = [
   {
     name: 'Registry of Adaptation Practitioners',
     url: '/Registry',
-    matches : ['/Registry', '/practitionerworkexamplepage', '/practitioner'],
-  }, {
+    matches: ['/Registry', '/practitionerworkexamplepage', '/practitioner'],
+  },
+  {
     name: 'How to apply',
     url: '/Howtoapply',
     matches: ['/Howtoapply'],
-  },{
+  },
+  {
     name: 'About',
     url: '/About',
     matches: ['/About'],
-  }, 
-]
+  },
+];
 
 export default function NavBar() {
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [pageSelect, setPageSelect] = useState(location.pathname || '/Registry');
+  const [pageSelect, setPageSelect] = useState(
+    location.pathname || '/Registry'
+  );
 
   const handleDrawerToggle = () => {
-    setMobileOpen((prevState) => !prevState);
+    setMobileOpen(prevState => !prevState);
   };
 
   const params = window.location.search || '';
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center', color: 'primary.main', }}>
+    <Box
+      onClick={handleDrawerToggle}
+      sx={{ textAlign: 'center', color: 'primary.main' }}
+    >
       <Logo />
       <Divider />
       <List>
         {navItems.map((item, i) => (
-          <ListItem key={i} to={item.url + params} component={Link} disablePadding onClick={() => {setPageSelect(`${item.url}`);}}>
-            <ListItemButton >
+          <ListItem
+            key={i}
+            to={item.url + params}
+            component={Link}
+            disablePadding
+            onClick={() => {
+              setPageSelect(`${item.url}`);
+            }}
+          >
+            <ListItemButton>
               <ListItemText
-                disableTypography={true}
+                disableTypography
                 primary={item.name}
-                 sx={{ 
+                sx={{
                   px: 2.5,
                   py: 0.5,
-                  color: 'primary.main', 
-                  textTransform: 'capitalize', 
-                  fontSize: '1rem', 
-                  backgroundColor: item.matches.includes(`/${pageSelect?.split('?')[0]?.split('#')[0]?.split('/')[1]}`) ? 'primary.cellHoverBg' : 'unset',
-                  textDecoration: item.matches.includes(`/${pageSelect?.split('?')[0]?.split('#')[0]?.split('/')[1]}`) ?  'none' : 'none' }}/>
+                  color: 'primary.main',
+                  textTransform: 'capitalize',
+                  fontSize: '1rem',
+                  backgroundColor: item.matches.includes(
+                    `/${pageSelect?.split('?')[0]?.split('#')[0]?.split('/')[1]}`
+                  )
+                    ? 'primary.cellHoverBg'
+                    : 'unset',
+                  textDecoration: item.matches.includes(
+                    `/${pageSelect?.split('?')[0]?.split('#')[0]?.split('/')[1]}`
+                  )
+                    ? 'none'
+                    : 'none',
+                }}
+              />
             </ListItemButton>
           </ListItem>
         ))}
@@ -71,11 +97,15 @@ export default function NavBar() {
   );
 
   return (
-    <Box sx={{ display: 'flex', color: 'primary.main', }}>
-      <AppBar position="static" component="nav" sx={{ bgcolor: 'primary.white' }}>
+    <Box sx={{ display: 'flex', color: 'primary.main' }}>
+      <AppBar
+        position="static"
+        component="nav"
+        sx={{ bgcolor: 'primary.white' }}
+      >
         <Toolbar>
           <IconButton
-            color='primary.main'
+            color="primary.main"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
@@ -86,28 +116,37 @@ export default function NavBar() {
           <Typography
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1, alignContent: 'center', display: { xs: 'none', sm: 'block', color: 'black' } }}
+            sx={{
+              flexGrow: 1,
+              alignContent: 'center',
+              display: { xs: 'none', sm: 'block', color: 'black' },
+            }}
           >
-            <Logo onClick={() => {setPageSelect('/Registry');}}/>
+            <Logo
+              onClick={() => {
+                setPageSelect('/Registry');
+              }}
+            />
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item, i) => (
-              <Button
-                component={Link}
-                to={item.url + params}
-                key={i}
-                onClick={() => {setPageSelect(`${item.url}`);}}
-                sx={{ 
-                  borderRadius: 9999,
-                  px: 2.5,
-                  marginRight: theme.spacing(2),
-                  color: 'primary.main', 
-                  textTransform: 'capitalize', 
-                  fontSize: '1rem', 
-                  backgroundColor: item.matches.includes(`/${pageSelect?.split('?')[0]?.split('#')[0]?.split('/')[1]}`) ? 'primary.cellHoverBg' : 'unset',
-                  textDecoration: item.matches.includes(`/${pageSelect?.split('?')[0]?.split('#')[0]?.split('/')[1]}`) ?  'none' : 'none' }}>
-                {item.name}
-              </Button>
+              <HeaderLink name={item.name} url={item.url + params} key={i} />
+              // <Button
+              //   component={Link}
+              //   to={item.url + params}
+              //   key={i}
+              //   onClick={() => {setPageSelect(`${item.url}`);}}
+              //   sx={{
+              //     borderRadius: 9999,
+              //     px: 2.5,
+              //     marginRight: theme.spacing(2),
+              //     color: 'primary.main',
+              //     textTransform: 'capitalize',
+              //     fontSize: '1rem',
+              //     backgroundColor: item.matches.includes(`/${pageSelect?.split('?')[0]?.split('#')[0]?.split('/')[1]}`) ? 'primary.cellHoverBg' : 'unset',
+              //     textDecoration: item.matches.includes(`/${pageSelect?.split('?')[0]?.split('#')[0]?.split('/')[1]}`) ?  'none' : 'none' }}>
+              //   {item.name}
+              // </Button>
             ))}
           </Box>
         </Toolbar>
@@ -122,7 +161,10 @@ export default function NavBar() {
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            '& .MuiDrawer-paper': {
+              boxSizing: 'border-box',
+              width: drawerWidth,
+            },
           }}
         >
           {drawer}

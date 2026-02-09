@@ -1,12 +1,12 @@
 import { Chip } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-const HomeActive = props => {
+const HeaderLink = props => {
+  const { name, url, matches } = props;
   return (
     <>
       <Chip
         sx={{
-          width: '107px',
           height: '59px',
           pt: '12px',
           pr: '24px',
@@ -28,7 +28,7 @@ const HomeActive = props => {
           border: 'rounded',
           borderRadius: '99px',
         }}
-        label="Home"
+        label={name || 'Default'}
         component={Link}
         to="/"
         clickable
@@ -36,4 +36,4 @@ const HomeActive = props => {
     </>
   );
 };
-export default HomeActive;
+export default HeaderLink;
