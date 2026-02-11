@@ -1,14 +1,15 @@
 
 import Box from '@mui/material/Box';
-import csciLogo from '../assets/Registry_Logo_primary_RGB.jpg';
+import csciLogo from '../assets/Registry_Logo_new.png';
 import theme from '../theme.jsx';
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Link } from 'react-router-dom';
+import { Typography } from '@mui/material';
 
 
 export default function Logo () {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const logoWidth = isSmallScreen ? 150 : 180;
+  const logoWidth = isSmallScreen ? 56 : 86;
   const params = window.location.search || '';
   return (
     <Box
@@ -17,7 +18,8 @@ export default function Logo () {
             width: '100%',
             alignItems: 'center',
             justifyContent: {xs: 'center', sm: 'flex-start', md: 'flex-start'},
-            p: 2
+            p: 2,
+                gap:1
           }}
         >
           <Link to={'/Registry' + params}>
@@ -31,6 +33,9 @@ export default function Logo () {
               }}
             />
           </Link>
+            <Typography  width={321} height={23}>
+                Registry of Adaptation Practitioners
+            </Typography>
         </Box>
   )
 }

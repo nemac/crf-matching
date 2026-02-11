@@ -7,13 +7,7 @@ const HeaderLink = props => {
     <>
       <Chip
         sx={{
-          height: '59px',
-          pt: '12px',
-          pr: '24px',
-          pb: '12px',
-          pl: '24px',
-          gap: '10px',
-          backgroundColor: '#F1ECE4',
+            backgroundColor :'transparent',
           '& .MuiChip-label': {
             overflow: 'visible',
             textOverflow: 'unset',
@@ -21,16 +15,16 @@ const HeaderLink = props => {
             fontFamily: 'Roboto',
             fontWeight: 500,
             fontSize: 16,
-            '&:hover': {
-              textDecoration: 'underline',
-            },
           },
           border: 'rounded',
+          '&:hover': {
+              backgroundColor: '#F1ECE4',
+        },
           borderRadius: '99px',
         }}
         label={name || 'Default'}
         component={Link}
-        to="/"
+        to={url}
         clickable
       />
     </>
