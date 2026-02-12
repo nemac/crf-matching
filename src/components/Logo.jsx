@@ -19,7 +19,7 @@ export default function Logo () {
                 alignItems: 'center',
                 justifyContent: {xs: 'center', sm: 'flex-start', md: 'flex-start'},
                 p: 2,
-                gap:1
+                gap:1,
             }}
         >
             <Link to={'/Registry' + params}>
@@ -27,22 +27,13 @@ export default function Logo () {
                     src={csciLogo}
                     alt="Registry of Adaptation Practitioners Logo"
                     style={{
-                        display: 'block',
                         margin: '0 auto',
                         height: 'auto',
                         width: `${logoWidth}px`,
                     }}
                 />
             </Link>
-            <Typography  
-                sx={{
-                    width: 321,
-                    fontFamily: 'Roboto',
-                    fontWeight: 600,
-                    fontSize: 20,
-                    color:'#2D3F5D',
-                }}
-            >
+            <Typography  width={321} height={23}>
                 Registry of Adaptation Practitioners
             </Typography>
         </Box>

@@ -1,11 +1,12 @@
-import { Button} from '@mui/material';
+import { Button,Typography} from '@mui/material';
 
-const AltActionButton= () =>{
+const AltActionButton= props =>{
+    const {text,textSx} = props
     return (
         <>
             <Button
                 sx={{
-                    width: '92px',
+                    width: 'auto',
                     height: '37px',
                     pt: '8px',
                     pb: '8px',
@@ -15,7 +16,10 @@ const AltActionButton= () =>{
                     },
                 }}
             >
-                Action
+                <Typography sx = {textSx}>
+                    {text ?? "Nan"}
+                </Typography>
+
             </Button>
         </>
     ); 
