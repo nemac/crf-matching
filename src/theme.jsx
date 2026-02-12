@@ -1,12 +1,8 @@
-
-import {
-  createTheme,
-  responsiveFontSizes,
-} from "@mui/material/styles";
+import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 
 let theme = createTheme({
   typography: {
-    fontFamily: 'sans-serif',
+    fontFamily: 'Roboto',
   },
   palette: {
     primary: {
@@ -28,8 +24,8 @@ let theme = createTheme({
       matchGreen: '#677D66',
       noMatchRed: '#FC8A79',
       cellHoverBg: '#F1ECE4',
-    }
-  }
+    },
+  },
 });
 
 theme = responsiveFontSizes(theme);
