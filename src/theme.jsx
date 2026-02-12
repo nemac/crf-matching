@@ -2,7 +2,7 @@ import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 
 let theme = createTheme({
   typography: {
-    fontFamily: 'Roboto',
+    fontFamily: 'Roboto, sans-serif',
   },
   palette: {
     primary: {
