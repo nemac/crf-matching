@@ -1,11 +1,11 @@
 export { default as CallToActionButton } from './CallToActionButton';
-export { default as AltButton } from './AltButton';
+export { default as AltButton } from './AltButton.jsx';
 export { default as SecondaryButton } from './SecondaryButton';
 export { default as TertiaryButton } from './TertiaryButton';
 export { default as AltActionButton } from './AltActionButton';
 export { default as BroadServiceProvider } from './BroadServiceProvider';
 export { default as SpecialistLabel } from './SpecialistLabel';
-export {default as FilterRemove} from './FilterRemove';
-export {default as FilterRemoveTwo} from './FilterRemoveTwo';
-export {default as HomeDefault} from './HomeDefault';
-export {default as HomeActive} from './HomeActive';
+export { default as FilterRemove } from './FilterRemove';
+export { default as FilterRemoveTwo } from './FilterRemoveTwo';
+export { default as HomeDefault } from './HomeDefault';
+export { default as HomeActive } from './HomeActive';
