@@ -287,7 +287,7 @@ export default function AboutPage() {
                     }}
                   >
                     <strong>Submit Application</strong>: Applicants should
-                    complete the online form, detailing your organizations
+                    complete the online form, detailing your organization&apos;s
                     qualifications, experience, and areas of specialization.
                   </Typography>
                 </Box>
