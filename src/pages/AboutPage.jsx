@@ -280,7 +280,7 @@ export default function AboutPage() {
                   />
                   <Typography
                     sx={{
-                      fontWeight: 500,
+                      fontWeight: 400,
                       fontSize: '18px',
                       lineHeight: '21px',
                       color: '#101828',
@@ -305,7 +305,7 @@ export default function AboutPage() {
                   />
                   <Typography
                     sx={{
-                      fontWeight: 500,
+                      fontWeight: 400,
                       fontSize: '18px',
                       lineHeight: '21px',
                       color: '#101828',
@@ -330,7 +330,7 @@ export default function AboutPage() {
                   />
                   <Typography
                     sx={{
-                      fontWeight: 500,
+                      fontWeight: 400,
                       fontSize: '18px',
                       lineHeight: '21px',
                       color: '#101828',
