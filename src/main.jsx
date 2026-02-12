@@ -16,59 +16,65 @@ import UpdateDataPage from './pages/UpdateDataPage.jsx';
 import WorkExamplePage from './pages/WorkExamplePage.jsx';
 import AllComponents from './pages/AllComponents.jsx';
 import HomePage from './pages/HomePage.jsx';
+import ComparePractitioners from './pages/ComparePractitioners.jsx'
 
 ReactGA.initialize('G-V5H6STTJJS'); // Replace with your GA Measurement ID
 ReactGA.send('pageview'); // Send initial pageview
 
 const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <HomePage />,
-  },
-  {
-    path: '/Registry',
-    element: <Registry />,
-  },
-  {
-    path: '/practitioner/:practitionerId',
-    element: <PractitionerPage />,
-  },
-  // {
-  // path: '/practitionerworkexamplepage/:practitionerId:workExampleId',
-  // path: '/practitionerworkexamplepage/:practitionerId',
-  // element: <PractitionerWorkExamplePage />,
-  // },
-  {
-    path: '/About',
-    element: <AboutPage />,
-  },
-  {
-    path: '/Howtoapply',
-    element: <HowToApplyPage />,
-  },
-  {
-    path: '/request-update',
-    element: <RequestUpdatePage />,
-  },
-  {
-    path: '/update-data',
-    element: <UpdateDataPage />,
-  },
-  {
-    path: '/work-example',
-    element: <WorkExamplePage />,
-  },
-  {
-    path: '/all-components',
-    element: <AllComponents />,
-  },
+    {
+        path: '/',
+        element: <HomePage />,
+    },
+    {
+        path: '/Registry',
+        element: <Registry />,
+    },
+    {
+        path: '/Practitioner',
+        element: <PractitionerPage />,
+    },
+    {
+        path: '/ComparePractitioners',
+        element: <ComparePractitioners/>
+    },
+    // {
+    // path: '/practitionerworkexamplepage/:practitionerId:workExampleId',
+    // path: '/practitionerworkexamplepage/:practitionerId',
+    // element: <PractitionerWorkExamplePage />,
+    // },
+    {
+        path: '/About',
+        element: <AboutPage />,
+    },
+    {
+        path: '/Howtoapply',
+        element: <HowToApplyPage />,
+    },
+    {
+        path: '/request-update',
+        element: <RequestUpdatePage />,
+    },
+    {
+        path: '/update-data',
+        element: <UpdateDataPage />,
+    },
+    {
+        path: '/work-example',
+        element: <WorkExamplePage />,
+    },
+    {
+        path: '/all-components',
+                    textDecoration: 'underline',
+        element: <AllComponents />,
+    },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <RouterProvider router={router} />
-    </ThemeProvider>
-  </React.StrictMode>
+    <React.StrictMode>
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <RouterProvider router={router} />
+        </ThemeProvider>
+    </React.StrictMode>
 );

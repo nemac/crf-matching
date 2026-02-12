@@ -1,13 +1,16 @@
 import { Button,Typography} from '@mui/material';
+import {Link as RouterLink} from 'react-router-dom';
 
 const AltActionButton= props =>{
-    const {text,textSx} = props
+    const {text,textSx, to} = props
     return (
         <>
             <Button
+                component={to? RouterLink :"button"}
+                to={to}
                 sx={{
                     width: 'auto',
-                    height: '37px',
+                    height: '32px',
                     pt: '8px',
                     pb: '8px',
                     backgroundColor: '#66CCFF',

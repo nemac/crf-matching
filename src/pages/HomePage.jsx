@@ -14,17 +14,35 @@ export default function HomePage() {
             <Container maxWidth="xl">
                 <Stack direction="column" spacing={8} sx={{ mt: 4 }}>
                     <Box sx={{ textAlign: 'center' }}>
-                        <Typography>
-                            Browse all {totalPractitioners} practitioners section
+                        <Typography
+                            sx= {{
+                                fontFamily: 'Roboto',
+                                fontSize: '24px',
+                                fontWeight: 500,
+                        }}>
+                            Browse all{" "} 
+                            <Box component="span"
+                            sx={{
+                                    fontFamily:'Roboto',
+                                    fontWeight:700,
+                                    fontSize:'24px',
+                                    color:'#003366',
+                                }}
+                            >
+                                {totalPractitioners}
+                            </Box> 
+                            {" "}practitioners section
                         </Typography>
-                        <Typography>
-                            A simple, streamlined process to connect you with
+                       {/* Mid below*/} 
+                        <Typography sx={{p:'10px'}}>
+                            A simple, streamlined process to connect you with the expertise you need.
                         </Typography>
-                        <AltActionButton text="Browse all Practitioners"textSx ={{
+                       {/* Button below should be changed once the main practitioners page is done*/} 
+                        <AltActionButton to="/ComparePractitioners" text="Browse all Practitioners"textSx ={{
                             fontWeight: 400,
                             fontFamily: 'Roboto',
                             fontSize: '14px',
-                            height: 21
+                            color:'#2D3F5D',
 
                         }}
                         />
