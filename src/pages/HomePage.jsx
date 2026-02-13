@@ -19,10 +19,10 @@ export default function HomePage() {
                                 fontFamily: 'Roboto',
                                 fontSize: '24px',
                                 fontWeight: 500,
-                        }}>
+                            }}>
                             Browse all{" "} 
                             <Box component="span"
-                            sx={{
+                                sx={{
                                     fontFamily:'Roboto',
                                     fontWeight:700,
                                     fontSize:'24px',
@@ -33,11 +33,11 @@ export default function HomePage() {
                             </Box> 
                             {" "}practitioners section
                         </Typography>
-                       {/* Mid below*/} 
+                        {/* Mid below*/} 
                         <Typography sx={{p:'10px'}}>
                             A simple, streamlined process to connect you with the expertise you need.
                         </Typography>
-                       {/* Button below should be changed once the main practitioners page is done*/} 
+                        {/* Button below should be changed once the main practitioners page is done*/} 
                         <AltActionButton to="/ComparePractitioners" text="Browse all Practitioners"textSx ={{
                             fontWeight: 400,
                             fontFamily: 'Roboto',
@@ -46,8 +46,61 @@ export default function HomePage() {
 
                         }}
                         />
+                    </Box >
+                    <Box 
+                        sx={{
+                            backgroundColor:'purple',
+                            height:'418px',
+                            alignItems:'center',
+                            display:'flex',
+                            justifyContent:'center',
+                        }}
+                    >
+                        <Box sx={{ 
+                            height:'80%',
+                            width:'80%',
+                            backgroundColor: 'orange',
+                        }}
+                        >
+                            <Typography
+                                sx={{
+                                    textAlign:'center',
+                                    pt:3,
+                                    fontWeight:700,
+                                    fontSize:'24px',
+                                    fontFamily:'Roboto',
+                                    color:'#101828',
+                                }}
+                            >
+                                How the Registry Works
+                            </Typography>
+                            <Typography
+                                sx={{
+                                    textAlign:'center',
+                                    fontWeight:400,
+                                    fontSize:'18px',
+                                    fontFamily:'Roboto',
+                                    color:'#56657D',
+                                    pb:10,
+
+                                }}
+                            >
+                                A simple, streamlined process to connect you with the expertise you need.
+                            </Typography>
+                            <Box 
+                                sx={{
+                                    display:'flex',
+                                    alignItems:'center',
+                                    justifyContent:'center',
+
+                                }}
+                            >
+                                3 boxes will go here
+                            </Box>
+
+
+                        </Box>
                     </Box>
-                    <Box sx={{ textAlign: 'center' }}>How the Registry Works</Box>
                     <Box sx={{ textAlign: 'center' }}>
                         The Registry includes two categories of practitioners
                     </Box>
