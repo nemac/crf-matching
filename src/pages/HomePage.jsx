@@ -1,4 +1,5 @@
 import { Box, Container, Stack, Typography } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import NavBar from '../components/NavBar.jsx';
 import { fetchTotalPractitionerCount } from '../util/api.js';
 import { useEffect,useState } from 'react';
@@ -47,9 +48,9 @@ export default function HomePage() {
                         }}
                         />
                     </Box >
+                    {/*How registry works*/}
                     <Box 
                         sx={{
-                            backgroundColor:'purple',
                             height:'418px',
                             alignItems:'center',
                             display:'flex',
@@ -59,9 +60,13 @@ export default function HomePage() {
                         <Box sx={{ 
                             height:'80%',
                             width:'80%',
-                            backgroundColor: 'orange',
+                            backgroundColor: '#F9FAFB',
+                            border:'2px solid',
+                            borderColor:'#E1F5FE',
+                            borderRadius:2
                         }}
                         >
+                            {/*This has the two sentences before the 3 boxes */}
                             <Typography
                                 sx={{
                                     textAlign:'center',
@@ -87,15 +92,52 @@ export default function HomePage() {
                             >
                                 A simple, streamlined process to connect you with the expertise you need.
                             </Typography>
+                            {/*nested boxes will hold the 3 boxes within the how registry works*/}
                             <Box 
                                 sx={{
                                     display:'flex',
                                     alignItems:'center',
-                                    justifyContent:'center',
+                                    justifyContent:'space-between',
+                                    px:16,
 
                                 }}
                             >
-                                3 boxes will go here
+                                <Box
+                                    sx={{
+                                        display:'flex',
+                                        alignItems:'center',
+                                        width:'100%',
+                                    }}
+                                >
+                                    <Box>
+                                        <Box
+                                            sx = {{
+                                                width:42,
+                                                height:42,
+                                                display:'flex',
+                                                gap:'18px',
+                                                justifyContent:'center',
+                                                alignItems:'center',
+                                                backgroundColor:"#003366",
+                                                borderRadius:'50%',
+                                            }}
+                                        >
+                                            {/*Icon to be changed to image from figma*/}
+                                            <SearchIcon 
+                                                sx={{
+                                                    color:'#FFFFFF',
+                                                    fontSize:30
+                                                }}/> 
+
+                                        </Box>
+                                    </Box>
+                                    <Box
+                                        sx={{
+                                            margin:'0 auto',
+                                        }}
+                                    >Feat 2</Box>
+                                    <Box>Feat 3</Box>
+                                </Box>
                             </Box>
 
 
