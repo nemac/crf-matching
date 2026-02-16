@@ -26,7 +26,7 @@ const BroadServiceProvider = () => {
                     border: 'rounded',
                     borderRadius: '9999px'
                 }}
-                label ="Broad service provider" />    
+                label ="Broad service provider" />
         </>
     );
 };
