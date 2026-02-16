@@ -7,6 +7,8 @@ let theme = createTheme({
   palette: {
     primary: {
       main: '#2D3F5D',
+      main2: '#101828',
+      secondary: '#56657D',
       lightTan: '#f8f5f1',
       tan: '#FFEED2',
       darkTan: '#845200',
@@ -24,6 +26,10 @@ let theme = createTheme({
       matchGreen: '#677D66',
       noMatchRed: '#FC8A79',
       cellHoverBg: '#F1ECE4',
+    },
+    text: {
+      primary: '#101828',
+      secondary: '#56657D',
     },
   },
 });
