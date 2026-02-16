@@ -1,4 +1,4 @@
-import { Box, Container, Stack, Typography } from '@mui/material';
+import { Box, Container, Grid, Stack, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import NavBar from '../components/NavBar.jsx';
 import { fetchTotalPractitionerCount } from '../util/api.js';
@@ -102,93 +102,207 @@ export default function HomePage() {
                 you need.
               </Typography>
               {/* Nested boxes will hold the 3 boxes within the how registry works */}
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  px: 6,
-                }}
-              >
+              <Grid container>
                 {/* Begin first box */}
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    flexDirection: 'column',
-                    backgroundColor: 'red',
-                  }}
-                >
+                <Grid size={{ xs: 12, md: 4 }}>
                   <Box
                     sx={{
-                      width: 42,
-                      height: 42,
                       display: 'flex',
-                      gap: '18px',
-                      justifyContent: 'center',
                       alignItems: 'center',
-                      backgroundColor: '#003366',
-                      borderRadius: '50%',
+                      flexDirection: 'column',
                     }}
                   >
-                    {/* Icon to be changed to image from figma */}
-                    <SearchIcon
+                    <Box
                       sx={{
-                        color: '#FFFFFF',
-                        fontSize: 30,
+                        width: 42,
+                        height: 42,
+                        display: 'flex',
+                        gap: '18px',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: '#003366',
+                        borderRadius: '50%',
                       }}
-                    />
-                  </Box>
+                    >
+                      {/* Icon to be changed to image from figma */}
+                      <SearchIcon
+                        sx={{
+                          color: '#FFFFFF',
+                          fontSize: 30,
+                        }}
+                      />
+                    </Box>
 
-                  <Typography
-                    sx={{
-                      mt: 2,
-                      fontFamily: 'Roboto',
-                      fontWeight: 500,
-                      fontSize: 20,
-                      color: '#101828',
-                    }}
-                  >
-    
-    
-                    Search and Filter
-                  </Typography>
-                  <Typography
-                    sx={{
-                      fontFamily: 'Roboto',
-                      fontWeight: 400,
-                      fontSize: 16,
-                      color: '#56657D',
-                    }}
-                  >
-                    Use our guided search to find practitioners
-                    <br />
-                    with the right expertise and focus for your
                     <Typography
                       sx={{
-                        textAlign: 'center',
+                        mt: 2,
+                        fontFamily: 'Roboto',
+                        fontWeight: 500,
+                        fontSize: 20,
+                        color: '#101828',
+                      }}
+                    >
+                      Search and Filter
+                    </Typography>
+                    <Typography
+                      sx={{
                         fontFamily: 'Roboto',
                         fontWeight: 400,
                         fontSize: 16,
                         color: '#56657D',
                       }}
                     >
-                      needs.
+                      Use our guided search to find practitioners
+                      <br />
+                      with the right expertise and focus for your
+                      <Typography
+                        sx={{
+                          textAlign: 'center',
+                          fontFamily: 'Roboto',
+                          fontWeight: 400,
+                          fontSize: 16,
+                          color: '#56657D',
+                        }}
+                      >
+                        needs.
+                      </Typography>
                     </Typography>
-                  </Typography>
-                </Box>
+                  </Box>
+                </Grid>
                 {/* End first feature box, begin second */}
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    width: '100%',
-                  }}
-                >
-                  Feat 2
-                </Box>
-                <Box>Feat 3</Box>
-              </Box>
+                <Grid size={{ xs: 12, md: 4 }}>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      flexDirection: 'column',
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        width: 42,
+                        height: 42,
+                        display: 'flex',
+                        gap: '18px',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: '#003366',
+                        borderRadius: '50%',
+                      }}
+                    >
+                      {/* Icon to be changed to image from figma */}
+                      <SearchIcon
+                        sx={{
+                          color: '#FFFFFF',
+                          fontSize: 30,
+                        }}
+                      />
+                    </Box>
+
+                    <Typography
+                      sx={{
+                        mt: 2,
+                        fontFamily: 'Roboto',
+                        fontWeight: 500,
+                        fontSize: 20,
+                        color: '#101828',
+                      }}
+                    >
+                      Search and Filter
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontFamily: 'Roboto',
+                        fontWeight: 400,
+                        fontSize: 16,
+                        color: '#56657D',
+                      }}
+                    >
+                      Use our guided search to find practitioners
+                      <br />
+                      with the right expertise and focus for your
+                      <Typography
+                        sx={{
+                          textAlign: 'center',
+                          fontFamily: 'Roboto',
+                          fontWeight: 400,
+                          fontSize: 16,
+                          color: '#56657D',
+                        }}
+                      >
+                        needs.
+                      </Typography>
+                    </Typography>
+                  </Box>
+                </Grid>
+                {/*End second feature begin third*/}
+                <Grid size={{ xs: 12, md: 4 }}>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      flexDirection: 'column',
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        width: 42,
+                        height: 42,
+                        display: 'flex',
+                        gap: '18px',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: '#003366',
+                        borderRadius: '50%',
+                      }}
+                    >
+                      {/* Icon to be changed to image from figma */}
+                      <SearchIcon
+                        sx={{
+                          color: '#FFFFFF',
+                          fontSize: 30,
+                        }}
+                      />
+                    </Box>
+
+                    <Typography
+                      sx={{
+                        mt: 2,
+                        fontFamily: 'Roboto',
+                        fontWeight: 500,
+                        fontSize: 20,
+                        color: '#101828',
+                      }}
+                    >
+                      Search and Filter
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontFamily: 'Roboto',
+                        fontWeight: 400,
+                        fontSize: 16,
+                        color: '#56657D',
+                      }}
+                    >
+                      Use our guided search to find practitioners
+                      <br />
+                      with the right expertise and focus for your
+                      <Typography
+                        sx={{
+                          textAlign: 'center',
+                          fontFamily: 'Roboto',
+                          fontWeight: 400,
+                          fontSize: 16,
+                          color: '#56657D',
+                        }}
+                      >
+                        needs.
+                      </Typography>
+                    </Typography>
+                  </Box>
+                </Grid>
+                {/*end third feature*/}
+              </Grid>
             </Box>
           </Box>
           <Box sx={{ textAlign: 'center' }}>
