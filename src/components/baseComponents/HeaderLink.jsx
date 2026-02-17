@@ -7,19 +7,18 @@ const HeaderLink = props => {
     <>
       <Chip
         sx={{
-            backgroundColor :'transparent',
+          backgroundColor: 'transparent',
           '& .MuiChip-label': {
             overflow: 'visible',
             textOverflow: 'unset',
             whiteSpace: 'nowrap',
-            fontFamily: 'Roboto',
             fontWeight: 500,
             fontSize: 16,
           },
           border: 'rounded',
           '&:hover': {
-              backgroundColor: '#F1ECE4',
-        },
+            backgroundColor: '#F1ECE4',
+          },
           borderRadius: '99px',
         }}
         label={name || 'Default'}

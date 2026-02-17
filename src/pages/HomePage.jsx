@@ -1,5 +1,7 @@
 import { Box, Container, Grid, Stack, Typography } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import PeopleOutlineOutlinedIcon from '@mui/icons-material/PeopleOutlineOutlined';
+import HandshakeOutlinedIcon from '@mui/icons-material/HandshakeOutlined';
 import NavBar from '../components/NavBar.jsx';
 import { fetchTotalPractitionerCount } from '../util/api.js';
 import { useEffect, useState } from 'react';
@@ -20,7 +22,6 @@ export default function HomePage() {
           <Box sx={{ textAlign: 'center' }}>
             <Typography
               sx={{
-                fontFamily: 'Roboto',
                 fontSize: '24px',
                 fontWeight: 500,
               }}
@@ -29,7 +30,6 @@ export default function HomePage() {
               <Box
                 component="span"
                 sx={{
-                  fontFamily: 'Roboto',
                   fontWeight: 700,
                   fontSize: '24px',
                   color: '#003366',
@@ -50,7 +50,6 @@ export default function HomePage() {
               text="Browse all Practitioners"
               textSx={{
                 fontWeight: 400,
-                fontFamily: 'Roboto',
                 fontSize: '14px',
                 color: '#2D3F5D',
               }}
@@ -73,6 +72,7 @@ export default function HomePage() {
                 border: '2px solid',
                 borderColor: '#E1F5FE',
                 borderRadius: 2,
+                color: '#F9FAFB',
               }}
             >
               {/* This has the two sentences before the 3 boxes */}
@@ -82,7 +82,6 @@ export default function HomePage() {
                   pt: 3,
                   fontWeight: 700,
                   fontSize: '24px',
-                  fontFamily: 'Roboto',
                   color: '#101828',
                 }}
               >
@@ -93,7 +92,6 @@ export default function HomePage() {
                   textAlign: 'center',
                   fontWeight: 400,
                   fontSize: '18px',
-                  fontFamily: 'Roboto',
                   color: '#56657D',
                   pb: 10,
                 }}
@@ -102,7 +100,7 @@ export default function HomePage() {
                 you need.
               </Typography>
               {/* Nested boxes will hold the 3 boxes within the how registry works */}
-              <Grid container>
+              <Grid container spacing={2}>
                 {/* Begin first box */}
                 <Grid size={{ xs: 12, md: 4 }}>
                   <Box
@@ -136,7 +134,6 @@ export default function HomePage() {
                     <Typography
                       sx={{
                         mt: 2,
-                        fontFamily: 'Roboto',
                         fontWeight: 500,
                         fontSize: 20,
                         color: '#101828',
@@ -146,10 +143,10 @@ export default function HomePage() {
                     </Typography>
                     <Typography
                       sx={{
-                        fontFamily: 'Roboto',
                         fontWeight: 400,
                         fontSize: 16,
                         color: '#56657D',
+                        textAlign: 'center',
                       }}
                     >
                       Use our guided search to find practitioners
@@ -158,7 +155,6 @@ export default function HomePage() {
                       <Typography
                         sx={{
                           textAlign: 'center',
-                          fontFamily: 'Roboto',
                           fontWeight: 400,
                           fontSize: 16,
                           color: '#56657D',
@@ -191,7 +187,7 @@ export default function HomePage() {
                       }}
                     >
                       {/* Icon to be changed to image from figma */}
-                      <SearchIcon
+                      <PeopleOutlineOutlinedIcon
                         sx={{
                           color: '#FFFFFF',
                           fontSize: 30,
@@ -202,35 +198,33 @@ export default function HomePage() {
                     <Typography
                       sx={{
                         mt: 2,
-                        fontFamily: 'Roboto',
                         fontWeight: 500,
                         fontSize: 20,
                         color: '#101828',
                       }}
                     >
-                      Search and Filter
+                      Review Profiles
                     </Typography>
                     <Typography
                       sx={{
-                        fontFamily: 'Roboto',
                         fontWeight: 400,
                         fontSize: 16,
                         color: '#56657D',
+                        textAlign: 'center',
                       }}
                     >
-                      Use our guided search to find practitioners
+                      Explore detailed profiles, including
                       <br />
-                      with the right expertise and focus for your
+                      specailizations, community focus and work
                       <Typography
                         sx={{
                           textAlign: 'center',
-                          fontFamily: 'Roboto',
                           fontWeight: 400,
                           fontSize: 16,
                           color: '#56657D',
                         }}
                       >
-                        needs.
+                        examples
                       </Typography>
                     </Typography>
                   </Box>
@@ -257,7 +251,7 @@ export default function HomePage() {
                       }}
                     >
                       {/* Icon to be changed to image from figma */}
-                      <SearchIcon
+                      <HandshakeOutlinedIcon
                         sx={{
                           color: '#FFFFFF',
                           fontSize: 30,
@@ -268,35 +262,33 @@ export default function HomePage() {
                     <Typography
                       sx={{
                         mt: 2,
-                        fontFamily: 'Roboto',
                         fontWeight: 500,
                         fontSize: 20,
                         color: '#101828',
                       }}
                     >
-                      Search and Filter
+                      Connect & Collaborate
                     </Typography>
                     <Typography
                       sx={{
-                        fontFamily: 'Roboto',
                         fontWeight: 400,
                         fontSize: 16,
                         color: '#56657D',
+                        textAlign: 'center',
                       }}
                     >
-                      Use our guided search to find practitioners
+                      Contact practitioners directly to discuss
                       <br />
-                      with the right expertise and focus for your
+                      your project and build a resilient future
                       <Typography
                         sx={{
                           textAlign: 'center',
-                          fontFamily: 'Roboto',
                           fontWeight: 400,
                           fontSize: 16,
                           color: '#56657D',
                         }}
                       >
-                        needs.
+                        together.
                       </Typography>
                     </Typography>
                   </Box>
@@ -305,8 +297,92 @@ export default function HomePage() {
               </Grid>
             </Box>
           </Box>
-          <Box sx={{ textAlign: 'center' }}>
-            The Registry includes two categories of practitioners
+          {/*end how reg works, begin two categories*/}
+          <Box
+            sx={{
+              textAlign: 'center',
+              height: 433,
+              gap: 26,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <Box
+              sx={{
+                height: 223,
+                width: 992,
+                gap: 4,
+              }}
+            >
+              <Typography
+                sx={{
+                  fontWeight: 400,
+                  fontSize: 18,
+                  color: '#56657D',
+                  p: 4,
+                }}
+              >
+                The Registry includes two categories of practitioners
+              </Typography>
+              <Box sx={{ height: 156, gap: 24 }}>
+                <Grid container>
+                  <Grid size={{ xs: 12, md: 6 }}>
+                    <Box sx={{ height: 140 }}>
+                      <Typography
+                        sx={{
+                          fontWeight: 700,
+                          fontSize: 24,
+                        }}
+                      >
+                        Broad service providers
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontWeight: 400,
+                          fontSize: 16,
+                          color: '#56657D',
+                        }}
+                      >
+                        Practitioners that are generalists, supporting
+                        <br />
+                        communities or other groups with adaptation projects
+                        <br />
+                        and programs across a wide range of topics/sectors,
+                        <br />
+                        climate impacts, type of project, etc
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid size={{ xs: 12, md: 6 }}>
+                    <Box>
+                      <Typography
+                        sx={{
+                          fontWeight: 700,
+                          fontSize: 24,
+                        }}
+                      >
+                        Specialists
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontWeight: 400,
+                          fontSize: 16,
+                          color: '#56657D',
+                        }}
+                      >
+                        Practitioners that provide a specific, specialized
+                        skillset
+                        <br />
+                        or service, or who focus on a narrow range of topics or
+                        <br />
+                        sectors (e.g., energy efficiency, insurance systems).
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Box>
           </Box>
           <Box sx={{ textAlign: 'center' }}>How to apply</Box>
         </Stack>

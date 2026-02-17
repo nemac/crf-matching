@@ -78,7 +78,7 @@ const PartnerLogo = ({ name, imgSrc, url }) => (
           sx={{
             fontSize: '1.0 rem',
             fontWeight: 'bold',
-            color: 'theme.palette.primary.main'
+            color: 'theme.palette.primary.main',
           }}
         >
           {name}
@@ -91,12 +91,12 @@ const PartnerLogo = ({ name, imgSrc, url }) => (
 export default function AboutPage() {
   return (
     <ThemeProvider theme={theme}>
-      <NavBar />    
+      <NavBar />
       <Container
         maxWidth="xl"
-        sx={{ 
-          pt: 4, 
-          pb: 8, 
+        sx={{
+          pt: 4,
+          pb: 8,
           cursor: 'default',
           px: { xs: 4, sm: 4, md: 4, lg: 3 },
         }}
@@ -117,49 +117,59 @@ export default function AboutPage() {
 
         {/* Main Description Section */}
         <Box sx={{ mb: 2 }}>
-          <Typography
-            variant="body1"
-            paragraph
-          >
-            The <strong >Registry of Adaptation Practitioners</strong> is an online guided directory of vetted adaptation service providers. The Registry 
-            enables communities and organizations seeking climate adaptation support services to easily find practitioners whose expertise and focus match their needs. 
+          <Typography variant="body1" paragraph>
+            The <strong>Registry of Adaptation Practitioners</strong> is an
+            online guided directory of vetted adaptation service providers. The
+            Registry enables communities and organizations seeking climate
+            adaptation support services to easily find practitioners whose
+            expertise and focus match their needs.
           </Typography>
 
-          <Typography
-            variant="body1"
-            paragraph
-          >
-            The Registry is open to all organizations that provide climate adaptation and resilience services. For climate adaptation practitioners, 
-            the Registry offers an opportunity to showcase their organization and its skills, be discoverable by those that need their help, and be 
-            eligible for funding from sources, such as the <a
+          <Typography variant="body1" paragraph>
+            The Registry is open to all organizations that provide climate
+            adaptation and resilience services. For climate adaptation
+            practitioners, the Registry offers an opportunity to showcase their
+            organization and its skills, be discoverable by those that need
+            their help, and be eligible for funding from sources, such as the{' '}
+            <a
               href="https://climatesmartcommunity.org/"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: theme.palette.primary.main, textDecoration: 'underline' }}
-            >Climate Smart Communities Initiative. </a>
+              style={{
+                color: theme.palette.primary.main,
+                textDecoration: 'underline',
+              }}
+            >
+              Climate Smart Communities Initiative.{' '}
+            </a>
           </Typography>
         </Box>
 
         <Box sx={{ mb: 2 }}>
           <Typography variant="body1">
-          In order to be accepted into the Registry, organizations must submit an application that is then reviewed and approved to ensure that 
-          they possess the depth of expertise and skill that will allow them to provide effective, equitable, and sustainable adaptation services to 
-          communities, and that they adhere to the known best practices in the field. The review process assesses:
+            In order to be accepted into the Registry, organizations must submit
+            an application that is then reviewed and approved to ensure that
+            they possess the depth of expertise and skill that will allow them
+            to provide effective, equitable, and sustainable adaptation services
+            to communities, and that they adhere to the known best practices in
+            the field. The review process assesses:
           </Typography>
 
-          <Typography component="ul"  sx={{ mt: 1, mb: 2, ml: 2, mr: 2}}>
-              <li>
-                Length of time working in the field
-              </li>
-              <li>
-                Whether practitioners have certifications or training, such as the NOAA Steps to Resilience training
-              </li>
-              <li>
-                Proficiency incorporating stakeholder engagement and equity into adaptation work
-              </li>
-              <li>
-               Expertise and ability to provide adaptation services from vulnerability assessment and adaptation planning to project implementation
-              </li>
+          <Typography component="ul" sx={{ mt: 1, mb: 2, ml: 2, mr: 2 }}>
+            <li>Length of time working in the field</li>
+            <li>
+              Whether practitioners have certifications or training, such as the
+              NOAA Steps to Resilience training
+            </li>
+            <li>
+              Proficiency incorporating stakeholder engagement and equity into
+              adaptation work
+            </li>
+            <li>
+              Expertise and ability to provide adaptation services from
+              vulnerability assessment and adaptation planning to project
+              implementation
+            </li>
           </Typography>
         </Box>
 
@@ -173,98 +183,107 @@ export default function AboutPage() {
               mb: 1,
             }}
           >
-            Want to be included in the Registry? 
+            Want to be included in the Registry?
           </Typography>
 
-          <Box sx={{ 
-            width: `100%`,
-            
-          }}>
-
-            <Typography
-              variant="body1"
-              paragraph
-            >
-              If your organization provides services in the field of climate resilience and adaptation, 
-              is committed to following best practices, and has a track record of high-quality results,&nbsp;
+          <Box
+            sx={{
+              width: `100%`,
+            }}
+          >
+            <Typography variant="body1" paragraph>
+              If your organization provides services in the field of climate
+              resilience and adaptation, is committed to following best
+              practices, and has a track record of high-quality results,&nbsp;
               <a
                 href="https://www.surveymonkey.com/r/adaptation-registry"
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ color: theme.palette.primary.main, textDecoration: 'underline' }}
+                style={{
+                  color: theme.palette.primary.main,
+                  textDecoration: 'underline',
+                }}
               >
                 submit an application
               </a>
-              ! We are especially interested in organizations that support entire community adaptation processes, including stakeholder 
-              engagement, vulnerability assessment, adaptation planning, and plan implementation.
+              ! We are especially interested in organizations that support
+              entire community adaptation processes, including stakeholder
+              engagement, vulnerability assessment, adaptation planning, and
+              plan implementation.
             </Typography>
           </Box>
         </Box>
 
-        <Box sx={{ 
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'flex-start',
-          width: '100%',
-          mb: 4,
-        }}>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-start',
+            width: '100%',
+            mb: 4,
+          }}
+        >
           <Button
-              variant="contained"
-              href="https://www.surveymonkey.com/r/adaptation-registry"
-              target="_blank"
-              rel="noopener noreferrer"
-              sx={{
-                bgcolor: 'primary.main',
-                color: 'primary.white',
-                textTransform: 'none',
-                px: 4,
-                py: 1,
-                borderRadius: 1,
-                '&:hover': {
-                  bgcolor: 'primary.dark',
-                },
-              }}
-            >
-              Submit an application
+            variant="contained"
+            href="https://www.surveymonkey.com/r/adaptation-registry"
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={{
+              bgcolor: 'primary.main',
+              color: 'primary.white',
+              textTransform: 'none',
+              px: 4,
+              py: 1,
+              borderRadius: 1,
+              '&:hover': {
+                bgcolor: 'primary.dark',
+              },
+            }}
+          >
+            Submit an application
           </Button>
         </Box>
 
         {/* Foundation Support Section */}
         <Box sx={{ mt: 1, mb: 4 }}>
-          <Typography
-            variant="body1"
-            paragraph
-          >
-            The Registry of Adaptation Professionals is made possible by the Walton Family Foundation and the Gordon and Betty Moore Foundation.
+          <Typography variant="body1" paragraph>
+            The Registry of Adaptation Professionals is made possible by the
+            Walton Family Foundation and the Gordon and Betty Moore Foundation.
           </Typography>
         </Box>
 
         {/* Partners Section */}
         <Box>
-          <Typography
-            variant="body1"
-            sx={{ mb: 4 }}
-          >
-            The Registry is conceived, supported, directed, created and operated by EcoAdapt, Climate Resilience Fund, Geos, and UNC Asheville's NEMAC. 
+          <Typography variant="body1" sx={{ mb: 4 }}>
+            The Registry is conceived, supported, directed, created and operated
+            by EcoAdapt, Climate Resilience Fund, Geos, and UNC Asheville's
+            NEMAC.
           </Typography>
 
-          <Grid
-            container
-            spacing={4}
-          >
+          <Grid container spacing={4}>
             {[
-              { name: 'EcoAdapt', imgSrc: ecoadapt_logo, url: 'https://ecoadapt.org' },
-              { name: 'Climate Resilience Fund', imgSrc: crf_logo, url: 'https://climateresiliencefund.org' },
-              { name: 'Geos Institute', imgSrc: geos_logo, url: 'https://geosinstitute.org' },
-              { name: 'UNC Asheville\'s NEMAC', imgSrc: nemac_logo, url: 'https://nemac.unca.edu' },
+              {
+                name: 'EcoAdapt',
+                imgSrc: ecoadapt_logo,
+                url: 'https://ecoadapt.org',
+              },
+              {
+                name: 'Climate Resilience Fund',
+                imgSrc: crf_logo,
+                url: 'https://climateresiliencefund.org',
+              },
+              {
+                name: 'Geos Institute',
+                imgSrc: geos_logo,
+                url: 'https://geosinstitute.org',
+              },
+              {
+                name: "UNC Asheville's NEMAC",
+                imgSrc: nemac_logo,
+                url: 'https://nemac.unca.edu',
+              },
             ].map((partner, index) => (
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                md={3}
-                key={index}
-              >
+              <Grid item xs={12} sm={6} md={3} key={index}>
                 <PartnerLogo {...partner} />
               </Grid>
             ))}

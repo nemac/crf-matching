@@ -5,7 +5,7 @@ const SpecialistLabel = () => {
     <>
       <Chip
         sx={{
-          width: '119px',
+          width: '118px',
           height: '51px',
           pt: '16px',
           pr: '24px',
@@ -17,7 +17,6 @@ const SpecialistLabel = () => {
             overflow: 'visible',
             textOverflow: 'unset',
             whiteSpace: 'nowrap',
-            fontFamily: 'Roboto',
             fontWeight: 700,
             color: '#1F2C35',
             fontSize: 16,
