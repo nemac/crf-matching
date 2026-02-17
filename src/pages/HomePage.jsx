@@ -301,7 +301,6 @@ export default function HomePage() {
           <Box
             sx={{
               textAlign: 'center',
-              height: 433,
               gap: 26,
               display: 'flex',
               alignItems: 'center',
