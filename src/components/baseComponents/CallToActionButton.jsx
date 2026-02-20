@@ -7,7 +7,7 @@ const CallToActionButton = props => {
     <>
       <Button
         endIcon={<ArrowRightAltOutlinedIcon />}
-        componet={to ? RouterLink : 'button'}
+        component={to ? RouterLink : 'button'}
         to={to}
         sx={{
           height: '46px',

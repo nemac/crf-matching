@@ -59,7 +59,7 @@ export default function HomePage() {
           {/* How registry works */}
           <Box
             sx={{
-              height: '418px',
+              minHeight: '418px',
               alignItems: 'center',
               display: 'flex',
               justifyContent: 'center',
@@ -94,7 +94,7 @@ export default function HomePage() {
                   fontWeight: 400,
                   fontSize: '18px',
                   color: '#56657D',
-                  pb: 10,
+                  pb: { xs: 4, md: 10 },
                 }}
               >
                 A simple, streamlined process to connect you with the expertise
@@ -302,7 +302,7 @@ export default function HomePage() {
           <Box
             sx={{
               textAlign: 'center',
-              gap: 26,
+              gap: { xs: 4, md: 12 },
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -310,9 +310,10 @@ export default function HomePage() {
           >
             <Box
               sx={{
-                height: 223,
-                width: 992,
-                gap: 4,
+                minHeight: 223,
+                width: '100%',
+                maxWidth: 992,
+                mx: 'auto',
               }}
             >
               <Typography
@@ -325,10 +326,10 @@ export default function HomePage() {
               >
                 The Registry includes two categories of practitioners
               </Typography>
-              <Box sx={{ height: 156, gap: 24 }}>
+              <Box sx={{ minHeight: 156, gap: 24 }}>
                 <Grid container>
                   <Grid size={{ xs: 12, md: 6 }}>
-                    <Box sx={{ height: 140 }}>
+                    <Box sx={{ minHeight: 140 }}>
                       <Typography
                         sx={{
                           fontWeight: 700,
@@ -342,6 +343,7 @@ export default function HomePage() {
                           fontWeight: 400,
                           fontSize: 16,
                           color: '#56657D',
+                          p: 1,
                         }}
                       >
                         Practitioners that are generalists, supporting
@@ -421,7 +423,7 @@ export default function HomePage() {
               }}
             >
               <CallToActionButton
-                to="Howtoapply"
+                to="/Howtoapply"
                 text="Apply to the Registry"
               />
             </Box>
