@@ -6,6 +6,7 @@ import NavBar from '../components/NavBar.jsx';
 import { fetchTotalPractitionerCount } from '../util/api.js';
 import { useEffect, useState } from 'react';
 import AltActionButton from '../components/baseComponents/AltActionButton.jsx';
+import CallToActionButton from '../components/baseComponents/CallToActionButton.jsx';
 
 export default function HomePage() {
   const [totalPractitioners, setTotalPractitioners] = useState(0);
@@ -383,7 +384,48 @@ export default function HomePage() {
               </Box>
             </Box>
           </Box>
-          <Box sx={{ textAlign: 'center' }}>How to apply</Box>
+          {/* End registry includes section, begin how to apply */}
+          <Box
+            sx={{
+              height: 136,
+              pt: 8,
+              pb: 8,
+            }}
+          >
+            <Typography
+              sx={{
+                textAlign: 'center',
+                fontWeight: 500,
+                fontSize: 20,
+                color: '#56657D',
+              }}
+            >
+              How to apply
+            </Typography>
+            <Typography
+              sx={{
+                p: 2,
+                fontWeight: 400,
+                fontSize: 16,
+                color: '#56657D',
+                textAlign: 'center',
+              }}
+            >
+              Be recognized as an expert helping communities build a more
+              resilient future!
+            </Typography>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              <CallToActionButton
+                to="Howtoapply"
+                text="Apply to the Registry"
+              />
+            </Box>
+          </Box>
         </Stack>
       </Container>
     </>

@@ -1,13 +1,17 @@
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
-const CallToActionButton = () => {
+import { Link as RouterLink } from 'react-router-dom';
+const CallToActionButton = props => {
+  const { text, textSx, to } = props;
   return (
     <>
       <Button
         endIcon={<ArrowRightAltOutlinedIcon />}
+        componet={to ? RouterLink : 'button'}
+        to={to}
         sx={{
           height: '46px',
-          width: '132px',
+          width: 'auto',
           color: '#FFFFFF',
           pt: '4px',
           pl: '12px',
@@ -20,7 +24,7 @@ const CallToActionButton = () => {
           },
         }}
       >
-        Action
+        <Typography sx={textSx}>{text ?? 'To be filled'}</Typography>
       </Button>
     </>
   );
