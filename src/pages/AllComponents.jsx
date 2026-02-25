@@ -14,6 +14,7 @@ import {
   FilterRemoveTwo,
   HomeDefault,
   HomeActive,
+  FilterCheck,
 } from '../components/baseComponents';
 
 export default function AllComponents() {
@@ -62,6 +63,9 @@ export default function AllComponents() {
           <Grid size={{ xs: 12, md: 4, lg: 6 }}>
             <HomeActive />
           </Grid>
+        </Grid>
+        <Grid size={{ xs: 12, md: 4, lg: 6 }}>
+          <FilterCheck />
         </Grid>
       </Container>
     </ThemeProvider>
