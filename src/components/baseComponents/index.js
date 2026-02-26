@@ -10,3 +10,4 @@ export { default as FilterRemoveTwo } from './FilterRemoveTwo';
 export { default as HomeDefault } from './HomeDefault';
 export { default as HomeActive } from './HeaderLink.jsx';
 export { default as FilterCheck } from './FilterCheck.jsx';
+export { default as PulldownFilter } from './PulldownFilter.jsx';
