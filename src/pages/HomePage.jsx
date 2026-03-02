@@ -7,6 +7,7 @@ import { fetchTotalPractitionerCount } from '../util/api.js';
 import { useEffect, useState } from 'react';
 import AltActionButton from '../components/baseComponents/AltActionButton.jsx';
 import CallToActionButton from '../components/baseComponents/CallToActionButton.jsx';
+import searchbar_background from '../assets/searchbar_background.png';
 
 export default function HomePage() {
   const [totalPractitioners, setTotalPractitioners] = useState(0);
@@ -20,6 +21,25 @@ export default function HomePage() {
       <NavBar />
       <Container maxWidth="xl">
         <Stack direction="column" spacing={8} sx={{ mt: 4 }}>
+          <Box
+            sx={{
+              position: 'relative',
+              '&::before': {
+                content: '""',
+                position: 'absolute',
+                inset: 0,
+                backgroundImage: `url(${searchbar_background})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                filter: 'blur(1px)', // adjust blur amount
+                zIndex: 0,
+              },
+              minHeight: 394,
+            }}
+          >
+            <Box>to be filled</Box>
+          </Box>
+          {/* this is where the search bar ends and the browse all start */}
           <Box sx={{ textAlign: 'center' }}>
             <Typography
               sx={{
