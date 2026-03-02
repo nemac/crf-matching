@@ -17,7 +17,6 @@ import Logo from '../components/Logo.jsx';
 import theme from '../theme';
 import { searchParamsToFilters } from '../util/urlStateManagement';
 import HeaderLink from './baseComponents/HeaderLink.jsx';
-import { MedicationLiquid } from '@mui/icons-material';
 
 const drawerWidth = 240;
 const navItems = [
