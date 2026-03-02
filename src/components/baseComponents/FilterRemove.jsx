@@ -11,7 +11,6 @@ const FilterRemove = () => {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          width: '325px',
           height: '31px',
           borderRadius: '9999px',
           pt: '6px',
