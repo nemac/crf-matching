@@ -20,18 +20,33 @@ export default function Logo() {
         gap: 1,
       }}
     >
+<<<<<<< HEAD
       <Link to={`/Registry${params}`}>
+=======
+      <Link to="/">
+>>>>>>> 7090038 (Fixed issues from last meeting)
         <img
           src={csciLogo}
           alt="Registry of Adaptation Practitioners Logo"
           style={{
+<<<<<<< HEAD
             margin: '0 auto',
             height: 'auto',
+=======
+            height: 'auto',
+            display: 'block',
+>>>>>>> 7090038 (Fixed issues from last meeting)
             width: `${logoWidth}px`,
           }}
         />
       </Link>
+<<<<<<< HEAD
       <Typography>Registry of Adaptation Practitioners</Typography>
+=======
+      <Typography width={321} height={23}>
+        Registry of Adaptation Practitioners
+      </Typography>
+>>>>>>> 7090038 (Fixed issues from last meeting)
     </Box>
   );
 }

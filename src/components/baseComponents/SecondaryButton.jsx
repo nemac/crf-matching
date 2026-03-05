@@ -7,7 +7,7 @@ const SecondaryButton = () => {
       <Button
         startIcon=<SearchOutlinedIcon />
         sx={{
-          width: '132px',
+          width: 'auto',
           height: '40px',
           backgroundColor: '#FFDDBB',
           '&:hover': {

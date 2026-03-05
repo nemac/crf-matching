@@ -5,7 +5,7 @@ const TertiaryButton = () => {
     <>
       <Button
         sx={{
-          width: '92px',
+          width: 'auto',
           height: '37px',
           pt: '8px',
           pb: '8px',

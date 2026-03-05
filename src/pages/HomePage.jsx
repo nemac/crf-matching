@@ -19,11 +19,12 @@ export default function HomePage() {
   return (
     <>
       <NavBar />
-      <Container maxWidth="xl">
+      <Container disableGutters maxWidth={false}>
         <Stack direction="column" spacing={8} sx={{ mt: 4 }}>
           <Box
             sx={{
               position: 'relative',
+              width: '100%',
               '&::before': {
                 content: '""',
                 position: 'absolute',
@@ -39,7 +40,7 @@ export default function HomePage() {
           >
             <Box>to be filled</Box>
           </Box>
-          {/* this is where the search bar ends and the browse all start */}
+          {/*this is where the search bar ends and the browse all start */}
           <Box sx={{ textAlign: 'center' }}>
             <Typography
               sx={{
