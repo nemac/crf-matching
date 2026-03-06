@@ -17,8 +17,16 @@ const SearchBar = props => {
       <InputBase
         placeholder={text ?? 'to be filled'}
         inputProps={{ 'aria-label': 'search' }}
+        sx={{
+          backgroundColor: '#FFFFFF',
+          minWidth: 320,
+          borderRadius: 12,
+          '& input::placeholder': {
+            p: 2,
+          },
+        }}
       >
-        hi
+        <></>
       </InputBase>
     </>
   );
