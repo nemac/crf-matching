@@ -35,10 +35,54 @@ export default function HomePage() {
                 filter: 'blur(1px)', // adjust blur amount
                 zIndex: 0,
               },
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
               minHeight: 394,
             }}
           >
-            <Box>to be filled</Box>
+            <Box
+              sx={{
+                width: '95%',
+                minHeight: 250,
+                position: 'relative',
+                zIndex: 1,
+              }}
+            >
+              <Box>
+                <Typography
+                  sx={{
+                    textAlign: 'center',
+                    color: '#FFFFFF',
+                    fontWeight: 700,
+                    fontSize: 48,
+                  }}
+                >
+                  Registry of Adaptation Practitioners
+                </Typography>
+                <Typography
+                  sx={{
+                    textAlign: 'center',
+                    color: '#FFFFFF',
+                    fontWeight: 400,
+                    fontSize: 18,
+                  }}
+                >
+                  Connect with vetted experts to build resilience in your
+                  community or organization.
+                </Typography>
+                <Box
+                  sx={{
+                    backgroundColor: '#FFFFFF99',
+                    width: '100%',
+                    minHeight: 84,
+                    borderRadius: 3,
+                  }}
+                >
+                  <Box>Search bar</Box>
+                </Box>
+              </Box>
+            </Box>
           </Box>
           {/*this is where the search bar ends and the browse all start */}
           <Box sx={{ textAlign: 'center' }}>

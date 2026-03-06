@@ -16,6 +16,7 @@ import {
   HomeActive,
   FilterCheck,
   PulldownFilter,
+  SearchBar,
 } from '../components/baseComponents';
 
 export default function AllComponents() {
@@ -70,6 +71,9 @@ export default function AllComponents() {
         </Grid>
         <Grid size={{ xs: 12, md: 4, lg: 6 }}>
           <PulldownFilter />
+        </Grid>
+        <Grid size={{ xs: 12, md: 4, lg: 6 }}>
+          <SearchBar />
         </Grid>
       </Container>
     </ThemeProvider>
