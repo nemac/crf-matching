@@ -9,7 +9,7 @@ import theme from '../theme';
 import NavBar from '../components/NavBar';
 import IncludedInRegistry from '../components/IncludedInRegistry.jsx';
 import ContactUs from '../components/ContactUs.jsx';
-import applicationDoc from '../assets/Registry-Application-Questions_Jan2026.docx';
+import applicationDoc from '../assets/Registry-Application-Questions_Mar2026.docx';
 
 export default function HowToApplyPage() {
   return (
@@ -286,7 +286,9 @@ export default function HowToApplyPage() {
             borderRadius: '6px',
           }}
         >
-          <Box sx={{ display: 'flex', flexDirection: 'column', py: 1, gap: 0.5 }}>
+          <Box
+            sx={{ display: 'flex', flexDirection: 'column', py: 1, gap: 0.5 }}
+          >
             <Typography
               sx={{
                 fontWeight: 700,
@@ -307,13 +309,18 @@ export default function HowToApplyPage() {
                 py: 0.5,
               }}
             >
-              Our application process is designed to be straightforward and transparent:
+              Our application process is designed to be straightforward and
+              transparent:
             </Typography>
           </Box>
 
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-            <Box sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}>
-              <LooksOneOutlinedIcon sx={{ color: '#0066CC', fontSize: 48, flexShrink: 0 }} />
+            <Box
+              sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
+            >
+              <LooksOneOutlinedIcon
+                sx={{ color: '#0066CC', fontSize: 48, flexShrink: 0 }}
+              />
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 <Typography
                   sx={{
@@ -348,14 +355,18 @@ export default function HowToApplyPage() {
                   >
                     Word document
                   </Typography>
-                  , which organizations can use to collect required information and
-                  collaboratively draft their answers.
+                  , which organizations can use to collect required information
+                  and collaboratively draft their answers.
                 </Typography>
               </Box>
             </Box>
 
-            <Box sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}>
-              <LooksTwoOutlinedIcon sx={{ color: '#0066CC', fontSize: 48, flexShrink: 0 }} />
+            <Box
+              sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
+            >
+              <LooksTwoOutlinedIcon
+                sx={{ color: '#0066CC', fontSize: 48, flexShrink: 0 }}
+              />
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 <Typography
                   sx={{
@@ -375,9 +386,9 @@ export default function HowToApplyPage() {
                     color: '#101828',
                   }}
                 >
-                  Submit your application through our online form. Please note that
-                  progress is not automatically saved in the application form, so we
-                  recommend drafting your answers in the{' '}
+                  Submit your application through our online form. Please note
+                  that progress is not automatically saved in the application
+                  form, so we recommend drafting your answers in the{' '}
                   <Typography
                     component="a"
                     href={applicationDoc}
@@ -397,8 +408,12 @@ export default function HowToApplyPage() {
               </Box>
             </Box>
 
-            <Box sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}>
-              <Looks3OutlinedIcon sx={{ color: '#0066CC', fontSize: 48, flexShrink: 0 }} />
+            <Box
+              sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
+            >
+              <Looks3OutlinedIcon
+                sx={{ color: '#0066CC', fontSize: 48, flexShrink: 0 }}
+              />
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 <Typography
                   sx={{
@@ -418,16 +433,20 @@ export default function HowToApplyPage() {
                     color: '#101828',
                   }}
                 >
-                  Applications are reviewed on a rolling basis, and the Registry team
-                  will contact applicants with a decision or to request additional
-                  information. All applicants will be contacted within two months of
-                  submission
+                  Applications are reviewed on a rolling basis, and the Registry
+                  team will contact applicants with a decision or to request
+                  additional information. All applicants will be contacted
+                  within two months of submission
                 </Typography>
               </Box>
             </Box>
 
-            <Box sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}>
-              <Looks4OutlinedIcon sx={{ color: '#0066CC', fontSize: 48, flexShrink: 0 }} />
+            <Box
+              sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
+            >
+              <Looks4OutlinedIcon
+                sx={{ color: '#0066CC', fontSize: 48, flexShrink: 0 }}
+              />
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 <Typography
                   sx={{
@@ -447,11 +466,12 @@ export default function HowToApplyPage() {
                     color: '#101828',
                   }}
                 >
-                  The primary organization contact listed in the application will be
-                  notified of the decision within two months of submission. Reviews may
-                  take longer if additional information is required or during busy
-                  periods. Approved organizations will be listed in the Registry shortly
-                  thereafter and will be visible to users.
+                  The primary organization contact listed in the application
+                  will be notified of the decision within two months of
+                  submission. Reviews may take longer if additional information
+                  is required or during busy periods. Approved organizations
+                  will be listed in the Registry shortly thereafter and will be
+                  visible to users.
                 </Typography>
               </Box>
             </Box>
