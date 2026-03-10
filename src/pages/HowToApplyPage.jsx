@@ -142,7 +142,7 @@ export default function HowToApplyPage() {
               }}
             >
               The Registry is open to all organizations that provide climate
-              adaptation and resilience services to communities and is free to
+              adaptation and resilience services to communities and free to
               join. To ensure the quality and integrity of the Registry,
               applicant organizations must meet the following criteria:
             </Typography>
@@ -174,11 +174,10 @@ export default function HowToApplyPage() {
                     color: '#101828',
                   }}
                 >
-                  Applications should be submitted on behalf of an organization,
-                  used here to refer to any nonprofit organization, governmental
-                  entity, academic institution, consulting firm, or sole
-                  proprietorship that offers adaptation and/or resilience
-                  services.
+                  Applications should be submitted on behalf of nonprofit
+                  organizations, governmental entities, academic institutions,
+                  consulting firms, or sole proprietorships that offer
+                  adaptation services.
                 </Typography>
               </Box>
             </Box>
@@ -209,9 +208,9 @@ export default function HowToApplyPage() {
                   }}
                 >
                   Organizations must have at least three years of professional
-                  experience providing adaptation services to communities, and
-                  must submit 2-3 project examples demonstrating those services
-                  and the quality of their work.
+                  experience providing adaptation services, and must submit 2-3
+                  project examples demonstrating those services and the quality
+                  of their work.
                 </Typography>
               </Box>
             </Box>
@@ -309,7 +308,7 @@ export default function HowToApplyPage() {
                 py: 0.5,
               }}
             >
-              Our application process is designed to be straightforward and
+              The application process is designed to be straightforward and
               transparent:
             </Typography>
           </Box>
@@ -340,7 +339,7 @@ export default function HowToApplyPage() {
                     color: '#101828',
                   }}
                 >
-                  Application questions can be downloaded in a{' '}
+                  Application questions can be downloaded in this{' '}
                   <Typography
                     component="a"
                     href={applicationDoc}
@@ -356,7 +355,7 @@ export default function HowToApplyPage() {
                     Word document
                   </Typography>
                   , which organizations can use to collect required information
-                  and collaboratively draft their answers.
+                  and draft their answers.
                 </Typography>
               </Box>
             </Box>
@@ -376,7 +375,7 @@ export default function HowToApplyPage() {
                     color: '#101828',
                   }}
                 >
-                  Submit your application
+                  Submit the application
                 </Typography>
                 <Typography
                   sx={{
@@ -386,9 +385,9 @@ export default function HowToApplyPage() {
                     color: '#101828',
                   }}
                 >
-                  Submit your application through our online form. Please note
-                  that progress is not automatically saved in the application
-                  form, so we recommend drafting your answers in the{' '}
+                  Submit the application through our online form (note that
+                  progress is not automatically saved in the application form,
+                  so we recommend drafting your answers in this{' '}
                   <Typography
                     component="a"
                     href={applicationDoc}
@@ -403,7 +402,7 @@ export default function HowToApplyPage() {
                   >
                     Word document
                   </Typography>{' '}
-                  before submitting.
+                  before submitting).
                 </Typography>
               </Box>
             </Box>
@@ -436,7 +435,7 @@ export default function HowToApplyPage() {
                   Applications are reviewed on a rolling basis, and the Registry
                   team will contact applicants with a decision or to request
                   additional information. All applicants will be contacted
-                  within two months of submission
+                  within two months of submission.
                 </Typography>
               </Box>
             </Box>
@@ -470,8 +469,7 @@ export default function HowToApplyPage() {
                   will be notified of the decision within two months of
                   submission. Reviews may take longer if additional information
                   is required or during busy periods. Approved organizations
-                  will be listed in the Registry shortly thereafter and will be
-                  visible to users.
+                  will be listed in the Registry shortly thereafter.
                 </Typography>
               </Box>
             </Box>

@@ -119,8 +119,9 @@ export default function AboutPage() {
               }}
             >
               The Registry of Adaptation Practitioners is a curated directory of
-              vetted adaptation service providers dedicated to helping
-              communities build resilience to climate change.
+              vetted adaptation service providers designed to help communities
+              find the professional assistance they need to build resilience to
+              climate change.
             </Typography>
           </Box>
         </Box>
@@ -196,7 +197,7 @@ export default function AboutPage() {
                     py: 0.5,
                   }}
                 >
-                  Practitioners
+                  For Practitioners
                 </Typography>
                 <Typography
                   sx={{
@@ -207,12 +208,67 @@ export default function AboutPage() {
                     py: 0.5,
                   }}
                 >
-                  Showcase your organization&apos;s skills and experience to
-                  communities actively seeking adaptation expertise. Joining the
-                  Registry enhances your organization&apos;s visibility and
+                  The Registry enables practitioner organizations to showcase
+                  their expertise, skills, and experience to community leaders
+                  who are actively seeking adaptation assistance. Joining the
+                  Registry enhances an organization&apos;s visibility and
                   connects it with meaningful projects that make a real-world
                   impact.
                 </Typography>
+                <Box
+                  sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}
+                >
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      p: 1,
+                      gap: 1,
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontWeight: 400,
+                        fontSize: '16px',
+                        lineHeight: '21px',
+                        color: '#101828',
+                      }}
+                    >
+                      &#8226; <strong>Broad service providers</strong> have
+                      wide-ranging adaptation expertise, supporting community
+                      efforts to undertake cross-sector climate change
+                      vulnerability assessments, develop adaptation plans, and
+                      plan or implement actions focused on reducing their
+                      vulnerability to climate change impacts.
+                    </Typography>
+                  </Box>
+
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      p: 1,
+                      gap: 1,
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontWeight: 400,
+                        fontSize: '16px',
+                        lineHeight: '21px',
+                        color: '#101828',
+                      }}
+                    >
+                      &#8226; <strong>Specialists</strong> are organizations
+                      that focus more narrowly on one or more specific climate
+                      hazards, topics, or sectors, supporting communities in
+                      planning through implementation of adaptation-focused
+                      actions within a specific category (e.g., wildfire
+                      resilience, public health, spatial analysis, ecosystem
+                      restoration, insurance systems).
+                    </Typography>
+                  </Box>
+                </Box>
               </Box>
             </Box>
           </Grid>
@@ -259,10 +315,10 @@ export default function AboutPage() {
                   }}
                 >
                   To be accepted into the Registry, an organization&apos;s
-                  application is evaluated to ensure they possess the depth of
-                  expertise and skill that will allow them to provide effective,
+                  application is evaluated to ensure that it possesses the depth
+                  of expertise and skill necessary to provide effective,
                   equitable, and sustainable adaptation services to communities,
-                  and that they adhere to the known best practices in the field.
+                  and that its staff adhere to best practices in the field.
                 </Typography>
               </Box>
 
@@ -286,8 +342,8 @@ export default function AboutPage() {
                       color: '#101828',
                     }}
                   >
-                    <strong>Submit Application</strong>: Applicants should
-                    complete the online form, detailing your organization&apos;s
+                    <strong>Submit Application</strong>: Practitioner
+                    organizations complete the online form, detailing their
                     qualifications, experience, and areas of specialization.
                   </Typography>
                 </Box>
@@ -312,8 +368,8 @@ export default function AboutPage() {
                     }}
                   >
                     <strong>Expert Review</strong>: Our panel of seasoned
-                    adaptation experts assesses each application against our
-                    criteria
+                    adaptation experts assesses each application against
+                    criteria for acceptance.
                   </Typography>
                 </Box>
 
@@ -336,10 +392,10 @@ export default function AboutPage() {
                       color: '#101828',
                     }}
                   >
-                    <strong>Notification and listing</strong>: Applicants will
-                    be notified of the final decision within two months. Once
-                    approved, your organization will be published on the
-                    Registry.
+                    <strong>Notification and listing</strong>: Applicants are
+                    notified of the final decision within two months. Once
+                    approved, the organization will be published in the
+                    Registry. Registry.
                   </Typography>
                 </Box>
               </Box>
