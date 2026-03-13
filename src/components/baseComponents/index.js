@@ -11,4 +11,4 @@ export { default as HomeDefault } from './HomeDefault';
 export { default as FilterCheck } from './FilterCheck.jsx';
 export { default as PulldownFilter } from './PulldownFilter.jsx';
 export { default as SearchBar } from './SearchBar.jsx';
-export { default as HomeActive } from './HomeActive';
+// export { default as HomeActive } from './HomeActive';
