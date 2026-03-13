@@ -1,48 +1,52 @@
 import { Typography, Box, Stack } from '@mui/material';
 import HeaderBox from './HeaderBox';
-import ScoreSection from './ScoreSection';
 import Pane from './Pane';
 import Section from './Section';
 import theme from '../theme';
 
-const getSectionData = (community, isSelectable, availableOptions, onSelectionChange) =>
+const getSectionData = (
+  community,
+  isSelectable,
+  availableOptions,
+  onSelectionChange
+) =>
   [
     {
       header: 'Activities',
       cards: availableOptions?.activities,
       // availableSelections: isSelectable ? availableOptions?.activities || [] : [],
-      availableSelections: availableOptions?.activities // || [],
+      availableSelections: availableOptions?.activities, // || [],
     },
     {
       header: 'Sectors',
       cards: availableOptions?.sectors,
       // availableSelections: isSelectable ? availableOptions?.sectors || [] : [],
-      availableSelections: availableOptions?.sectors // || [],
+      availableSelections: availableOptions?.sectors, // || [],
     },
     {
       header: 'Hazards',
       cards: availableOptions?.hazards,
       // availableSelections: isSelectable ? availableOptions?.hazards || [] : [],
-      availableSelections: availableOptions?.hazards // || [],
+      availableSelections: availableOptions?.hazards, // || [],
     },
     {
       header: 'Community Population',
       cards: availableOptions?.size,
       // availableSelections: isSelectable ? availableOptions?.size || [] : [],
-      availableSelections: availableOptions?.size // || [],
+      availableSelections: availableOptions?.size, // || [],
     },
     {
       header: 'State',
       cards: availableOptions?.state,
       // availableSelections: isSelectable ? availableOptions?.state || [] : [],
-      availableSelections: availableOptions?.state // || [],
-    },    
+      availableSelections: availableOptions?.state, // || [],
+    },
   ].map((section, index) => ({
     ...section,
     type: 'community',
     id: `section${index}`,
-    isSelectable: isSelectable,
-    onSelectionChange: onSelectionChange,
+    isSelectable,
+    onSelectionChange,
   }));
 
 export default function CommunityPane({
@@ -51,7 +55,12 @@ export default function CommunityPane({
   availableOptions = {},
   onSelectionChange = () => {},
 }) {
-  const sectionData = getSectionData(community, isSelectable, availableOptions, onSelectionChange);
+  const sectionData = getSectionData(
+    community,
+    isSelectable,
+    availableOptions,
+    onSelectionChange
+  );
 
   return (
     <Box
@@ -82,17 +91,11 @@ export default function CommunityPane({
             {/* {community.name} */}
           </Typography>
         </HeaderBox>
-        <Box sx={{ height: '40px', width: '100%' }}></Box>
+        <Box sx={{ height: '40px', width: '100%' }} />
       </Stack>
-      <Pane
-        boxShadow={2}
-        sx={{ pl: 1 }}
-      >
-        {sectionData.map((section) => (
-          <Section
-            key={section.id}
-            {...section}
-          />
+      <Pane boxShadow={2} sx={{ pl: 1 }}>
+        {sectionData.map(section => (
+          <Section key={section.id} {...section} />
         ))}
         {/* <ScoreSection
           sx={{

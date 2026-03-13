@@ -11,9 +11,10 @@ export default defineConfig(({ command, mode }) => {
       __AGOL_API_KEY__: JSON.stringify(env.AGOL_API_KEY),
     },
     //base: 'https://nemac.github.io/crf-matching',
+    assetsInclude: ['**/*.docx'],
     plugins: [react()],
-    optimizeDeps: { // 
-      include: ['@mui/material/Unstable_Grid2'],
-    },    
+    // optimizeDeps: { //
+    //   include: ['@mui/material/Unstable_Grid2'],
+    // },
   };
 });
