@@ -28,7 +28,7 @@ const PulldownFilter = props => {
   return (
     <Box
       sx={{
-        px: 2,
+        px: 1,
         py: 1,
         display: 'inline-flex',
         alignSelf: 'flex-start',
@@ -36,7 +36,7 @@ const PulldownFilter = props => {
         ...boxSx,
       }}
     >
-      <FormControl fullWidth>
+      <FormControl>
         <InputLabel
           sx={{
             transform: 'translate(14px, 6px) scale(1)',
@@ -46,6 +46,7 @@ const PulldownFilter = props => {
           {filterText ?? 'label be filled'}
         </InputLabel>
         <Select
+          notched={false}
           sx={{
             width: 248,
             height: 34,
