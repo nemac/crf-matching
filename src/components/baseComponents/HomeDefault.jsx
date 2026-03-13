@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import { Link as RouterLink } from 'react-router-dom';
 
-const preventDefault = (event) => event.preventDefault();
+const preventDefault = event => event.preventDefault();
 
 export default function Links() {
   return (
@@ -16,8 +16,9 @@ export default function Links() {
       }}
       onClick={preventDefault}
     >
-      <Link component={RouterLink} to='/' underline='hover'>Home</Link>
+      <Link component={RouterLink} to="/" underline="hover">
+        Home
+      </Link>
     </Box>
   );
 }
-
