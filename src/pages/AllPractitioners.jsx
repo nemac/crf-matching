@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Typography, Container, Box, Grid, Button } from '@mui/material';
+import { Typography, Container, Box, Button } from '@mui/material';
 import SortByAlphaIcon from '@mui/icons-material/SortByAlpha';
 import {
   fetchTotalPractitionerCount,
@@ -109,19 +109,24 @@ export default function AllPractitioners() {
             </Button>
           </Box>
 
-          <Grid container spacing={3} sx={{ mb: 4 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              gap: 3,
+              mb: 4,
+              justifyContent: 'center',
+            }}
+          >
             {practitioners.map((practitioner, index) => (
-              <Grid item xs={12} sm={4} md={4} key={index}>
-                <PractitionerCard
-                  filters=""
-                  practitioner={practitioner}
-                  onComparisonSelect={() => {}}
-                  isSelectedForComparison={false}
-                  showBrowseAll={false}
-                />
-              </Grid>
+              <PractitionerCard
+                key={index}
+                filters=""
+                practitioner={practitioner}
+              />
             ))}
-          </Grid>
+          </Box>
         </Box>
       </Container>
     </>
