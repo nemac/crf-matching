@@ -6,6 +6,8 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import WorkExampleCard from './WorkExampleCard';
+import BroadServiceProvider from '../baseComponents/BroadServiceProvider';
+import SpecialistLabel from '../baseComponents/SpecialistLabel';
 
 const SectionHeader = ({ children, sx = {} }) => {
   return (
@@ -23,43 +25,31 @@ const SectionHeader = ({ children, sx = {} }) => {
 };
 
 const MultiSelectionDisplay = ({ selected = [], validOptions }) => {
-  const unselectedOptions = validOptions.filter(
-    option => !selected.includes(option)
-  );
-
   return (
     <Box sx={{ display: 'flex', gap: '12px', flexWrap: 'wrap', ml: 2, mb: 8 }}>
-      {selected.map((item, index) => (
-        <Chip
-          key={`selected-${index}`}
-          label={item}
-          icon={<CheckCircleIcon sx={{ color: '#0066CC !important' }} />}
-          sx={{
-            borderRadius: '9999px',
-            border: '1px solid #0066CC',
-            padding: '5px 12px',
-            color: '#0066CC',
-            bgcolor: '#66CCFF',
-            '& .MuiChip-icon': {
-              marginLeft: '12px',
-              marginRight: '-6px',
-            },
-          }}
-        />
-      ))}
-      {unselectedOptions.map((item, index) => (
-        <Chip
-          key={`valid-${index}`}
-          label={item}
-          sx={{
-            borderRadius: '9999px',
-            border: '1px solid #0066CC',
-            padding: '6px 12px',
-            bgcolor: '#F9FAFB',
-            color: '#000',
-          }}
-        />
-      ))}
+      {validOptions.map((item, index) => {
+        const isSelected = selected.includes(item);
+        return (
+          <Chip
+            key={index}
+            label={isSelected ? <strong>{item}</strong> : item}
+            icon={isSelected ? <CheckCircleIcon sx={{ color: '#0066CC !important' }} /> : undefined}
+            sx={{
+              borderRadius: '9999px',
+              border: '1px solid #0066CC',
+              padding: isSelected ? '5px 12px' : '6px 12px',
+              color: isSelected ? '#0066CC' : '#000',
+              bgcolor: isSelected ? '#66CCFF' : '#F9FAFB',
+              ...(isSelected && {
+                '& .MuiChip-icon': {
+                  marginLeft: '12px',
+                  marginRight: '-6px',
+                },
+              }),
+            }}
+          />
+        );
+      })}
     </Box>
   );
 };
@@ -81,28 +71,11 @@ const NewPractitionerLayout = props => {
   return (
     <Box>
       <Box sx={{ mb: 4, display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-        <Chip
-          label="Adaptation Practitioner"
-          sx={{
-            bgcolor: '#B3D9FF',
-            color: '#003366',
-            fontWeight: 500,
-            fontSize: '0.875rem',
-            height: '32px',
-            borderRadius: '16px',
-          }}
-        />
-        <Chip
-          label="Adaptation Specialist"
-          sx={{
-            bgcolor: '#F5D5A8',
-            color: '#805000',
-            fontWeight: 500,
-            fontSize: '0.875rem',
-            height: '32px',
-            borderRadius: '16px',
-          }}
-        />
+        {formData.org_registry_category === 'Specialist' ? (
+          <SpecialistLabel />
+        ) : (
+          <BroadServiceProvider />
+        )}
       </Box>
 
       <SectionHeader>Organization Contact</SectionHeader>

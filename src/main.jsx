@@ -35,7 +35,7 @@ const router = createBrowserRouter([
     element: <Registry />,
   },
   {
-    path: '/Practitioner',
+    path: '/practitioner/:practitionerId',
     element: <PractitionerPage />,
   },
   {
