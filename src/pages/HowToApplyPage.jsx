@@ -1,4 +1,5 @@
 import { Typography, Box } from '@mui/material';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import LooksOneOutlinedIcon from '@mui/icons-material/LooksOneOutlined';
 import LooksTwoOutlinedIcon from '@mui/icons-material/LooksTwoOutlined';
@@ -99,9 +100,223 @@ export default function HowToApplyPage() {
                 color: '#56657D',
               }}
             >
-              Help communities build resilience to climate change by joining the
-              Registry as a vetted service provider
+              Help communities adapt to climate change by joining the Registry
+              as a vetted service provider
             </Typography>
+          </Box>
+        </Box>
+      </Box>
+
+      <Box sx={{ px: { xs: 4, sm: 6, md: 12 }, py: 4, bgcolor: '#FFFFFF' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            p: 3,
+            gap: 1,
+            bgcolor: '#F9FAFB',
+            border: '1px solid #E1F5FE',
+            borderRadius: '6px',
+            isolation: 'isolate',
+          }}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              pb: 1,
+              gap: 1,
+            }}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                py: 1,
+                gap: 0.5,
+              }}
+            >
+              <Typography
+                sx={{
+                  fontWeight: 700,
+                  fontSize: '24px',
+                  lineHeight: '28px',
+                  color: '#101828',
+                  py: 0.5,
+                }}
+              >
+                Is your organization a good fit for the Registry?
+              </Typography>
+              <Typography
+                sx={{
+                  fontWeight: 400,
+                  fontSize: '18px',
+                  lineHeight: '21px',
+                  color: '#101828',
+                  py: 0.5,
+                }}
+              >
+                The Registry is designed to connect climate adaptation service
+                providers and communities who need support with adaptation. An
+                adaptation service provider is an organization that focuses on
+                helping communities prepare for the impacts of climate change
+                (note that reducing greenhouse gas emissions is an important
+                component of climate action, but not a focus of this Registry!).
+                Some of the defining characteristics of adaptation service
+                providers who should be included in this Registry include:
+              </Typography>
+            </Box>
+
+            {[
+              'Experience assisting communities with planning efforts and projects specifically designed to proactively address local impacts of climate change',
+              'Ability to skillfully incorporate climate change considerations into projects and processes;',
+              'Understanding of climate data and projections, including when and how to utilize them, as well as how to communicate about it to community leaders and residents; and',
+              'Ability to engage whole communities and ensure adaptation projects center equity;',
+              'Willingness to be contacted by communities looking for support with adaptation needs;',
+            ].map(item => (
+              <Box
+                key={item}
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  py: 0.5,
+                  px: 1,
+                  gap: 3,
+                }}
+              >
+                <FiberManualRecordIcon
+                  sx={{ color: '#003366', fontSize: 12, flexShrink: 0 }}
+                />
+                <Typography
+                  sx={{
+                    fontWeight: 400,
+                    fontSize: '16px',
+                    lineHeight: '19px',
+                    color: '#101828',
+                  }}
+                >
+                  {item}
+                </Typography>
+              </Box>
+            ))}
+
+            <Box sx={{ py: 1 }}>
+              <Typography
+                sx={{
+                  fontWeight: 400,
+                  fontSize: '18px',
+                  lineHeight: '21px',
+                  color: '#101828',
+                  py: 0.5,
+                }}
+              >
+                All organizations in the Registry, regardless of the type of
+                services that they provide, must demonstrate that they are
+                sought out for the adaptation expertise that they provide. They
+                must also show that the services they offer are intentional
+                about incorporating consideration of climate impacts and
+                proactively addressing them, rather than simple acknowledgement
+                that work focused on other topics or community needs also
+                happens to have adaptation benefits.
+              </Typography>
+            </Box>
+          </Box>
+
+          <Box sx={{ p: 1, gap: 1.5 }}>
+            <Box sx={{ py: 1 }}>
+              <Typography
+                sx={{
+                  fontWeight: 400,
+                  fontSize: '18px',
+                  lineHeight: '21px',
+                  color: '#101828',
+                  py: 0.5,
+                }}
+              >
+                The Registry is categorized into two groups of adaptation
+                service providers:
+              </Typography>
+            </Box>
+
+            <Box
+              sx={{ px: 3, display: 'flex', flexDirection: 'column', gap: 1 }}
+            >
+              <Box sx={{ py: 1, gap: 0.5 }}>
+                <Typography
+                  sx={{
+                    fontWeight: 700,
+                    fontSize: '24px',
+                    lineHeight: '28px',
+                    color: '#101828',
+                    py: 0.5,
+                  }}
+                >
+                  Broad service providers
+                </Typography>
+                <Typography
+                  sx={{
+                    fontWeight: 400,
+                    fontSize: '16px',
+                    lineHeight: '19px',
+                    color: '#56657D',
+                    py: 0.5,
+                  }}
+                >
+                  Broad service providers have wide-ranging adaptation
+                  expertise, supporting community efforts to undertake
+                  cross-sector climate change vulnerability assessments, develop
+                  adaptation plans, and plan or implement actions focused on
+                  reducing their vulnerability to climate change impacts.
+                </Typography>
+              </Box>
+
+              <Box sx={{ py: 1, gap: 0.5 }}>
+                <Typography
+                  sx={{
+                    fontWeight: 700,
+                    fontSize: '24px',
+                    lineHeight: '28px',
+                    color: '#101828',
+                    py: 0.5,
+                  }}
+                >
+                  Specialists
+                </Typography>
+                <Typography
+                  sx={{
+                    fontWeight: 400,
+                    fontSize: '16px',
+                    lineHeight: '19px',
+                    color: '#56657D',
+                    py: 0.5,
+                  }}
+                >
+                  Specialists are organizations that focus more narrowly on one
+                  or more specific climate hazards, topics, or sectors,
+                  supporting communities in planning through implementation of
+                  adaptation-focused actions within a specific category (e.g.,
+                  wildfire resilience, public health, spatial analysis,
+                  ecosystem restoration, insurance systems).
+                </Typography>
+              </Box>
+            </Box>
+
+            <Box sx={{ pb: 1 }}>
+              <Typography
+                sx={{
+                  fontWeight: 400,
+                  fontSize: '18px',
+                  lineHeight: '21px',
+                  color: '#101828',
+                  py: 0.5,
+                }}
+              >
+                Approved practitioners will be categorized as broad service
+                practitioners or specialists based on the best judgement of the
+                review team.
+              </Typography>
+            </Box>
           </Box>
         </Box>
       </Box>
