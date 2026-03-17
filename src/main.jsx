@@ -20,6 +20,7 @@ import WorkExamplePage from './pages/WorkExamplePage.jsx';
 import AllComponents from './pages/AllComponents.jsx';
 import HomePage from './pages/HomePage.jsx';
 import ComparePractitioners from './pages/ComparePractitioners.jsx';
+import AllPractitioners from './pages/AllPractitioners.jsx';
 
 ReactGA.initialize('G-V5H6STTJJS'); // Replace with your GA Measurement ID
 ReactGA.send('pageview'); // Send initial pageview
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
     element: <ComparePractitioners />,
   },
 
+  {
+    path: '/AllPractitioners',
+    element: <AllPractitioners />,
+  },
   {
     path: '/About',
     element: <AboutPage />,

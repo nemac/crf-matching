@@ -32,8 +32,8 @@ const navItems = [
   },
   {
     name: 'All practitioners',
-    url: '/practitioner',
-    matches: ['/practitioner'],
+    url: '/AllPractitioners',
+    matches: ['/AllPractitioners'],
   },
   {
     name: 'Compare practitioners',
