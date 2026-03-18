@@ -58,7 +58,7 @@ export default function PractitionerCard({ filters, practitioner }) {
 
             WebkitLineClamp: 2,
             WebkitBoxOrient: 'vertical',
-            height: '46px', // 23px line-height × 2 lines
+            height: '69px', // 23px line-height × 3 lines
           }}
         >
           {practitioner.org}
