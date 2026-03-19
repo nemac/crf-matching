@@ -3,6 +3,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { fetchOptionsFromAirtable } from '../../util/api';
 import { useState, useEffect } from 'react';
 
 const PulldownFilter = props => {
@@ -20,6 +21,19 @@ const PulldownFilter = props => {
     { id: 3, label: 'three', value: 3 },
   ]);
   const [selectedValue, setSelectedValue] = useState([]);
+  const [selectedOptions, setSelectedOptions] = useState({
+    state: [],
+    activities: [],
+    sectors: [],
+    hazards: [],
+  });
+  const [availableOptions, setAvailableOptions] = useState({
+    state: [],
+    activities: [],
+    sectors: [],
+    hazards: [],
+  });
+
   // useEffect(() => {
   //   fetch('api/filters')
   //     .then(res => res.json())
