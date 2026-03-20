@@ -1,4 +1,5 @@
 import { Box, Container, Grid, Stack, Typography } from '@mui/material';
+import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import PeopleOutlineOutlinedIcon from '@mui/icons-material/PeopleOutlineOutlined';
 import HandshakeOutlinedIcon from '@mui/icons-material/HandshakeOutlined';
@@ -8,6 +9,8 @@ import { useEffect, useState } from 'react';
 import AltActionButton from '../components/baseComponents/AltActionButton.jsx';
 import CallToActionButton from '../components/baseComponents/CallToActionButton.jsx';
 import searchbar_background from '../assets/searchbar_background.png';
+import SearchBar from '../components/baseComponents/SearchBar.jsx';
+import PullDownFilter from '../components/baseComponents/PulldownFilter.jsx';
 
 export default function HomePage() {
   const [totalPractitioners, setTotalPractitioners] = useState(0);
@@ -21,6 +24,7 @@ export default function HomePage() {
       <NavBar />
       <Container disableGutters maxWidth={false}>
         <Stack direction="column" spacing={8} sx={{ mt: 4 }}>
+          {/* background image of search bar */}
           <Box
             sx={{
               position: 'relative',
@@ -32,7 +36,7 @@ export default function HomePage() {
                 backgroundImage: `url(${searchbar_background})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                filter: 'blur(1px)', // adjust blur amount
+                filter: 'blur(1px)',
                 zIndex: 0,
               },
               display: 'flex',
@@ -50,6 +54,7 @@ export default function HomePage() {
               }}
             >
               <Box>
+                {/* main text of search bar */}
                 <Typography
                   sx={{
                     textAlign: 'center',
@@ -77,9 +82,39 @@ export default function HomePage() {
                     width: '100%',
                     minHeight: 84,
                     borderRadius: 3,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                   }}
                 >
-                  <Box>Search bar</Box>
+                  {/* searching fields */}
+                  <Box sx={{}}>
+                    <SearchBar text="Enter the community" />
+                    <PullDownFilter
+                      filterName="services filter"
+                      filterText="Services"
+                    />
+                    <PullDownFilter
+                      filterName="Hazards filter"
+                      filterText="Hazards"
+                    />
+                    <PullDownFilter
+                      filterName="Sectors filter"
+                      filterText="Sectors"
+                    />
+                    <CallToActionButton
+                      buttonSx={{
+                        borderRadius: 12,
+                        height: 34,
+                      }}
+                      iconStart=<SearchIcon />
+                      textSx={{
+                        fontSize: 13,
+                        fontWeight: 500,
+                      }}
+                      text="Find Practitioners"
+                    />
+                  </Box>
                 </Box>
               </Box>
             </Box>

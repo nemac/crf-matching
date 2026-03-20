@@ -3,6 +3,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { fetchOptionsFromAirtable } from '../../util/api';
 import { useState, useEffect } from 'react';
 
 const PulldownFilter = props => {
@@ -20,6 +21,19 @@ const PulldownFilter = props => {
     { id: 3, label: 'three', value: 3 },
   ]);
   const [selectedValue, setSelectedValue] = useState([]);
+  const [selectedOptions, setSelectedOptions] = useState({
+    state: [],
+    activities: [],
+    sectors: [],
+    hazards: [],
+  });
+  const [availableOptions, setAvailableOptions] = useState({
+    state: [],
+    activities: [],
+    sectors: [],
+    hazards: [],
+  });
+
   // useEffect(() => {
   //   fetch('api/filters')
   //     .then(res => res.json())
@@ -28,7 +42,7 @@ const PulldownFilter = props => {
   return (
     <Box
       sx={{
-        px: 2,
+        px: 1,
         py: 1,
         display: 'inline-flex',
         alignSelf: 'flex-start',
@@ -36,7 +50,7 @@ const PulldownFilter = props => {
         ...boxSx,
       }}
     >
-      <FormControl fullWidth>
+      <FormControl>
         <InputLabel
           sx={{
             transform: 'translate(14px, 6px) scale(1)',
@@ -46,6 +60,7 @@ const PulldownFilter = props => {
           {filterText ?? 'label be filled'}
         </InputLabel>
         <Select
+          notched={false}
           sx={{
             width: 248,
             height: 34,

@@ -2,11 +2,12 @@ import { Button, Typography } from '@mui/material';
 import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
 import { Link as RouterLink } from 'react-router-dom';
 const CallToActionButton = props => {
-  const { text, textSx, to } = props;
+  const { text, textSx, buttonSx, to, iconStart, iconEnd } = props;
   return (
     <>
       <Button
-        endIcon={<ArrowRightAltOutlinedIcon />}
+        startIcon={iconStart}
+        endIcon={iconEnd}
         component={to ? RouterLink : 'button'}
         to={to}
         sx={{
@@ -17,11 +18,12 @@ const CallToActionButton = props => {
           pl: '12px',
           pb: '4px',
           pr: '12px',
-          gap: '16px',
+          textTransform: 'none',
           backgroundColor: '#003366',
           '&:hover': {
             bgcolor: '#44619A',
           },
+          ...buttonSx,
         }}
       >
         <Typography sx={textSx}>{text ?? 'To be filled'}</Typography>
