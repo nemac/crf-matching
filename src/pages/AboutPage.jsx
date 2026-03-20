@@ -215,57 +215,111 @@ export default function AboutPage() {
                   connects it with meaningful projects that make a real-world
                   impact.
                 </Typography>
+              </Box>
+
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  py: 1,
+                  gap: 1,
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontWeight: 400,
+                    fontSize: '18px',
+                    lineHeight: '21px',
+                    color: '#101828',
+                    py: 0.5,
+                  }}
+                >
+                  The Registry includes:
+                </Typography>
+
                 <Box
-                  sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-start',
+                    pl: 3,
+                    gap: 1,
+                  }}
                 >
                   <Box
                     sx={{
                       display: 'flex',
+                      flexDirection: 'column',
                       alignItems: 'flex-start',
-                      p: 1,
-                      gap: 1,
+                      py: 1,
+                      gap: 0.5,
                     }}
                   >
                     <Typography
                       sx={{
-                        fontWeight: 400,
-                        fontSize: '16px',
-                        lineHeight: '21px',
+                        fontWeight: 700,
+                        fontSize: '24px',
+                        lineHeight: '28px',
                         color: '#101828',
+                        py: 0.5,
                       }}
                     >
-                      &#8226; <strong>Broad service providers</strong> have
-                      wide-ranging adaptation expertise, supporting community
-                      efforts to undertake cross-sector climate change
-                      vulnerability assessments, develop adaptation plans, and
-                      plan or implement actions focused on reducing their
-                      vulnerability to climate change impacts.
+                      Broad service providers
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: 400,
+                        fontSize: '16px',
+                        lineHeight: '19px',
+                        color: '#56657D',
+                        py: 0.5,
+                      }}
+                    >
+                      Broad service providers have wide-ranging adaptation
+                      expertise, supporting community efforts to undertake
+                      cross-sector climate change vulnerability assessments,
+                      develop adaptation plans, and plan or implement actions
+                      focused on reducing their vulnerability to climate change
+                      impacts.
                     </Typography>
                   </Box>
 
                   <Box
                     sx={{
                       display: 'flex',
+                      flexDirection: 'column',
                       alignItems: 'flex-start',
-                      p: 1,
-                      gap: 1,
+                      py: 1,
+                      gap: 0.5,
                     }}
                   >
                     <Typography
                       sx={{
-                        fontWeight: 400,
-                        fontSize: '16px',
-                        lineHeight: '21px',
+                        fontWeight: 700,
+                        fontSize: '24px',
+                        lineHeight: '28px',
                         color: '#101828',
+                        py: 0.5,
                       }}
                     >
-                      &#8226; <strong>Specialists</strong> are organizations
-                      that focus more narrowly on one or more specific climate
-                      hazards, topics, or sectors, supporting communities in
-                      planning through implementation of adaptation-focused
-                      actions within a specific category (e.g., wildfire
-                      resilience, public health, spatial analysis, ecosystem
-                      restoration, insurance systems).
+                      Specialists
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontWeight: 400,
+                        fontSize: '16px',
+                        lineHeight: '19px',
+                        color: '#56657D',
+                        py: 0.5,
+                      }}
+                    >
+                      Specialists are organizations that focus more narrowly on
+                      one or more specific climate hazards, topics, or sectors,
+                      supporting communities in planning through implementation
+                      of adaptation-focused actions within a specific category
+                      (e.g., wildfire resilience, public health, spatial
+                      analysis, ecosystem restoration, insurance systems).
                     </Typography>
                   </Box>
                 </Box>

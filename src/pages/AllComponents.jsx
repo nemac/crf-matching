@@ -13,7 +13,6 @@ import {
   FilterRemove,
   FilterRemoveTwo,
   HomeDefault,
-  // HomeActive,
   FilterCheck,
   PulldownFilter,
   SearchBar,
@@ -62,9 +61,6 @@ export default function AllComponents() {
           <Grid size={{ xs: 12, md: 4, lg: 6 }}>
             <HomeDefault />
           </Grid>
-          {/* <Grid size={{ xs: 12, md: 4, lg: 6 }}> */}
-          {/*   <HomeActive /> */}
-          {/* </Grid> */}
         </Grid>
         <Grid size={{ xs: 12, md: 4, lg: 6 }}>
           <FilterCheck />

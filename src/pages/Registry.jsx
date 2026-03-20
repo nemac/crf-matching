@@ -23,12 +23,11 @@ import WindowIcon from '@mui/icons-material/Window';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import ShareIcon from '@mui/icons-material/Share';
 import ClearAllIcon from '@mui/icons-material/ClearAll';
-import { PersonOffOutlined } from '@mui/icons-material';
-import { FormatListBulleted } from '@mui/icons-material';
+import { PersonOffOutlined, FormatListBulleted } from '@mui/icons-material';
 import CancelIcon from '@mui/icons-material/Cancel';
 import IconButton from '@mui/material/IconButton';
 import SortByAlphaIcon from '@mui/icons-material/SortByAlpha';
-import { 
+import {
   fetchTotalPractitionerCount,
   fetchFilteredPractitioners,
   fetchFilteredSpecialist,
@@ -41,7 +40,11 @@ import RecommendSpecialist from '../components/RecommendSpecialist';
 import NavBar from '../components/NavBar';
 
 import { searchLocations, getLocationDetails } from '../util/geocoding';
-import { filtersToSearchParams, searchParamsToFilters, generateShareableUrl } from '../util/urlStateManagement';
+import {
+  filtersToSearchParams,
+  searchParamsToFilters,
+  generateShareableUrl,
+} from '../util/urlStateManagement';
 import { lightBlue } from '@mui/material/colors';
 
 const PRACTITIONERS_PER_PAGE = 21;
@@ -66,7 +69,7 @@ const LocationSearch = ({ value, onChange, disabled }) => {
       setLoading(true);
       const suggestions = await searchLocations(newInputValue);
       // Transform suggestions to match the selected value format
-      const transformedSuggestions = suggestions.map((suggestion) => ({
+      const transformedSuggestions = suggestions.map(suggestion => ({
         ...suggestion,
         fullText: suggestion.text,
       }));
@@ -90,7 +93,7 @@ const LocationSearch = ({ value, onChange, disabled }) => {
     }
   };
 
-  const handleClear = (event) => {
+  const handleClear = event => {
     event.stopPropagation(); // Prevent triggering other click handlers
     onChange(null, null);
     setInputValue('');
@@ -103,7 +106,7 @@ const LocationSearch = ({ value, onChange, disabled }) => {
       inputValue={inputValue}
       onInputChange={handleInputChange}
       options={value ? [value, ...options] : options}
-      getOptionLabel={(option) => {
+      getOptionLabel={option => {
         if (!option) return '';
         return option.fullText || option.text || '';
       }}
@@ -111,20 +114,24 @@ const LocationSearch = ({ value, onChange, disabled }) => {
         if (!option || !value) return false;
         return option.fullText === value.fullText;
       }}
-      filterOptions={(x) => x}
+      filterOptions={x => x}
       autoComplete
       includeInputInList
       filterSelectedOptions
       loading={loading}
       loadingText="Searching..."
-      noOptionsText={inputValue.length < 3 ? 'Type at least 3 characters' : 'No locations found'}
+      noOptionsText={
+        inputValue.length < 3
+          ? 'Type at least 3 characters'
+          : 'No locations found'
+      }
       open={open && inputValue.length >= 3}
       onOpen={() => setOpen(true)}
       onClose={() => setOpen(false)}
       disabled={disabled}
       sx={{ flexGrow: 1 }}
       popupIcon={null}
-      renderInput={(params) => (
+      renderInput={params => (
         <TextField
           {...params}
           placeholder="Enter the community location"
@@ -140,14 +147,13 @@ const LocationSearch = ({ value, onChange, disabled }) => {
           }}
           InputProps={{
             ...params.InputProps,
-            startAdornment: <LocationOnIcon sx={{ ml: 1, mr: -0.5, color: 'grey.500' }} />,
+            startAdornment: (
+              <LocationOnIcon sx={{ ml: 1, mr: -0.5, color: 'grey.500' }} />
+            ),
             endAdornment: (
               <>
                 {loading ? (
-                  <CircularProgress
-                    color="inherit"
-                    size={20}
-                  />
+                  <CircularProgress color="inherit" size={20} />
                 ) : value ? (
                   <IconButton
                     onClick={handleClear}
@@ -172,11 +178,19 @@ const LocationSearch = ({ value, onChange, disabled }) => {
   );
 };
 
-const FilterSection = ({ title, description, type, selected, availableOptions, onAdd, onRemove }) => {
+const FilterSection = ({
+  title,
+  description,
+  type,
+  selected,
+  availableOptions,
+  onAdd,
+  onRemove,
+}) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
-  const handleClick = (event) => {
+  const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -184,7 +198,7 @@ const FilterSection = ({ title, description, type, selected, availableOptions, o
     setAnchorEl(null);
   };
 
-  const handleSelect = (option) => {
+  const handleSelect = option => {
     onAdd(option);
     handleClose();
   };
@@ -205,7 +219,9 @@ const FilterSection = ({ title, description, type, selected, availableOptions, o
   };
 
   // Filter out already selected options
-  const availableChoices = availableOptions.filter((option) => !selected.includes(option));
+  const availableChoices = availableOptions.filter(
+    option => !selected.includes(option)
+  );
 
   return (
     <Box sx={{ mb: 3 }}>
@@ -225,10 +241,7 @@ const FilterSection = ({ title, description, type, selected, availableOptions, o
           mb: 1,
         }}
       >
-        <Typography
-          variant="h6"
-          sx={{ fontWeight: 500 }}
-        >
+        <Typography variant="h6" sx={{ fontWeight: 500 }}>
           {title}
         </Typography>
         {/*<Button*/}
@@ -244,15 +257,14 @@ const FilterSection = ({ title, description, type, selected, availableOptions, o
         {/*</Button>*/}
       </Box>
 
-      <Typography
-        variant="body2"
-        sx={{ mb: 2, color: 'text.secondary' }}
-      >
+      <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
         {description}
       </Typography>
 
-      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, alignItems: 'center' }}>
-        {selected.map((item) => (
+      <Box
+        sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, alignItems: 'center' }}
+      >
+        {selected.map(item => (
           <Chip
             key={item}
             label={item}
@@ -301,7 +313,7 @@ const FilterSection = ({ title, description, type, selected, availableOptions, o
             },
           }}
         >
-          {availableChoices.map((option) => (
+          {availableChoices.map(option => (
             <MenuItem
               key={option}
               onClick={() => handleSelect(option)}
@@ -320,7 +332,13 @@ const FilterSection = ({ title, description, type, selected, availableOptions, o
   );
 };
 
-const ViewToggle = ({ view, onViewChange, selectedCount, onClearSelected, showBrowseAll}) => {
+const ViewToggle = ({
+  view,
+  onViewChange,
+  selectedCount,
+  onClearSelected,
+  showBrowseAll,
+}) => {
   return (
     <Box
       sx={{
@@ -333,63 +351,63 @@ const ViewToggle = ({ view, onViewChange, selectedCount, onClearSelected, showBr
         position: 'relative', // For absolute positioning of clear button
       }}
     >
-    {showBrowseAll && (
-    <React.Fragment>
-        <Box
-          sx={{
-            bgcolor: view === 'cards' ? 'primary.main' : 'white',
-            color: view === 'cards' ? 'primary.white' : 'primary.main',
-            borderRadius: '20px',
-            cursor: 'pointer',
-            minWidth: '120px',
-            p: 1,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexBasis: {
-              // So the clear button wraps in mobile
-              xs: '40%',
-              md: 'auto',
-            },
-            boxShadow: view === 'cards' ? 2 : 1,
-            transition: 'all 0.2s ease-in-out',
-            '&:hover': {
-              bgcolor: view === 'cards' ? 'primary.dark' : 'grey.100',
-            },
-          }}
-          onClick={() => onViewChange(null, 'cards')}
-        >
-          <WindowIcon sx={{ mr: 1, fontSize: '1.2rem' }} />
-          Grid
-        </Box>
-        <Box
-          sx={{
-            bgcolor: view === 'compare' ? 'primary.main' : 'primary.white',
-            color: view === 'compare' ? 'primary.white' : 'primary.main',
-            borderRadius: '20px',
-            cursor: 'pointer',
-            minWidth: '120px',
-            p: 1,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexBasis: {
-              // So the clear button wraps in mobile
-              xs: '40%',
-              md: 'auto',
-            },
-            boxShadow: view === 'compare' ? 2 : 1,
-            transition: 'all 0.2s ease-in-out',
-            '&:hover': {
-              bgcolor: view === 'compare' ? 'primary.dark' : 'grey.100',
-            },
-          }}
-          onClick={() => onViewChange(null, 'compare')}
-        >
-          <CompareArrowsIcon sx={{ mr: 1, fontSize: '1.2rem' }} />
-          Compare
-        </Box>
-       </React.Fragment>
+      {showBrowseAll && (
+        <React.Fragment>
+          <Box
+            sx={{
+              bgcolor: view === 'cards' ? 'primary.main' : 'white',
+              color: view === 'cards' ? 'primary.white' : 'primary.main',
+              borderRadius: '20px',
+              cursor: 'pointer',
+              minWidth: '120px',
+              p: 1,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexBasis: {
+                // So the clear button wraps in mobile
+                xs: '40%',
+                md: 'auto',
+              },
+              boxShadow: view === 'cards' ? 2 : 1,
+              transition: 'all 0.2s ease-in-out',
+              '&:hover': {
+                bgcolor: view === 'cards' ? 'primary.dark' : 'grey.100',
+              },
+            }}
+            onClick={() => onViewChange(null, 'cards')}
+          >
+            <WindowIcon sx={{ mr: 1, fontSize: '1.2rem' }} />
+            Grid
+          </Box>
+          <Box
+            sx={{
+              bgcolor: view === 'compare' ? 'primary.main' : 'primary.white',
+              color: view === 'compare' ? 'primary.white' : 'primary.main',
+              borderRadius: '20px',
+              cursor: 'pointer',
+              minWidth: '120px',
+              p: 1,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexBasis: {
+                // So the clear button wraps in mobile
+                xs: '40%',
+                md: 'auto',
+              },
+              boxShadow: view === 'compare' ? 2 : 1,
+              transition: 'all 0.2s ease-in-out',
+              '&:hover': {
+                bgcolor: view === 'compare' ? 'primary.dark' : 'grey.100',
+              },
+            }}
+            onClick={() => onViewChange(null, 'compare')}
+          >
+            <CompareArrowsIcon sx={{ mr: 1, fontSize: '1.2rem' }} />
+            Compare
+          </Box>
+        </React.Fragment>
       )}
       {/* Clear Selected Button - Only show when there are selected practitioners */}
       {selectedCount > 0 && (
@@ -484,34 +502,41 @@ export default function Registry() {
   }, []);
   // Helper to check if all filters are empty
   const areFiltersEmpty = () => {
-    return Object.values(filters).every((arr) => arr.length === 0);
+    return Object.values(filters).every(arr => arr.length === 0);
   };
 
   // Update URL when filters, location, or selected practitioners change
   useEffect(() => {
-    const params = filtersToSearchParams(filters, selectedLocation, currentView, Array.from(selectedForComparison));
+    const params = filtersToSearchParams(
+      filters,
+      selectedLocation,
+      currentView,
+      Array.from(selectedForComparison)
+    );
     setSearchParams(params);
 
-    const loc = !selectedLocation  ? 0 : 1;
-    const activeFilterCount =  filters.activities.length + filters.sectors.length + filters.hazards.length + filters.size.length + loc
+    const loc = !selectedLocation ? 0 : 1;
+    const activeFilterCount =
+      filters.activities.length +
+      filters.sectors.length +
+      filters.hazards.length +
+      filters.size.length +
+      loc;
     setFilterCount(activeFilterCount);
     activeFilterCount === 0 ? setShowBrowseAll(true) : setShowBrowseAll(false);
-    activeFilterCount > 0 && setCurrentView('cards') 
-
-    
+    activeFilterCount > 0 && setCurrentView('cards');
   }, [filters, selectedLocation, currentView, selectedForComparison]);
 
   const debounceRef = useRef();
   const prevFiltersRef = useRef(JSON.stringify(filters));
-  
+
   useEffect(() => {
     fetchOptionsFromAirtable(setAvailableOptions);
   }, []);
 
   useEffect(() => {
-    fetchTotalPractitionerCount(setTotalPractitioners)
+    fetchTotalPractitionerCount(setTotalPractitioners);
   }, []);
-
 
   useEffect(() => {
     // Only run if filters actually changed
@@ -525,7 +550,7 @@ export default function Registry() {
     }
 
     debounceRef.current = setTimeout(() => {
-      if (filters && Object.values(filters).some((arr) => arr.length > 0)) {
+      if (filters && Object.values(filters).some(arr => arr.length > 0)) {
         fetchFilteredPractitioners(filters, setPractitioners);
         // fetchFilteredSpecialist(filters, setSpecialists);
       } else {
@@ -543,7 +568,9 @@ export default function Registry() {
     if (areFiltersEmpty()) {
       return 'My Community';
     }
-    return selectedLocation ? `${selectedLocation.city}, ${selectedLocation.state}` : 'My Community';
+    return selectedLocation
+      ? `${selectedLocation.city}, ${selectedLocation.state}`
+      : 'My Community';
   };
 
   const community = {
@@ -563,7 +590,8 @@ export default function Registry() {
 
   const visiblePractitioners = practitioners.slice(0, displayCount);
   const hasMorePractitioners = practitioners.length > displayCount;
-  const hasAnyFilters = Object.values(filters).some((arr) => arr.length > 0) || selectedState;
+  const hasAnyFilters =
+    Object.values(filters).some(arr => arr.length > 0) || selectedState;
 
   const handleShare = async () => {
     const shareableUrl = generateShareableUrl(
@@ -589,14 +617,14 @@ export default function Registry() {
     setSelectedLocation(newValue);
     if (newValue) {
       setSelectedState(newValue.state);
-      setFilters((prev) => ({
+      setFilters(prev => ({
         ...prev,
         state: [newValue.state],
       }));
       setShowFilters(true);
     } else {
       setSelectedState('');
-      setFilters((prev) => ({
+      setFilters(prev => ({
         ...prev,
         state: [],
       }));
@@ -611,13 +639,13 @@ export default function Registry() {
         setSelectedState('');
       }
       // Update filters
-      setFilters((prev) => ({
+      setFilters(prev => ({
         ...prev,
         [category]: newSelections,
       }));
     } else {
       // Handle other categories normally
-      setFilters((prev) => ({
+      setFilters(prev => ({
         ...prev,
         [category]: newSelections,
       }));
@@ -625,16 +653,16 @@ export default function Registry() {
   };
 
   const handleAddFilter = (category, value) => {
-    setFilters((prev) => ({
+    setFilters(prev => ({
       ...prev,
       [category]: [...prev[category], value],
     }));
   };
 
   const handleRemoveFilter = (category, itemToRemove) => {
-    setFilters((prev) => ({
+    setFilters(prev => ({
       ...prev,
-      [category]: prev[category].filter((item) => item !== itemToRemove),
+      [category]: prev[category].filter(item => item !== itemToRemove),
     }));
   };
 
@@ -655,7 +683,9 @@ export default function Registry() {
       // When switching views, maintain the current displayCount unless we're filtering for selected practitioners
       if (newView === 'compare' && selectedForComparison.size > 0) {
         // Only show selected practitioners in compare view if there are any selected
-        const selectedPractitioners = practitioners.filter((p) => selectedForComparison.has(p.airtableRecId));
+        const selectedPractitioners = practitioners.filter(p =>
+          selectedForComparison.has(p.airtableRecId)
+        );
         setDisplayCount(selectedPractitioners.length);
       }
       setCurrentView(newView);
@@ -692,7 +722,7 @@ export default function Registry() {
   };
 
   const handleComparisonSelect = (practitionerId, isSelected) => {
-    setSelectedForComparison((prev) => {
+    setSelectedForComparison(prev => {
       const newSelected = new Set(prev);
       if (isSelected) {
         newSelected.add(practitionerId);
@@ -712,7 +742,7 @@ export default function Registry() {
       <NavBar />
       <Container
         maxWidth="xl"
-        sx={{ 
+        sx={{
           mt: 4,
           mb: 4,
           cursor: 'default',
@@ -730,25 +760,29 @@ export default function Registry() {
             }}
           >
             Registry of Adaptation Practitioners
-            <Chip sx={{
-                display:{  xs: 'flex',  sm: 'inline-flex', md: 'inline-flex' }, 
-                maxWidth: '150px', 
+            <Chip
+              sx={{
+                display: { xs: 'flex', sm: 'inline-flex', md: 'inline-flex' },
+                maxWidth: '150px',
                 mt: { xs: 1, sm: 1, md: 1, lg: 0 },
-                mx: 2, 
-                mb: 6,          
-                p: 2,                 
-                backgroundColor: 'primary.lightBlue', 
-                color: 'primary.purple'  
-              }} 
-              label='Beta version'  
-              size="small" />
+                mx: 2,
+                mb: 6,
+                p: 2,
+                backgroundColor: 'primary.lightBlue',
+                color: 'primary.purple',
+              }}
+              label="Beta version"
+              size="small"
+            />
           </Typography>
           <Typography
             sx={{
               mb: 3,
             }}
           >
-            The Registry of Adaptation Practitioners is a community resource for easy identification of a qualified adaptation practitioner to provide the support you need!
+            The Registry of Adaptation Practitioners is a community resource for
+            easy identification of a qualified adaptation practitioner to
+            provide the support you need!
           </Typography>
           <Typography
             variant="h5"
@@ -843,7 +877,7 @@ export default function Registry() {
                       // fetchFilteredSpecialist(filters, setSpecialists);
                       setCurrentView('cards');
                       setSelectedState('BrowseAll');
-                      setDisplayCount(totalPractitioners);                      
+                      setDisplayCount(totalPractitioners);
                     }}
                     startIcon={<FormatListBulleted />}
                     sx={{
@@ -851,7 +885,7 @@ export default function Registry() {
                       bgcolor: lightBlue[50],
                       color: 'primary.main',
                       textTransform: 'none',
-                      borderRadius: 9999,                      
+                      borderRadius: 9999,
                       px: 2,
                       '&:hover': {
                         bgcolor: lightBlue[100],
@@ -867,10 +901,10 @@ export default function Registry() {
                 )}
 
                 {/* Only show clear button if there are filters applied */}
-                {(filterCount > 0) && (
+                {filterCount > 0 && (
                   <Button
                     startIcon={<ClearAllIcon />}
-                    onClick={(e) => {
+                    onClick={e => {
                       e.stopPropagation(); // Prevent filter panel from toggling
                       handleClearAllFilters();
                     }}
@@ -899,8 +933,8 @@ export default function Registry() {
                   type="activities"
                   selected={filters.activities}
                   availableOptions={availableOptions.activities}
-                  onAdd={(value) => handleAddFilter('activities', value)}
-                  onRemove={(value) => handleRemoveFilter('activities', value)}
+                  onAdd={value => handleAddFilter('activities', value)}
+                  onRemove={value => handleRemoveFilter('activities', value)}
                 />
 
                 <FilterSection
@@ -909,8 +943,8 @@ export default function Registry() {
                   type="hazards"
                   selected={filters.hazards}
                   availableOptions={availableOptions.hazards}
-                  onAdd={(value) => handleAddFilter('hazards', value)}
-                  onRemove={(value) => handleRemoveFilter('hazards', value)}
+                  onAdd={value => handleAddFilter('hazards', value)}
+                  onRemove={value => handleRemoveFilter('hazards', value)}
                 />
 
                 <FilterSection
@@ -919,8 +953,8 @@ export default function Registry() {
                   type="sectors"
                   selected={filters.sectors}
                   availableOptions={availableOptions.sectors}
-                  onAdd={(value) => handleAddFilter('sectors', value)}
-                  onRemove={(value) => handleRemoveFilter('sectors', value)}
+                  onAdd={value => handleAddFilter('sectors', value)}
+                  onRemove={value => handleRemoveFilter('sectors', value)}
                 />
                 <FilterSection
                   title="Filter practitioners by community population size"
@@ -928,8 +962,8 @@ export default function Registry() {
                   type="size"
                   selected={filters.size}
                   availableOptions={availableOptions.size}
-                  onAdd={(value) => handleAddFilter('size', value)}
-                  onRemove={(value) => handleRemoveFilter('size', value)}
+                  onAdd={value => handleAddFilter('size', value)}
+                  onRemove={value => handleRemoveFilter('size', value)}
                 />
               </Box>
             </Collapse>
@@ -1010,8 +1044,9 @@ export default function Registry() {
                       variant="body1"
                       sx={{ mb: 3, color: 'text.secondary' }}
                     >
-                      Showing <strong >{practitioners.length}</strong> of {totalPractitioners} Adaptation Practitioners
-                      {/* <a 
+                      Showing <strong>{practitioners.length}</strong> of{' '}
+                      {totalPractitioners} Adaptation Practitioners
+                      {/* <a
                         href="https://climatesmartcommunity.org/registry/"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -1023,7 +1058,7 @@ export default function Registry() {
                         the Registry of Adaptation Practitioners
                       </a> */}
                     </Typography>
-                    {showBrowseAll  && (
+                    {showBrowseAll && (
                       <Button
                         startIcon={<SortByAlphaIcon />}
                         sx={{
@@ -1041,7 +1076,9 @@ export default function Registry() {
                           },
                         }}
                         onClick={() => {
-                          const sortedPractitioners = [...practitioners].sort((a, b) => a.org.localeCompare(b.org));
+                          const sortedPractitioners = [...practitioners].sort(
+                            (a, b) => a.org.localeCompare(b.org)
+                          );
 
                           if (!isAscending) {
                             sortedPractitioners.reverse();
@@ -1056,24 +1093,16 @@ export default function Registry() {
                     )}
                   </Box>
 
-                  <Grid
-                    container
-                    spacing={3}
-                    sx={{ mb: 4 }}
-                  >
+                  <Grid container spacing={3} sx={{ mb: 4 }}>
                     {visiblePractitioners.map((practitioner, index) => (
-                      <Grid
-                        item
-                        xs={12}
-                        sm={6}
-                        md={4}
-                        key={index}
-                      >
+                      <Grid item xs={12} sm={6} md={4} key={index}>
                         <PractitionerCard
                           filters={searchParams}
                           practitioner={practitioner}
                           onComparisonSelect={handleComparisonSelect}
-                          isSelectedForComparison={selectedForComparison.has(practitioner.airtableRecId)}
+                          isSelectedForComparison={selectedForComparison.has(
+                            practitioner.airtableRecId
+                          )}
                           showBrowseAll={showBrowseAll}
                         />
                       </Grid>
@@ -1081,9 +1110,13 @@ export default function Registry() {
                   </Grid>
                   {/* Load More Button */}
                   {hasMorePractitioners && (
-                    <Box sx={{ display: 'flex', justifyContent: 'center', mb: 4 }}>
+                    <Box
+                      sx={{ display: 'flex', justifyContent: 'center', mb: 4 }}
+                    >
                       <Button
-                        onClick={() => setDisplayCount((prev) => prev + PRACTITIONERS_PER_PAGE)}
+                        onClick={() =>
+                          setDisplayCount(prev => prev + PRACTITIONERS_PER_PAGE)
+                        }
                         variant="outlined"
                         sx={{
                           color: 'text.primary',
@@ -1112,10 +1145,12 @@ export default function Registry() {
                 // Compare view
                 <ComparisonBoard
                   community={community}
-                  practitioners={practitioners.filter((p) =>
-                    selectedForComparison.size === 0 ? true : selectedForComparison.has(p.airtableRecId)
+                  practitioners={practitioners.filter(p =>
+                    selectedForComparison.size === 0
+                      ? true
+                      : selectedForComparison.has(p.airtableRecId)
                   )}
-                  isSelectable={true}
+                  isSelectable
                   availableOptions={availableOptions}
                   onSelectionChange={handleSelectionChange}
                   displayCount={displayCount}
