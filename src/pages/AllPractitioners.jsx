@@ -1,30 +1,27 @@
 import { useState, useEffect } from 'react';
-import { Typography, Container, Box, Button } from '@mui/material';
-import SortByAlphaIcon from '@mui/icons-material/SortByAlpha';
 import {
-  fetchTotalPractitionerCount,
   fetchFilteredPractitioners,
-} from '../util/api';
-import PractitionerCard from '../components/PractitionerCard';
+  fetchTotalPractitionerCount,
+} from '../util/api.js';
+import SearchRegistryComponent from '../components/RegistryComponent.jsx';
 import FullPageSpinner from '../components/FullPageSpinner';
-import NavBar from '../components/NavBar';
+import NavBar from '../components/NavBar.jsx';
 
 export default function AllPractitioners() {
   const [practitioners, setPractitioners] = useState([]);
   const [totalPractitioners, setTotalPractitioners] = useState(0);
-  const [isAscending, setIsAscending] = useState(true);
   const [loading, setLoading] = useState(true);
 
-  const emptyFilters = {
+  const filters = {
     activities: [],
     sectors: [],
     hazards: [],
-    size: [],
+    community: '',
   };
 
   useEffect(() => {
     fetchTotalPractitionerCount(setTotalPractitioners);
-    fetchFilteredPractitioners(emptyFilters, data => {
+    fetchFilteredPractitioners(filters, data => {
       setPractitioners(data);
       setLoading(false);
     });
@@ -42,93 +39,10 @@ export default function AllPractitioners() {
   return (
     <>
       <NavBar />
-      <Container
-        maxWidth="xl"
-        sx={{
-          mt: 4,
-          mb: 4,
-          px: { xs: 4, sm: 4, md: 4, lg: 3 },
-        }}
-      >
-        <Box sx={{ mb: 6 }}>
-          <Typography
-            variant="h3"
-            sx={{
-              color: 'primary.main',
-              fontWeight: 'bold',
-              mb: 1,
-            }}
-          >
-            All Practitioners
-          </Typography>
-          <Typography sx={{ mb: 3 }}>
-            Browse all adaptation practitioners in the Registry.
-          </Typography>
-
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              mb: 3,
-              gap: 2,
-            }}
-          >
-            <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-              Showing <strong>{practitioners.length}</strong> of{' '}
-              {totalPractitioners} Adaptation Practitioners
-            </Typography>
-            <Button
-              startIcon={<SortByAlphaIcon />}
-              sx={{
-                bgcolor: 'primary.white',
-                color: 'primary.main',
-                border: '1px solid',
-                borderColor: 'primary.borderGray',
-                borderRadius: '20px',
-                boxShadow: 1,
-                px: 2,
-                textTransform: 'none',
-                whiteSpace: 'nowrap',
-                '&:hover': {
-                  bgcolor: 'grey.100',
-                },
-              }}
-              onClick={() => {
-                const sorted = [...practitioners].sort((a, b) =>
-                  a.org.localeCompare(b.org)
-                );
-                if (!isAscending) {
-                  sorted.reverse();
-                }
-                setPractitioners(sorted);
-                setIsAscending(!isAscending);
-              }}
-            >
-              Sort
-            </Button>
-          </Box>
-
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              gap: 3,
-              mb: 4,
-              justifyContent: 'center',
-            }}
-          >
-            {practitioners.map((practitioner, index) => (
-              <PractitionerCard
-                key={index}
-                filters=""
-                practitioner={practitioner}
-              />
-            ))}
-          </Box>
-        </Box>
-      </Container>
+      <SearchRegistryComponent
+        practitioners={practitioners}
+        totalPractitioners={totalPractitioners}
+      />
     </>
   );
 }
