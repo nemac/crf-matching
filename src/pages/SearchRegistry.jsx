@@ -1,12 +1,16 @@
-import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import Typography from '@mui/material/Typography';
 import NavBar from '../components/NavBar';
-import { useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 const SearchRegistry = () => {
-  const { state } = useLocation();
+  const [searchParams] = useSearchParams();
+
+  const community = searchParams.get('community') ?? '';
+  const activities = searchParams.get('activities')?.split(',') ?? [];
+  const hazards = searchParams.get('hazards')?.split(',') ?? [];
+  const sectors = searchParams.get('sectors')?.split(',') ?? [];
 
   const FilterSection = ({ title, values }) => (
     <Box sx={{ mb: 2 }}>
@@ -49,12 +53,12 @@ const SearchRegistry = () => {
             Community
           </Typography>
           <Typography variant="h6" sx={{ mt: 0.5 }}>
-            {state?.community ?? '—'}
+            {community || '—'}
           </Typography>
         </Box>
-        <FilterSection title="Sectors" values={state?.sectorsFilter ?? []} />
-        <FilterSection title="Hazards" values={state?.hazardsFilter ?? []} />
-        <FilterSection title="Services" values={state?.servicesFilter ?? []} />
+        <FilterSection title="Services" values={activities} />
+        <FilterSection title="Hazards" values={hazards} />
+        <FilterSection title="Sectors" values={sectors} />
       </Box>
     </>
   );

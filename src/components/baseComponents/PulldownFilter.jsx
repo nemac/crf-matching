@@ -8,40 +8,16 @@ import { fetchOptionsFromAirtable } from '../../util/api';
 import { useState, useEffect } from 'react';
 
 const PulldownFilter = props => {
-  const [selectedValue, setSelectedValue] = useState([]);
-  console.log('press the button');
-  const { filterId, filterText, filterName, boxSx, onChange } = props;
-  console.log('pressed the button');
-  // to be uncommented and probably changed for when active filters are to be used
-  const [options, setOptions] = useState([
-    { id: 1, label: 'one', value: 1 },
-    { id: 2, label: 'two', value: 2 },
-    { id: 3, label: 'three', value: 3 },
-  ]);
+  const {
+    filterId,
+    filterText,
+    filterName,
+    boxSx,
+    onChange,
+    availableOptions,
+    selectedValues,
+  } = props;
 
-  const handleChange = e => {
-    const value = e.target.value;
-    setSelectedValue(typeof value === 'string' ? value.split(',') : value);
-    props.onChange?.(value);
-  };
-  const [selectedOptions, setSelectedOptions] = useState({
-    state: [],
-    activities: [],
-    sectors: [],
-    hazards: [],
-  });
-  const [availableOptions, setAvailableOptions] = useState({
-    state: [],
-    activities: [],
-    sectors: [],
-    hazards: [],
-  });
-
-  // useEffect(() => {
-  //   fetch('api/filters')
-  //     .then(res => res.json())
-  //     .then(data => setFilters(date));
-  // }, []);
   return (
     <Box
       sx={{
@@ -54,7 +30,7 @@ const PulldownFilter = props => {
       }}
     >
       <FormControl>
-        {selectedValue.length === 0 && (
+        {selectedValues.length === 0 && (
           <InputLabel
             sx={{ transform: 'translate(14px, 6px) scale(1)' }}
             id={filterName ?? 'To be filled'}
@@ -74,15 +50,15 @@ const PulldownFilter = props => {
           }}
           labelId={filterName ?? 'fil name be filled'}
           id={filterId ?? 'Filter Id to be filled'}
-          value={selectedValue}
+          value={selectedValues}
           label={filterText ?? 'Filters'}
-          onChange={handleChange}
+          onChange={onChange}
         >
-          {options.map(option => (
-            <MenuItem key={option.id} value={option.value}>
+          {availableOptions?.map(option => (
+            <MenuItem key={option} value={option}>
               <FilterCheck
-                text={option.label}
-                checked={selectedValue.includes(option.value)}
+                text={option}
+                checked={selectedValues.includes(option)}
               />
             </MenuItem>
           ))}

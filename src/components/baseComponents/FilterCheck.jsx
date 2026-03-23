@@ -5,7 +5,7 @@ import Checkbox from '@mui/material/Checkbox';
 const FilterCheck = props => {
   const { text, textSx, checked } = props;
   return (
-    <FormGroup>
+    <FormGroup sx={{ pointerEvents: 'none' }}>
       <FormControlLabel
         sx={{
           width: 'fit-content',
