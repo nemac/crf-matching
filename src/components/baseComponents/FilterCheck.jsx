@@ -3,9 +3,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
 const FilterCheck = props => {
-  const { text, textSx } = props;
+  const { text, textSx, checked } = props;
   return (
-    <FormGroup>
+    <FormGroup sx={{ pointerEvents: 'none' }}>
       <FormControlLabel
         sx={{
           width: 'fit-content',
@@ -21,7 +21,7 @@ const FilterCheck = props => {
           },
           ...textSx,
         }}
-        control={<Checkbox />}
+        control={<Checkbox checked={checked} />}
         label={text ?? 'To be filled'}
       />
     </FormGroup>

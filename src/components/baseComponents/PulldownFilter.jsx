@@ -3,6 +3,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import FilterCheck from './FilterCheck.jsx';
 import { fetchOptionsFromAirtable } from '../../util/api';
 import { useState, useEffect } from 'react';
 
@@ -12,33 +13,11 @@ const PulldownFilter = props => {
     filterText,
     filterName,
     boxSx,
-    handleChange = e => setSelectedValue(e.target.value),
+    onChange,
+    availableOptions,
+    selectedValues,
   } = props;
-  // to be uncommented and probably changed for when active filters are to be used
-  const [options, setOptions] = useState([
-    { id: 1, label: 'one', value: 1 },
-    { id: 2, label: 'two', value: 2 },
-    { id: 3, label: 'three', value: 3 },
-  ]);
-  const [selectedValue, setSelectedValue] = useState([]);
-  const [selectedOptions, setSelectedOptions] = useState({
-    state: [],
-    activities: [],
-    sectors: [],
-    hazards: [],
-  });
-  const [availableOptions, setAvailableOptions] = useState({
-    state: [],
-    activities: [],
-    sectors: [],
-    hazards: [],
-  });
 
-  // useEffect(() => {
-  //   fetch('api/filters')
-  //     .then(res => res.json())
-  //     .then(data => setFilters(date));
-  // }, []);
   return (
     <Box
       sx={{
@@ -51,16 +30,18 @@ const PulldownFilter = props => {
       }}
     >
       <FormControl>
-        <InputLabel
-          sx={{
-            transform: 'translate(14px, 6px) scale(1)',
-          }}
-          id={filterName ?? 'To be filled'}
-        >
-          {filterText ?? 'label be filled'}
-        </InputLabel>
+        {selectedValues.length === 0 && (
+          <InputLabel
+            sx={{ transform: 'translate(14px, 6px) scale(1)' }}
+            id={filterName ?? 'To be filled'}
+          >
+            {filterText ?? 'label be filled'}
+          </InputLabel>
+        )}
         <Select
+          multiple
           notched={false}
+          renderValue={() => filterText}
           sx={{
             width: 248,
             height: 34,
@@ -69,13 +50,16 @@ const PulldownFilter = props => {
           }}
           labelId={filterName ?? 'fil name be filled'}
           id={filterId ?? 'Filter Id to be filled'}
-          value={selectedValue}
+          value={selectedValues}
           label={filterText ?? 'Filters'}
-          onChange={handleChange}
+          onChange={onChange}
         >
-          {options.map(option => (
-            <MenuItem key={option.id} value={option.value}>
-              {option.label}
+          {availableOptions?.map(option => (
+            <MenuItem key={option} value={option}>
+              <FilterCheck
+                text={option}
+                checked={selectedValues.includes(option)}
+              />
             </MenuItem>
           ))}
         </Select>

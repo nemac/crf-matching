@@ -4,20 +4,38 @@ import SearchIcon from '@mui/icons-material/Search';
 import PeopleOutlineOutlinedIcon from '@mui/icons-material/PeopleOutlineOutlined';
 import HandshakeOutlinedIcon from '@mui/icons-material/HandshakeOutlined';
 import NavBar from '../components/NavBar.jsx';
-import { fetchTotalPractitionerCount } from '../util/api.js';
+import {
+  fetchOptionsFromAirtable,
+  fetchTotalPractitionerCount,
+} from '../util/api.js';
 import { useEffect, useState } from 'react';
 import AltActionButton from '../components/baseComponents/AltActionButton.jsx';
 import CallToActionButton from '../components/baseComponents/CallToActionButton.jsx';
 import searchbar_background from '../assets/searchbar_background.png';
 import SearchBar from '../components/baseComponents/SearchBar.jsx';
 import PullDownFilter from '../components/baseComponents/PulldownFilter.jsx';
+import { useNavigate } from 'react-router-dom';
 
 export default function HomePage() {
   const [totalPractitioners, setTotalPractitioners] = useState(0);
+  const [filters, setFilters] = useState({
+    community: '',
+    activities: [],
+    sectors: [],
+    hazards: [],
+  });
+  const [availableOptions, setAvailableOptions] = useState({
+    activities: [],
+    sectors: [],
+    hazards: [],
+  });
 
   useEffect(() => {
     fetchTotalPractitionerCount(setTotalPractitioners);
+    fetchOptionsFromAirtable(setAvailableOptions);
   }, []);
+
+  const navigate = useNavigate();
 
   return (
     <>
@@ -88,24 +106,79 @@ export default function HomePage() {
                   }}
                 >
                   {/* searching fields */}
-                  <Box sx={{}}>
-                    <SearchBar text="Enter the community" />
+                  <Box
+                    sx={{
+                      width: '100%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-evenly',
+                      flexWrap: 'wrap',
+                    }}
+                  >
+                    <SearchBar
+                      text="Enter the community"
+                      onChange={e =>
+                        setFilters(prev => ({
+                          ...prev,
+                          community: e.target.value,
+                        }))
+                      }
+                    />
                     <PullDownFilter
                       filterName="services filter"
                       filterText="Services"
+                      availableOptions={availableOptions.activities}
+                      selectedValues={filters.activities}
+                      onChange={e =>
+                        setFilters(prev => ({
+                          ...prev,
+                          activities: e.target.value,
+                        }))
+                      }
                     />
                     <PullDownFilter
                       filterName="Hazards filter"
                       filterText="Hazards"
+                      availableOptions={availableOptions.hazards}
+                      selectedValues={filters.hazards}
+                      onChange={e =>
+                        setFilters(prev => ({
+                          ...prev,
+                          hazards: e.target.value,
+                        }))
+                      }
                     />
                     <PullDownFilter
                       filterName="Sectors filter"
                       filterText="Sectors"
+                      availableOptions={availableOptions.sectors}
+                      selectedValues={filters.sectors}
+                      onChange={e =>
+                        setFilters(prev => ({
+                          ...prev,
+                          sectors: e.target.value,
+                        }))
+                      }
                     />
                     <CallToActionButton
                       buttonSx={{
                         borderRadius: 12,
                         height: 34,
+                      }}
+                      onClick={() => {
+                        const params = new URLSearchParams();
+                        if (filters.community)
+                          params.set('community', filters.community);
+                        if (filters.activities.length > 0)
+                          params.set(
+                            'activities',
+                            filters.activities.join(',')
+                          );
+                        if (filters.hazards.length > 0)
+                          params.set('hazards', filters.hazards.join(','));
+                        if (filters.sectors.length > 0)
+                          params.set('sectors', filters.sectors.join(','));
+                        navigate(`/Registry?${params.toString()}`);
                       }}
                       iconStart=<SearchIcon />
                       textSx={{
@@ -253,16 +326,8 @@ export default function HomePage() {
                       Use our guided search to find practitioners
                       <br />
                       with the right expertise and focus for your
-                      <Typography
-                        sx={{
-                          textAlign: 'center',
-                          fontWeight: 400,
-                          fontSize: 16,
-                          color: '#56657D',
-                        }}
-                      >
-                        needs.
-                      </Typography>
+                      <br />
+                      needs.
                     </Typography>
                   </Box>
                 </Grid>
@@ -317,16 +382,8 @@ export default function HomePage() {
                       Explore detailed profiles, including
                       <br />
                       specailizations, community focus and work
-                      <Typography
-                        sx={{
-                          textAlign: 'center',
-                          fontWeight: 400,
-                          fontSize: 16,
-                          color: '#56657D',
-                        }}
-                      >
-                        examples
-                      </Typography>
+                      <br />
+                      examples
                     </Typography>
                   </Box>
                 </Grid>
@@ -381,16 +438,8 @@ export default function HomePage() {
                       Contact practitioners directly to discuss
                       <br />
                       your project and build a resilient future
-                      <Typography
-                        sx={{
-                          textAlign: 'center',
-                          fontWeight: 400,
-                          fontSize: 16,
-                          color: '#56657D',
-                        }}
-                      >
-                        together.
-                      </Typography>
+                      <br />
+                      together.
                     </Typography>
                   </Box>
                 </Grid>
