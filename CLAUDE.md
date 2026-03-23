@@ -40,6 +40,19 @@ Even in these cases, first attempt to refactor the code to be self-explanatory b
 
 ---
 
+## Props Convention
+
+Always accept `props` as the parameter and destructure inside the function body:
+
+```jsx
+export default function MyComponent(props) {
+  const { foo, bar, baz } = props;
+  // ...
+}
+```
+
+Do NOT destructure in the function signature.
+
 ## Other Guidelines
 
 *Add additional project-specific guidelines here as needed*

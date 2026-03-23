@@ -65,9 +65,9 @@ export default function AllComponents() {
         <Grid size={{ xs: 12, md: 4, lg: 6 }}>
           <FilterCheck />
         </Grid>
-        <Grid size={{ xs: 12, md: 4, lg: 6 }}>
-          <PulldownFilter />
-        </Grid>
+        {/*<Grid size={{ xs: 12, md: 4, lg: 6 }}>*/}
+        {/*  <PulldownFilter />*/}
+        {/*</Grid>*/}
         <Grid size={{ xs: 12, md: 4, lg: 6 }}>
           <SearchBar />
         </Grid>
