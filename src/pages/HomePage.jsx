@@ -11,6 +11,7 @@ import CallToActionButton from '../components/baseComponents/CallToActionButton.
 import searchbar_background from '../assets/searchbar_background.png';
 import SearchBar from '../components/baseComponents/SearchBar.jsx';
 import PullDownFilter from '../components/baseComponents/PulldownFilter.jsx';
+import { useNavigate } from 'react-router-dom';
 
 export default function HomePage() {
   const [totalPractitioners, setTotalPractitioners] = useState(0);
@@ -18,6 +19,14 @@ export default function HomePage() {
   useEffect(() => {
     fetchTotalPractitionerCount(setTotalPractitioners);
   }, []);
+
+  const [filters, setFilters] = useState({
+    community: '',
+    sectorsFilter: [],
+    hazardsFilter: [],
+    servicesFilter: [],
+  });
+  const navigate = useNavigate();
 
   return (
     <>
@@ -88,24 +97,51 @@ export default function HomePage() {
                   }}
                 >
                   {/* searching fields */}
-                  <Box sx={{}}>
-                    <SearchBar text="Enter the community" />
+                  <Box
+                    sx={{
+                      width: '100%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-evenly',
+                      flexWrap: 'wrap',
+                    }}
+                  >
+                    <SearchBar
+                      text="Enter the community"
+                      onChange={val =>
+                        setFilters(prev => ({ ...prev, community: val }))
+                      }
+                    />
                     <PullDownFilter
                       filterName="services filter"
                       filterText="Services"
+                      onChange={val =>
+                        setFilters(prev => ({ ...prev, servicesFilter: val }))
+                      }
                     />
                     <PullDownFilter
                       filterName="Hazards filter"
                       filterText="Hazards"
+                      onChange={val =>
+                        setFilters(prev => ({ ...prev, harzardsFilter: val }))
+                      }
                     />
                     <PullDownFilter
                       filterName="Sectors filter"
                       filterText="Sectors"
+                      onChange={val =>
+                        setFilters(prev => ({ ...prev, sectorsFilter: val }))
+                      }
                     />
                     <CallToActionButton
                       buttonSx={{
                         borderRadius: 12,
                         height: 34,
+                      }}
+                      to="/Registry"
+                      onClick={() => {
+                        (console.log(filters),
+                          navigate('/Registry', { state: filters }));
                       }}
                       iconStart=<SearchIcon />
                       textSx={{

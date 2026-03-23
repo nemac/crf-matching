@@ -6,7 +6,7 @@ const SearchBar = props => {
   return (
     <>
       <InputBase
-        placeholder={text ?? 'to be filled'}
+        placeholder={text ?? 'to be fillllled'}
         inputProps={{ 'aria-label': 'search' }}
         endAdornment=<InputAdornment posiiton="end">
           <SearchIcon />

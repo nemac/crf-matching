@@ -21,6 +21,7 @@ import AllComponents from './pages/AllComponents.jsx';
 import HomePage from './pages/HomePage.jsx';
 import ComparePractitioners from './pages/ComparePractitioners.jsx';
 import AllPractitioners from './pages/AllPractitioners.jsx';
+import SearchRegistry from './pages/SearchRegistry.jsx';
 
 ReactGA.initialize('G-V5H6STTJJS'); // Replace with your GA Measurement ID
 ReactGA.send('pageview'); // Send initial pageview
@@ -32,7 +33,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/Registry',
-    element: <Registry />,
+    element: <SearchRegistry />,
   },
   {
     path: '/practitioner/:practitionerId',
