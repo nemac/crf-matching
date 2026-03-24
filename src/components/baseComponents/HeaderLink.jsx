@@ -1,18 +1,24 @@
 import { Chip } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const HeaderLink = props => {
   const { name, url, matches } = props;
+  const location = useLocation();
+  const currentPath = '/' + (location.pathname.split('/')[1] || '');
+  const isActive = matches
+    ? matches.some(m => currentPath === m || location.pathname.startsWith(m + '/'))
+    : currentPath === url.split('?')[0];
+
   return (
     <>
       <Chip
         sx={{
-          backgroundColor: 'transparent',
+          backgroundColor: isActive ? '#F1ECE4' : 'transparent',
           '& .MuiChip-label': {
             overflow: 'visible',
             textOverflow: 'unset',
             whiteSpace: 'nowrap',
-            fontWeight: 500,
+            fontWeight: isActive ? 700 : 500,
             fontSize: 16,
           },
           border: 'rounded',

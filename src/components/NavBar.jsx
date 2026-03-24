@@ -145,7 +145,7 @@ export default function NavBar() {
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item, i) => (
-              <HeaderLink name={item.name} url={item.url + params} key={i} />
+              <HeaderLink name={item.name} url={item.url + params} matches={item.matches} key={i} />
               // <Button
               //   component={Link}
               //   to={item.url + params}
