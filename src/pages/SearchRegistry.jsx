@@ -1,6 +1,7 @@
 import { useSearchParams } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
 import SearchRegistryComponent from '../components/RegistryComponent.jsx';
+import CompareBar from '../components/CompareBar.jsx';
 import { useEffect, useState } from 'react';
 import {
   fetchFilteredPractitioners,
@@ -14,6 +15,7 @@ export default function SearchRegistry() {
   const [practitioners, setPractitioners] = useState([]);
   const [totalPractitioners, setTotalPractitioners] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [selectedForComparison, setSelectedForComparison] = useState(new Map());
 
   const community = searchParams.get('community') ?? '';
   const activities = searchParams.get('activities')?.split(',') ?? [];
@@ -29,6 +31,37 @@ export default function SearchRegistry() {
       setLoading(false);
     });
   }, []);
+
+  const handleComparisonSelect = (practitionerId, isSelected) => {
+    setSelectedForComparison(prev => {
+      const newMap = new Map(prev);
+      if (isSelected) {
+        const practitioner = practitioners.find(
+          p => p.airtableRecId === practitionerId
+        );
+        if (practitioner) {
+          newMap.set(practitionerId, practitioner);
+        }
+      } else {
+        newMap.delete(practitionerId);
+      }
+      return newMap;
+    });
+  };
+
+  const handleClearSelectedPractitioners = () => {
+    setSelectedForComparison(new Map());
+  };
+
+  const handleAddFromModal = (newPractitioners) => {
+    setSelectedForComparison(prev => {
+      const newMap = new Map(prev);
+      newPractitioners.forEach(p => {
+        newMap.set(p.airtableRecId, p);
+      });
+      return newMap;
+    });
+  };
 
   if (loading) {
     return (
@@ -113,6 +146,13 @@ export default function SearchRegistry() {
         activities={activities}
         hazards={hazards}
         sectors={sectors}
+        selectedForComparison={selectedForComparison}
+        onComparisonSelect={handleComparisonSelect}
+      />
+      <CompareBar
+        selectedPractitioners={selectedForComparison}
+        onClearAll={handleClearSelectedPractitioners}
+        onAddFromModal={handleAddFromModal}
       />
     </>
   );

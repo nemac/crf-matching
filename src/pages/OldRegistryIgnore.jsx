@@ -439,8 +439,7 @@ const ViewToggle = ({
   );
 };
 
-export default function Registry() {
-  const theme = useTheme();
+export default function OldRegistryIgnore() {
   const [toastOpen, setToastOpen] = useState(false);
   const [showBrowseAll, setShowBrowseAll] = useState(false);
   const [filterCount, setFilterCount] = useState(0);
@@ -1055,7 +1054,7 @@ export default function Registry() {
                           textDecoration: 'underline',
                         }}
                       >
-                        the Registry of Adaptation Practitioners
+                        the OldRegistryIgnore of Adaptation Practitioners
                       </a> */}
                     </Typography>
                     {showBrowseAll && (

@@ -4,7 +4,12 @@ import SortByAlphaIcon from '@mui/icons-material/SortByAlpha';
 import PractitionerCard from './PractitionerCard';
 
 export default function RegistryComponent(props) {
-  const { practitioners = [], totalPractitioners = 0 } = props;
+  const {
+    practitioners = [],
+    totalPractitioners = 0,
+    selectedForComparison,
+    onComparisonSelect,
+  } = props;
 
   const [isAscending, setIsAscending] = useState(true);
 
@@ -78,6 +83,12 @@ export default function RegistryComponent(props) {
                 key={index}
                 filters=""
                 practitioner={practitioner}
+                onComparisonSelect={onComparisonSelect}
+                isSelectedForComparison={
+                  selectedForComparison
+                    ? selectedForComparison.has(practitioner.airtableRecId)
+                    : false
+                }
               />
             ))}
           </Box>
