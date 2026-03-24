@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import {
   Box,
   Typography,
@@ -19,7 +20,7 @@ import {
   RowHoverContext,
   SetHoverRowContext,
 } from '../components/RowHoverContext.js';
-import { fetchOptionsFromAirtable } from '../util/api.js';
+import { fetchOptionsFromAirtable, fetchPractitioner } from '../util/api.js';
 import theme from '../theme.jsx';
 
 function AddPractitionerColumn(props) {
@@ -85,10 +86,12 @@ function AddPractitionerColumn(props) {
 }
 
 export default function ComparePractitioners() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [selectedPractitioners, setSelectedPractitioners] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [poppedPractitioner, setPoppedPractitioner] = useState(null);
   const [hoverRow, setHoverRow] = useState(null);
+  const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   const [availableOptions, setAvailableOptions] = useState({
     activities: [],
     sectors: [],
@@ -100,6 +103,49 @@ export default function ComparePractitioners() {
   useEffect(() => {
     fetchOptionsFromAirtable(setAvailableOptions);
   }, []);
+
+  useEffect(() => {
+    const practitionerIds = searchParams.get('practitioners');
+    if (!practitionerIds) {
+      setInitialLoadComplete(true);
+      return;
+    }
+
+    const ids = practitionerIds.split(',').filter(Boolean);
+    if (ids.length === 0) {
+      setInitialLoadComplete(true);
+      return;
+    }
+
+    let loaded = 0;
+    const results = [];
+    ids.forEach((id) => {
+      fetchPractitioner(id, (practitioner) => {
+        if (practitioner) {
+          results.push(practitioner);
+        }
+        loaded++;
+        if (loaded === ids.length) {
+          const ordered = ids
+            .map((id) => results.find((p) => p.airtableRecId === id))
+            .filter(Boolean);
+          setSelectedPractitioners(ordered);
+          setInitialLoadComplete(true);
+        }
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!initialLoadComplete) return;
+
+    const ids = selectedPractitioners.map((p) => p.airtableRecId);
+    if (ids.length > 0) {
+      setSearchParams({ practitioners: ids.join(',') }, { replace: true });
+    } else {
+      setSearchParams({}, { replace: true });
+    }
+  }, [selectedPractitioners, initialLoadComplete]);
 
   const handleAddPractitioners = (practitioners) => {
     setSelectedPractitioners((prev) => [...prev, ...practitioners]);
@@ -189,8 +235,8 @@ export default function ComparePractitioners() {
                 <Stack
                   direction="row"
                   sx={{
-                    bgcolor: theme.palette.primary.lightGray,
-                    gap: { xs: 0, md: 1 },
+                    bgcolor: '#FFFFFF',
+                    gap: { xs: 0, md: 0 },
                   }}
                 >
                   <Box sx={{ flex: '1 1 250px' }}>
@@ -198,7 +244,7 @@ export default function ComparePractitioners() {
                       community={community}
                       availableOptions={availableOptions}
                       showHeader={false}
-                      headerSpacerHeight={141}
+                      headerSpacerHeight={187}
                     />
                   </Box>
 
@@ -216,6 +262,8 @@ export default function ComparePractitioners() {
                         sx={{
                           flex: '1 1 0',
                           minWidth: { xs: 50, md: 175 },
+                          bgcolor: '#FFFFFF',
+                          border: '1px solid #F0F8FF',
                         }}
                       >
                         <Box
@@ -223,7 +271,7 @@ export default function ComparePractitioners() {
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
-                            bgcolor: theme.palette.primary.lightGray,
+                            bgcolor: '#FFFFFF',
                             pt: 3,
                             pb: 2,
                             px: 1,
@@ -240,8 +288,9 @@ export default function ComparePractitioners() {
                               textAlign: 'center',
                               overflow: 'hidden',
                               display: '-webkit-box',
-                              WebkitLineClamp: 2,
+                              WebkitLineClamp: 3,
                               WebkitBoxOrient: 'vertical',
+                              height: 69,
                             }}
                           >
                             {pract.org}

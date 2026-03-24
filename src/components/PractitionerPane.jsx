@@ -216,6 +216,7 @@ export default function PractitionerPane(props) {
   const { community, practitioner, poppedPractitioner, setPoppedPractitioner, availableOptions = {}, showHeader = true } = props;
   // Determine if we're on SelfServicePage by checking if community.name is "Self Service"
   const isSelfService = community.name === 'My Community' || community.name.includes(',');
+  const sectionHeaders = ['Services', 'Hazards', 'Sectors', 'Community Population', 'State/Territory'];
   const sections = [
     [availableOptions?.activities, practitioner.activities],
     [availableOptions?.hazards, practitioner.hazards],
@@ -228,6 +229,7 @@ export default function PractitionerPane(props) {
       return {
         type: 'practitioner',
         id: `section${index}`,
+        header: sectionHeaders[index],
         cards: matches,
       };
     });
@@ -235,7 +237,7 @@ export default function PractitionerPane(props) {
   return (
     <Box
       style={{
-        backgroundColor: theme.palette.primary.lightGray,
+        backgroundColor: showHeader ? theme.palette.primary.lightGray : '#FFFFFF',
       }}
     >
       {showHeader && (

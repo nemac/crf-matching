@@ -40,6 +40,7 @@ export default function Section({
             fontSize: '20px',
             lineHeight: '23px',
             color: '#6C788D',
+            textAlign: type === 'practitioner' ? 'center' : 'left',
           }}
         >
           {header}
@@ -47,7 +48,7 @@ export default function Section({
       </Box>
 
       <Stack
-        gap={2}
+        gap={0}
         useFlexGap={true}
       >
         {cells}
