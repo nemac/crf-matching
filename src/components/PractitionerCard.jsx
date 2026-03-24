@@ -1,10 +1,12 @@
 import { Card, Typography, Box, Chip } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import CheckIcon from '@mui/icons-material/Check';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import BroadServiceProvider from './baseComponents/BroadServiceProvider';
 import SpecialistLabel from './baseComponents/SpecialistLabel';
 
-export default function PractitionerCard({ filters, practitioner }) {
+export default function PractitionerCard(props) {
+  const { filters, practitioner, onComparisonSelect, isSelectedForComparison } = props;
   const urlFilters = filters;
   const topServices = (
     practitioner.topServicesProvided ||
@@ -16,6 +18,13 @@ export default function PractitionerCard({ filters, practitioner }) {
     .filter(Boolean)
     .join(', ');
 
+  const handleCompareClick = (e) => {
+    e.preventDefault();
+    if (onComparisonSelect) {
+      onComparisonSelect(practitioner.airtableRecId, !isSelectedForComparison);
+    }
+  };
+
   return (
     <Card
       sx={{
@@ -26,7 +35,7 @@ export default function PractitionerCard({ filters, practitioner }) {
         alignItems: 'flex-start',
         p: '20px 12px 8px',
         gap: 1,
-        bgcolor: '#FFFFFF',
+        bgcolor: isSelectedForComparison ? '#FFDDBB' : '#FFFFFF',
         boxShadow:
           '0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px -1px rgba(0, 0, 0, 0.1)',
         borderRadius: '10px',
@@ -55,10 +64,9 @@ export default function PractitionerCard({ filters, practitioner }) {
             overflow: 'hidden',
             display: '-webkit-box',
             textOverflow: 'ellipsis',
-
             WebkitLineClamp: 2,
             WebkitBoxOrient: 'vertical',
-            height: '69px', // 23px line-height × 3 lines
+            height: '69px',
           }}
         >
           {practitioner.org}
@@ -185,7 +193,7 @@ export default function PractitionerCard({ filters, practitioner }) {
           alignItems: 'flex-end',
           py: 0.5,
           alignSelf: 'stretch',
-          bgcolor: '#FFFFFF',
+          bgcolor: isSelectedForComparison ? '#FFDDBB' : '#FFFFFF',
           flexGrow: 0,
         }}
       >
@@ -229,6 +237,7 @@ export default function PractitionerCard({ filters, practitioner }) {
           <Box sx={{ flexGrow: 1 }} />
 
           <Box
+            onClick={handleCompareClick}
             sx={{
               display: 'flex',
               flexDirection: 'row',
@@ -237,23 +246,27 @@ export default function PractitionerCard({ filters, practitioner }) {
               p: '4px 8px 8px',
               width: '110px',
               height: '40px',
-              bgcolor: '#E5E7EB',
+              bgcolor: isSelectedForComparison ? '#0066CC' : '#E5E7EB',
               borderRadius: '8px',
               cursor: 'pointer',
               gap: 0.5,
               flexGrow: 0,
             }}
           >
-            <AddIcon sx={{ color: '#0066CC', fontSize: '24px' }} />
+            {isSelectedForComparison ? (
+              <CheckIcon sx={{ color: '#FFFFFF', fontSize: '24px' }} />
+            ) : (
+              <AddIcon sx={{ color: '#0066CC', fontSize: '24px' }} />
+            )}
             <Typography
               sx={{
                 fontWeight: 400,
                 fontSize: '16px',
                 lineHeight: '19px',
-                color: '#0066CC',
+                color: isSelectedForComparison ? '#FFFFFF' : '#0066CC',
               }}
             >
-              Compare
+              {isSelectedForComparison ? 'Selected' : 'Compare'}
             </Typography>
           </Box>
         </Box>
