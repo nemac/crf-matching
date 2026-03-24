@@ -212,13 +212,14 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
   );
 }
 
-export default function PractitionerPane({ community, practitioner, poppedPractitioner, setPoppedPractitioner, availableOptions={availableOptions} }) {
+export default function PractitionerPane(props) {
+  const { community, practitioner, poppedPractitioner, setPoppedPractitioner, availableOptions = {}, showHeader = true } = props;
   // Determine if we're on SelfServicePage by checking if community.name is "Self Service"
   const isSelfService = community.name === 'My Community' || community.name.includes(',');
   const sections = [
     [availableOptions?.activities, practitioner.activities],
-    [availableOptions?.sectors, practitioner.sectors],
     [availableOptions?.hazards, practitioner.hazards],
+    [availableOptions?.sectors, practitioner.sectors],
     [availableOptions?.size, practitioner.size],
     [availableOptions?.state, practitioner.state],
   ]
@@ -237,12 +238,14 @@ export default function PractitionerPane({ community, practitioner, poppedPracti
         backgroundColor: theme.palette.primary.lightGray,
       }}
     >
-      <PractitionerHeader
-        practitioner={practitioner}
-        strTrained={practitioner.strTrained}
-        poppedPractitioner={poppedPractitioner}
-        setPoppedPractitioner={setPoppedPractitioner}
-      />
+      {showHeader && (
+        <PractitionerHeader
+          practitioner={practitioner}
+          strTrained={practitioner.strTrained}
+          poppedPractitioner={poppedPractitioner}
+          setPoppedPractitioner={setPoppedPractitioner}
+        />
+      )}
       <Pane boxShadow={2}>
         {sections.map((section, index) => (
           <div key={section.id}>

@@ -10,6 +10,7 @@ import {
 import { ThemeProvider } from '@mui/material/styles';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import NavBar from '../components/NavBar.jsx';
 import AddPractitionerModal from '../components/AddPractitionerModal.jsx';
 import PractitionerPane from '../components/PractitionerPane.jsx';
@@ -192,10 +193,12 @@ export default function ComparePractitioners() {
                     gap: { xs: 0, md: 1 },
                   }}
                 >
-                  <Box mt={3} sx={{ flex: '1 1 250px' }}>
+                  <Box sx={{ flex: '1 1 250px' }}>
                     <CommunityPane
                       community={community}
                       availableOptions={availableOptions}
+                      showHeader={false}
+                      headerSpacerHeight={141}
                     />
                   </Box>
 
@@ -213,50 +216,102 @@ export default function ComparePractitioners() {
                         sx={{
                           flex: '1 1 0',
                           minWidth: { xs: 50, md: 175 },
-                          position: 'relative',
                         }}
                       >
                         <Box
                           sx={{
-                            position: 'absolute',
-                            top: 8,
-                            right: 8,
-                            zIndex: 10,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            bgcolor: theme.palette.primary.lightGray,
+                            pt: 3,
+                            pb: 2,
+                            px: 1,
+                            gap: 1.5,
                           }}
                         >
+                          <Typography
+                            sx={{
+                              fontFamily: 'Roboto',
+                              fontWeight: 500,
+                              fontSize: '20px',
+                              lineHeight: '23px',
+                              color: '#101828',
+                              textAlign: 'center',
+                              overflow: 'hidden',
+                              display: '-webkit-box',
+                              WebkitLineClamp: 2,
+                              WebkitBoxOrient: 'vertical',
+                            }}
+                          >
+                            {pract.org}
+                          </Typography>
+
+                          <Box
+                            component="a"
+                            href={`/practitioner/${pract.airtableRecId}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            sx={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: 0.5,
+                              textDecoration: 'none',
+                            }}
+                          >
+                            <Typography
+                              sx={{
+                                fontFamily: 'Roboto',
+                                fontWeight: 500,
+                                fontSize: '16px',
+                                lineHeight: '19px',
+                                color: '#0066CC',
+                              }}
+                            >
+                              View Full Profile
+                            </Typography>
+                            <ArrowForwardIcon
+                              sx={{ fontSize: 18, color: '#0066CC' }}
+                            />
+                          </Box>
+
                           <Button
-                            size="small"
-                            startIcon={<CloseIcon sx={{ fontSize: 14 }} />}
+                            startIcon={<CloseIcon sx={{ fontSize: 16 }} />}
                             onClick={() =>
                               handleRemovePractitioner(pract.airtableRecId)
                             }
                             sx={{
-                              textTransform: 'none',
-                              bgcolor: '#FFFFFF',
-                              borderColor: '#D1D5DB',
-                              border: '1px solid #D1D5DB',
-                              color: '#374151',
+                              display: 'flex',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              padding: '8px 24px',
+                              gap: '12px',
+                              width: 128,
+                              height: 35,
+                              bgcolor: '#E5E7EB',
+                              border: '1px solid #AEAFB3',
                               borderRadius: '8px',
-                              fontSize: '12px',
+                              textTransform: 'none',
+                              color: '#374151',
                               fontWeight: 500,
-                              px: 1,
-                              py: 0.25,
-                              minWidth: 'auto',
+                              fontSize: '14px',
                               '&:hover': {
-                                borderColor: '#9CA3AF',
-                                bgcolor: '#F9FAFB',
+                                bgcolor: '#D1D5DB',
+                                border: '1px solid #9CA3AF',
                               },
                             }}
                           >
                             Remove
                           </Button>
                         </Box>
+
                         <PractitionerPane
                           community={community}
                           practitioner={pract}
                           poppedPractitioner={poppedPractitioner}
                           setPoppedPractitioner={setPoppedPractitioner}
                           availableOptions={availableOptions}
+                          showHeader={false}
                         />
                       </Box>
                     ))}

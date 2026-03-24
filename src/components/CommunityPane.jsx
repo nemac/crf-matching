@@ -12,34 +12,29 @@ const getSectionData = (
 ) =>
   [
     {
-      header: 'Activities',
+      header: 'Services',
       cards: availableOptions?.activities,
-      // availableSelections: isSelectable ? availableOptions?.activities || [] : [],
-      availableSelections: availableOptions?.activities, // || [],
-    },
-    {
-      header: 'Sectors',
-      cards: availableOptions?.sectors,
-      // availableSelections: isSelectable ? availableOptions?.sectors || [] : [],
-      availableSelections: availableOptions?.sectors, // || [],
+      availableSelections: availableOptions?.activities,
     },
     {
       header: 'Hazards',
       cards: availableOptions?.hazards,
-      // availableSelections: isSelectable ? availableOptions?.hazards || [] : [],
-      availableSelections: availableOptions?.hazards, // || [],
+      availableSelections: availableOptions?.hazards,
+    },
+    {
+      header: 'Sectors',
+      cards: availableOptions?.sectors,
+      availableSelections: availableOptions?.sectors,
     },
     {
       header: 'Community Population',
       cards: availableOptions?.size,
-      // availableSelections: isSelectable ? availableOptions?.size || [] : [],
-      availableSelections: availableOptions?.size, // || [],
+      availableSelections: availableOptions?.size,
     },
     {
-      header: 'State',
+      header: 'State/Territory',
       cards: availableOptions?.state,
-      // availableSelections: isSelectable ? availableOptions?.state || [] : [],
-      availableSelections: availableOptions?.state, // || [],
+      availableSelections: availableOptions?.state,
     },
   ].map((section, index) => ({
     ...section,
@@ -49,12 +44,15 @@ const getSectionData = (
     onSelectionChange,
   }));
 
-export default function CommunityPane({
-  community,
-  isSelectable = false,
-  availableOptions = {},
-  onSelectionChange = () => {},
-}) {
+export default function CommunityPane(props) {
+  const {
+    community,
+    isSelectable = false,
+    availableOptions = {},
+    onSelectionChange = () => {},
+    showHeader = true,
+    headerSpacerHeight = 0,
+  } = props;
   const sectionData = getSectionData(
     community,
     isSelectable,
@@ -74,25 +72,29 @@ export default function CommunityPane({
         pb: 1,
       }}
     >
-      <Stack sx={{ width: '100%' }}>
-        <HeaderBox>
-          <Typography
-            color="primary.main"
-            fontWeight="700"
-            align="center"
-            variant="h5"
-            sx={{
-              fontSize: {
-                xs: '1rem',
-                lg: '1.5rem',
-              },
-            }}
-          >
-            {/* {community.name} */}
-          </Typography>
-        </HeaderBox>
-        <Box sx={{ height: '40px', width: '100%' }} />
-      </Stack>
+      {showHeader ? (
+        <Stack sx={{ width: '100%' }}>
+          <HeaderBox>
+            <Typography
+              color="primary.main"
+              fontWeight="700"
+              align="center"
+              variant="h5"
+              sx={{
+                fontSize: {
+                  xs: '1rem',
+                  lg: '1.5rem',
+                },
+              }}
+            >
+              {/* {community.name} */}
+            </Typography>
+          </HeaderBox>
+          <Box sx={{ height: '40px', width: '100%' }} />
+        </Stack>
+      ) : headerSpacerHeight > 0 ? (
+        <Box sx={{ height: headerSpacerHeight, width: '100%' }} />
+      ) : null}
       <Pane boxShadow={2} sx={{ pl: 1 }}>
         {sectionData.map(section => (
           <Section key={section.id} {...section} />
