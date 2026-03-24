@@ -342,6 +342,35 @@ export const fetchFilteredPractitioners = (filters, setPractitioners) => {
     });
 };
 
+export const fetchPractitionersByName = (searchTerm, callback) => {
+  if (!searchTerm || searchTerm.trim().length === 0) {
+    callback([]);
+    return;
+  }
+
+  const filterFormula = `FIND(LOWER("${searchTerm}"), LOWER({org_name}))`;
+
+  base('Organization')
+    .select({
+      view: practitionerViewName,
+      fields: practFetchFields,
+      filterByFormula: filterFormula,
+      maxRecords: 3,
+      sort: [{ field: 'org_name', direction: 'asc' }],
+    })
+    .firstPage((err, records) => {
+      if (err) {
+        console.error(err);
+        callback([]);
+        return;
+      }
+      const results = records
+        .map(rawRec => rawRec.fields)
+        .map(rec => normalizeRec(rec, practitionerFieldMap));
+      callback(results);
+    });
+};
+
 export const fetchOptionsFromAirtable = setOptions => {
   base('Options')
     .select({
