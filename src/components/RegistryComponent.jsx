@@ -1,6 +1,4 @@
-import { useState, useEffect } from 'react';
-import { Typography, Container, Box, Button } from '@mui/material';
-import SortByAlphaIcon from '@mui/icons-material/SortByAlpha';
+import { Typography, Container, Box } from '@mui/material';
 import PractitionerCard from './PractitionerCard';
 
 export default function RegistryComponent(props) {
@@ -10,8 +8,6 @@ export default function RegistryComponent(props) {
     selectedForComparison,
     onComparisonSelect,
   } = props;
-
-  const [isAscending, setIsAscending] = useState(true);
 
   return (
     <>
@@ -37,35 +33,6 @@ export default function RegistryComponent(props) {
               Showing <strong>{practitioners.length}</strong> of{' '}
               {totalPractitioners} Adaptation Practitioners
             </Typography>
-            <Button
-              startIcon={<SortByAlphaIcon />}
-              sx={{
-                bgcolor: 'primary.white',
-                color: 'primary.main',
-                border: '1px solid',
-                borderColor: 'primary.borderGray',
-                borderRadius: '20px',
-                boxShadow: 1,
-                px: 2,
-                textTransform: 'none',
-                whiteSpace: 'nowrap',
-                '&:hover': {
-                  bgcolor: 'grey.100',
-                },
-              }}
-              onClick={() => {
-                const sorted = [...practitioners].sort((a, b) =>
-                  a.org.localeCompare(b.org)
-                );
-                if (!isAscending) {
-                  sorted.reverse();
-                }
-                setPractitioners(sorted);
-                setIsAscending(!isAscending);
-              }}
-            >
-              Sort
-            </Button>
           </Box>
 
           <Box
