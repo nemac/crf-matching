@@ -212,6 +212,8 @@ export default function PractitionerCard(props) {
           <Box
             component="a"
             href={`/practitioner/${practitioner.airtableRecId}?${urlFilters}`}
+            target="_blank"
+            rel="noopener noreferrer"
             sx={{
               display: 'flex',
               flexDirection: 'row',
