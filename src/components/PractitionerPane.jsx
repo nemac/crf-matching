@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { Typography, Box, styled, IconButton } from '@mui/material';
+import { Typography, Box, Stack, styled, IconButton } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import SchoolIcon from '@mui/icons-material/School';
 import Button from '@mui/material/Button';
@@ -9,7 +9,6 @@ import ProfilePopper from './ProfilePopper';
 import HeaderBox from './HeaderBox';
 import Section from './Section';
 // import ScoreSection from './ScoreSection';
-import Pane from './Pane';
 import theme from '../theme';
 
 const matchVals = (commCats, practCats) => {
@@ -248,7 +247,15 @@ export default function PractitionerPane(props) {
           setPoppedPractitioner={setPoppedPractitioner}
         />
       )}
-      <Pane boxShadow={2}>
+      <Stack
+        sx={{
+          pt: 1,
+          pb: 1,
+          border: (t) => `1px solid ${t.palette.primary.borderGray}`,
+          borderRadius: '10px',
+          boxShadow: 2,
+        }}
+      >
         {sections.map((section, index) => (
           <div key={section.id}>
             <Section {...section} />
@@ -266,7 +273,7 @@ export default function PractitionerPane(props) {
         {/* <ScoreSection style={{ justifyContent: 'center' }}>
           <Box>{practitioner.matchScore}</Box>
         </ScoreSection> */}
-      </Pane>
+      </Stack>
     </Box>
   );
 }
