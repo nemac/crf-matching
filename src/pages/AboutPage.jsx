@@ -8,6 +8,7 @@ import ecoadapt_logo from '../assets/EcoAdapt_logo_cmyk.jpg';
 import geos_logo from '../assets/geos_logo.jpg';
 import nemac_logo from '../assets/nemac_logo.png';
 import NavBar from '../components/NavBar';
+import Footer from '../components/Footer';
 import IncludedInRegistry from '../components/IncludedInRegistry';
 import ContactUs from '../components/ContactUs';
 
@@ -645,6 +646,7 @@ export default function AboutPage() {
       <Box sx={{ px: { xs: 4, sm: 6, md: 12 }, py: 6, bgcolor: '#FFFFFF' }}>
         <ContactUs />
       </Box>
+      <Footer />
     </ThemeProvider>
   );
 }

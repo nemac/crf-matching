@@ -9,6 +9,7 @@ import {
 } from '../util/api.js';
 import FullPageSpinner from '../components/FullPageSpinner';
 import NavBar from '../components/NavBar.jsx';
+import Footer from '../components/Footer.jsx';
 
 export default function SearchRegistry() {
   const [searchParams] = useSearchParams();
@@ -149,6 +150,7 @@ export default function SearchRegistry() {
         selectedForComparison={selectedForComparison}
         onComparisonSelect={handleComparisonSelect}
       />
+      <Footer />
       <CompareBar
         selectedPractitioners={selectedForComparison}
         onClearAll={handleClearSelectedPractitioners}
