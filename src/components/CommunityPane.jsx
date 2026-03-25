@@ -1,6 +1,6 @@
 import { Typography, Box, Stack } from '@mui/material';
 import HeaderBox from './HeaderBox';
-import Pane from './Pane';
+
 import Section from './Section';
 import theme from '../theme';
 
@@ -95,7 +95,16 @@ export default function CommunityPane(props) {
       ) : headerSpacerHeight > 0 ? (
         <Box sx={{ height: headerSpacerHeight, width: '100%' }} />
       ) : null}
-      <Pane boxShadow={2} sx={{ pl: 1 }}>
+      <Stack
+        sx={{
+          pt: 1,
+          pb: 1,
+          border: `1px solid ${theme.palette.primary.borderGray}`,
+          borderRadius: '10px',
+          boxShadow: 2,
+          pl: 1,
+        }}
+      >
         {sectionData.map(section => (
           <Section key={section.id} {...section} />
         ))}
@@ -109,7 +118,7 @@ export default function CommunityPane(props) {
           <div>Total</div>
           <div>{community.totalCategories}</div>
         </ScoreSection> */}
-      </Pane>
+      </Stack>
     </Box>
   );
 }

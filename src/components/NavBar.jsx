@@ -24,6 +24,7 @@ const navItems = [
     name: 'Home',
     url: '/',
     matches: ['/'],
+    resetParams: true,
   },
   {
     name: 'Search Registry',
@@ -34,21 +35,25 @@ const navItems = [
     name: 'All practitioners',
     url: '/AllPractitioners',
     matches: ['/AllPractitioners'],
+    resetParams: true,
   },
   {
     name: 'Compare practitioners',
     url: '/ComparePractitioners',
     matches: ['/ComparePractitioners'],
+    resetParams: true,
   },
   {
     name: 'How to apply',
     url: '/Howtoapply',
     matches: ['/Howtoapply'],
+    resetParams: true,
   },
   {
     name: 'About',
     url: '/About',
     matches: ['/About'],
+    resetParams: true,
   },
 ];
 
@@ -75,7 +80,7 @@ export default function NavBar() {
         {navItems.map((item, i) => (
           <ListItem
             key={i}
-            to={item.url + params}
+            to={item.resetParams ? item.url : item.url + params}
             component={Link}
             disablePadding
             onClick={() => {
@@ -147,7 +152,7 @@ export default function NavBar() {
             {navItems.map((item, i) => (
               <HeaderLink
                 name={item.name}
-                url={item.url + params}
+                url={item.resetParams ? item.url : item.url + params}
                 matches={item.matches}
                 key={i}
               />
