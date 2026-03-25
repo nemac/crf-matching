@@ -234,41 +234,45 @@ export default function PractitionerCard(props) {
             <ArrowForwardIcon sx={{ color: '#003366', fontSize: '24px' }} />
           </Box>
 
-          <Box sx={{ flexGrow: 1 }} />
+          {onComparisonSelect && (
+            <>
+              <Box sx={{ flexGrow: 1 }} />
 
-          <Box
-            onClick={handleCompareClick}
-            sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'flex-end',
-              alignItems: 'center',
-              p: '4px 8px 8px',
-              width: '110px',
-              height: '40px',
-              bgcolor: isSelectedForComparison ? '#0066CC' : '#E5E7EB',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              gap: 0.5,
-              flexGrow: 0,
-            }}
-          >
-            {isSelectedForComparison ? (
-              <CheckIcon sx={{ color: '#FFFFFF', fontSize: '24px' }} />
-            ) : (
-              <AddIcon sx={{ color: '#0066CC', fontSize: '24px' }} />
-            )}
-            <Typography
-              sx={{
-                fontWeight: 400,
-                fontSize: '16px',
-                lineHeight: '19px',
-                color: isSelectedForComparison ? '#FFFFFF' : '#0066CC',
-              }}
-            >
-              {isSelectedForComparison ? 'Selected' : 'Compare'}
-            </Typography>
-          </Box>
+              <Box
+                onClick={handleCompareClick}
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'flex-end',
+                  alignItems: 'center',
+                  p: '4px 8px 8px',
+                  width: '110px',
+                  height: '40px',
+                  bgcolor: isSelectedForComparison ? '#0066CC' : '#E5E7EB',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  gap: 0.5,
+                  flexGrow: 0,
+                }}
+              >
+                {isSelectedForComparison ? (
+                  <CheckIcon sx={{ color: '#FFFFFF', fontSize: '24px' }} />
+                ) : (
+                  <AddIcon sx={{ color: '#0066CC', fontSize: '24px' }} />
+                )}
+                <Typography
+                  sx={{
+                    fontWeight: 400,
+                    fontSize: '16px',
+                    lineHeight: '19px',
+                    color: isSelectedForComparison ? '#FFFFFF' : '#0066CC',
+                  }}
+                >
+                  {isSelectedForComparison ? 'Selected' : 'Compare'}
+                </Typography>
+              </Box>
+            </>
+          )}
         </Box>
       </Box>
     </Card>
