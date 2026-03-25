@@ -5,6 +5,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import theme from '../theme';
 import NavBar from '../components/NavBar';
+import Footer from '../components/Footer';
 import WorkExampleForm from '../components/updateData/WorkExampleForm';
 import NewWorkExampleLayout from '../components/updateData/NewWorkExampleLayout';
 
@@ -53,6 +54,7 @@ export default function WorkExamplePage() {
         >
           <Typography>Loading...</Typography>
         </Container>
+        <Footer />
       </ThemeProvider>
     );
   }
@@ -121,6 +123,7 @@ export default function WorkExamplePage() {
           />
         )}
       </Container>
+      <Footer />
     </ThemeProvider>
   );
 }

@@ -6,6 +6,7 @@ import {
 import SearchRegistryComponent from '../components/RegistryComponent.jsx';
 import FullPageSpinner from '../components/FullPageSpinner';
 import NavBar from '../components/NavBar.jsx';
+import Footer from '../components/Footer.jsx';
 
 export default function AllPractitioners() {
   const [practitioners, setPractitioners] = useState([]);
@@ -43,6 +44,7 @@ export default function AllPractitioners() {
         practitioners={practitioners}
         totalPractitioners={totalPractitioners}
       />
+      <Footer />
     </>
   );
 }

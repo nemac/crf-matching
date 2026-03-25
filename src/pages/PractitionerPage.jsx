@@ -4,6 +4,7 @@ import { Container, Typography } from '@mui/material';
 
 import FullPageSpinner from '../components/FullPageSpinner';
 import NavBar from '../components/NavBar';
+import Footer from '../components/Footer';
 import NewPractitionerLayout from '../components/updateData/NewPractitionerLayout';
 import { fetchPractitioner } from '../util/api';
 import {
@@ -84,6 +85,7 @@ function PractitionerPageLoaded({ practitioner }) {
           validStates={validStates}
         />
       </Container>
+      <Footer />
     </>
   );
 }

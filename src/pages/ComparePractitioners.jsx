@@ -13,6 +13,7 @@ import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import NavBar from '../components/NavBar.jsx';
+import Footer from '../components/Footer.jsx';
 import AddPractitionerModal from '../components/AddPractitionerModal.jsx';
 import PractitionerPane from '../components/PractitionerPane.jsx';
 import CommunityPane from '../components/CommunityPane.jsx';
@@ -375,6 +376,8 @@ export default function ComparePractitioners() {
           </RowHoverContext.Provider>
         </ThemeProvider>
       )}
+
+      <Footer />
 
       <AddPractitionerModal
         open={modalOpen}

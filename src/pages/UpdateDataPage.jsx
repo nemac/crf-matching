@@ -13,6 +13,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import theme from '../theme';
 import NavBar from '../components/NavBar';
+import Footer from '../components/Footer';
 import UpdateData from '../components/updateData/UpdateData.jsx';
 import NewPractitionerLayout from '../components/updateData/NewPractitionerLayout.jsx';
 import { validateToken, updateOrganization } from '../config/api';
@@ -245,6 +246,7 @@ export default function UpdateDataPage() {
             </Typography>
           </Box>
         </Container>
+      <Footer />
       </ThemeProvider>
     );
   }
@@ -288,6 +290,7 @@ export default function UpdateDataPage() {
             </Button>
           </Box>
         </Container>
+      <Footer />
       </ThemeProvider>
     );
   }
@@ -372,6 +375,7 @@ export default function UpdateDataPage() {
           )}
         </Box>
       </Container>
+      <Footer />
     </ThemeProvider>
   );
 }

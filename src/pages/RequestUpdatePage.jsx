@@ -2,6 +2,7 @@ import { Container, Typography, Box } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../theme';
 import NavBar from '../components/NavBar';
+import Footer from '../components/Footer';
 import RequestMagicLink from '../components/updateData/RequestMagicLink';
 
 export default function RequestUpdatePage() {
@@ -36,6 +37,7 @@ export default function RequestUpdatePage() {
           <RequestMagicLink />
         </Box>
       </Container>
+      <Footer />
     </ThemeProvider>
   );
 }

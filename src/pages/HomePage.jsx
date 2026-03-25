@@ -4,6 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import PeopleOutlineOutlinedIcon from '@mui/icons-material/PeopleOutlineOutlined';
 import HandshakeOutlinedIcon from '@mui/icons-material/HandshakeOutlined';
 import NavBar from '../components/NavBar.jsx';
+import Footer from '../components/Footer.jsx';
 import {
   fetchOptionsFromAirtable,
   fetchTotalPractitionerCount,
@@ -538,7 +539,6 @@ export default function HomePage() {
           {/* End registry includes section, begin how to apply */}
           <Box
             sx={{
-              height: 136,
               pt: 8,
               pb: 8,
             }}
@@ -579,6 +579,7 @@ export default function HomePage() {
           </Box>
         </Stack>
       </Container>
+      <Footer />
     </>
   );
 }

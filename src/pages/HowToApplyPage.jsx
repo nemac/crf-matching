@@ -8,6 +8,7 @@ import Looks4OutlinedIcon from '@mui/icons-material/Looks4Outlined';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../theme';
 import NavBar from '../components/NavBar';
+import Footer from '../components/Footer';
 import IncludedInRegistry from '../components/IncludedInRegistry.jsx';
 import ContactUs from '../components/ContactUs.jsx';
 import applicationDoc from '../assets/Registry-Application-Questions_Mar2026.docx';
@@ -699,6 +700,7 @@ export default function HowToApplyPage() {
       <Box sx={{ px: { xs: 4, sm: 6, md: 12 }, py: 6, bgcolor: '#FFFFFF' }}>
         <ContactUs />
       </Box>
+      <Footer />
     </ThemeProvider>
   );
 }
