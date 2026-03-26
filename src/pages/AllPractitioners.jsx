@@ -10,6 +10,7 @@ import FullPageSpinner from '../components/FullPageSpinner';
 import NavBar from '../components/NavBar.jsx';
 import Footer from '../components/Footer.jsx';
 import SearchBar from '../components/baseComponents/SearchBar.jsx';
+import PageHeader from '../components/baseComponents/PageHeader.jsx';
 
 export default function AllPractitioners() {
   const [practitioners, setPractitioners] = useState([]);
@@ -84,62 +85,10 @@ export default function AllPractitioners() {
   return (
     <>
       <NavBar />
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-start',
-          gap: 2,
-          alignSelf: 'stretch',
-        }}
-      >
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            alignSelf: 'stretch',
-            mt: 2,
-          }}
-        >
-          <Typography
-            sx={{
-              fontFamily: 'Roboto',
-              fontWeight: 700,
-              fontSize: '48px',
-              lineHeight: '56px',
-              textAlign: 'center',
-              color: '#2D3F5D',
-              flexGrow: 1,
-            }}
-          >
-            Registry of Adaptation Practitioners
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            alignSelf: 'stretch',
-            opacity: 0.9,
-          }}
-        >
-          <Typography
-            sx={{
-              fontFamily: 'Roboto',
-              fontWeight: 400,
-              fontSize: '18px',
-              lineHeight: '21px',
-              textAlign: 'center',
-              color: '#56657D',
-              flexGrow: 1,
-            }}
-          >
-            Connect with vetted experts to build resilience in your community.
-          </Typography>
-        </Box>
-      </Box>
+      <PageHeader
+        title="Registry of Adaptation Practitioners"
+        subtitle="Connect with vetted experts to build resilience in your community."
+      />
       <Box
         sx={{
           display: 'flex',

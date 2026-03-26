@@ -12,6 +12,7 @@ import NavBar from '../components/NavBar.jsx';
 import Footer from '../components/Footer.jsx';
 import CallToActionButton from '../components/baseComponents/CallToActionButton.jsx';
 import PullDownFilter from '../components/baseComponents/PulldownFilter.jsx';
+import PageHeader from '../components/baseComponents/PageHeader.jsx';
 export default function SearchRegistry() {
   const [searchParams] = useSearchParams();
   const [practitioners, setPractitioners] = useState([]);
@@ -45,47 +46,28 @@ export default function SearchRegistry() {
   return (
     <>
       <NavBar />
-      <Typography
-        sx={{
-          fontWeight: 700,
-          fontSize: 48,
-          lineHeight: '56px',
-          textAlign: 'center',
-          color: '#2D3F5D',
-          flex: 'none',
-          flexGrow: 1,
-          mt: 4,
-        }}
-      >
-        Registry of Adaptation Practitioners
-      </Typography>
-      <Typography
-        sx={{
-          fontWeight: 400,
-          fontSize: 18,
-          lineHeight: '21px',
-          textAlign: 'center',
-          color: '#56657D',
-          flex: 'none',
-          flexGrow: 1,
-        }}
-      >
-        Connect with vetted experts to build resilience in your community or
-        organization.
-        <br />
-        Looking for a specific Practitioner? Search our database of{' '}
-        <Box
-          component="a"
-          href="/AllPractitioners"
-          sx={{
-            color: '#56657D',
-            fontWeight: 400,
-            textDecoration: 'underline',
-          }}
-        >
-          Practitioners
-        </Box>
-      </Typography>
+      <PageHeader
+        title="Registry of Adaptation Practitioners"
+        subtitle={
+          <>
+            Connect with vetted experts to build resilience in your community or
+            organization.
+            <br />
+            Looking for a specific Practitioner? Search our database of{' '}
+            <Box
+              component="a"
+              href="/AllPractitioners"
+              sx={{
+                color: '#56657D',
+                fontWeight: 400,
+                textDecoration: 'underline',
+              }}
+            >
+              Practitioners
+            </Box>
+          </>
+        }
+      />
       <Box sx={{ mt: 3, px: 4 }}>
         <Typography
           sx={{
