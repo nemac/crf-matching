@@ -1,11 +1,8 @@
 import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import FilterCheck from './FilterCheck.jsx';
-import { fetchOptionsFromAirtable } from '../../util/api';
-import { useState, useEffect } from 'react';
 
 const PulldownFilter = props => {
   const {
@@ -21,51 +18,83 @@ const PulldownFilter = props => {
   return (
     <Box
       sx={{
-        px: 1,
-        py: 1,
         display: 'flex',
-        flexGrow: 1,
-        alignItems: 'stretch',
-        alignSelf: 'flex-start',
-        justifyContent: 'space-between',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        width: 250,
+        minWidth: 250,
+        maxWidth: 250,
         ...boxSx,
       }}
     >
-      <FormControl
-        sx={{
-          flexGrow: 1,
-          flexShrink: 0,
-          minWidth: 200,
-        }}
-      >
-        {selectedValues.length === 0 && (
-          <InputLabel
-            sx={{
-              transform: 'translate(14px, 6px) scale(1)',
-            }}
-            id={filterName ?? 'To be filled'}
-          >
-            {filterText ?? 'label be filled'}
-          </InputLabel>
-        )}
+      <FormControl sx={{ width: '100%' }}>
         <Select
           multiple
+          displayEmpty
           notched={false}
           renderValue={() => filterText}
           sx={{
             width: '100%',
-            height: 34,
+            height: 36,
             backgroundColor: '#FFFFFF',
-            borderRadius: 9,
+            border: '1px solid #E5E7EB',
+            borderRadius: '12px',
+            '& .MuiOutlinedInput-notchedOutline': {
+              border: 'none',
+            },
+            '& .MuiSelect-select': {
+              padding: '0px 24px',
+              display: 'flex',
+              alignItems: 'center',
+              color: '#6C788D',
+              fontSize: '16px',
+              fontWeight: 400,
+              lineHeight: '19px',
+            },
+            '& .MuiSelect-icon': {
+              color: '#6C788D',
+              opacity: 0.5,
+              right: 24,
+            },
           }}
-          labelId={filterName ?? 'fil name be filled'}
-          id={filterId ?? 'Filter Id to be filled'}
+          labelId={filterName ?? 'filter-label'}
+          id={filterId ?? 'filter-id'}
           value={selectedValues}
-          label={filterText ?? 'Filters'}
           onChange={onChange}
+          MenuProps={{
+            PaperProps: {
+              sx: {
+                minWidth: 250,
+                maxHeight: 360,
+                backgroundColor: '#FFFFFF',
+                border: '1px solid #E5E7EB',
+                borderRadius: '8px',
+                boxShadow: 'none',
+                padding: '4px',
+                mt: 0.5,
+              },
+            },
+          }}
         >
           {availableOptions?.map(option => (
-            <MenuItem key={option} value={option}>
+            <MenuItem
+              key={option}
+              value={option}
+              sx={{
+                padding: '8px 12px',
+                gap: 1,
+                backgroundColor: '#FFFFFF',
+                '&:hover': {
+                  backgroundColor: '#F9FAFB',
+                },
+                '&.Mui-selected': {
+                  backgroundColor: '#FFFFFF',
+                  '&:hover': {
+                    backgroundColor: '#F9FAFB',
+                  },
+                },
+              }}
+            >
               <FilterCheck
                 text={option}
                 checked={selectedValues.includes(option)}

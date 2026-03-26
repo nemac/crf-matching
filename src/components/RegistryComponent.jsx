@@ -39,7 +39,7 @@ export default function RegistryComponent(props) {
           >
             <Typography variant="body1" sx={{ color: 'text.secondary' }}>
               Showing <strong>{visiblePractitioners.length}</strong> of{' '}
-              {totalPractitioners} Adaptation Practitioners
+              {practitioners.length} Adaptation Practitioners
             </Typography>
           </Box>
 

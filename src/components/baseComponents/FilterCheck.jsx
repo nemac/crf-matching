@@ -9,19 +9,36 @@ const FilterCheck = props => {
       <FormControlLabel
         sx={{
           width: 'fit-content',
-          borderRadius: 1,
           alignItems: 'center',
-          pr: 2,
-          backgroundColor: '#FFFFFF',
+          gap: 1,
+          margin: 0,
           '& .MuiFormControlLabel-label': {
-            fontSize: 16,
+            fontSize: '16px',
             fontWeight: 400,
+            lineHeight: '19px',
             color: '#6C788D',
-            mt: 0.3,
           },
           ...textSx,
         }}
-        control={<Checkbox checked={checked} />}
+        control={
+          <Checkbox
+            checked={checked}
+            sx={{
+              padding: '4px',
+              '& .MuiSvgIcon-root': {
+                width: 12,
+                height: 12,
+                border: '1px solid #6C788D',
+                borderRadius: '2px',
+                backgroundColor: '#FFFFFF',
+              },
+              '&.Mui-checked .MuiSvgIcon-root': {
+                color: '#6C788D',
+              },
+              color: 'transparent',
+            }}
+          />
+        }
         label={text ?? 'To be filled'}
       />
     </FormGroup>

@@ -21,11 +21,17 @@ export default function SearchRegistry() {
   const [displayCount, setDisplayCount] = useState(9);
 
   const community = searchParams.get('community') ?? '';
+  const state = searchParams.get('state') ?? '';
   const activities = searchParams.get('activities')?.split(',') ?? [];
   const hazards = searchParams.get('hazards')?.split(',') ?? [];
   const sectors = searchParams.get('sectors')?.split(',') ?? [];
 
-  const filters = { community, activities, hazards, sectors };
+  const filters = {
+    state: state ? [state] : [],
+    activities,
+    hazards,
+    sectors,
+  };
 
   useEffect(() => {
     fetchTotalPractitionerCount(setTotalPractitioners);

@@ -1,6 +1,15 @@
-import { Box, Container, Grid, Stack, Typography } from '@mui/material';
-import InputAdornment from '@mui/material/InputAdornment';
+import {
+  Autocomplete,
+  Box,
+  CircularProgress,
+  Container,
+  Grid,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PeopleOutlineOutlinedIcon from '@mui/icons-material/PeopleOutlineOutlined';
 import HandshakeOutlinedIcon from '@mui/icons-material/HandshakeOutlined';
 import FeatureCard from '../components/homePage/FeatureCard.jsx';
@@ -14,14 +23,17 @@ import { useEffect, useState } from 'react';
 import AltActionButton from '../components/baseComponents/AltActionButton.jsx';
 import CallToActionButton from '../components/baseComponents/CallToActionButton.jsx';
 import searchbar_background from '../assets/searchbar_background.png';
-import SearchBar from '../components/baseComponents/SearchBar.jsx';
 import PullDownFilter from '../components/baseComponents/PulldownFilter.jsx';
 import { useNavigate } from 'react-router-dom';
+import { searchLocations, getLocationDetails } from '../util/geocoding';
 
 export default function HomePage() {
   const [totalPractitioners, setTotalPractitioners] = useState(0);
+  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [locationOptions, setLocationOptions] = useState([]);
+  const [locationInputValue, setLocationInputValue] = useState('');
+  const [locationLoading, setLocationLoading] = useState(false);
   const [filters, setFilters] = useState({
-    community: '',
     activities: [],
     sectors: [],
     hazards: [],
@@ -31,6 +43,34 @@ export default function HomePage() {
     sectors: [],
     hazards: [],
   });
+
+  const handleLocationInputChange = async (event, newInputValue) => {
+    setLocationInputValue(newInputValue);
+    if (newInputValue.length >= 3) {
+      setLocationLoading(true);
+      const suggestions = await searchLocations(newInputValue);
+      setLocationOptions(
+        suggestions.map(s => ({ ...s, fullText: s.text }))
+      );
+      setLocationLoading(false);
+    } else {
+      setLocationOptions([]);
+    }
+  };
+
+  const handleLocationChange = async (event, newValue) => {
+    if (newValue?.magicKey) {
+      setLocationLoading(true);
+      const details = await getLocationDetails(newValue.magicKey);
+      if (details) {
+        setSelectedLocation(details);
+        setLocationInputValue(details.fullText);
+      }
+      setLocationLoading(false);
+    } else {
+      setSelectedLocation(null);
+    }
+  };
 
   useEffect(() => {
     fetchTotalPractitionerCount(setTotalPractitioners);
@@ -117,14 +157,57 @@ export default function HomePage() {
                       flexWrap: 'wrap',
                     }}
                   >
-                    <SearchBar
-                      text="Enter the community"
-                      onChange={e =>
-                        setFilters(prev => ({
-                          ...prev,
-                          community: e.target.value,
-                        }))
+                    <Autocomplete
+                      value={selectedLocation}
+                      onChange={handleLocationChange}
+                      inputValue={locationInputValue}
+                      onInputChange={handleLocationInputChange}
+                      options={selectedLocation ? [selectedLocation, ...locationOptions] : locationOptions}
+                      getOptionLabel={option => option?.fullText || option?.text || ''}
+                      isOptionEqualToValue={(option, value) =>
+                        option?.fullText === value?.fullText
                       }
+                      filterOptions={x => x}
+                      autoComplete
+                      includeInputInList
+                      filterSelectedOptions
+                      loading={locationLoading}
+                      loadingText="Searching..."
+                      noOptionsText={
+                        locationInputValue.length < 3
+                          ? 'Type at least 3 characters'
+                          : 'No locations found'
+                      }
+                      open={locationInputValue.length >= 3 && locationOptions.length > 0}
+                      popupIcon={null}
+                      sx={{ flexGrow: 1, minWidth: 200 }}
+                      renderInput={params => (
+                        <TextField
+                          {...params}
+                          placeholder="Enter the community"
+                          sx={{
+                            bgcolor: '#FFFFFF',
+                            borderRadius: 3,
+                            '& .MuiOutlinedInput-root': {
+                              borderRadius: 3,
+                              height: 36,
+                              padding: '0 12px',
+                            },
+                            '& .MuiOutlinedInput-notchedOutline': {
+                              border: 'none',
+                            },
+                          }}
+                          InputProps={{
+                            ...params.InputProps,
+                            startAdornment: (
+                              <LocationOnIcon sx={{ color: 'grey.500', mr: 0.5 }} />
+                            ),
+                            endAdornment: locationLoading ? (
+                              <CircularProgress color="inherit" size={20} />
+                            ) : null,
+                          }}
+                        />
+                      )}
                     />
                     <PullDownFilter
                       filterName="services filter"
@@ -169,8 +252,10 @@ export default function HomePage() {
                       }}
                       onClick={() => {
                         const params = new URLSearchParams();
-                        if (filters.community)
-                          params.set('community', filters.community);
+                        if (selectedLocation) {
+                          params.set('community', selectedLocation.fullText);
+                          params.set('state', selectedLocation.state);
+                        }
                         if (filters.activities.length > 0)
                           params.set(
                             'activities',
