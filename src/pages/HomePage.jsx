@@ -231,223 +231,336 @@ export default function HomePage() {
               }}
             />
           </Box>
-          {/* How registry works */}
           <Box
             sx={{
-              minHeight: '418px',
-              alignItems: 'center',
               display: 'flex',
+              alignItems: 'center',
               justifyContent: 'center',
+              px: { xs: 2, md: '96px' },
             }}
           >
             <Box
               sx={{
-                height: '80%',
-                width: '80%',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                padding: '24px',
+                gap: '48px',
                 backgroundColor: '#F9FAFB',
-                border: '2px solid',
-                borderColor: '#E1F5FE',
-                borderRadius: 2,
-                color: '#F9FAFB',
+                border: '2px solid #E1F5FE',
+                borderRadius: '8px',
+                alignSelf: 'stretch',
+                width: '100%',
               }}
             >
-              {/* This has the two sentences before the 3 boxes */}
-              <Typography
+              <Box
                 sx={{
-                  textAlign: 'center',
-                  pt: 3,
-                  fontWeight: 700,
-                  fontSize: '24px',
-                  color: '#101828',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
                 }}
               >
-                How the Registry Works
-              </Typography>
-              <Typography
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    alignSelf: 'stretch',
+                    p: 0.5,
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontFamily: 'Roboto',
+                      fontWeight: 700,
+                      fontSize: '24px',
+                      lineHeight: '28px',
+                      textAlign: 'center',
+                      color: '#101828',
+                    }}
+                  >
+                    How the Registry Works
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    alignSelf: 'stretch',
+                    p: '10px',
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontFamily: 'Roboto',
+                      fontWeight: 400,
+                      fontSize: '18px',
+                      lineHeight: '21px',
+                      textAlign: 'center',
+                      color: '#56657D',
+                    }}
+                  >
+                    A simple, streamlined process to connect you with the
+                    expertise you need.
+                  </Typography>
+                </Box>
+              </Box>
+              <Box
                 sx={{
-                  textAlign: 'center',
-                  fontWeight: 400,
-                  fontSize: '18px',
-                  color: '#56657D',
-                  pb: { xs: 4, md: 10 },
+                  display: 'flex',
+                  flexDirection: { xs: 'column', md: 'row' },
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: '56px',
+                  py: 0.5,
                 }}
               >
-                A simple, streamlined process to connect you with the expertise
-                you need.
-              </Typography>
-              {/* Nested boxes will hold the 3 boxes within the how registry works */}
-              <Grid container spacing={2}>
-                {/* Begin first box */}
-                <Grid size={{ xs: 12, md: 4 }}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '18px',
+                    width: 320,
+                  }}
+                >
                   <Box
                     sx={{
                       display: 'flex',
+                      justifyContent: 'center',
                       alignItems: 'center',
+                      width: 52,
+                      height: 52,
+                      backgroundColor: '#003366',
+                      borderRadius: '50%',
+                    }}
+                  >
+                    <SearchIcon sx={{ color: '#FFFFFF', fontSize: 32 }} />
+                  </Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
                       flexDirection: 'column',
-                      pb: 5,
+                      alignItems: 'flex-start',
+                      pt: 1.5,
+                      gap: 0.5,
+                      alignSelf: 'stretch',
                     }}
                   >
                     <Box
                       sx={{
-                        width: 42,
-                        height: 42,
                         display: 'flex',
-                        gap: '18px',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        backgroundColor: '#003366',
-                        borderRadius: '50%',
+                        alignSelf: 'stretch',
+                        minHeight: 25,
                       }}
                     >
-                      {/* Icon to be changed to image from figma */}
-                      <SearchIcon
+                      <Typography
                         sx={{
-                          color: '#FFFFFF',
-                          fontSize: 30,
+                          fontFamily: 'Roboto',
+                          fontWeight: 500,
+                          fontSize: '20px',
+                          lineHeight: '23px',
+                          textAlign: 'center',
+                          color: '#101828',
                         }}
-                      />
+                      >
+                        Search and Filter
+                      </Typography>
                     </Box>
-
-                    <Typography
+                    <Box
                       sx={{
-                        mt: 2,
-                        fontWeight: 500,
-                        fontSize: 20,
-                        color: '#101828',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'flex-start',
+                        alignSelf: 'stretch',
+                        px: '5px',
+                        minHeight: 75,
                       }}
                     >
-                      Search and Filter
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontWeight: 400,
-                        fontSize: 16,
-                        color: '#56657D',
-                        textAlign: 'center',
-                      }}
-                    >
-                      Use our guided search to find practitioners
-                      <br />
-                      with the right expertise and focus for your
-                      <br />
-                      needs.
-                    </Typography>
+                      <Typography
+                        sx={{
+                          fontFamily: 'Roboto',
+                          fontWeight: 400,
+                          fontSize: '16px',
+                          lineHeight: '19px',
+                          textAlign: 'center',
+                          color: '#56657D',
+                        }}
+                      >
+                        Use our guided search to find practitioners with the
+                        right expertise and focus for your needs.
+                      </Typography>
+                    </Box>
                   </Box>
-                </Grid>
-                {/* End first feature box, begin second */}
-                <Grid size={{ xs: 12, md: 4 }}>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '18px',
+                    width: 320,
+                  }}
+                >
                   <Box
                     sx={{
                       display: 'flex',
+                      justifyContent: 'center',
                       alignItems: 'center',
+                      width: 52,
+                      height: 52,
+                      backgroundColor: '#003366',
+                      borderRadius: '50%',
+                    }}
+                  >
+                    <PeopleOutlineOutlinedIcon
+                      sx={{ color: '#FFFFFF', fontSize: 32 }}
+                    />
+                  </Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
                       flexDirection: 'column',
+                      alignItems: 'flex-start',
+                      pt: 1.5,
+                      gap: 0.5,
+                      alignSelf: 'stretch',
                     }}
                   >
                     <Box
                       sx={{
-                        width: 42,
-                        height: 42,
                         display: 'flex',
-                        gap: '18px',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        backgroundColor: '#003366',
-                        borderRadius: '50%',
+                        alignSelf: 'stretch',
+                        minHeight: 25,
                       }}
                     >
-                      {/* Icon to be changed to image from figma */}
-                      <PeopleOutlineOutlinedIcon
+                      <Typography
                         sx={{
-                          color: '#FFFFFF',
-                          fontSize: 30,
+                          fontFamily: 'Roboto',
+                          fontWeight: 500,
+                          fontSize: '20px',
+                          lineHeight: '23px',
+                          textAlign: 'center',
+                          color: '#101828',
                         }}
-                      />
+                      >
+                        Review Profiles
+                      </Typography>
                     </Box>
-
-                    <Typography
+                    <Box
                       sx={{
-                        mt: 2,
-                        fontWeight: 500,
-                        fontSize: 20,
-                        color: '#101828',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'flex-start',
+                        alignSelf: 'stretch',
+                        px: '5px',
+                        minHeight: 75,
                       }}
                     >
-                      Review Profiles
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontWeight: 400,
-                        fontSize: 16,
-                        color: '#56657D',
-                        textAlign: 'center',
-                      }}
-                    >
-                      Explore detailed profiles, including
-                      <br />
-                      specailizations, community focus and work
-                      <br />
-                      examples
-                    </Typography>
+                      <Typography
+                        sx={{
+                          fontFamily: 'Roboto',
+                          fontWeight: 400,
+                          fontSize: '16px',
+                          lineHeight: '19px',
+                          textAlign: 'center',
+                          color: '#56657D',
+                        }}
+                      >
+                        Explore detailed profiles, including specailizations,
+                        community focus and work examples.
+                      </Typography>
+                    </Box>
                   </Box>
-                </Grid>
-                {/*End second feature begin third*/}
-                <Grid size={{ xs: 12, md: 4 }}>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '18px',
+                    width: 320,
+                  }}
+                >
                   <Box
                     sx={{
                       display: 'flex',
+                      justifyContent: 'center',
                       alignItems: 'center',
+                      width: 52,
+                      height: 52,
+                      backgroundColor: '#003366',
+                      borderRadius: '50%',
+                    }}
+                  >
+                    <HandshakeOutlinedIcon
+                      sx={{ color: '#FFFFFF', fontSize: 32 }}
+                    />
+                  </Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
                       flexDirection: 'column',
+                      alignItems: 'flex-start',
+                      pt: 1.5,
+                      gap: 0.5,
+                      alignSelf: 'stretch',
                     }}
                   >
                     <Box
                       sx={{
-                        width: 42,
-                        height: 42,
                         display: 'flex',
-                        gap: '18px',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        backgroundColor: '#003366',
-                        borderRadius: '50%',
+                        alignSelf: 'stretch',
+                        minHeight: 25,
                       }}
                     >
-                      {/* Icon to be changed to image from figma */}
-                      <HandshakeOutlinedIcon
+                      <Typography
                         sx={{
-                          color: '#FFFFFF',
-                          fontSize: 30,
+                          fontFamily: 'Roboto',
+                          fontWeight: 500,
+                          fontSize: '20px',
+                          lineHeight: '23px',
+                          textAlign: 'center',
+                          color: '#101828',
                         }}
-                      />
+                      >
+                        Connect & Collaborate
+                      </Typography>
                     </Box>
-
-                    <Typography
+                    <Box
                       sx={{
-                        mt: 2,
-                        fontWeight: 500,
-                        fontSize: 20,
-                        color: '#101828',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'flex-start',
+                        alignSelf: 'stretch',
+                        px: '5px',
+                        minHeight: 75,
                       }}
                     >
-                      Connect & Collaborate
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontWeight: 400,
-                        fontSize: 16,
-                        color: '#56657D',
-                        textAlign: 'center',
-                      }}
-                    >
-                      Contact practitioners directly to discuss
-                      <br />
-                      your project and build a resilient future
-                      <br />
-                      together.
-                    </Typography>
+                      <Typography
+                        sx={{
+                          fontFamily: 'Roboto',
+                          fontWeight: 400,
+                          fontSize: '16px',
+                          lineHeight: '19px',
+                          textAlign: 'center',
+                          color: '#56657D',
+                        }}
+                      >
+                        Contact practitioners directly to discuss your project
+                        and build a resilient future together.
+                      </Typography>
+                    </Box>
                   </Box>
-                </Grid>
-                {/*end third feature*/}
-              </Grid>
+                </Box>
+              </Box>
             </Box>
           </Box>
           {/*end how reg works, begin two categories*/}
