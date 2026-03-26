@@ -55,18 +55,20 @@ function AddPractitionerColumn(props) {
       >
         Add Practitioner
       </Typography>
-      <Typography
-        sx={{
-          fontWeight: 400,
-          fontSize: '14px',
-          lineHeight: '20px',
-          color: '#56657D',
-          fontStyle: 'italic',
-          textAlign: 'center',
-        }}
-      >
-        Select Another Practitioner
-      </Typography>
+      {!isEmpty && (
+        <Typography
+          sx={{
+            fontWeight: 400,
+            fontSize: '14px',
+            lineHeight: '20px',
+            color: '#56657D',
+            fontStyle: 'italic',
+            textAlign: 'center',
+          }}
+        >
+          Select Another Practitioner
+        </Typography>
+      )}
       <IconButton
         onClick={onClick}
         sx={{
@@ -218,6 +220,7 @@ export default function ComparePractitioners() {
             justifyContent: 'center',
             px: 3,
             pt: 2,
+            mb: 8,
           }}
         >
           <AddPractitionerColumn
