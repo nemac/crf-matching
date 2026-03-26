@@ -23,16 +23,26 @@ const PulldownFilter = props => {
       sx={{
         px: 1,
         py: 1,
-        display: 'inline-flex',
+        display: 'flex',
+        flexGrow: 1,
+        alignItems: 'stretch',
         alignSelf: 'flex-start',
         justifyContent: 'space-between',
         ...boxSx,
       }}
     >
-      <FormControl>
+      <FormControl
+        sx={{
+          flexGrow: 1,
+          flexShrink: 0,
+          minWidth: 200,
+        }}
+      >
         {selectedValues.length === 0 && (
           <InputLabel
-            sx={{ transform: 'translate(14px, 6px) scale(1)' }}
+            sx={{
+              transform: 'translate(14px, 6px) scale(1)',
+            }}
             id={filterName ?? 'To be filled'}
           >
             {filterText ?? 'label be filled'}
@@ -43,7 +53,7 @@ const PulldownFilter = props => {
           notched={false}
           renderValue={() => filterText}
           sx={{
-            width: 248,
+            width: '100%',
             height: 34,
             backgroundColor: '#FFFFFF',
             borderRadius: 9,

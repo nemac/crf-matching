@@ -42,7 +42,7 @@ export default function HomePage() {
     <>
       <NavBar />
       <Container disableGutters maxWidth={false}>
-        <Stack direction="column" spacing={8} sx={{ mt: 4 }}>
+        <Stack direction="column" spacing={8}>
           {/* background image of search bar */}
           <Box
             sx={{
@@ -101,6 +101,7 @@ export default function HomePage() {
                     width: '100%',
                     minHeight: 84,
                     borderRadius: 3,
+                    px: 2,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -112,7 +113,7 @@ export default function HomePage() {
                       width: '100%',
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'space-evenly',
+                      gap: 2,
                       flexWrap: 'wrap',
                     }}
                   >
@@ -283,6 +284,7 @@ export default function HomePage() {
                       display: 'flex',
                       alignItems: 'center',
                       flexDirection: 'column',
+                      pb: 5,
                     }}
                   >
                     <Box
