@@ -20,7 +20,7 @@ export default function PageHeader(props) {
           fontSize: 48,
           lineHeight: '56px',
           textAlign: 'center',
-          color: '#2D3F5D',
+          color: 'primary.main',
           flexGrow: 1,
         }}
       >
@@ -33,7 +33,7 @@ export default function PageHeader(props) {
             fontSize: 18,
             lineHeight: '21px',
             textAlign: 'center',
-            color: '#56657D',
+            color: 'text.secondary',
             flexGrow: 1,
           }}
         >

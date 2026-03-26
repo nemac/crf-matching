@@ -5,7 +5,7 @@ export default function ContactUs() {
   return (
     <Box
       sx={{
-        bgcolor: '#F9FAFB',
+        bgcolor: 'primary.sectionBg',
         border: '1px solid #E1F5FE',
         borderRadius: '8px',
       }}
@@ -19,7 +19,7 @@ export default function ContactUs() {
           gap: 1,
         }}
       >
-        <EmailOutlinedIcon sx={{ color: '#003366', fontSize: 24 }} />
+        <EmailOutlinedIcon sx={{ color: 'primary.ctaDarkBlue', fontSize: 24 }} />
         <Box
           sx={{
             display: 'flex',
@@ -51,7 +51,7 @@ export default function ContactUs() {
                 fontWeight: 400,
                 fontSize: '16px',
                 lineHeight: '19px',
-                color: '#2D3F5D',
+                color: 'primary.main',
               }}
             >
               Have additional questions about applying to the Registry? Email
@@ -65,7 +65,7 @@ export default function ContactUs() {
                 fontSize: '16px',
                 lineHeight: '24px',
                 letterSpacing: '-0.3125px',
-                color: '#0066CC',
+                color: 'primary.linkBlue',
                 textDecoration: 'none',
                 '&:hover': {
                   textDecoration: 'underline',

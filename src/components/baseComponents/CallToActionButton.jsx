@@ -20,7 +20,7 @@ const CallToActionButton = props => {
           pb: '4px',
           pr: '12px',
           textTransform: 'none',
-          backgroundColor: '#003366',
+          backgroundColor: 'primary.ctaDarkBlue',
           '&:hover': {
             bgcolor: '#44619A',
           },

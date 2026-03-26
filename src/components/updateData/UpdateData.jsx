@@ -410,7 +410,7 @@ export default function UpdateData({
                   fontSize: '14px',
                   lineHeight: '100%',
                   textTransform: 'none',
-                  color: '#0066CC',
+                  color: 'primary.linkBlue',
                   mb: 1,
                   px: 2,
                   py: 0.5,
@@ -434,7 +434,7 @@ export default function UpdateData({
                           fontWeight: 700,
                           fontSize: '10px',
                           lineHeight: '100%',
-                          bgcolor: '#F9FAFB',
+                          bgcolor: 'primary.sectionBg',
                           '&:hover': {
                             bgcolor: '#E5E7EB',
                           },
@@ -447,7 +447,7 @@ export default function UpdateData({
                       height: '33px',
                       borderRadius: '9999px',
                       border: '1px solid #0066CC',
-                      bgcolor: '#F9FAFB',
+                      bgcolor: 'primary.sectionBg',
                     }}
                   />
                 ))}
@@ -506,7 +506,7 @@ export default function UpdateData({
                   fontSize: '14px',
                   lineHeight: '100%',
                   textTransform: 'none',
-                  color: '#0066CC',
+                  color: 'primary.linkBlue',
                   mb: 1,
                   px: 2,
                   py: 0.5,
@@ -530,7 +530,7 @@ export default function UpdateData({
                           fontWeight: 700,
                           fontSize: '10px',
                           lineHeight: '100%',
-                          bgcolor: '#F9FAFB',
+                          bgcolor: 'primary.sectionBg',
                           '&:hover': {
                             bgcolor: '#E5E7EB',
                           },
@@ -543,7 +543,7 @@ export default function UpdateData({
                       height: '33px',
                       borderRadius: '9999px',
                       border: '1px solid #0066CC',
-                      bgcolor: '#F9FAFB',
+                      bgcolor: 'primary.sectionBg',
                     }}
                   />
                 ))}
@@ -577,7 +577,7 @@ export default function UpdateData({
                 fontSize: '14px',
                 lineHeight: '100%',
                 textTransform: 'none',
-                color: '#0066CC',
+                color: 'primary.linkBlue',
                 mb: 1,
                 px: 2,
                 py: 0.5,
@@ -599,7 +599,7 @@ export default function UpdateData({
                         fontWeight: 700,
                         fontSize: '10px',
                         lineHeight: '100%',
-                        bgcolor: '#F9FAFB',
+                        bgcolor: 'primary.sectionBg',
                         '&:hover': {
                           bgcolor: '#E5E7EB',
                         },
@@ -612,7 +612,7 @@ export default function UpdateData({
                     height: '33px',
                     borderRadius: '9999px',
                     border: '1px solid #0066CC',
-                    bgcolor: '#F9FAFB',
+                    bgcolor: 'primary.sectionBg',
                   }}
                 />
               ))}
@@ -646,7 +646,7 @@ export default function UpdateData({
                 fontSize: '14px',
                 lineHeight: '100%',
                 textTransform: 'none',
-                color: '#0066CC',
+                color: 'primary.linkBlue',
                 mb: 1,
                 px: 2,
                 py: 0.5,
@@ -668,7 +668,7 @@ export default function UpdateData({
                         fontWeight: 700,
                         fontSize: '10px',
                         lineHeight: '100%',
-                        bgcolor: '#F9FAFB',
+                        bgcolor: 'primary.sectionBg',
                         '&:hover': {
                           bgcolor: '#E5E7EB',
                         },
@@ -681,7 +681,7 @@ export default function UpdateData({
                     height: '33px',
                     borderRadius: '9999px',
                     border: '1px solid #0066CC',
-                    bgcolor: '#F9FAFB',
+                    bgcolor: 'primary.sectionBg',
                   }}
                 />
               ))}
@@ -715,7 +715,7 @@ export default function UpdateData({
                 fontSize: '14px',
                 lineHeight: '100%',
                 textTransform: 'none',
-                color: '#0066CC',
+                color: 'primary.linkBlue',
                 mb: 1,
                 px: 2,
                 py: 0.5,
@@ -737,7 +737,7 @@ export default function UpdateData({
                         fontWeight: 700,
                         fontSize: '10px',
                         lineHeight: '100%',
-                        bgcolor: '#F9FAFB',
+                        bgcolor: 'primary.sectionBg',
                         '&:hover': {
                           bgcolor: '#E5E7EB',
                         },
@@ -750,7 +750,7 @@ export default function UpdateData({
                     height: '33px',
                     borderRadius: '9999px',
                     border: '1px solid #0066CC',
-                    bgcolor: '#F9FAFB',
+                    bgcolor: 'primary.sectionBg',
                   }}
                 />
               ))}
@@ -789,7 +789,7 @@ export default function UpdateData({
                   fontSize: '14px',
                   lineHeight: '100%',
                   textTransform: 'none',
-                  color: '#0066CC',
+                  color: 'primary.linkBlue',
                   px: 2,
                   py: 0.5,
                 }}
@@ -814,7 +814,7 @@ export default function UpdateData({
                   fontSize: '14px',
                   lineHeight: '100%',
                   textTransform: 'none',
-                  color: '#0066CC',
+                  color: 'primary.linkBlue',
                   px: 2,
                   py: 0.5,
                 }}
@@ -840,7 +840,7 @@ export default function UpdateData({
                         fontWeight: 700,
                         fontSize: '10px',
                         lineHeight: '100%',
-                        bgcolor: '#F9FAFB',
+                        bgcolor: 'primary.sectionBg',
                         '&:hover': {
                           bgcolor: '#E5E7EB',
                         },
@@ -853,7 +853,7 @@ export default function UpdateData({
                     height: '33px',
                     borderRadius: '9999px',
                     border: '1px solid #0066CC',
-                    bgcolor: '#F9FAFB',
+                    bgcolor: 'primary.sectionBg',
                   }}
                 />
               ))}
@@ -892,7 +892,7 @@ export default function UpdateData({
                     fontSize: '14px',
                     lineHeight: '100%',
                     textTransform: 'none',
-                    color: '#0066CC',
+                    color: 'primary.linkBlue',
                     px: 2,
                     py: 0.5,
                   }}
@@ -917,7 +917,7 @@ export default function UpdateData({
                   fontSize: '14px',
                   lineHeight: '100%',
                   textTransform: 'none',
-                  color: '#0066CC',
+                  color: 'primary.linkBlue',
                   px: 2,
                   py: 0.5,
                 }}
@@ -946,7 +946,7 @@ export default function UpdateData({
                           fontWeight: 700,
                           fontSize: '10px',
                           lineHeight: '100%',
-                          bgcolor: '#F9FAFB',
+                          bgcolor: 'primary.sectionBg',
                           '&:hover': {
                             bgcolor: '#E5E7EB',
                           },
@@ -959,7 +959,7 @@ export default function UpdateData({
                       height: '33px',
                       borderRadius: '9999px',
                       border: '1px solid #0066CC',
-                      bgcolor: '#F9FAFB',
+                      bgcolor: 'primary.sectionBg',
                     }}
                   />
                 ))}
@@ -974,7 +974,7 @@ export default function UpdateData({
         onClick={handleSubmit}
         disabled={submitting || success || isDevMode}
         sx={{
-          bgcolor: '#003366',
+          bgcolor: 'primary.ctaDarkBlue',
           color: 'white',
           textTransform: 'none',
           px: 6,

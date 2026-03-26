@@ -70,7 +70,7 @@ export default function AboutPage() {
                 fontSize: '20px',
                 lineHeight: '23px',
                 textAlign: 'center',
-                color: '#0066CC',
+                color: 'primary.linkBlue',
                 textTransform: 'uppercase',
               }}
             >
@@ -93,7 +93,7 @@ export default function AboutPage() {
                 fontSize: { xs: '32px', md: '48px' },
                 lineHeight: { xs: '40px', md: '56px' },
                 textAlign: 'center',
-                color: '#2D3F5D',
+                color: 'primary.main',
               }}
             >
               Connecting Communities with Climate Adaptation Experts
@@ -116,7 +116,7 @@ export default function AboutPage() {
                 fontSize: '18px',
                 lineHeight: '21px',
                 textAlign: 'center',
-                color: '#56657D',
+                color: 'text.secondary',
               }}
             >
               The Registry of Adaptation Practitioners is a curated directory of
@@ -169,7 +169,7 @@ export default function AboutPage() {
                     fontWeight: 400,
                     fontSize: '16px',
                     lineHeight: '19px',
-                    color: '#56657D',
+                    color: 'text.secondary',
                     py: 0.5,
                   }}
                 >
@@ -205,7 +205,7 @@ export default function AboutPage() {
                     fontWeight: 400,
                     fontSize: '16px',
                     lineHeight: '19px',
-                    color: '#56657D',
+                    color: 'text.secondary',
                     py: 0.5,
                   }}
                 >
@@ -273,7 +273,7 @@ export default function AboutPage() {
                         fontWeight: 400,
                         fontSize: '16px',
                         lineHeight: '19px',
-                        color: '#56657D',
+                        color: 'text.secondary',
                         py: 0.5,
                       }}
                     >
@@ -311,7 +311,7 @@ export default function AboutPage() {
                         fontWeight: 400,
                         fontSize: '16px',
                         lineHeight: '19px',
-                        color: '#56657D',
+                        color: 'text.secondary',
                         py: 0.5,
                       }}
                     >
@@ -387,7 +387,7 @@ export default function AboutPage() {
                   }}
                 >
                   <CheckCircleOutlineIcon
-                    sx={{ color: '#0066CC', fontSize: 20 }}
+                    sx={{ color: 'primary.linkBlue', fontSize: 20 }}
                   />
                   <Typography
                     sx={{
@@ -412,7 +412,7 @@ export default function AboutPage() {
                   }}
                 >
                   <CheckCircleOutlineIcon
-                    sx={{ color: '#0066CC', fontSize: 20 }}
+                    sx={{ color: 'primary.linkBlue', fontSize: 20 }}
                   />
                   <Typography
                     sx={{
@@ -437,7 +437,7 @@ export default function AboutPage() {
                   }}
                 >
                   <CheckCircleOutlineIcon
-                    sx={{ color: '#0066CC', fontSize: 20 }}
+                    sx={{ color: 'primary.linkBlue', fontSize: 20 }}
                   />
                   <Typography
                     sx={{
@@ -467,7 +467,7 @@ export default function AboutPage() {
           py: 6,
           px: { xs: 4, sm: 6, md: 12 },
           gap: 1,
-          bgcolor: '#F9FAFB',
+          bgcolor: 'primary.sectionBg',
         }}
       >
         <Box
@@ -494,7 +494,7 @@ export default function AboutPage() {
                 fontSize: '24px',
                 lineHeight: '28px',
                 textAlign: 'center',
-                color: '#2D3F5D',
+                color: 'primary.main',
               }}
             >
               Made Possible By
@@ -517,7 +517,7 @@ export default function AboutPage() {
                 fontSize: '18px',
                 lineHeight: '21px',
                 textAlign: 'center',
-                color: '#56657D',
+                color: 'text.secondary',
               }}
             >
               The Registry of Adaptation Professionals is made possible by the
@@ -543,7 +543,7 @@ export default function AboutPage() {
                 fontSize: '16px',
                 lineHeight: '19px',
                 textAlign: 'center',
-                color: '#56657D',
+                color: 'text.secondary',
               }}
             >
               The Registry is a collaborative effort by leading organizations in

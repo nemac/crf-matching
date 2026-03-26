@@ -19,7 +19,7 @@ const BroadServiceProvider = () => {
             whiteSpace: 'nowrap',
             fontWeight: '700',
             fontSize: 16,
-            color: '#0066CC',
+            color: 'primary.linkBlue',
           },
           border: 'rounded',
           borderRadius: '9999px',

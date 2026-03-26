@@ -117,7 +117,7 @@ export default function AllPractitioners() {
                 fontWeight: 400,
                 fontSize: '16px',
                 lineHeight: '19px',
-                color: '#2D3F5D',
+                color: 'primary.main',
               }}
             >
               Search for a Adaptation Practitioner
@@ -130,7 +130,7 @@ export default function AllPractitioners() {
               width: '100%',
               minWidth: '285px',
               height: '36px',
-              backgroundColor: '#F3F3F5',
+              backgroundColor: 'primary.inputBg',
               borderRadius: '8px',
             }}
           />

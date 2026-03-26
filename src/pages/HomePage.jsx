@@ -209,7 +209,7 @@ export default function HomePage() {
                 sx={{
                   fontWeight: 700,
                   fontSize: '24px',
-                  color: '#003366',
+                  color: 'primary.ctaDarkBlue',
                 }}
               >
                 {totalPractitioners}
@@ -228,7 +228,7 @@ export default function HomePage() {
               textSx={{
                 fontWeight: 400,
                 fontSize: '14px',
-                color: '#2D3F5D',
+                color: 'primary.main',
               }}
             />
           </Box>
@@ -247,7 +247,7 @@ export default function HomePage() {
                 alignItems: 'center',
                 padding: '24px',
                 gap: '48px',
-                backgroundColor: '#F9FAFB',
+                backgroundColor: 'primary.sectionBg',
                 border: '2px solid #E1F5FE',
                 borderRadius: '8px',
                 alignSelf: 'stretch',
@@ -299,7 +299,7 @@ export default function HomePage() {
                       fontSize: '18px',
                       lineHeight: '21px',
                       textAlign: 'center',
-                      color: '#56657D',
+                      color: 'text.secondary',
                     }}
                   >
                     A simple, streamlined process to connect you with the
@@ -365,7 +365,7 @@ export default function HomePage() {
                 sx={{
                   fontWeight: 400,
                   fontSize: 18,
-                  color: '#56657D',
+                  color: 'text.secondary',
                   p: 4,
                 }}
               >
@@ -387,7 +387,7 @@ export default function HomePage() {
                         sx={{
                           fontWeight: 400,
                           fontSize: 16,
-                          color: '#56657D',
+                          color: 'text.secondary',
                           p: 1,
                         }}
                       >
@@ -415,7 +415,7 @@ export default function HomePage() {
                         sx={{
                           fontWeight: 400,
                           fontSize: 16,
-                          color: '#56657D',
+                          color: 'text.secondary',
                         }}
                       >
                         Practitioners that provide a specific, specialized
@@ -443,7 +443,7 @@ export default function HomePage() {
                 textAlign: 'center',
                 fontWeight: 500,
                 fontSize: 20,
-                color: '#56657D',
+                color: 'text.secondary',
               }}
             >
               How to apply
@@ -453,7 +453,7 @@ export default function HomePage() {
                 p: 2,
                 fontWeight: 400,
                 fontSize: 16,
-                color: '#56657D',
+                color: 'text.secondary',
                 textAlign: 'center',
               }}
             >

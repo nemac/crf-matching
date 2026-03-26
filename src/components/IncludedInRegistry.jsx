@@ -11,7 +11,7 @@ export default function IncludedInRegistry() {
         py: 6,
         px: 3,
         gap: 6,
-        bgcolor: '#003366',
+        bgcolor: 'primary.ctaDarkBlue',
         borderRadius: '8px',
       }}
     >
@@ -63,7 +63,7 @@ export default function IncludedInRegistry() {
           fontWeight: 400,
           fontSize: '18px',
           lineHeight: '21px',
-          color: '#003366',
+          color: 'primary.ctaDarkBlue',
           textTransform: 'none',
           boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.25)',
           borderRadius: '4px',

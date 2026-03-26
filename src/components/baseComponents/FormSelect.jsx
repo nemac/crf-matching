@@ -70,18 +70,18 @@ export default function FormSelect({
               : undefined
           }
           sx={{
-            bgcolor: '#F9FAFB',
+            bgcolor: 'primary.sectionBg',
             borderRadius: '4px',
             height: '43px',
             '& .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#0066CC',
+              borderColor: 'primary.linkBlue',
               borderWidth: '1px',
             },
             '&:hover .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#0066CC',
+              borderColor: 'primary.linkBlue',
             },
             '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#0066CC',
+              borderColor: 'primary.linkBlue',
               borderWidth: '1px',
             },
             '& .MuiSelect-select': {

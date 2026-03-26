@@ -23,7 +23,7 @@ const HeaderLink = props => {
           fontWeight: 400,
           fontSize: '16px',
           lineHeight: '19px',
-          color: '#2D3F5D',
+          color: 'primary.main',
         },
         '&:hover': {
           backgroundColor: '#F1ECE4',

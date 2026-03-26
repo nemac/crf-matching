@@ -42,8 +42,8 @@ const MultiSelectionDisplay = ({ selected = [], validOptions }) => {
               borderRadius: '9999px',
               border: '1px solid #0066CC',
               padding: isSelected ? '5px 12px' : '6px 12px',
-              color: isSelected ? '#0066CC' : '#000',
-              bgcolor: isSelected ? '#66CCFF' : '#F9FAFB',
+              color: isSelected ? 'primary.linkBlue' : '#000',
+              bgcolor: isSelected ? '#66CCFF' : 'primary.sectionBg',
               ...(isSelected && {
                 '& .MuiChip-icon': {
                   marginLeft: '12px',

@@ -94,26 +94,6 @@ Do NOT destructure in the function signature.
 
 ---
 
-### 2. Abstraction Opportunities
-
-**C. `BaseFormField` wrapper** — `FormTextField`, `MultiLineFormTextField`, and `FormSelect` all share the same label-above-input wrapper pattern. Extract the shared wrapper.
-
-**D. Shared `EditIconAdornment`** — `FormTextField` (lines ~26-44) and `MultiLineFormTextField` (lines ~27-50) duplicate the same InputAdornment with EditIcon in a blue box.
-
-**E. Default filters constant** — `{ community: '', activities: [], sectors: [], hazards: [] }` is defined identically in `SearchRegistry.jsx`, `AllPractitioners.jsx`, and `HomePage.jsx`. Extract to a shared constant in `src/config/` or `src/util/`.
-
-**F. `usePractitionerData` hook** — `SearchRegistry.jsx` and `AllPractitioners.jsx` both call `fetchTotalPractitionerCount` + `fetchFilteredPractitioners` with the same loading/state pattern. Extract to a custom hook.
-
-**G. Theme color tokens** — Hardcoded hex colors appear extensively. Add to `src/theme.jsx`:
-- `#0066CC` (link blue) — ~25 usages
-- `#003366` (CTA dark blue) — ~10 usages
-- `#56657D` (secondary text) — ~15 usages
-- `#2D3F5D` (main text) — ~10 usages
-- `#F9FAFB` (section bg) — ~8 usages
-- `#F3F3F5` (input bg) — ~4 usages
-
----
-
 ### 3. Base Component Misuse
 
 **Props convention violations (must accept `props` and destructure inside body):**

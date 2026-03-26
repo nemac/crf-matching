@@ -37,7 +37,7 @@ function FooterLink(props) {
           fontSize: '16px',
           lineHeight: '19px',
           textDecoration: 'underline',
-          color: '#2D3F5D',
+          color: 'primary.main',
         }}
       >
         {name}
@@ -77,7 +77,7 @@ function FooterColumn(props) {
             fontWeight: 500,
             fontSize: '20px',
             lineHeight: '23px',
-            color: '#56657D',
+            color: 'text.secondary',
           }}
         >
           {title}
@@ -165,7 +165,7 @@ export default function Footer() {
               fontSize: '16px',
               lineHeight: '19px',
               textAlign: 'center',
-              color: '#2D3F5D',
+              color: 'primary.main',
             }}
           >
             © 2025 Registry of Adaptation Practitioners. All rights reserved.

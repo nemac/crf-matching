@@ -52,7 +52,7 @@ export default function HowToApplyPage() {
                 fontSize: '20px',
                 lineHeight: '23px',
                 textAlign: 'center',
-                color: '#0066CC',
+                color: 'primary.linkBlue',
                 textTransform: 'uppercase',
               }}
             >
@@ -75,7 +75,7 @@ export default function HowToApplyPage() {
                 fontSize: { xs: '32px', md: '48px' },
                 lineHeight: { xs: '40px', md: '56px' },
                 textAlign: 'center',
-                color: '#2D3F5D',
+                color: 'primary.main',
               }}
             >
               Join the Registry of Adaptation Practitioners
@@ -98,7 +98,7 @@ export default function HowToApplyPage() {
                 fontSize: '18px',
                 lineHeight: '21px',
                 textAlign: 'center',
-                color: '#56657D',
+                color: 'text.secondary',
               }}
             >
               Help communities adapt to climate change by joining the Registry
@@ -115,7 +115,7 @@ export default function HowToApplyPage() {
             flexDirection: 'column',
             p: 3,
             gap: 1,
-            bgcolor: '#F9FAFB',
+            bgcolor: 'primary.sectionBg',
             border: '1px solid #E1F5FE',
             borderRadius: '6px',
             isolation: 'isolate',
@@ -187,7 +187,7 @@ export default function HowToApplyPage() {
                 }}
               >
                 <FiberManualRecordIcon
-                  sx={{ color: '#003366', fontSize: 12, flexShrink: 0 }}
+                  sx={{ color: 'primary.ctaDarkBlue', fontSize: 12, flexShrink: 0 }}
                 />
                 <Typography
                   sx={{
@@ -260,7 +260,7 @@ export default function HowToApplyPage() {
                     fontWeight: 400,
                     fontSize: '16px',
                     lineHeight: '19px',
-                    color: '#56657D',
+                    color: 'text.secondary',
                     py: 0.5,
                   }}
                 >
@@ -289,7 +289,7 @@ export default function HowToApplyPage() {
                     fontWeight: 400,
                     fontSize: '16px',
                     lineHeight: '19px',
-                    color: '#56657D',
+                    color: 'text.secondary',
                     py: 0.5,
                   }}
                 >
@@ -329,7 +329,7 @@ export default function HowToApplyPage() {
             flexDirection: 'column',
             p: 3,
             gap: 3,
-            bgcolor: '#F9FAFB',
+            bgcolor: 'primary.sectionBg',
             border: '1px solid #E1F5FE',
             borderRadius: '6px',
           }}
@@ -369,7 +369,7 @@ export default function HowToApplyPage() {
               sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
             >
               <CheckCircleOutlineIcon
-                sx={{ color: '#0066CC', fontSize: 48, flexShrink: 0 }}
+                sx={{ color: 'primary.linkBlue', fontSize: 48, flexShrink: 0 }}
               />
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 <Typography
@@ -402,7 +402,7 @@ export default function HowToApplyPage() {
               sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
             >
               <CheckCircleOutlineIcon
-                sx={{ color: '#0066CC', fontSize: 48, flexShrink: 0 }}
+                sx={{ color: 'primary.linkBlue', fontSize: 48, flexShrink: 0 }}
               />
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 <Typography
@@ -435,7 +435,7 @@ export default function HowToApplyPage() {
               sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
             >
               <CheckCircleOutlineIcon
-                sx={{ color: '#0066CC', fontSize: 48, flexShrink: 0 }}
+                sx={{ color: 'primary.linkBlue', fontSize: 48, flexShrink: 0 }}
               />
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 <Typography
@@ -476,7 +476,7 @@ export default function HowToApplyPage() {
                       fontWeight: 400,
                       fontSize: '16px',
                       lineHeight: '19px',
-                      color: '#0066CC',
+                      color: 'primary.linkBlue',
                       textDecoration: 'underline',
                     }}
                   >
@@ -534,7 +534,7 @@ export default function HowToApplyPage() {
               sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
             >
               <LooksOneOutlinedIcon
-                sx={{ color: '#0066CC', fontSize: 48, flexShrink: 0 }}
+                sx={{ color: 'primary.linkBlue', fontSize: 48, flexShrink: 0 }}
               />
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 <Typography
@@ -580,7 +580,7 @@ export default function HowToApplyPage() {
               sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
             >
               <LooksTwoOutlinedIcon
-                sx={{ color: '#0066CC', fontSize: 48, flexShrink: 0 }}
+                sx={{ color: 'primary.linkBlue', fontSize: 48, flexShrink: 0 }}
               />
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 <Typography
@@ -627,7 +627,7 @@ export default function HowToApplyPage() {
               sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
             >
               <Looks3OutlinedIcon
-                sx={{ color: '#0066CC', fontSize: 48, flexShrink: 0 }}
+                sx={{ color: 'primary.linkBlue', fontSize: 48, flexShrink: 0 }}
               />
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 <Typography
@@ -660,7 +660,7 @@ export default function HowToApplyPage() {
               sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
             >
               <Looks4OutlinedIcon
-                sx={{ color: '#0066CC', fontSize: 48, flexShrink: 0 }}
+                sx={{ color: 'primary.linkBlue', fontSize: 48, flexShrink: 0 }}
               />
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 <Typography

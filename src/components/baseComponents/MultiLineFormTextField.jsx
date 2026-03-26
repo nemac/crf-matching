@@ -34,7 +34,7 @@ export default function MultiLineFormTextField({ label, value, onChange, name, m
             >
               <Box
                 sx={{
-                  bgcolor: '#0066CC',
+                  bgcolor: 'primary.linkBlue',
                   color: 'white',
                   borderRadius: '4px',
                   width: '32px',
@@ -49,19 +49,19 @@ export default function MultiLineFormTextField({ label, value, onChange, name, m
             </InputAdornment>
           ),
           sx: {
-            bgcolor: '#F9FAFB',
+            bgcolor: 'primary.sectionBg',
             borderRadius: '4px',
             minHeight: '81px',
             alignItems: 'flex-start',
             '& .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#0066CC',
+              borderColor: 'primary.linkBlue',
               borderWidth: '1px',
             },
             '&:hover .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#0066CC',
+              borderColor: 'primary.linkBlue',
             },
             '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#0066CC',
+              borderColor: 'primary.linkBlue',
               borderWidth: '1px',
             },
             '& textarea': {

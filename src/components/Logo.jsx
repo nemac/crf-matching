@@ -34,7 +34,7 @@ export default function Logo() {
           fontWeight: 500,
           fontSize: '20px',
           lineHeight: '23px',
-          color: '#2D3F5D',
+          color: 'primary.main',
           whiteSpace: 'nowrap',
         }}
       >

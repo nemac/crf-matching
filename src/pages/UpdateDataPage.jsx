@@ -276,7 +276,7 @@ export default function UpdateDataPage() {
               variant="contained"
               onClick={() => navigate('/request-update')}
               sx={{
-                bgcolor: '#003366',
+                bgcolor: 'primary.ctaDarkBlue',
                 color: 'white',
                 textTransform: 'none',
                 px: 4,

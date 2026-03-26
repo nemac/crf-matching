@@ -122,7 +122,7 @@ export default function NavBar() {
         position="static"
         component="nav"
         sx={{
-          bgcolor: '#F9FAFB',
+          bgcolor: 'primary.sectionBg',
           borderBottom: '1px solid #E5E7EB',
           boxShadow: '0px -3px 2px rgba(0, 0, 0, 0.1)',
         }}

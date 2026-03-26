@@ -26,6 +26,10 @@ let theme = createTheme({
       matchGreen: '#677D66',
       noMatchRed: '#FC8A79',
       cellHoverBg: '#F1ECE4',
+      linkBlue: '#0066CC',
+      ctaDarkBlue: '#003366',
+      sectionBg: '#F9FAFB',
+      inputBg: '#F3F3F5',
     },
     text: {
       primary: '#101828',

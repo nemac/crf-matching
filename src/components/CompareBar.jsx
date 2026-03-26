@@ -40,7 +40,7 @@ export default function CompareBar(props) {
           left: 0,
           right: 0,
           height: 69,
-          bgcolor: '#F3F3F5',
+          bgcolor: 'primary.inputBg',
           borderBottom: '1px solid #6C788D',
           boxShadow: '0px -3px 2px rgba(0, 0, 0, 0.1)',
           zIndex: 1200,
@@ -58,7 +58,7 @@ export default function CompareBar(props) {
               fontWeight: 700,
               fontSize: '24px',
               lineHeight: '28px',
-              color: '#2D3F5D',
+              color: 'primary.main',
               whiteSpace: 'nowrap',
             }}
           >
@@ -87,7 +87,7 @@ export default function CompareBar(props) {
                     fontWeight: 700,
                     fontSize: '24px',
                     lineHeight: '28px',
-                    color: '#2D3F5D',
+                    color: 'primary.main',
                   }}
                 >
                   {getInitials(p.org)}
@@ -105,7 +105,7 @@ export default function CompareBar(props) {
                 width: 52,
                 height: 52,
                 borderRadius: '99999px',
-                bgcolor: '#003366',
+                bgcolor: 'primary.ctaDarkBlue',
                 border: '1.25px solid #F3F3F5',
                 cursor: 'pointer',
               }}
@@ -116,7 +116,7 @@ export default function CompareBar(props) {
                   fontWeight: 700,
                   fontSize: '24px',
                   lineHeight: '28px',
-                  color: '#F3F3F5',
+                  color: 'primary.inputBg',
                 }}
               >
                 +
@@ -129,8 +129,8 @@ export default function CompareBar(props) {
           <Button
             onClick={handleCompareClick}
             sx={{
-              bgcolor: '#0066CC',
-              color: '#F9FAFB',
+              bgcolor: 'primary.linkBlue',
+              color: 'primary.sectionBg',
               borderRadius: '8px',
               textTransform: 'none',
               px: 3,
@@ -157,7 +157,7 @@ export default function CompareBar(props) {
               fontSize: '16px',
               lineHeight: '19px',
               textDecoration: 'underline',
-              color: '#003366',
+              color: 'primary.ctaDarkBlue',
               px: 1.5,
               py: 1.5,
             }}

@@ -89,7 +89,7 @@ export default function PractitionerCard(props) {
               fontWeight: 400,
               fontSize: '16px',
               lineHeight: '19px',
-              color: '#56657D',
+              color: 'text.secondary',
             }}
           >
             Headquartered In: <strong>{headquarters || '—'}</strong>
@@ -154,14 +154,14 @@ export default function PractitionerCard(props) {
                 label={service}
                 sx={{
                   height: '26px',
-                  bgcolor: '#F9FAFB',
+                  bgcolor: 'primary.sectionBg',
                   border: '1px solid #0066CC',
                   borderRadius: '9999px',
                   '& .MuiChip-label': {
                     fontWeight: 400,
                     fontSize: '12px',
                     lineHeight: '14px',
-                    color: '#0066CC',
+                    color: 'primary.linkBlue',
                     px: 1.5,
                   },
                 }}
@@ -228,12 +228,12 @@ export default function PractitionerCard(props) {
                 fontWeight: 400,
                 fontSize: '16px',
                 lineHeight: '19px',
-                color: '#003366',
+                color: 'primary.ctaDarkBlue',
               }}
             >
               View Full Profile
             </Typography>
-            <ArrowForwardIcon sx={{ color: '#003366', fontSize: '24px' }} />
+            <ArrowForwardIcon sx={{ color: 'primary.ctaDarkBlue', fontSize: '24px' }} />
           </Box>
 
           {onComparisonSelect && (
@@ -250,7 +250,7 @@ export default function PractitionerCard(props) {
                   p: '4px 8px 8px',
                   width: '110px',
                   height: '40px',
-                  bgcolor: isSelectedForComparison ? '#0066CC' : '#E5E7EB',
+                  bgcolor: isSelectedForComparison ? 'primary.linkBlue' : '#E5E7EB',
                   borderRadius: '8px',
                   cursor: 'pointer',
                   gap: 0.5,
@@ -260,14 +260,14 @@ export default function PractitionerCard(props) {
                 {isSelectedForComparison ? (
                   <CheckIcon sx={{ color: '#FFFFFF', fontSize: '24px' }} />
                 ) : (
-                  <AddIcon sx={{ color: '#0066CC', fontSize: '24px' }} />
+                  <AddIcon sx={{ color: 'primary.linkBlue', fontSize: '24px' }} />
                 )}
                 <Typography
                   sx={{
                     fontWeight: 400,
                     fontSize: '16px',
                     lineHeight: '19px',
-                    color: isSelectedForComparison ? '#FFFFFF' : '#0066CC',
+                    color: isSelectedForComparison ? '#FFFFFF' : 'primary.linkBlue',
                   }}
                 >
                   {isSelectedForComparison ? 'Selected' : 'Compare'}

@@ -99,7 +99,7 @@ export default function AddPractitionerModal(props) {
                 fontWeight: 400,
                 fontSize: '14px',
                 lineHeight: '20px',
-                color: '#56657D',
+                color: 'text.secondary',
                 mt: 0.5,
               }}
             >
@@ -133,7 +133,7 @@ export default function AddPractitionerModal(props) {
                 borderColor: '#9CA3AF',
               },
               '&.Mui-focused': {
-                borderColor: '#003366',
+                borderColor: 'primary.ctaDarkBlue',
               },
             }}
           />
@@ -160,7 +160,7 @@ export default function AddPractitionerModal(props) {
                 borderBottom: '1px solid #F3F4F6',
                 cursor: 'pointer',
                 '&:hover': {
-                  bgcolor: '#F9FAFB',
+                  bgcolor: 'primary.sectionBg',
                 },
               }}
             >
@@ -173,7 +173,7 @@ export default function AddPractitionerModal(props) {
                   mt: 0.5,
                   color: '#D1D5DB',
                   '&.Mui-checked': {
-                    color: '#003366',
+                    color: 'primary.ctaDarkBlue',
                   },
                 }}
               />
@@ -193,7 +193,7 @@ export default function AddPractitionerModal(props) {
                     fontWeight: 400,
                     fontSize: '14px',
                     lineHeight: '20px',
-                    color: '#56657D',
+                    color: 'text.secondary',
                     mt: 0.5,
                     display: '-webkit-box',
                     WebkitLineClamp: 3,
@@ -239,7 +239,7 @@ export default function AddPractitionerModal(props) {
               fontWeight: 500,
               '&:hover': {
                 borderColor: '#9CA3AF',
-                bgcolor: '#F9FAFB',
+                bgcolor: 'primary.sectionBg',
               },
             }}
           >

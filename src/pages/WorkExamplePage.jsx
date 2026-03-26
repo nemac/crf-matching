@@ -87,7 +87,7 @@ export default function WorkExamplePage() {
               onClick={handleToggle}
               startIcon={isPreview ? <ArrowBackIcon /> : <VisibilityIcon />}
               sx={{
-                bgcolor: '#003366',
+                bgcolor: 'primary.ctaDarkBlue',
                 color: 'white',
                 textTransform: 'none',
                 px: 3,

@@ -63,7 +63,7 @@ export default function CommunityPane(props) {
   return (
     <Box
       sx={{
-        bgcolor: '#F9FAFB',
+        bgcolor: 'primary.sectionBg',
         borderRadius: 4,
         border: `0px solid ${theme.palette.primary.white}`,
         pr: 1,

@@ -58,7 +58,7 @@ export default function SearchRegistry() {
               component="a"
               href="/AllPractitioners"
               sx={{
-                color: '#56657D',
+                color: 'text.secondary',
                 fontWeight: 400,
                 textDecoration: 'underline',
               }}
@@ -74,7 +74,7 @@ export default function SearchRegistry() {
             fontWeight: 700,
             fontSize: 16,
             lineHeight: '19px',
-            color: '#2D3F5D',
+            color: 'primary.main',
             flex: 'none',
             flexGrow: 0,
           }}
@@ -84,7 +84,7 @@ export default function SearchRegistry() {
         <SearchBar
           textSx={{
             width: '95vw',
-            backgroundColor: '#F3F3F5',
+            backgroundColor: 'primary.inputBg',
           }}
         />
         <Box
@@ -142,7 +142,7 @@ export default function SearchRegistry() {
         <Typography
           sx={{
             fontSize: 16,
-            color: '#56657D',
+            color: 'text.secondary',
           }}
         >
           {community || '—'}

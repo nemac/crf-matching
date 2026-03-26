@@ -61,7 +61,7 @@ function AddPractitionerColumn(props) {
             fontWeight: 400,
             fontSize: '14px',
             lineHeight: '20px',
-            color: '#56657D',
+            color: 'text.secondary',
             fontStyle: 'italic',
             textAlign: 'center',
           }}
@@ -78,11 +78,11 @@ function AddPractitionerColumn(props) {
           height: 48,
           boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.05)',
           '&:hover': {
-            bgcolor: '#F9FAFB',
+            bgcolor: 'primary.sectionBg',
           },
         }}
       >
-        <AddIcon sx={{ color: '#003366', fontSize: 24 }} />
+        <AddIcon sx={{ color: 'primary.ctaDarkBlue', fontSize: 24 }} />
       </IconButton>
     </Box>
   );
@@ -204,7 +204,7 @@ export default function ComparePractitioners() {
               fontWeight: 400,
               fontSize: '16px',
               lineHeight: '24px',
-              color: '#56657D',
+              color: 'text.secondary',
               mt: 1,
             }}
           >
@@ -318,13 +318,13 @@ export default function ComparePractitioners() {
                                 fontWeight: 500,
                                 fontSize: '16px',
                                 lineHeight: '19px',
-                                color: '#0066CC',
+                                color: 'primary.linkBlue',
                               }}
                             >
                               View Full Profile
                             </Typography>
                             <ArrowForwardIcon
-                              sx={{ fontSize: 18, color: '#0066CC' }}
+                              sx={{ fontSize: 18, color: 'primary.linkBlue' }}
                             />
                           </Box>
 

@@ -204,7 +204,7 @@ const WorkExampleForm = props => {
             width: '135px',
             borderRadius: '4px',
             padding: '4px 48px',
-            bgcolor: saved ? '#CCCCCC' : '#003366',
+            bgcolor: saved ? '#CCCCCC' : 'primary.ctaDarkBlue',
             color: saved ? '#666666' : '#FFFFFF',
             fontWeight: 400,
             fontSize: '18px',

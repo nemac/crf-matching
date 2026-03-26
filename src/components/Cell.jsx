@@ -17,7 +17,7 @@ export default function Cell({ label, type, key, isSelectable, onRemove }) {
           fontWeight: 400,
           fontSize: '12px',
           lineHeight: '14px',
-          color: '#0066CC',
+          color: 'primary.linkBlue',
         }}
       >
         {label}

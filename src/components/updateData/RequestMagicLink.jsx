@@ -106,18 +106,18 @@ export default function RequestMagicLink() {
             disabled={loading}
             sx={{
               '& .MuiOutlinedInput-root': {
-                bgcolor: '#F9FAFB',
+                bgcolor: 'primary.sectionBg',
                 borderRadius: '4px',
                 height: '43px',
                 '& .MuiOutlinedInput-notchedOutline': {
-                  borderColor: '#0066CC',
+                  borderColor: 'primary.linkBlue',
                   borderWidth: '1px',
                 },
                 '&:hover .MuiOutlinedInput-notchedOutline': {
-                  borderColor: '#0066CC',
+                  borderColor: 'primary.linkBlue',
                 },
                 '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                  borderColor: '#0066CC',
+                  borderColor: 'primary.linkBlue',
                   borderWidth: '1px',
                 },
                 '& input': {
@@ -135,7 +135,7 @@ export default function RequestMagicLink() {
           variant="contained"
           disabled={loading || !email}
           sx={{
-            bgcolor: '#003366',
+            bgcolor: 'primary.ctaDarkBlue',
             color: 'white',
             textTransform: 'none',
             px: 6,

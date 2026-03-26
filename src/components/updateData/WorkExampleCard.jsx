@@ -78,7 +78,7 @@ const WorkExampleCard = props => {
               fontWeight: 400,
               fontSize: '16px',
               lineHeight: '24px',
-              color: '#56657D',
+              color: 'text.secondary',
             }}
           >
             {truncateText(
@@ -98,11 +98,11 @@ const WorkExampleCard = props => {
         >
           <Button
             onClick={handleOpenInNewTab}
-            endIcon={<ArrowForwardIcon sx={{ color: '#003366' }} />}
+            endIcon={<ArrowForwardIcon sx={{ color: 'primary.ctaDarkBlue' }} />}
             sx={{
               textTransform: 'none',
               padding: 0,
-              color: '#003366',
+              color: 'primary.ctaDarkBlue',
               fontFamily: 'Roboto',
               fontWeight: 500,
               fontSize: '16px',

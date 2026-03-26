@@ -40,7 +40,7 @@ export default function ToggleSwitch({ label, value, onChange, name }) {
           sx={{
             fontSize: '14px',
             fontWeight: isYes ? 600 : 400,
-            color: isYes ? '#0066CC' : '#9CA3AF',
+            color: isYes ? 'primary.linkBlue' : '#9CA3AF',
           }}
         >
           Yes
@@ -58,7 +58,7 @@ export default function ToggleSwitch({ label, value, onChange, name }) {
               transitionDuration: '300ms',
               '&.Mui-checked': {
                 transform: 'translateX(44px)',
-                color: '#0066CC',
+                color: 'primary.linkBlue',
                 '& + .MuiSwitch-track': {
                   backgroundColor: '#66CCFF',
                   opacity: 1,
@@ -66,7 +66,7 @@ export default function ToggleSwitch({ label, value, onChange, name }) {
                 },
               },
               '&:not(.Mui-checked)': {
-                color: '#0066CC',
+                color: 'primary.linkBlue',
               },
             },
             '& .MuiSwitch-thumb': {
@@ -85,7 +85,7 @@ export default function ToggleSwitch({ label, value, onChange, name }) {
           sx={{
             fontSize: '14px',
             fontWeight: !isYes ? 600 : 400,
-            color: !isYes ? '#0066CC' : '#9CA3AF',
+            color: !isYes ? 'primary.linkBlue' : '#9CA3AF',
           }}
         >
           No

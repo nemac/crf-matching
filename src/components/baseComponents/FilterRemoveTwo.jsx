@@ -17,12 +17,12 @@ const FilterRemoveTwo = props => {
           pl: '12px',
           pb: '6px',
           gap: '4px',
-          backgroundColor: '#F9FAFB',
+          backgroundColor: 'primary.sectionBg',
           border: '1px solid #0066CC',
           '& .MuiChip-label': {
             font: 'roboto',
             fontStyle: 'regular',
-            color: '#0066CC',
+            color: 'primary.linkBlue',
             fontWeight: 400,
             fontSize: 16,
             overflow: 'visible',
@@ -32,7 +32,7 @@ const FilterRemoveTwo = props => {
           '& .MuiChip-deleteIcon': {
             width: 26,
             height: 26,
-            color: '#0066CC',
+            color: 'primary.linkBlue',
             borderRadius: '9999px',
             p: '2px',
             gap: '10px',

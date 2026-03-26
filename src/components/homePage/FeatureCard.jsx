@@ -20,7 +20,7 @@ export default function FeatureCard(props) {
           alignItems: 'center',
           width: 52,
           height: 52,
-          backgroundColor: '#003366',
+          backgroundColor: 'primary.ctaDarkBlue',
           borderRadius: '50%',
         }}
       >
@@ -75,7 +75,7 @@ export default function FeatureCard(props) {
               fontSize: '16px',
               lineHeight: '19px',
               textAlign: 'center',
-              color: '#56657D',
+              color: 'text.secondary',
             }}
           >
             {description}
