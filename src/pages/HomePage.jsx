@@ -44,8 +44,9 @@ export default function HomePage() {
     hazards: [],
   });
 
-  const handleLocationInputChange = async (event, newInputValue) => {
+  const handleLocationInputChange = async (event, newInputValue, reason) => {
     setLocationInputValue(newInputValue);
+    if (reason !== 'input') return;
     if (newInputValue.length >= 3) {
       setLocationLoading(true);
       const suggestions = await searchLocations(newInputValue);
@@ -61,6 +62,7 @@ export default function HomePage() {
   const handleLocationChange = async (event, newValue) => {
     if (newValue?.magicKey) {
       setLocationLoading(true);
+      setLocationOptions([]);
       const details = await getLocationDetails(newValue.magicKey);
       if (details) {
         setSelectedLocation(details);
