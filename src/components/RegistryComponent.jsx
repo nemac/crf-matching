@@ -1,4 +1,4 @@
-import { Typography, Container, Box } from '@mui/material';
+import { Typography, Container, Box, CircularProgress } from '@mui/material';
 import PractitionerCard from './PractitionerCard';
 import TertiaryButton from './baseComponents/TertiaryButton';
 
@@ -10,12 +10,31 @@ export default function RegistryComponent(props) {
     onComparisonSelect,
     displayCount,
     onLoadMore,
+    loading,
   } = props;
 
   const visiblePractitioners = displayCount
     ? practitioners.slice(0, displayCount)
     : practitioners;
   const hasMore = displayCount && displayCount < practitioners.length;
+
+  if (loading) {
+    return (
+      <Container
+        maxWidth="xl"
+        sx={{
+          mt: 4,
+          mb: 4,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: 300,
+        }}
+      >
+        <CircularProgress />
+      </Container>
+    );
+  }
 
   return (
     <>

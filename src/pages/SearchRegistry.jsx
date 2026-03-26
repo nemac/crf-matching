@@ -1,7 +1,14 @@
 import { useSearchParams } from 'react-router-dom';
-import { Box, Typography } from '@mui/material';
+import {
+  Autocomplete,
+  Box,
+  CircularProgress,
+  InputAdornment,
+  TextField,
+  Typography,
+} from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import SearchRegistryComponent from '../components/RegistryComponent.jsx';
-import SearchBar from '../components/baseComponents/SearchBar.jsx';
 import { useEffect, useState } from 'react';
 import {
   fetchFilteredPractitioners,
@@ -13,10 +20,12 @@ import Footer from '../components/Footer.jsx';
 import CallToActionButton from '../components/baseComponents/CallToActionButton.jsx';
 import PullDownFilter from '../components/baseComponents/PulldownFilter.jsx';
 import PageHeader from '../components/baseComponents/PageHeader.jsx';
+import { searchLocations, getLocationDetails } from '../util/geocoding';
 export default function SearchRegistry() {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [practitioners, setPractitioners] = useState([]);
   const [totalPractitioners, setTotalPractitioners] = useState(0);
+  const [initialLoad, setInitialLoad] = useState(true);
   const [loading, setLoading] = useState(true);
   const [displayCount, setDisplayCount] = useState(9);
 
@@ -26,6 +35,51 @@ export default function SearchRegistry() {
   const hazards = searchParams.get('hazards')?.split(',') ?? [];
   const sectors = searchParams.get('sectors')?.split(',') ?? [];
 
+  const [selectedLocation, setSelectedLocation] = useState(
+    community ? { fullText: community, state } : null
+  );
+  const [locationOptions, setLocationOptions] = useState([]);
+  const [locationInputValue, setLocationInputValue] = useState(community);
+  const [locationLoading, setLocationLoading] = useState(false);
+
+  const handleLocationInputChange = async (event, newInputValue, reason) => {
+    setLocationInputValue(newInputValue);
+    if (reason !== 'input') return;
+    if (newInputValue.length >= 3) {
+      setLocationLoading(true);
+      const suggestions = await searchLocations(newInputValue);
+      setLocationOptions(suggestions.map(s => ({ ...s, fullText: s.text })));
+      setLocationLoading(false);
+    } else {
+      setLocationOptions([]);
+    }
+  };
+
+  const handleLocationChange = async (event, newValue) => {
+    if (newValue?.magicKey) {
+      setLocationLoading(true);
+      setLocationOptions([]);
+      const details = await getLocationDetails(newValue.magicKey);
+      if (details) {
+        setSelectedLocation(details);
+        setLocationInputValue(details.fullText);
+        const newParams = new URLSearchParams(searchParams);
+        newParams.set('community', details.fullText);
+        newParams.set('state', details.state);
+        setSearchParams(newParams);
+      }
+      setLocationLoading(false);
+    } else {
+      setSelectedLocation(null);
+      setLocationInputValue('');
+      setLocationOptions([]);
+      const newParams = new URLSearchParams(searchParams);
+      newParams.delete('community');
+      newParams.delete('state');
+      setSearchParams(newParams);
+    }
+  };
+
   const filters = {
     state: state ? [state] : [],
     activities,
@@ -33,15 +87,19 @@ export default function SearchRegistry() {
     sectors,
   };
 
+  const searchKey = searchParams.toString();
+
   useEffect(() => {
     fetchTotalPractitionerCount(setTotalPractitioners);
+    setLoading(true);
     fetchFilteredPractitioners(filters, data => {
       setPractitioners(data);
       setLoading(false);
+      setInitialLoad(false);
     });
-  }, []);
+  }, [searchKey]);
 
-  if (loading) {
+  if (initialLoad) {
     return (
       <>
         <NavBar />
@@ -88,11 +146,70 @@ export default function SearchRegistry() {
         >
           Community Location
         </Typography>
-        <SearchBar
-          textSx={{
-            width: '95vw',
-            backgroundColor: 'primary.inputBg',
-          }}
+        <Autocomplete
+          value={selectedLocation}
+          onChange={handleLocationChange}
+          inputValue={locationInputValue}
+          onInputChange={handleLocationInputChange}
+          options={
+            selectedLocation
+              ? [selectedLocation, ...locationOptions]
+              : locationOptions
+          }
+          getOptionLabel={option => option?.fullText || option?.text || ''}
+          isOptionEqualToValue={(option, value) =>
+            option?.fullText === value?.fullText
+          }
+          filterOptions={x => x}
+          autoComplete
+          includeInputInList
+          filterSelectedOptions
+          loading={locationLoading}
+          loadingText="Searching..."
+          noOptionsText={
+            locationInputValue.length < 3
+              ? 'Type at least 3 characters'
+              : 'No locations found'
+          }
+          open={locationInputValue.length >= 3 && locationOptions.length > 0}
+          popupIcon={null}
+          sx={{ width: '100%', mt: 1 }}
+          renderInput={params => (
+            <TextField
+              {...params}
+              placeholder="Enter the Community"
+              sx={{
+                backgroundColor: '#F3F3F5',
+                borderRadius: '8px',
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '8px',
+                  height: 36,
+                  padding: '0 12px',
+                },
+                '& .MuiOutlinedInput-notchedOutline': {
+                  border: 'none',
+                },
+                '& input::placeholder': {
+                  color: '#56657D',
+                  opacity: 1,
+                  fontSize: 16,
+                  fontWeight: 400,
+                },
+              }}
+              InputProps={{
+                ...params.InputProps,
+                endAdornment: (
+                  <InputAdornment position="end">
+                    {locationLoading ? (
+                      <CircularProgress size={16} />
+                    ) : (
+                      <SearchIcon sx={{ color: '#56657D', fontSize: 16 }} />
+                    )}
+                  </InputAdornment>
+                ),
+              }}
+            />
+          )}
         />
         <Box
           sx={{
@@ -146,14 +263,6 @@ export default function SearchRegistry() {
           </Box>
           <CallToActionButton />
         </Box>
-        <Typography
-          sx={{
-            fontSize: 16,
-            color: 'text.secondary',
-          }}
-        >
-          {community || '—'}
-        </Typography>
       </Box>
       <SearchRegistryComponent
         practitioners={practitioners}
