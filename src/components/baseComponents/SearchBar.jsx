@@ -16,7 +16,8 @@ const SearchBar = props => {
         onChange={onChange}
         sx={{
           backgroundColor: '#FFFFFF',
-          minWidth: 320,
+          minWidth: 0,
+          flexGrow: 1,
           borderRadius: 3,
           '& .MuiInputAdornment-root': {
             pr: 2,
@@ -25,6 +26,7 @@ const SearchBar = props => {
             pl: 3,
             pt: 0.5,
           },
+          ...textSx,
         }}
       >
         <></>

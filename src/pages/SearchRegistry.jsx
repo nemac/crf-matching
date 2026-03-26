@@ -1,6 +1,7 @@
 import { useSearchParams } from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
 import SearchRegistryComponent from '../components/RegistryComponent.jsx';
+import SearchBar from '../components/baseComponents/SearchBar.jsx';
 import { useEffect, useState } from 'react';
 import {
   fetchFilteredPractitioners,
@@ -9,7 +10,8 @@ import {
 import FullPageSpinner from '../components/FullPageSpinner';
 import NavBar from '../components/NavBar.jsx';
 import Footer from '../components/Footer.jsx';
-
+import CallToActionButton from '../components/baseComponents/CallToActionButton.jsx';
+import PullDownFilter from '../components/baseComponents/PulldownFilter.jsx';
 export default function SearchRegistry() {
   const [searchParams] = useSearchParams();
   const [practitioners, setPractitioners] = useState([]);
@@ -97,6 +99,64 @@ export default function SearchRegistry() {
         >
           Community Location
         </Typography>
+        <SearchBar
+          textSx={{
+            width: '95vw',
+            backgroundColor: '#F3F3F5',
+          }}
+        />
+        <Box
+          sx={{
+            display: 'flex',
+            alignContent: 'flex-start',
+            justifyContent: 'space-between',
+            m: 3,
+          }}
+        >
+          <Box sx={{ borderStyle: 'dashed', borderWidth: 1 }}>
+            <Typography
+              sx={{
+                fontWeight: 700,
+                fontSize: 16,
+              }}
+            >
+              Services Provided
+            </Typography>
+          </Box>
+          <Box sx={{ borderStyle: 'dashed', borderWidth: 1 }}>
+            <Typography
+              sx={{
+                fontWeight: 700,
+                fontSize: 16,
+              }}
+            >
+              Climate Hazards
+            </Typography>
+          </Box>
+
+          <Box sx={{ borderStyle: 'dashed', borderWidth: 1 }}>
+            <Typography
+              sx={{
+                fontWeight: 700,
+                fontSize: 16,
+              }}
+            >
+              Sectors
+            </Typography>
+          </Box>
+
+          <Box sx={{ borderStyle: 'dashed', borderWidth: 1 }}>
+            <Typography
+              sx={{
+                fontWeight: 700,
+                fontSize: 16,
+              }}
+            >
+              Population Size
+            </Typography>
+          </Box>
+          <CallToActionButton />
+        </Box>
         <Typography
           sx={{
             fontSize: 16,
