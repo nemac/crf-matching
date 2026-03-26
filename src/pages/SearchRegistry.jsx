@@ -18,6 +18,7 @@ export default function SearchRegistry() {
   const [practitioners, setPractitioners] = useState([]);
   const [totalPractitioners, setTotalPractitioners] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [displayCount, setDisplayCount] = useState(9);
 
   const community = searchParams.get('community') ?? '';
   const activities = searchParams.get('activities')?.split(',') ?? [];
@@ -156,6 +157,8 @@ export default function SearchRegistry() {
         activities={activities}
         hazards={hazards}
         sectors={sectors}
+        displayCount={displayCount}
+        onLoadMore={() => setDisplayCount(prev => prev + 9)}
       />
       <Footer />
     </>

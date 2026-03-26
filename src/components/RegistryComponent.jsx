@@ -1,5 +1,6 @@
 import { Typography, Container, Box } from '@mui/material';
 import PractitionerCard from './PractitionerCard';
+import TertiaryButton from './baseComponents/TertiaryButton';
 
 export default function RegistryComponent(props) {
   const {
@@ -7,7 +8,14 @@ export default function RegistryComponent(props) {
     totalPractitioners = 0,
     selectedForComparison,
     onComparisonSelect,
+    displayCount,
+    onLoadMore,
   } = props;
+
+  const visiblePractitioners = displayCount
+    ? practitioners.slice(0, displayCount)
+    : practitioners;
+  const hasMore = displayCount && displayCount < practitioners.length;
 
   return (
     <>
@@ -30,7 +38,7 @@ export default function RegistryComponent(props) {
             }}
           >
             <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-              Showing <strong>{practitioners.length}</strong> of{' '}
+              Showing <strong>{visiblePractitioners.length}</strong> of{' '}
               {totalPractitioners} Adaptation Practitioners
             </Typography>
           </Box>
@@ -45,7 +53,7 @@ export default function RegistryComponent(props) {
               justifyContent: 'center',
             }}
           >
-            {practitioners.map((practitioner, index) => (
+            {visiblePractitioners.map((practitioner, index) => (
               <PractitionerCard
                 key={index}
                 filters=""
@@ -59,6 +67,28 @@ export default function RegistryComponent(props) {
               />
             ))}
           </Box>
+
+          {hasMore && onLoadMore && (
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <TertiaryButton
+                onClick={onLoadMore}
+                sx={{
+                  width: 233,
+                  height: 37,
+                  padding: '8px 0px',
+                  boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.25)',
+                  borderRadius: '4px',
+                  textTransform: 'none',
+                  color: 'primary.main',
+                  fontWeight: 400,
+                  fontSize: '18px',
+                  lineHeight: '21px',
+                }}
+              >
+                Load more Practitioners
+              </TertiaryButton>
+            </Box>
+          )}
         </Box>
       </Container>
     </>
