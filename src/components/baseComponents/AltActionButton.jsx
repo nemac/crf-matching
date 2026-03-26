@@ -11,11 +11,13 @@ const AltActionButton = props => {
         onClick={onClick}
         disabled={disabled}
         sx={{
-          width: 'auto',
-          height: '32px',
-          pt: '8px',
-          pb: '8px',
+          width: 230,
+          height: 37,
+          padding: '8px 0px',
           backgroundColor: '#66CCFF',
+          boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.25)',
+          borderRadius: '4px',
+          textTransform: 'none',
           '&:hover': {
             bgcolor: '#99DDFF',
           },
@@ -25,7 +27,17 @@ const AltActionButton = props => {
           },
         }}
       >
-        <Typography sx={textSx}>{text ?? 'To be filled'}</Typography>
+        <Typography
+          sx={{
+            fontWeight: 400,
+            fontSize: '18px',
+            lineHeight: '21px',
+            color: 'primary.main',
+            ...textSx,
+          }}
+        >
+          {text ?? 'To be filled'}
+        </Typography>
       </Button>
     </>
   );

@@ -32,7 +32,6 @@ function FooterLink(props) {
     >
       <Typography
         sx={{
-          fontFamily: 'Roboto',
           fontWeight: 400,
           fontSize: '16px',
           lineHeight: '19px',
@@ -73,8 +72,7 @@ function FooterColumn(props) {
       >
         <Typography
           sx={{
-            fontFamily: 'Roboto',
-            fontWeight: 500,
+              fontWeight: 500,
             fontSize: '20px',
             lineHeight: '23px',
             color: 'text.secondary',
@@ -160,8 +158,7 @@ export default function Footer() {
         >
           <Typography
             sx={{
-              fontFamily: 'Roboto',
-              fontWeight: 400,
+                  fontWeight: 400,
               fontSize: '16px',
               lineHeight: '19px',
               textAlign: 'center',

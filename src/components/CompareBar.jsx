@@ -54,7 +54,6 @@ export default function CompareBar(props) {
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
           <Typography
             sx={{
-              fontFamily: 'Roboto',
               fontWeight: 700,
               fontSize: '24px',
               lineHeight: '28px',
@@ -83,8 +82,7 @@ export default function CompareBar(props) {
               >
                 <Typography
                   sx={{
-                    fontFamily: 'Roboto',
-                    fontWeight: 700,
+                          fontWeight: 700,
                     fontSize: '24px',
                     lineHeight: '28px',
                     color: 'primary.main',
@@ -112,8 +110,7 @@ export default function CompareBar(props) {
             >
               <Typography
                 sx={{
-                  fontFamily: 'Roboto',
-                  fontWeight: 700,
+                      fontWeight: 700,
                   fontSize: '24px',
                   lineHeight: '28px',
                   color: 'primary.inputBg',
@@ -135,7 +132,6 @@ export default function CompareBar(props) {
               textTransform: 'none',
               px: 3,
               py: 1.5,
-              fontFamily: 'Roboto',
               fontWeight: 400,
               fontSize: '16px',
               lineHeight: '19px',
@@ -152,7 +148,6 @@ export default function CompareBar(props) {
             onClick={onClearAll}
             sx={{
               textTransform: 'none',
-              fontFamily: 'Roboto',
               fontWeight: 400,
               fontSize: '16px',
               lineHeight: '19px',

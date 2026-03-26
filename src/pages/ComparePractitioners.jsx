@@ -284,8 +284,7 @@ export default function ComparePractitioners() {
                         >
                           <Typography
                             sx={{
-                              fontFamily: 'Roboto',
-                              fontWeight: 500,
+                                fontWeight: 500,
                               fontSize: '20px',
                               lineHeight: '23px',
                               color: '#101828',
@@ -314,8 +313,7 @@ export default function ComparePractitioners() {
                           >
                             <Typography
                               sx={{
-                                fontFamily: 'Roboto',
-                                fontWeight: 500,
+                                    fontWeight: 500,
                                 fontSize: '16px',
                                 lineHeight: '19px',
                                 color: 'primary.linkBlue',

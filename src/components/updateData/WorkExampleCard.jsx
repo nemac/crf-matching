@@ -61,8 +61,7 @@ const WorkExampleCard = props => {
         <Box>
           <Typography
             sx={{
-              fontFamily: 'Roboto',
-              fontWeight: 500,
+                fontWeight: 500,
               fontSize: '20px',
               lineHeight: '100%',
               color: '#101828',
@@ -74,8 +73,7 @@ const WorkExampleCard = props => {
 
           <Typography
             sx={{
-              fontFamily: 'Roboto',
-              fontWeight: 400,
+                fontWeight: 400,
               fontSize: '16px',
               lineHeight: '24px',
               color: 'text.secondary',
@@ -103,8 +101,7 @@ const WorkExampleCard = props => {
               textTransform: 'none',
               padding: 0,
               color: 'primary.ctaDarkBlue',
-              fontFamily: 'Roboto',
-              fontWeight: 500,
+                fontWeight: 500,
               fontSize: '16px',
               '&:hover': {
                 backgroundColor: 'transparent',

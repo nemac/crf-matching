@@ -55,7 +55,7 @@ Do NOT destructure in the function signature.
 
 ## Other Guidelines
 
-*Add additional project-specific guidelines here as needed*
+Do not add `fontFamily: 'Roboto'` to sx props — the theme already sets Roboto as the default font globally.
 
 ---
 

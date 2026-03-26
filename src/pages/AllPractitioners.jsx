@@ -113,7 +113,6 @@ export default function AllPractitioners() {
           <Box sx={{ display: 'flex', alignItems: 'center', p: 0.5 }}>
             <Typography
               sx={{
-                fontFamily: 'Roboto',
                 fontWeight: 400,
                 fontSize: '16px',
                 lineHeight: '19px',

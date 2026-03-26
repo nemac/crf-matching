@@ -13,7 +13,6 @@ export default function Cell({ label, type, key, isSelectable, onRemove }) {
     content = (
       <Typography
         sx={{
-          fontFamily: 'Roboto',
           fontWeight: 400,
           fontSize: '12px',
           lineHeight: '14px',

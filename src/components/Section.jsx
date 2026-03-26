@@ -29,7 +29,6 @@ export default function Section({
       <Box sx={{ minHeight: { xs: '60px', md: '40px' }, mt: '5px', mb: '5px' }}>
         <Typography
           sx={{
-            fontFamily: 'Roboto',
             fontWeight: 500,
             fontSize: '20px',
             lineHeight: '23px',

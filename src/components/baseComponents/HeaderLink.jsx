@@ -19,7 +19,6 @@ const HeaderLink = props => {
           overflow: 'visible',
           textOverflow: 'unset',
           whiteSpace: 'nowrap',
-          fontFamily: 'Roboto',
           fontWeight: 400,
           fontSize: '16px',
           lineHeight: '19px',

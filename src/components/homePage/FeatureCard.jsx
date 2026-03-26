@@ -47,7 +47,6 @@ export default function FeatureCard(props) {
         >
           <Typography
             sx={{
-              fontFamily: 'Roboto',
               fontWeight: 500,
               fontSize: '20px',
               lineHeight: '23px',
@@ -70,7 +69,6 @@ export default function FeatureCard(props) {
         >
           <Typography
             sx={{
-              fontFamily: 'Roboto',
               fontWeight: 400,
               fontSize: '16px',
               lineHeight: '19px',

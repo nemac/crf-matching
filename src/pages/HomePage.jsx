@@ -224,11 +224,6 @@ export default function HomePage() {
             <AltActionButton
               to="/ComparePractitioners"
               text="Browse all Practitioners"
-              textSx={{
-                fontWeight: 400,
-                fontSize: '14px',
-                color: 'primary.main',
-              }}
             />
           </Box>
           <Box
@@ -271,8 +266,7 @@ export default function HomePage() {
                 >
                   <Typography
                     sx={{
-                      fontFamily: 'Roboto',
-                      fontWeight: 700,
+                        fontWeight: 700,
                       fontSize: '24px',
                       lineHeight: '28px',
                       textAlign: 'center',
@@ -293,8 +287,7 @@ export default function HomePage() {
                 >
                   <Typography
                     sx={{
-                      fontFamily: 'Roboto',
-                      fontWeight: 400,
+                        fontWeight: 400,
                       fontSize: '18px',
                       lineHeight: '21px',
                       textAlign: 'center',

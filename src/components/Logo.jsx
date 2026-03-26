@@ -30,7 +30,6 @@ export default function Logo() {
       </Link>
       <Typography
         sx={{
-          fontFamily: 'Roboto',
           fontWeight: 500,
           fontSize: '20px',
           lineHeight: '23px',

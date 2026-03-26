@@ -26,7 +26,6 @@ export default function IncludedInRegistry() {
       >
         <Typography
           sx={{
-            fontFamily: 'Roboto',
             fontWeight: 700,
             fontSize: { xs: '32px', md: '48px' },
             lineHeight: { xs: '40px', md: '56px' },
@@ -39,7 +38,6 @@ export default function IncludedInRegistry() {
 
         <Typography
           sx={{
-            fontFamily: 'Roboto',
             fontWeight: 400,
             fontSize: '18px',
             lineHeight: '21px',
@@ -59,7 +57,6 @@ export default function IncludedInRegistry() {
         sx={{
           px: 3,
           py: 2,
-          fontFamily: 'Roboto',
           fontWeight: 400,
           fontSize: '18px',
           lineHeight: '21px',

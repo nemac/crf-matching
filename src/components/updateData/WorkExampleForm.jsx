@@ -237,7 +237,6 @@ const WorkExampleForm = props => {
             padding: '4px',
             bgcolor: '#FFFFFF',
             color: '#000000',
-            fontFamily: 'Roboto',
             fontWeight: 400,
             fontSize: '18px',
             lineHeight: '100%',

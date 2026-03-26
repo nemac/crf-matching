@@ -405,7 +405,6 @@ export default function UpdateData({
               <Button
                 onClick={() => handleClearAll('languageFluencies')}
                 sx={{
-                  fontFamily: 'Roboto',
                   fontWeight: 400,
                   fontSize: '14px',
                   lineHeight: '100%',
@@ -430,7 +429,6 @@ export default function UpdateData({
                       <IconButton
                         size="small"
                         sx={{
-                          fontFamily: 'Roboto',
                           fontWeight: 700,
                           fontSize: '10px',
                           lineHeight: '100%',
@@ -501,7 +499,6 @@ export default function UpdateData({
               <Button
                 onClick={() => handleClearAll('topServicesProvided')}
                 sx={{
-                  fontFamily: 'Roboto',
                   fontWeight: 400,
                   fontSize: '14px',
                   lineHeight: '100%',
@@ -526,7 +523,6 @@ export default function UpdateData({
                       <IconButton
                         size="small"
                         sx={{
-                          fontFamily: 'Roboto',
                           fontWeight: 700,
                           fontSize: '10px',
                           lineHeight: '100%',
@@ -572,7 +568,6 @@ export default function UpdateData({
             <Button
               onClick={() => handleClearAll('activities')}
               sx={{
-                fontFamily: 'Roboto',
                 fontWeight: 400,
                 fontSize: '14px',
                 lineHeight: '100%',
@@ -595,7 +590,6 @@ export default function UpdateData({
                     <IconButton
                       size="small"
                       sx={{
-                        fontFamily: 'Roboto',
                         fontWeight: 700,
                         fontSize: '10px',
                         lineHeight: '100%',
@@ -641,7 +635,6 @@ export default function UpdateData({
             <Button
               onClick={() => handleClearAll('hazards')}
               sx={{
-                fontFamily: 'Roboto',
                 fontWeight: 400,
                 fontSize: '14px',
                 lineHeight: '100%',
@@ -664,7 +657,6 @@ export default function UpdateData({
                     <IconButton
                       size="small"
                       sx={{
-                        fontFamily: 'Roboto',
                         fontWeight: 700,
                         fontSize: '10px',
                         lineHeight: '100%',
@@ -710,7 +702,6 @@ export default function UpdateData({
             <Button
               onClick={() => handleClearAll('sectors')}
               sx={{
-                fontFamily: 'Roboto',
                 fontWeight: 400,
                 fontSize: '14px',
                 lineHeight: '100%',
@@ -733,7 +724,6 @@ export default function UpdateData({
                     <IconButton
                       size="small"
                       sx={{
-                        fontFamily: 'Roboto',
                         fontWeight: 700,
                         fontSize: '10px',
                         lineHeight: '100%',
@@ -784,7 +774,6 @@ export default function UpdateData({
               <Button
                 onClick={() => handleClearAll('communitySize')}
                 sx={{
-                  fontFamily: 'Roboto',
                   fontWeight: 400,
                   fontSize: '14px',
                   lineHeight: '100%',
@@ -809,7 +798,6 @@ export default function UpdateData({
                   })
                 }
                 sx={{
-                  fontFamily: 'Roboto',
                   fontWeight: 400,
                   fontSize: '14px',
                   lineHeight: '100%',
@@ -836,7 +824,6 @@ export default function UpdateData({
                     <IconButton
                       size="small"
                       sx={{
-                        fontFamily: 'Roboto',
                         fontWeight: 700,
                         fontSize: '10px',
                         lineHeight: '100%',
@@ -887,7 +874,6 @@ export default function UpdateData({
                 <Button
                   onClick={() => handleClearAll('whereOrganizationWorks')}
                   sx={{
-                    fontFamily: 'Roboto',
                     fontWeight: 400,
                     fontSize: '14px',
                     lineHeight: '100%',
@@ -912,7 +898,6 @@ export default function UpdateData({
                   })
                 }
                 sx={{
-                  fontFamily: 'Roboto',
                   fontWeight: 400,
                   fontSize: '14px',
                   lineHeight: '100%',
@@ -942,7 +927,6 @@ export default function UpdateData({
                       <IconButton
                         size="small"
                         sx={{
-                          fontFamily: 'Roboto',
                           fontWeight: 700,
                           fontSize: '10px',
                           lineHeight: '100%',
