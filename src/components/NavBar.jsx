@@ -32,13 +32,13 @@ const navItems = [
     matches: ['/Registry', '/practitionerworkexamplepage', '/practitioner'],
   },
   {
-    name: 'All practitioners',
+    name: 'All Practitioners',
     url: '/AllPractitioners',
     matches: ['/AllPractitioners'],
     resetParams: true,
   },
   {
-    name: 'Compare practitioners',
+    name: 'Compare Practitioners',
     url: '/ComparePractitioners',
     matches: ['/ComparePractitioners'],
     resetParams: true,
@@ -121,9 +121,22 @@ export default function NavBar() {
       <AppBar
         position="static"
         component="nav"
-        sx={{ bgcolor: 'primary.white' }}
+        sx={{
+          bgcolor: '#F9FAFB',
+          borderBottom: '1px solid #E5E7EB',
+          boxShadow: '0px -3px 2px rgba(0, 0, 0, 0.1)',
+        }}
       >
-        <Toolbar>
+        <Toolbar
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            px: { xs: 2, md: 3 },
+            minHeight: '67px !important',
+            height: '67px',
+          }}
+        >
           <IconButton
             color="primary.main"
             aria-label="open drawer"
@@ -133,22 +146,24 @@ export default function NavBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            component="div"
+          <Box
             sx={{
-              flexGrow: 1,
-              alignContent: 'center',
-              display: { xs: 'none', sm: 'block', color: 'black' },
+              display: { xs: 'none', sm: 'flex' },
+              alignItems: 'center',
+              flexShrink: 0,
             }}
           >
-            <Logo
-              onClick={() => {
-                setPageSelect('/Registry');
-              }}
-            />
-          </Typography>
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+            <Logo />
+          </Box>
+          <Box
+            sx={{
+              display: { xs: 'none', sm: 'flex' },
+              flexDirection: 'row',
+              alignItems: 'center',
+              p: 2,
+              gap: 1.5,
+            }}
+          >
             {navItems.map((item, i) => (
               <HeaderLink
                 name={item.name}
@@ -156,22 +171,6 @@ export default function NavBar() {
                 matches={item.matches}
                 key={i}
               />
-              // <Button
-              //   component={Link}
-              //   to={item.url + params}
-              //   key={i}
-              //   onClick={() => {setPageSelect(`${item.url}`);}}
-              //   sx={{
-              //     borderRadius: 9999,
-              //     px: 2.5,
-              //     marginRight: theme.spacing(2),
-              //     color: 'primary.main',
-              //     textTransform: 'capitalize',
-              //     fontSize: '1rem',
-              //     backgroundColor: item.matches.includes(`/${pageSelect?.split('?')[0]?.split('#')[0]?.split('/')[1]}`) ? 'primary.cellHoverBg' : 'unset',
-              //     textDecoration: item.matches.includes(`/${pageSelect?.split('?')[0]?.split('#')[0]?.split('/')[1]}`) ?  'none' : 'none' }}>
-              //   {item.name}
-              // </Button>
             ))}
           </Box>
         </Toolbar>

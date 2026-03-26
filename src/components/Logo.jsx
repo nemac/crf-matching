@@ -13,10 +13,7 @@ export default function Logo() {
     <Box
       sx={{
         display: 'flex',
-        width: '100%',
         alignItems: 'center',
-        justifyContent: { xs: 'center', sm: 'flex-start', md: 'flex-start' },
-        p: 2,
         gap: 1,
       }}
     >
@@ -31,7 +28,16 @@ export default function Logo() {
           }}
         />
       </Link>
-      <Typography width={321} height={23}>
+      <Typography
+        sx={{
+          fontFamily: 'Roboto',
+          fontWeight: 500,
+          fontSize: '20px',
+          lineHeight: '23px',
+          color: '#2D3F5D',
+          whiteSpace: 'nowrap',
+        }}
+      >
         Registry of Adaptation Practitioners
       </Typography>
     </Box>

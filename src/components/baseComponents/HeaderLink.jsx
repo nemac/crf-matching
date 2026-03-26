@@ -10,29 +10,31 @@ const HeaderLink = props => {
     : currentPath === url.split('?')[0];
 
   return (
-    <>
-      <Chip
-        sx={{
-          backgroundColor: isActive ? '#F1ECE4' : 'transparent',
-          '& .MuiChip-label': {
-            overflow: 'visible',
-            textOverflow: 'unset',
-            whiteSpace: 'nowrap',
-            fontWeight: isActive ? 700 : 500,
-            fontSize: 16,
-          },
-          border: 'rounded',
-          '&:hover': {
-            backgroundColor: '#F1ECE4',
-          },
-          borderRadius: '99px',
-        }}
-        label={name || 'Default'}
-        component={Link}
-        to={url}
-        clickable
-      />
-    </>
+    <Chip
+      sx={{
+        backgroundColor: isActive ? '#F1ECE4' : 'transparent',
+        px: isActive ? 0.5 : 0,
+        height: '35px',
+        '& .MuiChip-label': {
+          overflow: 'visible',
+          textOverflow: 'unset',
+          whiteSpace: 'nowrap',
+          fontFamily: 'Roboto',
+          fontWeight: 400,
+          fontSize: '16px',
+          lineHeight: '19px',
+          color: '#2D3F5D',
+        },
+        '&:hover': {
+          backgroundColor: '#F1ECE4',
+        },
+        borderRadius: '99px',
+      }}
+      label={name || 'Default'}
+      component={Link}
+      to={url}
+      clickable
+    />
   );
 };
 export default HeaderLink;

@@ -114,7 +114,15 @@ export default function Footer() {
           alignSelf: 'stretch',
         }}
       >
-        <Logo />
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            alignSelf: 'stretch',
+          }}
+        >
+          <Logo />
+        </Box>
 
         <Box
           sx={{
