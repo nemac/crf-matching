@@ -12,6 +12,7 @@ import SearchRegistryComponent from '../components/RegistryComponent.jsx';
 import { useEffect, useState } from 'react';
 import {
   fetchFilteredPractitioners,
+  fetchOptionsFromAirtable,
   fetchTotalPractitionerCount,
 } from '../util/api.js';
 import FullPageSpinner from '../components/FullPageSpinner';
@@ -19,6 +20,7 @@ import NavBar from '../components/NavBar.jsx';
 import Footer from '../components/Footer.jsx';
 import CallToActionButton from '../components/baseComponents/CallToActionButton.jsx';
 import PullDownFilter from '../components/baseComponents/PulldownFilter.jsx';
+import FilterRemoveTwo from '../components/baseComponents/FilterRemoveTwo.jsx';
 import PageHeader from '../components/baseComponents/PageHeader.jsx';
 import { searchLocations, getLocationDetails } from '../util/geocoding';
 export default function SearchRegistry() {
@@ -31,9 +33,23 @@ export default function SearchRegistry() {
 
   const community = searchParams.get('community') ?? '';
   const state = searchParams.get('state') ?? '';
-  const activities = searchParams.get('activities')?.split(',') ?? [];
-  const hazards = searchParams.get('hazards')?.split(',') ?? [];
-  const sectors = searchParams.get('sectors')?.split(',') ?? [];
+  const activities = searchParams.get('activities')?.split(',').filter(Boolean) ?? [];
+  const hazards = searchParams.get('hazards')?.split(',').filter(Boolean) ?? [];
+  const sectors = searchParams.get('sectors')?.split(',').filter(Boolean) ?? [];
+  const size = searchParams.get('size')?.split(',').filter(Boolean) ?? [];
+
+  const [filterSelections, setFilterSelections] = useState({
+    activities,
+    hazards,
+    sectors,
+    size,
+  });
+  const [availableOptions, setAvailableOptions] = useState({
+    activities: [],
+    hazards: [],
+    sectors: [],
+    size: [],
+  });
 
   const [selectedLocation, setSelectedLocation] = useState(
     community ? { fullText: community, state } : null
@@ -85,12 +101,17 @@ export default function SearchRegistry() {
     activities,
     hazards,
     sectors,
+    size,
   };
 
   const searchKey = searchParams.toString();
 
   useEffect(() => {
     fetchTotalPractitionerCount(setTotalPractitioners);
+    fetchOptionsFromAirtable(setAvailableOptions);
+  }, []);
+
+  useEffect(() => {
     setLoading(true);
     fetchFilteredPractitioners(filters, data => {
       setPractitioners(data);
@@ -98,6 +119,49 @@ export default function SearchRegistry() {
       setInitialLoad(false);
     });
   }, [searchKey]);
+
+  const handleFilterChange = (filterKey, newValues) => {
+    setFilterSelections(prev => ({ ...prev, [filterKey]: newValues }));
+  };
+
+  const handleClearFilter = filterKey => {
+    setFilterSelections(prev => ({ ...prev, [filterKey]: [] }));
+  };
+
+  const handleRemoveFilterValue = (filterKey, value) => {
+    setFilterSelections(prev => ({
+      ...prev,
+      [filterKey]: prev[filterKey].filter(v => v !== value),
+    }));
+  };
+
+  const handleFindPractitioners = () => {
+    const newParams = new URLSearchParams();
+    if (selectedLocation) {
+      newParams.set('community', selectedLocation.fullText);
+      newParams.set('state', selectedLocation.state);
+    }
+    if (filterSelections.activities.length > 0)
+      newParams.set('activities', filterSelections.activities.join(','));
+    if (filterSelections.hazards.length > 0)
+      newParams.set('hazards', filterSelections.hazards.join(','));
+    if (filterSelections.sectors.length > 0)
+      newParams.set('sectors', filterSelections.sectors.join(','));
+    if (filterSelections.size.length > 0)
+      newParams.set('size', filterSelections.size.join(','));
+    setSearchParams(newParams);
+  };
+
+  const getFilterText = (filterKey, label) => {
+    const count = filterSelections[filterKey].length;
+    if (count === 0) return `All ${label}`;
+    return `${count} ${label} Selected`;
+  };
+
+  const registrySelectSx = {
+    backgroundColor: '#F3F3F5',
+    borderRadius: '8px',
+  };
 
   if (initialLoad) {
     return (
@@ -214,54 +278,272 @@ export default function SearchRegistry() {
         <Box
           sx={{
             display: 'flex',
-            alignContent: 'flex-start',
-            justifyContent: 'space-between',
-            m: 3,
+            flexDirection: 'row',
+            alignItems: 'flex-start',
+            gap: '12px',
+            mt: 3,
+            backgroundColor: '#FFFFFF',
           }}
         >
-          <Box sx={{ borderStyle: 'dashed', borderWidth: 1 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              padding: '4px',
+              gap: '4px',
+              width: 280,
+              border: '1px dashed #E5E7EB',
+              borderRadius: '8px',
+              flexGrow: 1,
+            }}
+          >
             <Typography
               sx={{
                 fontWeight: 700,
                 fontSize: 16,
+                lineHeight: '19px',
+                color: 'primary.main',
+                p: '4px',
               }}
             >
               Services Provided
             </Typography>
+            <PullDownFilter
+              filterName="services-filter"
+              filterText={getFilterText('activities', 'Services')}
+              availableOptions={availableOptions.activities}
+              selectedValues={filterSelections.activities}
+              onChange={e => handleFilterChange('activities', e.target.value)}
+              boxSx={{ width: '100%', minWidth: 'unset', maxWidth: 'unset' }}
+              selectSx={registrySelectSx}
+            />
+            {filterSelections.activities.length > 0 && (
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '4px', px: '4px', width: '100%' }}>
+                <Typography
+                  onClick={() => handleClearFilter('activities')}
+                  sx={{
+                    fontSize: 12,
+                    color: 'primary.linkBlue',
+                    cursor: 'pointer',
+                    px: '10px',
+                  }}
+                >
+                  Clear All
+                </Typography>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '10px', px: '2px' }}>
+                  {filterSelections.activities.map(value => (
+                    <FilterRemoveTwo
+                      key={value}
+                      text={value}
+                      onDelete={() => handleRemoveFilterValue('activities', value)}
+                    />
+                  ))}
+                </Box>
+              </Box>
+            )}
           </Box>
-          <Box sx={{ borderStyle: 'dashed', borderWidth: 1 }}>
+
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              padding: '4px',
+              gap: '4px',
+              width: 280,
+              border: '1px dashed #E5E7EB',
+              borderRadius: '8px',
+              flexGrow: 1,
+            }}
+          >
             <Typography
               sx={{
                 fontWeight: 700,
                 fontSize: 16,
+                lineHeight: '19px',
+                color: 'primary.main',
+                p: '4px',
               }}
             >
               Climate Hazards
             </Typography>
+            <PullDownFilter
+              filterName="hazards-filter"
+              filterText={getFilterText('hazards', 'Hazards')}
+              availableOptions={availableOptions.hazards}
+              selectedValues={filterSelections.hazards}
+              onChange={e => handleFilterChange('hazards', e.target.value)}
+              boxSx={{ width: '100%', minWidth: 'unset', maxWidth: 'unset' }}
+              selectSx={registrySelectSx}
+            />
+            {filterSelections.hazards.length > 0 && (
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '4px', px: '4px', width: '100%' }}>
+                <Typography
+                  onClick={() => handleClearFilter('hazards')}
+                  sx={{
+                    fontSize: 12,
+                    color: 'primary.linkBlue',
+                    cursor: 'pointer',
+                    px: '10px',
+                  }}
+                >
+                  Clear All
+                </Typography>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '10px', px: '2px' }}>
+                  {filterSelections.hazards.map(value => (
+                    <FilterRemoveTwo
+                      key={value}
+                      text={value}
+                      onDelete={() => handleRemoveFilterValue('hazards', value)}
+                    />
+                  ))}
+                </Box>
+              </Box>
+            )}
           </Box>
 
-          <Box sx={{ borderStyle: 'dashed', borderWidth: 1 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              padding: '4px',
+              gap: '4px',
+              width: 280,
+              border: '1px dashed #E5E7EB',
+              borderRadius: '8px',
+              flexGrow: 1,
+            }}
+          >
             <Typography
               sx={{
                 fontWeight: 700,
                 fontSize: 16,
+                lineHeight: '19px',
+                color: 'primary.main',
+                p: '4px',
               }}
             >
               Sectors
             </Typography>
+            <PullDownFilter
+              filterName="sectors-filter"
+              filterText={getFilterText('sectors', 'Sectors')}
+              availableOptions={availableOptions.sectors}
+              selectedValues={filterSelections.sectors}
+              onChange={e => handleFilterChange('sectors', e.target.value)}
+              boxSx={{ width: '100%', minWidth: 'unset', maxWidth: 'unset' }}
+              selectSx={registrySelectSx}
+            />
+            {filterSelections.sectors.length > 0 && (
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '4px', px: '4px', width: '100%' }}>
+                <Typography
+                  onClick={() => handleClearFilter('sectors')}
+                  sx={{
+                    fontSize: 12,
+                    color: 'primary.linkBlue',
+                    cursor: 'pointer',
+                    px: '10px',
+                  }}
+                >
+                  Clear All
+                </Typography>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '10px', px: '2px' }}>
+                  {filterSelections.sectors.map(value => (
+                    <FilterRemoveTwo
+                      key={value}
+                      text={value}
+                      onDelete={() => handleRemoveFilterValue('sectors', value)}
+                    />
+                  ))}
+                </Box>
+              </Box>
+            )}
           </Box>
 
-          <Box sx={{ borderStyle: 'dashed', borderWidth: 1 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              padding: '4px',
+              gap: '4px',
+              width: 280,
+              border: '1px dashed #E5E7EB',
+              borderRadius: '8px',
+              flexGrow: 1,
+            }}
+          >
             <Typography
               sx={{
                 fontWeight: 700,
                 fontSize: 16,
+                lineHeight: '19px',
+                color: 'primary.main',
+                p: '4px',
               }}
             >
               Population Size
             </Typography>
+            <PullDownFilter
+              filterName="size-filter"
+              filterText={getFilterText('size', 'Population Sizes')}
+              availableOptions={availableOptions.size}
+              selectedValues={filterSelections.size}
+              onChange={e => handleFilterChange('size', e.target.value)}
+              boxSx={{ width: '100%', minWidth: 'unset', maxWidth: 'unset' }}
+              selectSx={registrySelectSx}
+            />
+            {filterSelections.size.length > 0 && (
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '4px', px: '4px', width: '100%' }}>
+                <Typography
+                  onClick={() => handleClearFilter('size')}
+                  sx={{
+                    fontSize: 12,
+                    color: 'primary.linkBlue',
+                    cursor: 'pointer',
+                    px: '10px',
+                  }}
+                >
+                  Clear All
+                </Typography>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '10px', px: '2px' }}>
+                  {filterSelections.size.map(value => (
+                    <FilterRemoveTwo
+                      key={value}
+                      text={value}
+                      onDelete={() => handleRemoveFilterValue('size', value)}
+                    />
+                  ))}
+                </Box>
+              </Box>
+            )}
           </Box>
-          <CallToActionButton />
+
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              pt: '32px',
+            }}
+          >
+            <CallToActionButton
+              onClick={handleFindPractitioners}
+              iconStart={<SearchIcon />}
+              text="Find Practitioners"
+              buttonSx={{
+                borderRadius: '99999px',
+                height: 37,
+                whiteSpace: 'nowrap',
+              }}
+              textSx={{
+                fontSize: 18,
+                fontWeight: 400,
+              }}
+            />
+          </Box>
         </Box>
       </Box>
       <SearchRegistryComponent

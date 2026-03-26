@@ -10,6 +10,7 @@ const PulldownFilter = props => {
     filterText,
     filterName,
     boxSx,
+    selectSx,
     onChange,
     availableOptions,
     selectedValues,
@@ -56,6 +57,7 @@ const PulldownFilter = props => {
               opacity: 0.5,
               right: 24,
             },
+            ...selectSx,
           }}
           labelId={filterName ?? 'filter-label'}
           id={filterId ?? 'filter-id'}

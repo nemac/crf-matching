@@ -1,15 +1,16 @@
 import Chip from '@mui/material/Chip';
 
 const FilterRemoveTwo = props => {
-  const { text } = props;
+  const { text, onDelete } = props;
   const handleDelete = () => {
-    console.info('You clicked the delete icon.');
+    if (onDelete) {
+      onDelete();
+    }
   };
   return (
     <>
       <Chip
         sx={{
-          width: '146px',
           height: '40px',
           borderRadius: '9999px',
           pt: '6px',
@@ -19,14 +20,13 @@ const FilterRemoveTwo = props => {
           gap: '4px',
           backgroundColor: 'primary.sectionBg',
           border: '1px solid #0066CC',
+          maxWidth: '100%',
           '& .MuiChip-label': {
-            font: 'roboto',
-            fontStyle: 'regular',
             color: 'primary.linkBlue',
             fontWeight: 400,
-            fontSize: 16,
-            overflow: 'visible',
-            textOverflow: 'unset',
+            fontSize: 12,
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
           },
           '& .MuiChip-deleteIcon': {
