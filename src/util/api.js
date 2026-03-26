@@ -17,7 +17,7 @@ const practitionerViewName = 'RegistryPractitionerAndSpecialistsToolView'; //'Re
 const specialistsViewName = 'RegistrySpecialistToolView'; //'RegistryToolView' // 'Grid view'
 const PractitionerPageViewName = 'RegistryForPractitionerPageToolView'; // 'Grid view'
 
-const normalizeRec = (rec, fieldMap) => {
+export const normalizeRec = (rec, fieldMap) => {
   const result = {};
   for (const [normKey, airKey] of Object.entries(fieldMap)) {
     // For communities, ensure every field is an array
@@ -47,7 +47,7 @@ const communityFieldMap = {
 
 const practFetchFields = Object.values(practitionerFieldMap);
 
-function buildAirtableFilterFormula(
+export function buildAirtableFilterFormula(
   criteriaObject,
   fieldMap,
   operator = 'AND'
