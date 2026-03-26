@@ -3,6 +3,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import PeopleOutlineOutlinedIcon from '@mui/icons-material/PeopleOutlineOutlined';
 import HandshakeOutlinedIcon from '@mui/icons-material/HandshakeOutlined';
+import FeatureCard from '../components/homePage/FeatureCard.jsx';
 import NavBar from '../components/NavBar.jsx';
 import Footer from '../components/Footer.jsx';
 import {
@@ -316,250 +317,29 @@ export default function HomePage() {
                   py: 0.5,
                 }}
               >
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: '18px',
-                    width: 320,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      width: 52,
-                      height: 52,
-                      backgroundColor: '#003366',
-                      borderRadius: '50%',
-                    }}
-                  >
-                    <SearchIcon sx={{ color: '#FFFFFF', fontSize: 32 }} />
-                  </Box>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'flex-start',
-                      pt: 1.5,
-                      gap: 0.5,
-                      alignSelf: 'stretch',
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        alignSelf: 'stretch',
-                        minHeight: 25,
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          fontFamily: 'Roboto',
-                          fontWeight: 500,
-                          fontSize: '20px',
-                          lineHeight: '23px',
-                          textAlign: 'center',
-                          color: '#101828',
-                        }}
-                      >
-                        Search and Filter
-                      </Typography>
-                    </Box>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'flex-start',
-                        alignSelf: 'stretch',
-                        px: '5px',
-                        minHeight: 75,
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          fontFamily: 'Roboto',
-                          fontWeight: 400,
-                          fontSize: '16px',
-                          lineHeight: '19px',
-                          textAlign: 'center',
-                          color: '#56657D',
-                        }}
-                      >
-                        Use our guided search to find practitioners with the
-                        right expertise and focus for your needs.
-                      </Typography>
-                    </Box>
-                  </Box>
-                </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: '18px',
-                    width: 320,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      width: 52,
-                      height: 52,
-                      backgroundColor: '#003366',
-                      borderRadius: '50%',
-                    }}
-                  >
+                <FeatureCard
+                  icon={<SearchIcon sx={{ color: '#FFFFFF', fontSize: 32 }} />}
+                  title="Search and Filter"
+                  description="Use our guided search to find practitioners with the right expertise and focus for your needs."
+                />
+                <FeatureCard
+                  icon={
                     <PeopleOutlineOutlinedIcon
                       sx={{ color: '#FFFFFF', fontSize: 32 }}
                     />
-                  </Box>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'flex-start',
-                      pt: 1.5,
-                      gap: 0.5,
-                      alignSelf: 'stretch',
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        alignSelf: 'stretch',
-                        minHeight: 25,
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          fontFamily: 'Roboto',
-                          fontWeight: 500,
-                          fontSize: '20px',
-                          lineHeight: '23px',
-                          textAlign: 'center',
-                          color: '#101828',
-                        }}
-                      >
-                        Review Profiles
-                      </Typography>
-                    </Box>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'flex-start',
-                        alignSelf: 'stretch',
-                        px: '5px',
-                        minHeight: 75,
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          fontFamily: 'Roboto',
-                          fontWeight: 400,
-                          fontSize: '16px',
-                          lineHeight: '19px',
-                          textAlign: 'center',
-                          color: '#56657D',
-                        }}
-                      >
-                        Explore detailed profiles, including specailizations,
-                        community focus and work examples.
-                      </Typography>
-                    </Box>
-                  </Box>
-                </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: '18px',
-                    width: 320,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      width: 52,
-                      height: 52,
-                      backgroundColor: '#003366',
-                      borderRadius: '50%',
-                    }}
-                  >
+                  }
+                  title="Review Profiles"
+                  description="Explore detailed profiles, including specailizations, community focus and work examples."
+                />
+                <FeatureCard
+                  icon={
                     <HandshakeOutlinedIcon
                       sx={{ color: '#FFFFFF', fontSize: 32 }}
                     />
-                  </Box>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'flex-start',
-                      pt: 1.5,
-                      gap: 0.5,
-                      alignSelf: 'stretch',
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        alignSelf: 'stretch',
-                        minHeight: 25,
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          fontFamily: 'Roboto',
-                          fontWeight: 500,
-                          fontSize: '20px',
-                          lineHeight: '23px',
-                          textAlign: 'center',
-                          color: '#101828',
-                        }}
-                      >
-                        Connect & Collaborate
-                      </Typography>
-                    </Box>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'flex-start',
-                        alignSelf: 'stretch',
-                        px: '5px',
-                        minHeight: 75,
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          fontFamily: 'Roboto',
-                          fontWeight: 400,
-                          fontSize: '16px',
-                          lineHeight: '19px',
-                          textAlign: 'center',
-                          color: '#56657D',
-                        }}
-                      >
-                        Contact practitioners directly to discuss your project
-                        and build a resilient future together.
-                      </Typography>
-                    </Box>
-                  </Box>
-                </Box>
+                  }
+                  title="Connect & Collaborate"
+                  description="Contact practitioners directly to discuss your project and build a resilient future together."
+                />
               </Box>
             </Box>
           </Box>

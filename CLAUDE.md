@@ -96,8 +96,6 @@ Do NOT destructure in the function signature.
 
 ### 2. Abstraction Opportunities
 
-**B. `FeatureCard` component** — `HomePage.jsx` (lines ~319-562) repeats the same icon-circle + title + description pattern 3 times. Extract to a `FeatureCard` component accepting `icon`, `title`, `description`.
-
 **C. `BaseFormField` wrapper** — `FormTextField`, `MultiLineFormTextField`, and `FormSelect` all share the same label-above-input wrapper pattern. Extract the shared wrapper.
 
 **D. Shared `EditIconAdornment`** — `FormTextField` (lines ~26-44) and `MultiLineFormTextField` (lines ~27-50) duplicate the same InputAdornment with EditIcon in a blue box.
