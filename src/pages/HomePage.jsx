@@ -56,7 +56,6 @@ export default function HomePage() {
                 backgroundImage: `url(${searchbar_background})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                filter: 'blur(1px)',
                 zIndex: 0,
               },
               display: 'flex',
