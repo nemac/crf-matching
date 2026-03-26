@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { CssBaseline, Stack, Container, Typography, Box, Button } from '@mui/material';
+import { CssBaseline, Stack, Container, Typography, Box } from '@mui/material';
 import ReadMoreIcon from '@mui/icons-material/ReadMore';
 import { ThemeProvider } from '@mui/material/styles';
 
 import PractitionerPane from './PractitionerPane';
+import TertiaryButton from './baseComponents/TertiaryButton';
 import CommunityPane from './CommunityPane';
 import theme from '../theme';
 import { RowHoverContext, SetHoverRowContext } from './RowHoverContext';
@@ -83,11 +84,10 @@ export default function ComparisonBoard({
                         right: '8px',
                       }}
                     >
-                      <Button
+                      <TertiaryButton
                         onClick={handleViewMore}
                         variant="contained"
                         sx={{
-                          bgcolor: 'primary.white',
                           color: 'primary.main',
                           border: '1px solid',
                           borderColor: 'primary.borderGray',
@@ -101,7 +101,7 @@ export default function ComparisonBoard({
                         startIcon={<ReadMoreIcon />}
                       >
                         View more matches
-                      </Button>
+                      </TertiaryButton>
                     </Box>
                   )}
                 </Box>

@@ -96,14 +96,6 @@ Do not add `fontFamily: 'Roboto'` to sx props — the theme already sets Roboto 
 
 ### 3. Base Component Misuse
 
-**Raw MUI components used where base components should be used instead:**
-- `CompareBar.jsx` (lines ~129-149) — raw `Button` with `#0066CC` bg, should use `CallToActionButton`
-- `RequestMagicLink.jsx` (lines ~133-167) — raw `Button` with `#003366` bg, should use `CallToActionButton`
-- `RequestMagicLink.jsx` (lines ~99-130) — raw `TextField`, should use `FormTextField`
-- `AddPractitionerModal.jsx` (lines ~110-139) — raw `InputBase`, should use `SearchBar`
-- `ComparisonBoard.jsx` (lines ~86-104) — raw `Button` white+border, should use `TertiaryButton`
-- `RecommendSpecialistCard.jsx` (lines ~101-126, ~153-170) — raw `Button`, could use base components
-
 **Hardcoded base components that should accept props for reusability:**
 - `SpecialistLabel` — hardcoded "Specialist" text, should accept a `label` prop
 - `BroadServiceProvider` — hardcoded "Broad service provider" text, should accept a `label` prop

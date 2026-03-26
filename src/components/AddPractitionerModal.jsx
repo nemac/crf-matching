@@ -2,15 +2,12 @@ import { useState, useEffect } from 'react';
 import {
   Box,
   Typography,
-  InputBase,
-  InputAdornment,
   Checkbox,
   Button,
   Modal,
-  CircularProgress,
 } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
 import { fetchPractitionersByName } from '../util/api';
+import SearchBar from './baseComponents/SearchBar';
 
 export default function AddPractitionerModal(props) {
   const { open, onClose, onAddPractitioners, existingPractitionerIds } = props;
@@ -107,20 +104,11 @@ export default function AddPractitionerModal(props) {
             </Typography>
           </Box>
 
-          <InputBase
-            placeholder="Search by Adaptation Practitioner Name"
-            value={searchTerm}
+          <SearchBar
+            text="Search by Adaptation Practitioner Name"
             onChange={(e) => setSearchTerm(e.target.value)}
-            endAdornment={
-              <InputAdornment position="end">
-                {loading ? (
-                  <CircularProgress size={20} />
-                ) : (
-                  <SearchIcon sx={{ color: '#9CA3AF' }} />
-                )}
-              </InputAdornment>
-            }
-            sx={{
+            loading={loading}
+            textSx={{
               mt: 2,
               width: '100%',
               height: 44,

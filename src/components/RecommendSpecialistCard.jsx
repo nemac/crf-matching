@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Typography, Box, Link, Button } from '@mui/material';
+import TertiaryButton from './baseComponents/TertiaryButton';
 import Grid from '@mui/material/Grid';
 import { useTheme } from '@mui/material/styles';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
@@ -150,14 +151,13 @@ export default function RecommendSpecialistCard({
         ))}
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'flex-end', p: 2, mt: 'auto' }}>
-        <Button
+        <TertiaryButton
           variant="contained"
           href={profileLink}
           rel="noopener noreferrer"
           startIcon={<PersonIcon />}
           sx={{
             color: theme.palette.primary.main,
-            backgroundColor: theme.palette.primary.white,
             border: `1px solid ${theme.palette.primary.borderGray}`,
             borderRadius: 8,
             textTransform: 'none',
@@ -167,7 +167,7 @@ export default function RecommendSpecialistCard({
           }}
         >
           View Profile
-        </Button>
+        </TertiaryButton>
       </Box>
     </Grid>
   );

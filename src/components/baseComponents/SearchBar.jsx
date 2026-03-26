@@ -1,8 +1,8 @@
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import { InputAdornment } from '@mui/material';
+import { CircularProgress, InputAdornment } from '@mui/material';
 const SearchBar = props => {
-  const { text, textSx, onChange } = props;
+  const { text, textSx, onChange, loading } = props;
   return (
     <>
       <InputBase
@@ -10,7 +10,7 @@ const SearchBar = props => {
         inputProps={{ 'aria-label': 'search' }}
         endAdornment={
           <InputAdornment position="end">
-            <SearchIcon />
+            {loading ? <CircularProgress size={20} /> : <SearchIcon />}
           </InputAdornment>
         }
         onChange={onChange}

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Typography, Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import AddPractitionerModal from './AddPractitionerModal';
+import CallToActionButton from './baseComponents/CallToActionButton';
 
 const getInitials = (orgName) => {
   if (!orgName) return '?';
@@ -123,26 +124,25 @@ export default function CompareBar(props) {
         </Box>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 4, px: 2 }}>
-          <Button
+          <CallToActionButton
             onClick={handleCompareClick}
-            sx={{
-              bgcolor: 'primary.linkBlue',
-              color: 'primary.sectionBg',
+            text={`Compare (${practitionerArray.length})`}
+            buttonSx={{
+              backgroundColor: 'primary.linkBlue',
               borderRadius: '8px',
-              textTransform: 'none',
               px: 3,
               py: 1.5,
-              fontWeight: 400,
-              fontSize: '16px',
-              lineHeight: '19px',
-              textDecoration: 'underline',
               '&:hover': {
                 bgcolor: '#0052A3',
               },
             }}
-          >
-            Compare ({practitionerArray.length})
-          </Button>
+            textSx={{
+              fontWeight: 400,
+              fontSize: '16px',
+              lineHeight: '19px',
+              textDecoration: 'underline',
+            }}
+          />
 
           <Button
             onClick={onClearAll}
