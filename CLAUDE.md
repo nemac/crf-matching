@@ -96,11 +96,6 @@ Do not add `fontFamily: 'Roboto'` to sx props — the theme already sets Roboto 
 
 ### 3. Base Component Misuse
 
-**Props convention violations (must accept `props` and destructure inside body):**
-- `src/components/baseComponents/MultiLineFormTextField.jsx` — destructures in function signature
-- `src/components/baseComponents/FormSelect.jsx` — destructures in function signature
-- `src/components/baseComponents/ToggleSwitch.jsx` — destructures in function signature
-
 **Raw MUI components used where base components should be used instead:**
 - `CompareBar.jsx` (lines ~129-149) — raw `Button` with `#0066CC` bg, should use `CallToActionButton`
 - `RequestMagicLink.jsx` (lines ~133-167) — raw `Button` with `#003366` bg, should use `CallToActionButton`

@@ -2,7 +2,8 @@ import { Box, TextField, InputAdornment } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import PropTypes from 'prop-types';
 
-export default function MultiLineFormTextField({ label, value, onChange, name, minRows = 3, placeholder }) {
+export default function MultiLineFormTextField(props) {
+  const { label, value, onChange, name, minRows = 3, placeholder } = props;
   return (
     <Box sx={{ minWidth: '240px', maxWidth: '856px', width: '100%' }}>
       <Box

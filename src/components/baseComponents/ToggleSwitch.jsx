@@ -1,7 +1,8 @@
 import { Box, Switch } from '@mui/material';
 import PropTypes from 'prop-types';
 
-export default function ToggleSwitch({ label, value, onChange, name }) {
+export default function ToggleSwitch(props) {
+  const { label, value, onChange, name } = props;
   const isYes = value === 'Yes';
 
   const handleToggle = () => {

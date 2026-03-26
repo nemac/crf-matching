@@ -8,15 +8,8 @@ import {
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 
-export default function FormSelect({
-  label,
-  value,
-  onChange,
-  name,
-  options,
-  fullWidth = false,
-  multiple = false,
-}) {
+export default function FormSelect(props) {
+  const { label, value, onChange, name, options, fullWidth = false, multiple = false } = props;
   const [open, setOpen] = useState(false);
 
   const handleChange = (event) => {
