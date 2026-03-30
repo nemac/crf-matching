@@ -24,6 +24,7 @@ import AltActionButton from '../components/baseComponents/AltActionButton.jsx';
 import CallToActionButton from '../components/baseComponents/CallToActionButton.jsx';
 import searchbar_background from '../assets/searchbar_background.png';
 import PullDownFilter from '../components/baseComponents/PulldownFilter.jsx';
+import FilterRemoveTwo from '../components/baseComponents/FilterRemoveTwo.jsx';
 import { useNavigate } from 'react-router-dom';
 import { searchLocations, getLocationDetails } from '../util/geocoding';
 
@@ -78,6 +79,27 @@ export default function HomePage() {
     fetchTotalPractitionerCount(setTotalPractitioners);
     fetchOptionsFromAirtable(setAvailableOptions);
   }, []);
+
+  const handleFilterChange = (filterKey, newValues) => {
+    setFilters(prev => ({ ...prev, [filterKey]: newValues }));
+  };
+
+  const handleClearFilter = filterKey => {
+    setFilters(prev => ({ ...prev, [filterKey]: [] }));
+  };
+
+  const handleRemoveFilterValue = (filterKey, value) => {
+    setFilters(prev => ({
+      ...prev,
+      [filterKey]: prev[filterKey].filter(v => v !== value),
+    }));
+  };
+
+  const getFilterText = (filterKey, label) => {
+    const count = filters[filterKey].length;
+    if (count === 0) return label;
+    return `${count} ${label} Selected`;
+  };
 
   const navigate = useNavigate();
 
@@ -144,8 +166,9 @@ export default function HomePage() {
                     minHeight: 84,
                     borderRadius: 3,
                     px: 2,
+                    py: 1,
                     display: 'flex',
-                    alignItems: 'center',
+                    flexDirection: 'column',
                     justifyContent: 'center',
                   }}
                 >
@@ -154,7 +177,7 @@ export default function HomePage() {
                     sx={{
                       width: '100%',
                       display: 'flex',
-                      alignItems: 'center',
+                      alignItems: 'flex-start',
                       gap: 2,
                       flexWrap: 'wrap',
                     }}
@@ -211,42 +234,42 @@ export default function HomePage() {
                         />
                       )}
                     />
-                    <PullDownFilter
-                      filterName="services filter"
-                      filterText="Services"
-                      availableOptions={availableOptions.activities}
-                      selectedValues={filters.activities}
-                      onChange={e =>
-                        setFilters(prev => ({
-                          ...prev,
-                          activities: e.target.value,
-                        }))
-                      }
-                    />
-                    <PullDownFilter
-                      filterName="Hazards filter"
-                      filterText="Hazards"
-                      availableOptions={availableOptions.hazards}
-                      selectedValues={filters.hazards}
-                      onChange={e =>
-                        setFilters(prev => ({
-                          ...prev,
-                          hazards: e.target.value,
-                        }))
-                      }
-                    />
-                    <PullDownFilter
-                      filterName="Sectors filter"
-                      filterText="Sectors"
-                      availableOptions={availableOptions.sectors}
-                      selectedValues={filters.sectors}
-                      onChange={e =>
-                        setFilters(prev => ({
-                          ...prev,
-                          sectors: e.target.value,
-                        }))
-                      }
-                    />
+                    {[
+                      { key: 'activities', filterName: 'services filter', label: 'Services' },
+                      { key: 'hazards', filterName: 'Hazards filter', label: 'Hazards' },
+                      { key: 'sectors', filterName: 'Sectors filter', label: 'Sectors' },
+                    ].map(({ key, filterName, label }) => (
+                      <Box key={key} sx={{ width: 250, minWidth: 250, maxWidth: 250 }}>
+                        <PullDownFilter
+                          filterName={filterName}
+                          filterText={getFilterText(key, label)}
+                          availableOptions={availableOptions[key]}
+                          selectedValues={filters[key]}
+                          onChange={e => handleFilterChange(key, e.target.value)}
+                        />
+                        {filters[key].length > 0 && (
+                          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '4px', mt: '4px' }}>
+                            <Typography
+                              onClick={() => handleClearFilter(key)}
+                              sx={{
+                                fontSize: 12,
+                                color: 'primary.linkBlue',
+                                cursor: 'pointer',
+                              }}
+                            >
+                              Clear All
+                            </Typography>
+                            {filters[key].map(value => (
+                              <FilterRemoveTwo
+                                key={value}
+                                text={value}
+                                onDelete={() => handleRemoveFilterValue(key, value)}
+                              />
+                            ))}
+                          </Box>
+                        )}
+                      </Box>
+                    ))}
                     <CallToActionButton
                       buttonSx={{
                         borderRadius: 12,
