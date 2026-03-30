@@ -248,7 +248,7 @@ export default function HomePage() {
                           onChange={e => handleFilterChange(key, e.target.value)}
                         />
                         {filters[key].length > 0 && (
-                          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '4px', mt: '4px' }}>
+                          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '4px', mt: '4px' }}>
                             <Typography
                               onClick={() => handleClearFilter(key)}
                               sx={{
