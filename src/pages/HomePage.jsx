@@ -332,7 +332,7 @@ export default function HomePage() {
             </Typography>
             {/* Button below should be changed once the main practitioners page is done */}
             <AltActionButton
-              to="/ComparePractitioners"
+              to="/AllPractitioners"
               text="Browse all Practitioners"
             />
           </Box>

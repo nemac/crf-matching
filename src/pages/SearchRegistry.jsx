@@ -283,6 +283,7 @@ export default function SearchRegistry() {
             gap: '12px',
             mt: 3,
             backgroundColor: '#FFFFFF',
+            flexWrap: 'wrap',
           }}
         >
           <Box

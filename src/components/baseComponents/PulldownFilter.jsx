@@ -44,18 +44,21 @@ const PulldownFilter = props => {
               border: 'none',
             },
             '& .MuiSelect-select': {
-              padding: '0px 24px',
+              padding: '0px 48px 0px 12px',
               display: 'flex',
               alignItems: 'center',
               color: '#6C788D',
               fontSize: '16px',
               fontWeight: 400,
               lineHeight: '19px',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
             },
             '& .MuiSelect-icon': {
               color: '#6C788D',
               opacity: 0.5,
-              right: 24,
+              right: 12,
             },
             ...selectSx,
           }}
