@@ -1,8 +1,15 @@
-import { Typography, Container, Box, CircularProgress } from '@mui/material';
+import { Typography, Container, Box, CircularProgress, useMediaQuery } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import PractitionerCard from './PractitionerCard';
 import TertiaryButton from './baseComponents/TertiaryButton';
 
 export default function RegistryComponent(props) {
+  const theme = useTheme();
+  const isXl = useMediaQuery(theme.breakpoints.up('xl'));
+  const isLg = useMediaQuery(theme.breakpoints.up('lg'));
+  const isMd = useMediaQuery(theme.breakpoints.up('md'));
+  const columns = isXl ? 4 : isLg ? 3 : isMd ? 2 : 1;
+  const pageSize = columns * 3;
   const {
     practitioners = [],
     totalPractitioners = 0,
@@ -105,7 +112,7 @@ export default function RegistryComponent(props) {
           {hasMore && onLoadMore && (
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
               <TertiaryButton
-                onClick={onLoadMore}
+                onClick={() => onLoadMore(pageSize)}
                 sx={{
                   width: 233,
                   height: 37,

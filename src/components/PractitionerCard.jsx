@@ -28,7 +28,7 @@ export default function PractitionerCard(props) {
   return (
     <Card
       sx={{
-        width: '380px',
+        width: '340px',
         minHeight: '380px',
         display: 'flex',
         flexDirection: 'column',
@@ -74,7 +74,7 @@ export default function PractitionerCard(props) {
             flexDirection: 'row',
             alignItems: 'flex-start',
             py: 0.5,
-            px: 1,
+            px: 0.5,
             gap: 1,
             alignSelf: 'stretch',
             flexGrow: 0,
@@ -93,8 +93,8 @@ export default function PractitionerCard(props) {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'flex-start',
-            pt: 1,
-            pb: 2,
+            pt: 0.5,
+            pb: 1,
             gap: 0.5,
             alignSelf: 'stretch',
             flexGrow: 0,
@@ -106,8 +106,7 @@ export default function PractitionerCard(props) {
               display: 'flex',
               flexDirection: 'row',
               alignItems: 'center',
-              py: 0.5,
-              gap: 1,
+              gap: 0.5,
               alignSelf: 'stretch',
               flexGrow: 0,
             }}
@@ -125,9 +124,7 @@ export default function PractitionerCard(props) {
               flexWrap: 'wrap',
               alignItems: 'flex-start',
               alignContent: 'flex-start',
-              px: 1,
-              py: 0.5,
-              gap: 1,
+              gap: 0.5,
               alignSelf: 'stretch',
               flexGrow: 0,
             }}

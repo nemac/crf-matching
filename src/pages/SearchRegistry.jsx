@@ -31,7 +31,7 @@ export default function SearchRegistry() {
   const [totalPractitioners, setTotalPractitioners] = useState(0);
   const [initialLoad, setInitialLoad] = useState(true);
   const [loading, setLoading] = useState(true);
-  const [displayCount, setDisplayCount] = useState(9);
+  const [displayCount, setDisplayCount] = useState(12);
 
   const stateParam = searchParams.get('state')?.split(',').filter(Boolean) ?? [];
   const activities = searchParams.get('activities')?.split(',').filter(Boolean) ?? [];
@@ -88,7 +88,7 @@ export default function SearchRegistry() {
       }
     });
     setSearchParams(newParams);
-    setDisplayCount(9);
+    setDisplayCount(12);
   };
 
   const handleFilterChange = (filterKey, newValues) => {
@@ -169,123 +169,94 @@ export default function SearchRegistry() {
         }
       />
       <Box sx={{ mt: 3, px: { xs: 4, sm: 6, md: 12 } }}>
-        <Box sx={{ ml: 4, my: 0.5 }}>
-          <Typography component="div" variant="body2">
-            Looking for a specific Practitioner? Search our database of{' '}
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', gap: 1, mt: 3, mb: 2 }}>
             <Box
-              component="a"
-              href="/AllPractitioners"
               sx={{
-                color: 'text.secondary',
-                fontSize: '14px',
-                textDecoration: 'underline',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                padding: '4px',
+                gap: 0.5,
+                flex: { xs: '1 1 100%', xl: '1 1 0' },
+                border: '1px solid #E5E7EB',
+                borderRadius: '8px',
               }}
             >
-              Practitioners
+              <Typography
+                sx={{
+                  fontWeight: 700,
+                  fontSize: 16,
+                  color: 'primary.main',
+                  p: '4px',
+                }}
+              >
+                What state is your community in
+              </Typography>
+              <PullDownFilter
+                filterName="state-filter"
+                filterText={getFilterText('state', 'States')}
+                availableOptions={['All States and Territories', ...availableOptions.state]}
+                selectedValues={allStatesSelected ? ['All States and Territories', ...filterSelections.state] : filterSelections.state}
+                onChange={e => handleStateFilterChange(e.target.value)}
+                boxSx={{ width: '100%', minWidth: 'unset', maxWidth: 'unset' }}
+                selectSx={registrySelectSx}
+              />
+              {filterSelections.state.length > 0 && (
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, px: '4px', width: '100%' }}>
+                  <Typography
+                    onClick={() => handleClearFilter('state')}
+                    sx={{
+                      fontSize: 12,
+                      color: 'primary.linkBlue',
+                      cursor: 'pointer',
+                      px: '10px',
+                    }}
+                  >
+                    Clear All
+                  </Typography>
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, px: '2px' }}>
+                    {allStatesSelected ? (
+                      <FilterRemoveTwo
+                        text="All States and Territories"
+                        onDelete={() => handleClearFilter('state')}
+                      />
+                    ) : (
+                      filterSelections.state.map(value => (
+                        <FilterRemoveTwo
+                          key={value}
+                          text={value}
+                          onDelete={() => handleRemoveFilterValue('state', value)}
+                        />
+                      ))
+                    )}
+                  </Box>
+                </Box>
+              )}
             </Box>
-           </Typography>
-        </Box>
 
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'flex-start',
-            gap: 1,
-            mt: 3,
-            mb: 4,
-            backgroundColor: '#FFFFFF',
-            flexWrap: 'wrap',
-          }}
-        >
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              padding: '4px',
-              gap: 0.5,
-              width: 280,
-              border: '1px solid #E5E7EB',
-              borderRadius: '8px',
-              flexGrow: 1,
-            }}
-          >
-            <Typography
-              sx={{
-                fontWeight: 700,
-                fontSize: 16,
-                color: 'primary.main',
-                p: '4px',
-              }}
-            >
-              What state is your community in
-            </Typography>
-            <PullDownFilter
-              filterName="state-filter"
-              filterText={getFilterText('state', 'States')}
-              availableOptions={['All States and Territories', ...availableOptions.state]}
-              selectedValues={allStatesSelected ? ['All States and Territories', ...filterSelections.state] : filterSelections.state}
-              onChange={e => handleStateFilterChange(e.target.value)}
-              boxSx={{ width: '100%', minWidth: 'unset', maxWidth: 'unset' }}
-              selectSx={registrySelectSx}
-            />
-            {filterSelections.state.length > 0 && (
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, px: '4px', width: '100%' }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  padding: '4px',
+                  gap: 0.5,
+                  flex: { xs: '1 1 calc(50% - 8px)', xl: '1 1 0' },
+                  minWidth: 200,
+                  border: '1px solid #E5E7EB',
+                  borderRadius: '8px',
+                }}
+              >
                 <Typography
-                  onClick={() => handleClearFilter('state')}
                   sx={{
-                    fontSize: 12,
-                    color: 'primary.linkBlue',
-                    cursor: 'pointer',
-                    px: '10px',
+                    fontWeight: 700,
+                    fontSize: 16,
+                    color: 'primary.main',
+                    p: '4px',
                   }}
                 >
-                  Clear All
+                  Services Provided
                 </Typography>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, px: '2px' }}>
-                  {allStatesSelected ? (
-                    <FilterRemoveTwo
-                      text="All States and Territories"
-                      onDelete={() => handleClearFilter('state')}
-                    />
-                  ) : (
-                    filterSelections.state.map(value => (
-                      <FilterRemoveTwo
-                        key={value}
-                        text={value}
-                        onDelete={() => handleRemoveFilterValue('state', value)}
-                      />
-                    ))
-                  )}
-                </Box>
-              </Box>
-            )}
-          </Box>
-
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              padding: '4px',
-              gap: 0.5,
-              width: 280,
-              border: '1px solid #E5E7EB',
-              borderRadius: '8px',
-              flexGrow: 1,
-            }}
-          >
-            <Typography
-              sx={{
-                fontWeight: 700,
-                fontSize: 16,
-                color: 'primary.main',
-                p: '4px',
-              }}
-            >
-              Services Provided
-            </Typography>
             <PullDownFilter
               filterName="services-filter"
               filterText={getFilterText('activities', 'Services')}
@@ -328,10 +299,10 @@ export default function SearchRegistry() {
               alignItems: 'flex-start',
               padding: '4px',
               gap: 0.5,
-              width: 280,
+              flex: { xs: '1 1 calc(50% - 8px)', xl: '1 1 0' },
+              minWidth: 200,
               border: '1px solid #E5E7EB',
               borderRadius: '8px',
-              flexGrow: 1,
             }}
           >
             <Typography
@@ -386,10 +357,10 @@ export default function SearchRegistry() {
               alignItems: 'flex-start',
               padding: '4px',
               gap: 0.5,
-              width: 280,
+              flex: { xs: '1 1 calc(50% - 8px)', xl: '1 1 0' },
+              minWidth: 200,
               border: '1px solid #E5E7EB',
               borderRadius: '8px',
-              flexGrow: 1,
             }}
           >
             <Typography
@@ -444,10 +415,10 @@ export default function SearchRegistry() {
               alignItems: 'flex-start',
               padding: '4px',
               gap: 0.5,
-              width: 280,
+              flex: { xs: '1 1 calc(50% - 8px)', xl: '1 1 0' },
+              minWidth: 200,
               border: '1px solid #E5E7EB',
               borderRadius: '8px',
-              flexGrow: 1,
             }}
           >
             <Typography
@@ -495,14 +466,7 @@ export default function SearchRegistry() {
             )}
           </Box>
 
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              alignSelf: 'flex-start',
-            }}
-          >
+          <Box sx={{ display: 'flex', justifyContent: { xs: 'center', md: 'flex-end' }, flex: { xs: '1 1 100%', xl: '0 0 auto' } }}>
             <CallToActionButton
               onClick={handleFindPractitioners}
               iconStart={<SearchIcon />}
@@ -519,6 +483,22 @@ export default function SearchRegistry() {
             />
           </Box>
         </Box>
+        <Box sx={{ ml: 2, mt: 0.5, mb: 1 }}>
+          <Typography component="div" variant="body2">
+            Looking for a specific Practitioner? Search our database of{' '}
+            <Box
+              component="a"
+              href="/AllPractitioners"
+              sx={{
+                color: 'text.secondary',
+                fontSize: '14px',
+                textDecoration: 'underline',
+              }}
+            >
+              Practitioners
+            </Box>
+           </Typography>
+        </Box>
       </Box>
       <SearchRegistryComponent
         practitioners={practitioners}
@@ -529,7 +509,7 @@ export default function SearchRegistry() {
         hazards={filterSelections.hazards}
         sectors={filterSelections.sectors}
         displayCount={displayCount}
-        onLoadMore={() => setDisplayCount(prev => prev + 9)}
+        onLoadMore={(pageSize) => setDisplayCount(prev => prev + pageSize)}
         source="registry"
       />
       <Footer />
