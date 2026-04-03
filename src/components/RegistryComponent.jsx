@@ -12,6 +12,7 @@ export default function RegistryComponent(props) {
     onLoadMore,
     loading,
     source = '',
+    state = [],
     activities = [],
     hazards = [],
     sectors = [],
@@ -20,6 +21,7 @@ export default function RegistryComponent(props) {
   const buildFilters = () => {
     const params = new URLSearchParams();
     if (source) params.set('source', source);
+    if (state.length > 0) params.set('state', state.join(','));
     if (activities.length > 0) params.set('activities', activities.join(','));
     if (hazards.length > 0) params.set('hazards', hazards.join(','));
     if (sectors.length > 0) params.set('sectors', sectors.join(','));

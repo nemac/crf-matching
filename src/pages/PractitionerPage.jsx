@@ -83,6 +83,7 @@ function PractitionerPage() {
   const { practitionerId } = useParams();
   const [searchParams] = useSearchParams();
   const urlFilters = {
+    state: searchParams.get('state')?.split(',').filter(Boolean) || [],
     activities: searchParams.get('activities')?.split(',').filter(Boolean) || [],
     hazards: searchParams.get('hazards')?.split(',').filter(Boolean) || [],
     sectors: searchParams.get('sectors')?.split(',').filter(Boolean) || [],

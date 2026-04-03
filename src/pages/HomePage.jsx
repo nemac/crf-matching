@@ -1,15 +1,17 @@
 import {
-  Autocomplete,
   Box,
-  CircularProgress,
   Container,
   Grid,
   Stack,
-  TextField,
   Typography,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+// import {
+//   Autocomplete,
+//   CircularProgress,
+//   TextField,
+// } from '@mui/material';
+// import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PeopleOutlineOutlinedIcon from '@mui/icons-material/PeopleOutlineOutlined';
 import HandshakeOutlinedIcon from '@mui/icons-material/HandshakeOutlined';
 import FeatureCard from '../components/homePage/FeatureCard.jsx';
@@ -26,62 +28,78 @@ import searchbar_background from '../assets/searchbar_background.png';
 import PullDownFilter from '../components/baseComponents/PulldownFilter.jsx';
 import FilterRemoveTwo from '../components/baseComponents/FilterRemoveTwo.jsx';
 import { useNavigate } from 'react-router-dom';
-import { searchLocations, getLocationDetails } from '../util/geocoding';
+// import { searchLocations, getLocationDetails } from '../util/geocoding';
 
 export default function HomePage() {
   const [totalPractitioners, setTotalPractitioners] = useState(0);
-  const [selectedLocation, setSelectedLocation] = useState(null);
-  const [locationOptions, setLocationOptions] = useState([]);
-  const [locationInputValue, setLocationInputValue] = useState('');
-  const [locationLoading, setLocationLoading] = useState(false);
+  // const [selectedLocation, setSelectedLocation] = useState(null);
+  // const [locationOptions, setLocationOptions] = useState([]);
+  // const [locationInputValue, setLocationInputValue] = useState('');
+  // const [locationLoading, setLocationLoading] = useState(false);
   const [filters, setFilters] = useState({
+    state: [],
     activities: [],
     sectors: [],
     hazards: [],
   });
   const [availableOptions, setAvailableOptions] = useState({
+    state: [],
     activities: [],
     sectors: [],
     hazards: [],
   });
 
-  const handleLocationInputChange = async (event, newInputValue, reason) => {
-    setLocationInputValue(newInputValue);
-    if (reason !== 'input') return;
-    if (newInputValue.length >= 3) {
-      setLocationLoading(true);
-      const suggestions = await searchLocations(newInputValue);
-      setLocationOptions(
-        suggestions.map(s => ({ ...s, fullText: s.text }))
-      );
-      setLocationLoading(false);
-    } else {
-      setLocationOptions([]);
-    }
-  };
+  // const handleLocationInputChange = async (event, newInputValue, reason) => {
+  //   setLocationInputValue(newInputValue);
+  //   if (reason !== 'input') return;
+  //   if (newInputValue.length >= 3) {
+  //     setLocationLoading(true);
+  //     const suggestions = await searchLocations(newInputValue);
+  //     setLocationOptions(
+  //       suggestions.map(s => ({ ...s, fullText: s.text }))
+  //     );
+  //     setLocationLoading(false);
+  //   } else {
+  //     setLocationOptions([]);
+  //   }
+  // };
 
-  const handleLocationChange = async (event, newValue) => {
-    if (newValue?.magicKey) {
-      setLocationLoading(true);
-      setLocationOptions([]);
-      const details = await getLocationDetails(newValue.magicKey);
-      if (details) {
-        setSelectedLocation(details);
-        setLocationInputValue(details.fullText);
-      }
-      setLocationLoading(false);
-    } else {
-      setSelectedLocation(null);
-    }
-  };
+  // const handleLocationChange = async (event, newValue) => {
+  //   if (newValue?.magicKey) {
+  //     setLocationLoading(true);
+  //     setLocationOptions([]);
+  //     const details = await getLocationDetails(newValue.magicKey);
+  //     if (details) {
+  //       setSelectedLocation(details);
+  //       setLocationInputValue(details.fullText);
+  //     }
+  //     setLocationLoading(false);
+  //   } else {
+  //     setSelectedLocation(null);
+  //   }
+  // };
 
   useEffect(() => {
     fetchTotalPractitionerCount(setTotalPractitioners);
     fetchOptionsFromAirtable(setAvailableOptions);
   }, []);
 
+  const allStatesSelected = availableOptions.state.length > 0 && filters.state.length === availableOptions.state.length;
+
   const handleFilterChange = (filterKey, newValues) => {
     setFilters(prev => ({ ...prev, [filterKey]: newValues }));
+  };
+
+  const handleStateFilterChange = (newValues) => {
+    const hasAllOption = newValues.includes('All States and Territories');
+    if (hasAllOption && !allStatesSelected) {
+      setFilters(prev => ({ ...prev, state: [...availableOptions.state] }));
+    } else if (!hasAllOption && allStatesSelected) {
+      setFilters(prev => ({ ...prev, state: [] }));
+    } else {
+      const filtered = newValues.filter(v => v !== 'All States and Territories');
+      setFilters(prev => ({ ...prev, state: filtered }));
+    }
   };
 
   const handleClearFilter = filterKey => {
@@ -98,6 +116,7 @@ export default function HomePage() {
   const getFilterText = (filterKey, label) => {
     const count = filters[filterKey].length;
     if (count === 0) return label;
+    if (filterKey === 'state' && allStatesSelected) return 'All States and Territories';
     return `${count} ${label} Selected`;
   };
 
@@ -161,7 +180,7 @@ export default function HomePage() {
                     justifyContent: 'center',
                   }}
                 >
-                  {/* searching fields */}
+                  {/* filter fields */}
                   <Box
                     sx={{
                       width: '100%',
@@ -171,70 +190,57 @@ export default function HomePage() {
                       flexWrap: 'wrap',
                     }}
                   >
-                    <Autocomplete
-                      value={selectedLocation}
-                      onChange={handleLocationChange}
-                      inputValue={locationInputValue}
-                      onInputChange={handleLocationInputChange}
-                      options={selectedLocation ? [selectedLocation, ...locationOptions] : locationOptions}
-                      getOptionLabel={option => option?.fullText || option?.text || ''}
-                      isOptionEqualToValue={(option, value) =>
-                        option?.fullText === value?.fullText
-                      }
-                      filterOptions={x => x}
-                      autoComplete
-                      includeInputInList
-                      filterSelectedOptions
-                      loading={locationLoading}
-                      loadingText="Searching..."
-                      noOptionsText={
-                        locationInputValue.length < 3
-                          ? 'Type at least 3 characters'
-                          : 'No locations found'
-                      }
-                      open={locationInputValue.length >= 3 && locationOptions.length > 0}
-                      popupIcon={null}
-                      sx={{ flexGrow: 1, minWidth: 200 }}
-                      renderInput={params => (
-                        <TextField
-                          {...params}
-                          placeholder="Enter the community"
-                          sx={{
-                            bgcolor: '#FFFFFF',
-                            borderRadius: 3,
-                            '& .MuiOutlinedInput-root': {
-                              borderRadius: 3,
-                              height: 36,
-                              padding: '0 12px',
-                            },
-                            '& .MuiOutlinedInput-notchedOutline': {
-                              border: 'none',
-                            },
-                          }}
-                          InputProps={{
-                            ...params.InputProps,
-                            startAdornment: (
-                              <LocationOnIcon sx={{ color: 'grey.500', mr: 0.5 }} />
-                            ),
-                            endAdornment: locationLoading ? (
-                              <CircularProgress color="inherit" size={20} />
-                            ) : null,
-                          }}
-                        />
+                    <Box sx={{ width: 300, minWidth: 300, maxWidth: 300 }}>
+                      <PullDownFilter
+                        filterName="state-filter"
+                        filterText={getFilterText('state', 'What state is your community in')}
+                        availableOptions={['All States and Territories', ...availableOptions.state]}
+                        selectedValues={allStatesSelected ? ['All States and Territories', ...filters.state] : filters.state}
+                        onChange={e => handleStateFilterChange(e.target.value)}
+                        boxSx={{ width: '100%', minWidth: 'unset', maxWidth: 'unset' }}
+                      />
+                      {filters.state.length > 0 && (
+                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 0.5, mt: '4px' }}>
+                          <Typography
+                            onClick={() => handleClearFilter('state')}
+                            sx={{
+                              fontSize: 12,
+                              color: 'primary.linkBlue',
+                              cursor: 'pointer',
+                            }}
+                          >
+                            Clear All
+                          </Typography>
+                          {allStatesSelected ? (
+                            <FilterRemoveTwo
+                              text="All States and Territories"
+                              onDelete={() => handleClearFilter('state')}
+                            />
+                          ) : (
+                            filters.state.map(value => (
+                              <FilterRemoveTwo
+                                key={value}
+                                text={value}
+                                onDelete={() => handleRemoveFilterValue('state', value)}
+                              />
+                            ))
+                          )}
+                        </Box>
                       )}
-                    />
+                    </Box>
                     {[
                       { key: 'activities', filterName: 'services filter', label: 'Services' },
                       { key: 'hazards', filterName: 'Hazards filter', label: 'Hazards' },
                       { key: 'sectors', filterName: 'Sectors filter', label: 'Sectors' },
                     ].map(({ key, filterName, label }) => (
-                      <Box key={key} sx={{ width: 250, minWidth: 250, maxWidth: 250 }}>
+                      <Box key={key} sx={{ width: 300, minWidth: 300, maxWidth: 300 }}>
                         <PullDownFilter
                           filterName={filterName}
                           filterText={getFilterText(key, label)}
                           availableOptions={availableOptions[key]}
                           selectedValues={filters[key]}
                           onChange={e => handleFilterChange(key, e.target.value)}
+                          boxSx={{ width: '100%', minWidth: 'unset', maxWidth: 'unset' }}
                         />
                         {filters[key].length > 0 && (
                           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 0.5, mt: '4px' }}>
@@ -265,22 +271,14 @@ export default function HomePage() {
                       }}
                       onClick={() => {
                         const params = new URLSearchParams();
-                        if (selectedLocation) {
-                          params.set('community', selectedLocation.fullText);
-                          params.set('state', selectedLocation.state);
-                        }
-                        if (filters.activities.length > 0)
-                          params.set(
-                            'activities',
-                            filters.activities.join(',')
-                          );
-                        if (filters.hazards.length > 0)
-                          params.set('hazards', filters.hazards.join(','));
-                        if (filters.sectors.length > 0)
-                          params.set('sectors', filters.sectors.join(','));
+                        ['state', 'activities', 'hazards', 'sectors'].forEach(key => {
+                          if (filters[key].length > 0) {
+                            params.set(key, filters[key].join(','));
+                          }
+                        });
                         navigate(`/Registry?${params.toString()}`);
                       }}
-                      iconStart=<SearchIcon />
+                      iconStart={<SearchIcon />}
                       textSx={{
                         fontSize: 16,
                         fontWeight: 'normal',
@@ -408,14 +406,12 @@ export default function HomePage() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              px: { xs: 2, sm: 4, md: 12 },
+              px: { xs: 2, md: 26 },
             }}
           >
             <Box
-              sx={{
-                minHeight: 223,
+              sx={{                
                 width: '100%',
-                maxWidth: 992,
                 mx: 'auto',
               }}
             >

@@ -162,7 +162,7 @@ const NewPractitionerLayout = props => {
       <Divider sx={{ mb: 4 }} />
 
       <SectionHeader>Where Organization Works</SectionHeader>
-      <ChipList items={formData.whereOrganizationWorks} />
+      <ChipList items={formData.whereOrganizationWorks} highlighted={urlFilters.state || []} />
 
       {/*TODO: Uncomment when ready for work examples*/}
       {/*<Divider sx={{ mb: 4 }} />*/}

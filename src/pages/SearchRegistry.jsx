@@ -1,13 +1,15 @@
 import { useSearchParams } from 'react-router-dom';
 import {
-  Autocomplete,
   Box,
-  CircularProgress,
-  InputAdornment,
-  TextField,
   Typography,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+// import {
+//   Autocomplete,
+//   CircularProgress,
+//   InputAdornment,
+//   TextField,
+// } from '@mui/material';
 import SearchRegistryComponent from '../components/RegistryComponent.jsx';
 import { useEffect, useState } from 'react';
 import {
@@ -22,7 +24,7 @@ import CallToActionButton from '../components/baseComponents/CallToActionButton.
 import PullDownFilter from '../components/baseComponents/PulldownFilter.jsx';
 import FilterRemoveTwo from '../components/baseComponents/FilterRemoveTwo.jsx';
 import PageHeader from '../components/baseComponents/PageHeader.jsx';
-import { searchLocations, getLocationDetails } from '../util/geocoding';
+// import { searchLocations, getLocationDetails } from '../util/geocoding';
 export default function SearchRegistry() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [practitioners, setPractitioners] = useState([]);
@@ -31,73 +33,29 @@ export default function SearchRegistry() {
   const [loading, setLoading] = useState(true);
   const [displayCount, setDisplayCount] = useState(9);
 
-  const community = searchParams.get('community') ?? '';
-  const state = searchParams.get('state') ?? '';
+  const stateParam = searchParams.get('state')?.split(',').filter(Boolean) ?? [];
   const activities = searchParams.get('activities')?.split(',').filter(Boolean) ?? [];
   const hazards = searchParams.get('hazards')?.split(',').filter(Boolean) ?? [];
   const sectors = searchParams.get('sectors')?.split(',').filter(Boolean) ?? [];
   const size = searchParams.get('size')?.split(',').filter(Boolean) ?? [];
 
   const [filterSelections, setFilterSelections] = useState({
+    state: stateParam,
     activities,
     hazards,
     sectors,
     size,
   });
   const [availableOptions, setAvailableOptions] = useState({
+    state: [],
     activities: [],
     hazards: [],
     sectors: [],
     size: [],
   });
 
-  const [selectedLocation, setSelectedLocation] = useState(
-    community ? { fullText: community, state } : null
-  );
-  const [locationOptions, setLocationOptions] = useState([]);
-  const [locationInputValue, setLocationInputValue] = useState(community);
-  const [locationLoading, setLocationLoading] = useState(false);
-
-  const handleLocationInputChange = async (event, newInputValue, reason) => {
-    setLocationInputValue(newInputValue);
-    if (reason !== 'input') return;
-    if (newInputValue.length >= 3) {
-      setLocationLoading(true);
-      const suggestions = await searchLocations(newInputValue);
-      setLocationOptions(suggestions.map(s => ({ ...s, fullText: s.text })));
-      setLocationLoading(false);
-    } else {
-      setLocationOptions([]);
-    }
-  };
-
-  const handleLocationChange = async (event, newValue) => {
-    if (newValue?.magicKey) {
-      setLocationLoading(true);
-      setLocationOptions([]);
-      const details = await getLocationDetails(newValue.magicKey);
-      if (details) {
-        setSelectedLocation(details);
-        setLocationInputValue(details.fullText);
-        const newParams = new URLSearchParams(searchParams);
-        newParams.set('community', details.fullText);
-        newParams.set('state', details.state);
-        setSearchParams(newParams);
-      }
-      setLocationLoading(false);
-    } else {
-      setSelectedLocation(null);
-      setLocationInputValue('');
-      setLocationOptions([]);
-      const newParams = new URLSearchParams(searchParams);
-      newParams.delete('community');
-      newParams.delete('state');
-      setSearchParams(newParams);
-    }
-  };
-
   const filters = {
-    state: state ? [state] : [],
+    state: filterSelections.state,
     activities,
     hazards,
     sectors,
@@ -122,7 +80,7 @@ export default function SearchRegistry() {
 
   const updateUrlFromFilters = (newSelections) => {
     const newParams = new URLSearchParams(searchParams);
-    ['activities', 'hazards', 'sectors', 'size'].forEach(key => {
+    ['state', 'activities', 'hazards', 'sectors', 'size'].forEach(key => {
       if (newSelections[key]?.length > 0) {
         newParams.set(key, newSelections[key].join(','));
       } else {
@@ -155,26 +113,34 @@ export default function SearchRegistry() {
   };
 
   const handleFindPractitioners = () => {
-    const newParams = new URLSearchParams();
-    if (selectedLocation) {
-      newParams.set('community', selectedLocation.fullText);
-      newParams.set('state', selectedLocation.state);
-    }
-    if (filterSelections.activities.length > 0)
-      newParams.set('activities', filterSelections.activities.join(','));
-    if (filterSelections.hazards.length > 0)
-      newParams.set('hazards', filterSelections.hazards.join(','));
-    if (filterSelections.sectors.length > 0)
-      newParams.set('sectors', filterSelections.sectors.join(','));
-    if (filterSelections.size.length > 0)
-      newParams.set('size', filterSelections.size.join(','));
-    setSearchParams(newParams);
+    updateUrlFromFilters(filterSelections);
   };
+
+  const allStatesSelected = availableOptions.state.length > 0 && filterSelections.state.length === availableOptions.state.length;
 
   const getFilterText = (filterKey, label) => {
     const count = filterSelections[filterKey].length;
     if (count === 0) return label;
+    if (filterKey === 'state' && allStatesSelected) return 'All States and Territories';
     return `${count} ${label} Selected`;
+  };
+
+  const handleStateFilterChange = (newValues) => {
+    const hasAllOption = newValues.includes('All States and Territories');
+    if (hasAllOption && !allStatesSelected) {
+      const newSelections = { ...filterSelections, state: [...availableOptions.state] };
+      setFilterSelections(newSelections);
+      updateUrlFromFilters(newSelections);
+    } else if (!hasAllOption && allStatesSelected) {
+      const newSelections = { ...filterSelections, state: [] };
+      setFilterSelections(newSelections);
+      updateUrlFromFilters(newSelections);
+    } else {
+      const filtered = newValues.filter(v => v !== 'All States and Territories');
+      const newSelections = { ...filterSelections, state: filtered };
+      setFilterSelections(newSelections);
+      updateUrlFromFilters(newSelections);
+    }
   };
 
   const registrySelectSx = {
@@ -203,86 +169,7 @@ export default function SearchRegistry() {
         }
       />
       <Box sx={{ mt: 3, px: { xs: 4, sm: 6, md: 12 } }}>
-        <Typography
-          sx={{
-            fontWeight: 700,
-            fontSize: 16,
-            color: 'primary.main',
-            flex: 'none',
-            flexGrow: 0,
-          }}
-        >
-          Community Location
-        </Typography>
-        <Autocomplete
-          value={selectedLocation}
-          onChange={handleLocationChange}
-          inputValue={locationInputValue}
-          onInputChange={handleLocationInputChange}
-          options={
-            selectedLocation
-              ? [selectedLocation, ...locationOptions]
-              : locationOptions
-          }
-          getOptionLabel={option => option?.fullText || option?.text || ''}
-          isOptionEqualToValue={(option, value) =>
-            option?.fullText === value?.fullText
-          }
-          filterOptions={x => x}
-          autoComplete
-          includeInputInList
-          filterSelectedOptions
-          loading={locationLoading}
-          loadingText="Searching..."
-          noOptionsText={
-            locationInputValue.length < 3
-              ? 'Type at least 3 characters'
-              : 'No locations found'
-          }
-          open={locationInputValue.length >= 3 && locationOptions.length > 0}
-          popupIcon={null}
-          sx={{ width: '100%', mt: 1 }}
-          renderInput={params => (
-            <TextField
-              {...params}
-              placeholder="Enter the community"
-              sx={{
-                backgroundColor: '#F3F3F5',
-                borderRadius: '8px',
-                '& .MuiOutlinedInput-root': {
-                  borderRadius: '8px',
-                  height: 36,
-                  padding: '0 12px',
-                },
-                '& .MuiOutlinedInput-notchedOutline': {
-                  border: 'none',
-                },
-                '& input::placeholder': {
-                  color: '#56657D',
-                  opacity: 1,
-                  fontSize: 16,
-                  fontWeight: 400,
-                },
-              }}
-              InputProps={{
-                ...params.InputProps,
-                endAdornment: (
-                  <InputAdornment position="end">
-                    {locationLoading ? (
-                      <CircularProgress size={16} />
-                    ) : (
-                      <SearchIcon sx={{ color: '#56657D', fontSize: 16 }} />
-                    )}
-                  </InputAdornment>
-                ),
-              }}
-            />
-          )}
-        />
-        <Box sx={{
-          ml: 4,
-          my: 0.5
-        }}>
+        <Box sx={{ ml: 4, my: 0.5 }}>
           <Typography component="div" variant="body2">
             Looking for a specific Practitioner? Search our database of{' '}
             <Box
@@ -296,7 +183,7 @@ export default function SearchRegistry() {
             >
               Practitioners
             </Box>
-           </Typography> 
+           </Typography>
         </Box>
 
         <Box
@@ -311,6 +198,71 @@ export default function SearchRegistry() {
             flexWrap: 'wrap',
           }}
         >
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              padding: '4px',
+              gap: 0.5,
+              width: 280,
+              border: '1px solid #E5E7EB',
+              borderRadius: '8px',
+              flexGrow: 1,
+            }}
+          >
+            <Typography
+              sx={{
+                fontWeight: 700,
+                fontSize: 16,
+                color: 'primary.main',
+                p: '4px',
+              }}
+            >
+              What state is your community in
+            </Typography>
+            <PullDownFilter
+              filterName="state-filter"
+              filterText={getFilterText('state', 'States')}
+              availableOptions={['All States and Territories', ...availableOptions.state]}
+              selectedValues={allStatesSelected ? ['All States and Territories', ...filterSelections.state] : filterSelections.state}
+              onChange={e => handleStateFilterChange(e.target.value)}
+              boxSx={{ width: '100%', minWidth: 'unset', maxWidth: 'unset' }}
+              selectSx={registrySelectSx}
+            />
+            {filterSelections.state.length > 0 && (
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, px: '4px', width: '100%' }}>
+                <Typography
+                  onClick={() => handleClearFilter('state')}
+                  sx={{
+                    fontSize: 12,
+                    color: 'primary.linkBlue',
+                    cursor: 'pointer',
+                    px: '10px',
+                  }}
+                >
+                  Clear All
+                </Typography>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, px: '2px' }}>
+                  {allStatesSelected ? (
+                    <FilterRemoveTwo
+                      text="All States and Territories"
+                      onDelete={() => handleClearFilter('state')}
+                    />
+                  ) : (
+                    filterSelections.state.map(value => (
+                      <FilterRemoveTwo
+                        key={value}
+                        text={value}
+                        onDelete={() => handleRemoveFilterValue('state', value)}
+                      />
+                    ))
+                  )}
+                </Box>
+              </Box>
+            )}
+          </Box>
+
           <Box
             sx={{
               display: 'flex',
@@ -572,7 +524,7 @@ export default function SearchRegistry() {
         practitioners={practitioners}
         totalPractitioners={totalPractitioners}
         loading={loading}
-        community={community}
+        state={filterSelections.state}
         activities={filterSelections.activities}
         hazards={filterSelections.hazards}
         sectors={filterSelections.sectors}
