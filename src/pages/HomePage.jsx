@@ -332,13 +332,10 @@ export default function HomePage() {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                padding: '24px',
-                gap: 6,
+                padding: 2,
                 backgroundColor: 'primary.sectionBg',
                 border: '1px solid #E1F5FE',
                 borderRadius: '8px',
-                alignSelf: 'stretch',
-                width: '100%',
               }}
             >
               <Box
@@ -353,7 +350,6 @@ export default function HomePage() {
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    alignSelf: 'stretch',
                     p: 0.5,
                     mb: 4,
                   }}
@@ -374,7 +370,7 @@ export default function HomePage() {
                   flexDirection: { xs: 'column', md: 'row' },
                   justifyContent: 'center',
                   alignItems: 'center',
-                  gap: 7,
+                  gap: 6,
                   py: 0.5,
                 }}
               >
@@ -390,7 +386,7 @@ export default function HomePage() {
                     />
                   }
                   title="Review Profiles"
-                  description="Explore detailed profiles, including specializations, community focus and work examples."
+                  description="Explore detailed profiles, including specailizations, community focus and work examples."
                 />
                 <FeatureCard
                   icon={
