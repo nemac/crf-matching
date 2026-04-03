@@ -40,7 +40,7 @@ export default function AboutPage() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'flex-start',
-          py: 6,
+          py: 4,
           px: { xs: 4, sm: 6, md: 12 },
           bgcolor: '#FFFFFF',
           borderRight: '1px solid #E5E7EB',
@@ -52,7 +52,6 @@ export default function AboutPage() {
             flexDirection: 'column',
             alignItems: 'flex-start',
             px: { xs: 0, md: 12 },
-            gap: 1.5,
             width: '100%',
           }}
         >
@@ -354,7 +353,7 @@ export default function AboutPage() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'flex-start',
-          py: 6,
+          py: 4,
           px: { xs: 4, sm: 6, md: 12 },
           gap: 1,
           bgcolor: 'primary.sectionBg',
@@ -490,7 +489,7 @@ export default function AboutPage() {
         </Box>
       </Box>
 
-      <Box sx={{ px: { xs: 4, sm: 6, md: 12 }, py: 6, bgcolor: '#FFFFFF' }}>
+      <Box sx={{ px: { xs: 4, sm: 6, md: 12 }, py: 4, bgcolor: '#FFFFFF' }}>
         <ContactUs />
       </Box>
       <Footer />

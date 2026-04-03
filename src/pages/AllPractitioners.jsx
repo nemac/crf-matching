@@ -94,8 +94,8 @@ export default function AllPractitioners() {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'flex-start',
-          px: { xs: 3, md: '96px' },
-          py: 3,
+          px: { xs: 4, sm: 6, md: 12 },
+          py: 4,
           gap: 1.5,
         }}
       >

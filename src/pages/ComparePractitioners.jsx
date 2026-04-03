@@ -179,7 +179,7 @@ export default function ComparePractitioners() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'flex-start',
-          py: 6,
+          py: 4,
           gap: 1,
           width: '100%',
           bgcolor: '#FFFFFF',
@@ -201,7 +201,7 @@ export default function ComparePractitioners() {
           sx={{
             display: 'flex',
             justifyContent: 'center',
-            px: 3,
+            px: { xs: 4, sm: 6, md: 12 },
             pt: 2,
             mb: 8,
           }}

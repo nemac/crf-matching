@@ -154,6 +154,7 @@ export default function HomePage() {
                     borderRadius: 3,
                     px: 2,
                     py: 1,
+                    mb: { xs: 4, md: 0 },
                     mt: 4,
                     display: 'flex',
                     flexDirection: 'column',

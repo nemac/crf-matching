@@ -202,7 +202,7 @@ export default function SearchRegistry() {
           </>
         }
       />
-      <Box sx={{ mt: 3, px: 4 }}>
+      <Box sx={{ mt: 3, px: { xs: 4, sm: 6, md: 12 } }}>
         <Typography
           sx={{
             fontWeight: 700,

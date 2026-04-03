@@ -62,7 +62,7 @@ function PractitionerPageLoaded({ practitioner, urlFilters }) {
           p: 3,
           pb: 8,
           cursor: 'default',
-          px: { xs: 4, sm: 4, md: 4, lg: 4 },
+          px: { xs: 4, sm: 6, md: 12 },
         }}
       >
         <Typography variant="h1" sx={{ mb: 3 }}>
