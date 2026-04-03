@@ -53,7 +53,7 @@ function FooterColumn(props) {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: '12px',
+        gap: 1,
         flex: '1 1 0',
         minWidth: 320,
       }}
@@ -94,7 +94,7 @@ export default function Footer() {
         flexDirection: 'column',
         alignItems: 'flex-center',
         padding: { xs: '24px 24px', md: '24px 96px' },
-        gap: '32px',
+        gap: 4,
         width: '100%',
         bgcolor: '#F0F8FF',
       }}
@@ -104,7 +104,7 @@ export default function Footer() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '32px',
+          gap: 4,
         }}
       >
         <Box

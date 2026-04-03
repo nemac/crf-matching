@@ -28,7 +28,7 @@ const validOrganizationSize = [
 ];
 
 const validOrganizationTypes = [
-  'Independent contractor or sole propietor',
+  'Independent contractor or sole proprietor',
   'Non-profit organization',
   'Consultant agency',
   'Local or regional government(s)',
@@ -287,12 +287,12 @@ export default function UpdateData({
         </Grid>
       </Box>
 
-      <SectionHeader>LinkedIN</SectionHeader>
+      <SectionHeader>LinkedIn</SectionHeader>
 
       <Box sx={{ ml: 2, mb: 8 }}>
         <Box sx={{ mb: 4, maxWidth: '350px' }}>
           <FormTextField
-            label="LinkedIN"
+            label="LinkedIn"
             name="linkedIn"
             value={formData.linkedIn}
             onChange={handleChange}

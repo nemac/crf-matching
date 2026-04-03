@@ -15,7 +15,7 @@ const FilterRemove = () => {
           borderRadius: '9999px',
           pt: '6px',
           pb: '6px',
-          gap: '9px',
+          gap: 1,
           backgroundColor: '#FFDDBB',
           '& .MuiChip-label': {
             fontStyle: 'regular',
@@ -27,7 +27,7 @@ const FilterRemove = () => {
             color: '#2D3F5D',
             borderRadius: '9999px',
             p: '4px',
-            gap: '10px',
+            gap: 1,
           },
         }}
         label="Filter Name"

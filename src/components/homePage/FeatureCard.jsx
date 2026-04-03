@@ -9,7 +9,7 @@ export default function FeatureCard(props) {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: '18px',
+        gap: 2,
         width: 320,
       }}
     >

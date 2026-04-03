@@ -35,7 +35,7 @@ function AddPractitionerColumn(props) {
         justifyContent: isEmpty ? 'center' : 'flex-start',
         alignItems: 'center',
         padding: isEmpty ? '48px 8px' : '24px 8px',
-        gap: '10px',
+        gap: 1,
         width: isEmpty ? 271 : undefined,
         minWidth: isEmpty ? 271 : 200,
         flex: isEmpty ? 'none' : '1 1 0',
@@ -223,7 +223,7 @@ export default function ComparePractitioners() {
                   direction="row"
                   sx={{
                     bgcolor: '#FFFFFF',
-                    gap: { xs: 0, md: 0 },
+                    gap: 0,
                   }}
                 >
                   <Box sx={{ flex: '1 1 250px' }}>
@@ -240,7 +240,7 @@ export default function ComparePractitioners() {
                     sx={{
                       flex: '3 2 auto',
                       overflowX: 'auto',
-                      gap: { xs: '4px', md: 1 },
+                      gap: { xs: 0.5, md: 1 },
                     }}
                   >
                     {selectedPractitioners.map((pract) => (
@@ -315,7 +315,7 @@ export default function ComparePractitioners() {
                               justifyContent: 'center',
                               alignItems: 'center',
                               padding: '8px 24px',
-                              gap: '12px',
+                              gap: 1,
                               width: 128,
                               height: 35,
                               bgcolor: '#E5E7EB',

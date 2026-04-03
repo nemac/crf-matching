@@ -7,7 +7,7 @@ const SpecialistLabel = () => {
         sx={{
           py: 2,
           px: 2,
-          gap: '4px',
+          gap: 0.5,
           backgroundColor: '#ffead5',
           '& .MuiChip-label': {
             overflow: 'visible',

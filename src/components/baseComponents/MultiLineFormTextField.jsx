@@ -72,7 +72,7 @@ export default function MultiLineFormTextField(props) {
         }}
         sx={{
           '& .MuiInputBase-root': {
-            gap: '12px',
+            gap: 1,
             paddingRight: '8px',
             paddingTop: '4px',
             paddingBottom: '4px',

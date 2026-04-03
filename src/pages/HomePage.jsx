@@ -237,7 +237,7 @@ export default function HomePage() {
                           onChange={e => handleFilterChange(key, e.target.value)}
                         />
                         {filters[key].length > 0 && (
-                          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '4px', mt: '4px' }}>
+                          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 0.5, mt: '4px' }}>
                             <Typography
                               onClick={() => handleClearFilter(key)}
                               sx={{
@@ -316,7 +316,7 @@ export default function HomePage() {
             {/* Button below should be changed once the main practitioners page is done */}
             <AltActionButton
               to="/AllPractitioners"
-              text="Browse all Practitioners"
+              text="Browse All Practitioners"
             />
           </Box>
           <Box
@@ -333,7 +333,7 @@ export default function HomePage() {
                 flexDirection: 'column',
                 alignItems: 'center',
                 padding: '24px',
-                gap: '48px',
+                gap: 6,
                 backgroundColor: 'primary.sectionBg',
                 border: '1px solid #E1F5FE',
                 borderRadius: '8px',
@@ -374,7 +374,7 @@ export default function HomePage() {
                   flexDirection: { xs: 'column', md: 'row' },
                   justifyContent: 'center',
                   alignItems: 'center',
-                  gap: '56px',
+                  gap: 7,
                   py: 0.5,
                 }}
               >
@@ -390,7 +390,7 @@ export default function HomePage() {
                     />
                   }
                   title="Review Profiles"
-                  description="Explore detailed profiles, including specailizations, community focus and work examples."
+                  description="Explore detailed profiles, including specializations, community focus and work examples."
                 />
                 <FeatureCard
                   icon={
@@ -465,7 +465,7 @@ export default function HomePage() {
             }}
           >
             <Typography
-              variant="h4"
+              variant="h3"
               sx={{
                 textAlign: 'center',
                 color: 'text.secondary',

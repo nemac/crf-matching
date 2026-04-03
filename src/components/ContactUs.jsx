@@ -10,7 +10,7 @@ export default function ContactUs() {
           Contact Us
         </Typography>
       </Box>
-      <Box sx={{ display: 'flex', flexDirection: 'row', gap: '4px', flexWrap: 'wrap' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'row', gap: 0.5, flexWrap: 'wrap' }}>
         <Typography variant="body1" component="div">
           Have additional questions about applying to the Registry? Email
         </Typography>

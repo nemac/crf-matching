@@ -66,7 +66,7 @@ export default function FormTextField(props) {
         }}
         sx={{
           '& .MuiInputBase-root': {
-            gap: '12px',
+            gap: 1,
             paddingRight: '8px',
           },
         }}

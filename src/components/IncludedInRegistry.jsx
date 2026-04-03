@@ -55,7 +55,7 @@ export default function IncludedInRegistry() {
           borderRadius: '4px',
         }}
       >
-        Fill out an the application
+        Fill out the application
       </TertiaryButton>
     </Box>
   );

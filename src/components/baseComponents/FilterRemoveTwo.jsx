@@ -17,7 +17,7 @@ const FilterRemoveTwo = props => {
           pr: '4px',
           pl: '12px',
           pb: '6px',
-          gap: '4px',
+          gap: 0.5,
           backgroundColor: 'primary.sectionBg',
           border: '1px solid #0066CC',
           maxWidth: '100%',
@@ -35,7 +35,7 @@ const FilterRemoveTwo = props => {
             color: 'primary.linkBlue',
             borderRadius: '9999px',
             p: '2px',
-            gap: '10px',
+            gap: 1,
           },
         }}
         label={text ?? 'Filter Name'}

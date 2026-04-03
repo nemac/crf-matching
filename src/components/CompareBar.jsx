@@ -151,7 +151,7 @@ export default function CompareBar(props) {
               py: 1.5,
             }}
           >
-            Clear all
+            Clear All
           </Button>
         </Box>
       </Box>

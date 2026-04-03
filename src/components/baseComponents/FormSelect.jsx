@@ -83,7 +83,7 @@ export default function FormSelect(props) {
               alignItems: 'center',
             },
             paddingRight: '8px',
-            gap: '12px',
+            gap: 1,
           }}
         >
           {options.map(option => (

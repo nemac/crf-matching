@@ -8,7 +8,7 @@ const AltButton = () => {
         sx={{
           px: 1,
           py: 2,
-          gap: '4px',
+          gap: 0.5,
           backgroundColor: '#66CCFF',
           '&:hover': {
             bgcolor: '#99DDFF',

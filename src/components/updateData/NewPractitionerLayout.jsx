@@ -26,7 +26,7 @@ const SectionHeader = ({ children, sx = {} }) => {
 
 const ChipList = ({ items = [], highlighted = [] }) => {
   return (
-    <Box sx={{ display: 'flex', gap: '12px', flexWrap: 'wrap', ml: 2, mb: 8 }}>
+    <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', ml: 2, mb: 8 }}>
       {items.map((item, index) => {
         const isHighlighted = highlighted.includes(item);
         return (

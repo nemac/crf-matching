@@ -75,7 +75,7 @@ export default function PractitionerCard(props) {
             alignItems: 'flex-start',
             py: 0.5,
             px: 1,
-            gap: '10px',
+            gap: 1,
             alignSelf: 'stretch',
             flexGrow: 0,
             overflow: 'hidden',
@@ -107,7 +107,7 @@ export default function PractitionerCard(props) {
               flexDirection: 'row',
               alignItems: 'center',
               py: 0.5,
-              gap: '10px',
+              gap: 1,
               alignSelf: 'stretch',
               flexGrow: 0,
             }}
@@ -200,7 +200,7 @@ export default function PractitionerCard(props) {
               display: 'flex',
               flexDirection: 'row',
               alignItems: 'center',
-              gap: '10px',
+              gap: 1,
               textDecoration: 'none',
               flexGrow: 0,
             }}

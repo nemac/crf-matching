@@ -112,10 +112,7 @@ export default function ComparisonBoard({
                   sx={{
                     pb: 2,
                     width: '100%',
-                    gap: {
-                      xs: '4px',
-                      md: 1,
-                    },
+                    gap: { xs: 0.5, md: 1 },
                     overflowX: 'auto',
                   }}
                 >

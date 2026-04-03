@@ -196,7 +196,7 @@ const WorkExampleForm = props => {
           />
         </Box>
       </Box>
-      <Box sx={{ display: 'flex', gap: '16px', ml: 2, mt: 4, mb: 4 }}>
+      <Box sx={{ display: 'flex', gap: 2, ml: 2, mt: 4, mb: 4 }}>
         <Button
           onClick={handleSave}
           disabled={submitting || saved}

@@ -339,7 +339,7 @@ export default function AboutPage() {
                     <strong>Notification and listing</strong>: Applicants are
                     notified of the final decision within two months. Once
                     approved, the organization will be published in the
-                    Registry. Registry.
+                    Registry.
                   </Typography>
                 </Box>
               </Box>

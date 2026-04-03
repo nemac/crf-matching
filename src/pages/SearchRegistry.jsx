@@ -245,7 +245,7 @@ export default function SearchRegistry() {
           renderInput={params => (
             <TextField
               {...params}
-              placeholder="Enter the Community"
+              placeholder="Enter the community"
               sx={{
                 backgroundColor: '#F3F3F5',
                 borderRadius: '8px',
@@ -304,7 +304,7 @@ export default function SearchRegistry() {
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'flex-start',
-            gap: '12px',
+            gap: 1,
             mt: 3,
             mb: 4,
             backgroundColor: '#FFFFFF',
@@ -317,7 +317,7 @@ export default function SearchRegistry() {
               flexDirection: 'column',
               alignItems: 'flex-start',
               padding: '4px',
-              gap: '4px',
+              gap: 0.5,
               width: 280,
               border: '1px solid #E5E7EB',
               borderRadius: '8px',
@@ -344,7 +344,7 @@ export default function SearchRegistry() {
               selectSx={registrySelectSx}
             />
             {filterSelections.activities.length > 0 && (
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '4px', px: '4px', width: '100%' }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, px: '4px', width: '100%' }}>
                 <Typography
                   onClick={() => handleClearFilter('activities')}
                   sx={{
@@ -356,7 +356,7 @@ export default function SearchRegistry() {
                 >
                   Clear All
                 </Typography>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '10px', px: '2px' }}>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, px: '2px' }}>
                   {filterSelections.activities.map(value => (
                     <FilterRemoveTwo
                       key={value}
@@ -375,7 +375,7 @@ export default function SearchRegistry() {
               flexDirection: 'column',
               alignItems: 'flex-start',
               padding: '4px',
-              gap: '4px',
+              gap: 0.5,
               width: 280,
               border: '1px solid #E5E7EB',
               borderRadius: '8px',
@@ -402,7 +402,7 @@ export default function SearchRegistry() {
               selectSx={registrySelectSx}
             />
             {filterSelections.hazards.length > 0 && (
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '4px', px: '4px', width: '100%' }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, px: '4px', width: '100%' }}>
                 <Typography
                   onClick={() => handleClearFilter('hazards')}
                   sx={{
@@ -414,7 +414,7 @@ export default function SearchRegistry() {
                 >
                   Clear All
                 </Typography>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '10px', px: '2px' }}>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, px: '2px' }}>
                   {filterSelections.hazards.map(value => (
                     <FilterRemoveTwo
                       key={value}
@@ -433,7 +433,7 @@ export default function SearchRegistry() {
               flexDirection: 'column',
               alignItems: 'flex-start',
               padding: '4px',
-              gap: '4px',
+              gap: 0.5,
               width: 280,
               border: '1px solid #E5E7EB',
               borderRadius: '8px',
@@ -460,7 +460,7 @@ export default function SearchRegistry() {
               selectSx={registrySelectSx}
             />
             {filterSelections.sectors.length > 0 && (
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '4px', px: '4px', width: '100%' }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, px: '4px', width: '100%' }}>
                 <Typography
                   onClick={() => handleClearFilter('sectors')}
                   sx={{
@@ -472,7 +472,7 @@ export default function SearchRegistry() {
                 >
                   Clear All
                 </Typography>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '10px', px: '2px' }}>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, px: '2px' }}>
                   {filterSelections.sectors.map(value => (
                     <FilterRemoveTwo
                       key={value}
@@ -491,7 +491,7 @@ export default function SearchRegistry() {
               flexDirection: 'column',
               alignItems: 'flex-start',
               padding: '4px',
-              gap: '4px',
+              gap: 0.5,
               width: 280,
               border: '1px solid #E5E7EB',
               borderRadius: '8px',
@@ -518,7 +518,7 @@ export default function SearchRegistry() {
               selectSx={registrySelectSx}
             />
             {filterSelections.size.length > 0 && (
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '4px', px: '4px', width: '100%' }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, px: '4px', width: '100%' }}>
                 <Typography
                   onClick={() => handleClearFilter('size')}
                   sx={{
@@ -530,7 +530,7 @@ export default function SearchRegistry() {
                 >
                   Clear All
                 </Typography>
-                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '10px', px: '2px' }}>
+                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, px: '2px' }}>
                   {filterSelections.size.map(value => (
                     <FilterRemoveTwo
                       key={value}

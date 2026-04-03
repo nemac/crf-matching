@@ -116,7 +116,7 @@ export default function RegistryComponent(props) {
                   fontSize: '18px',
                 }}
               >
-                Load more Practitioners
+                Load More Practitioners
               </TertiaryButton>
             </Box>
           )}

@@ -317,7 +317,7 @@ export default function HowToApplyPage() {
                   sx={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '4px',
+                    gap: 0.5,
                     flexWrap: 'wrap',
                   }}
                 >

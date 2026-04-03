@@ -34,7 +34,7 @@ export default function ToggleSwitch(props) {
         sx={{
           display: 'flex',
           alignItems: 'center',
-          gap: '12px',
+          gap: 1,
         }}
       >
         <Box

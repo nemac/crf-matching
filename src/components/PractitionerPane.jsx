@@ -198,7 +198,7 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
             textTransform: 'none',
             borderRadius: 2,
             width: '100%',
-            gap: '12px',
+            gap: 1,
             '&:hover': {
               bgcolor: 'primary.main',
             },
