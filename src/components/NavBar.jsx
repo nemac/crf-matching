@@ -142,13 +142,13 @@ export default function NavBar() {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            sx={{ mr: 2, display: { md: 'none' } }}
           >
             <MenuIcon />
           </IconButton>
           <Box
             sx={{
-              display: { xs: 'none', sm: 'flex' },
+              display: { xs: 'none', md: 'flex' },
               alignItems: 'center',
               flexShrink: 0,
             }}
@@ -157,7 +157,7 @@ export default function NavBar() {
           </Box>
           <Box
             sx={{
-              display: { xs: 'none', sm: 'flex' },
+              display: { xs: 'none', md: 'flex' },
               flexDirection: 'row',
               alignItems: 'center',
               p: 2,
@@ -184,7 +184,7 @@ export default function NavBar() {
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: 'block', sm: 'none' },
+            display: { xs: 'block', md: 'none' },
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',
               width: drawerWidth,

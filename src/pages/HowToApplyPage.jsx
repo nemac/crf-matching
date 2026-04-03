@@ -23,7 +23,7 @@ export default function HowToApplyPage() {
           flexDirection: 'column',
           alignItems: 'flex-start',
           py: 4,
-          px: { xs: 4, sm: 6, md: 12 },
+          px: { xs: 2, sm: 4, md: 12 },
           bgcolor: '#FFFFFF',
           borderRight: '1px solid #E5E7EB',
         }}
@@ -33,7 +33,6 @@ export default function HowToApplyPage() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'flex-start',
-            px: { xs: 0, md: 12 },
             width: '100%',
           }}
         >
@@ -60,7 +59,6 @@ export default function HowToApplyPage() {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              px: { xs: 0, md: 12 },
               width: '100%',
             }}
           >
@@ -79,7 +77,6 @@ export default function HowToApplyPage() {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              px: { xs: 2, sm: 8, md: 30 },
               width: '100%',
               opacity: 0.9,
             }}
@@ -92,7 +89,7 @@ export default function HowToApplyPage() {
         </Box>
       </Box>
 
-      <Box sx={{ px: { xs: 4, sm: 6, md: 12 }, py: 4, bgcolor: '#FFFFFF' }}>
+      <Box sx={{ px: { xs: 2, sm: 4, md: 12 }, py: 4, bgcolor: '#FFFFFF' }}>
         <Box
           sx={{
             display: 'flex',
@@ -175,7 +172,7 @@ export default function HowToApplyPage() {
             gap: 1,
             bgcolor: 'primary.sectionBg',
             border: '1px solid #E1F5FE',
-            borderRadius: '6px',
+            borderRadius: 2,
             isolation: 'isolate',
           }}
         >
@@ -235,24 +232,23 @@ export default function HowToApplyPage() {
         </Box>
       </Box>
 
-      <Box sx={{ px: { xs: 4, sm: 6, md: 12 }, py: 4, bgcolor: '#FFFFFF' }}>
+      <Box sx={{ px: { xs: 2, sm: 4, md: 12 }, py: 4, bgcolor: '#FFFFFF' }}>
         <Box
           sx={{
             display: 'flex',
             flexDirection: 'column',
             p: 3,
-            gap: 3,
             bgcolor: 'primary.sectionBg',
             border: '1px solid #E1F5FE',
-            borderRadius: '6px',
+            borderRadius: 2,
           }}
         >
           <Box
-            sx={{ display: 'flex', flexDirection: 'column', py: 1, gap: 0.5 }}
+            sx={{ display: 'flex', flexDirection: 'column', py: 1, }}
           >
             <Typography
-              variant="h3"
-              sx={{ py: 0.5 }}
+                  variant="h3"
+                  sx={{ py: 0.5 }}
             >
               Eligibility Requirements
             </Typography>
@@ -269,7 +265,7 @@ export default function HowToApplyPage() {
               sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
             >
               <CheckCircleOutlineIcon
-                sx={{ color: 'primary.linkBlue', fontSize: '36px', flexShrink: 0 }}
+                sx={{ color: 'primary.linkBlue', fontSize: '24px', flexShrink: 0 }}
               />
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 <Typography variant="h4">
@@ -288,7 +284,7 @@ export default function HowToApplyPage() {
               sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
             >
               <CheckCircleOutlineIcon
-                sx={{ color: 'primary.linkBlue', fontSize: '36px', flexShrink: 0 }}
+                sx={{ color: 'primary.linkBlue', fontSize: '24px', flexShrink: 0 }}
               />
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 <Typography variant="h4">
@@ -307,7 +303,7 @@ export default function HowToApplyPage() {
               sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
             >
               <CheckCircleOutlineIcon
-                sx={{ color: 'primary.linkBlue', fontSize: '36px', flexShrink: 0 }}
+                sx={{ color: 'primary.linkBlue', fontSize: '24px', flexShrink: 0 }}
               />
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 <Typography variant="h4">
@@ -345,7 +341,7 @@ export default function HowToApplyPage() {
         </Box>
       </Box>
 
-      <Box sx={{ px: { xs: 4, sm: 6, md: 12 }, py: 4, bgcolor: '#FFFFFF' }}>
+      <Box sx={{ px: { xs: 2, sm: 4, md: 12 }, py: 4, bgcolor: '#FFFFFF' }}>
         <Box
           sx={{
             display: 'flex',
@@ -354,7 +350,7 @@ export default function HowToApplyPage() {
             gap: 3,
             bgcolor: '#E1F5FE',
             border: '1px solid #003366',
-            borderRadius: '6px',
+            borderRadius: 2,
           }}
         >
           <Box
@@ -475,11 +471,11 @@ export default function HowToApplyPage() {
         </Box>
       </Box>
 
-      <Box sx={{ px: { xs: 4, sm: 6, md: 12 }, py: 4, bgcolor: '#FFFFFF' }}>
+      <Box sx={{ px: { xs: 2, sm: 4, md: 12 }, py: 4, bgcolor: '#FFFFFF' }}>
         <IncludedInRegistry />
       </Box>
 
-      <Box sx={{ px: { xs: 4, sm: 6, md: 12 }, py: 4, bgcolor: '#FFFFFF' }}>
+      <Box sx={{ px: { xs: 2, sm: 4, md: 12 }, py: 4, bgcolor: '#FFFFFF' }}>
         <ContactUs />
       </Box>
       <Footer />

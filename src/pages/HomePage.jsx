@@ -332,10 +332,10 @@ export default function HomePage() {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                padding: 2,
+                padding: 3,
                 backgroundColor: 'primary.sectionBg',
                 border: '1px solid #E1F5FE',
-                borderRadius: '8px',
+                borderRadius: 2,
               }}
             >
               <Box
@@ -408,6 +408,7 @@ export default function HomePage() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              px: { xs: 2, sm: 4, md: 12 },
             }}
           >
             <Box
@@ -458,6 +459,7 @@ export default function HomePage() {
             sx={{
               pt: 4,
               pb: 8,
+              px: { xs: 2, sm: 4, md: 12 },
             }}
           >
             <Typography

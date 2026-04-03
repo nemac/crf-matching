@@ -41,7 +41,7 @@ export default function AboutPage() {
           flexDirection: 'column',
           alignItems: 'flex-start',
           py: 4,
-          px: { xs: 4, sm: 6, md: 12 },
+          px: { xs: 2, sm: 4, md: 12 },
           bgcolor: '#FFFFFF',
           borderRight: '1px solid #E5E7EB',
         }}
@@ -51,7 +51,6 @@ export default function AboutPage() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'flex-start',
-            px: { xs: 0, md: 12 },
             width: '100%',
           }}
         >
@@ -78,7 +77,6 @@ export default function AboutPage() {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              px: { xs: 0, md: 12 },
               width: '100%',
             }}
           >
@@ -97,7 +95,6 @@ export default function AboutPage() {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              px: { xs: 2, sm: 8, md: 30 },
               width: '100%',
               opacity: 0.9,
             }}
@@ -114,18 +111,17 @@ export default function AboutPage() {
 
       <Box
         sx={{
-          px: { xs: 4, sm: 6, md: 12 },
+          px: { xs: 2, sm: 4, md: 12 },
           py: 4,
           bgcolor: '#FFFFFF',
         }}
       >
-        <Grid container spacing={6}>
+        <Grid container spacing={{ xs: 2, md: 6 }}>
           <Grid size={{ xs: 12, md: 6 }}>
             <Box
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                p: 3,
                 gap: 3,
               }}
             >
@@ -261,7 +257,7 @@ export default function AboutPage() {
                 gap: 3,
                 bgcolor: '#E1F5FE',
                 border: '1px solid #0066CC',
-                borderRadius: '6px',
+                borderRadius: 2,
               }}
             >
               <Box
@@ -269,7 +265,6 @@ export default function AboutPage() {
                   display: 'flex',
                   flexDirection: 'column',
                   py: 1,
-                  gap: 0.5,
                 }}
               >
                 <Typography
@@ -354,7 +349,7 @@ export default function AboutPage() {
           flexDirection: 'column',
           alignItems: 'flex-start',
           py: 4,
-          px: { xs: 4, sm: 6, md: 12 },
+          px: { xs: 2, sm: 4, md: 12 },
           gap: 1,
           bgcolor: 'primary.sectionBg',
         }}
@@ -489,7 +484,7 @@ export default function AboutPage() {
         </Box>
       </Box>
 
-      <Box sx={{ px: { xs: 4, sm: 6, md: 12 }, py: 4, bgcolor: '#FFFFFF' }}>
+      <Box sx={{ px: { xs: 2, sm: 4, md: 12 }, py: 4, bgcolor: '#FFFFFF' }}>
         <ContactUs />
       </Box>
       <Footer />
