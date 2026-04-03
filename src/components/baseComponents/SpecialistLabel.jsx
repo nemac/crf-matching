@@ -5,20 +5,16 @@ const SpecialistLabel = () => {
     <>
       <Chip
         sx={{
-          width: '118px',
-          height: '51px',
-          pt: '16px',
-          pr: '24px',
-          pb: '16px',
-          pl: '24px',
+          py: 2,
+          px: 2,
           gap: '4px',
-          backgroundColor: '#FFDDBB',
+          backgroundColor: '#ffead5',
           '& .MuiChip-label': {
             overflow: 'visible',
             textOverflow: 'unset',
             whiteSpace: 'nowrap',
             fontWeight: 700,
-            color: '#1F2C35',
+            color: '#56657D',
             fontSize: 16,
           },
 

@@ -10,33 +10,20 @@ export default function PageHeader(props) {
         flexDirection: 'column',
         alignItems: 'center',
         alignSelf: 'stretch',
-        gap: 2,
         mt: 4,
       }}
     >
       <Typography
+        variant="h1"
         sx={{
-          fontWeight: 700,
-          fontSize: 48,
-          lineHeight: '56px',
           textAlign: 'center',
-          color: 'primary.main',
           flexGrow: 1,
         }}
       >
         {title}
       </Typography>
       {subtitle && (
-        <Typography
-          sx={{
-            fontWeight: 400,
-            fontSize: 18,
-            lineHeight: '21px',
-            textAlign: 'center',
-            color: 'text.secondary',
-            flexGrow: 1,
-          }}
-        >
+        <Typography variant="subtitle1" component="div">
           {subtitle}
         </Typography>
       )}

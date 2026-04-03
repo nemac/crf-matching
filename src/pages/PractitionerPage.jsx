@@ -1,5 +1,5 @@
 import { useState, useLayoutEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { Container, Typography } from '@mui/material';
 
 import FullPageSpinner from '../components/FullPageSpinner';
@@ -7,13 +7,6 @@ import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import NewPractitionerLayout from '../components/updateData/NewPractitionerLayout';
 import { fetchPractitioner } from '../util/api';
-import {
-  validServices,
-  validHazards,
-  validSectors,
-  validCommunitySize,
-  validStates,
-} from '../config/config';
 
 function practitionerToFormData(practitioner) {
   return {
@@ -57,7 +50,7 @@ function practitionerToFormData(practitioner) {
   };
 }
 
-function PractitionerPageLoaded({ practitioner }) {
+function PractitionerPageLoaded({ practitioner, urlFilters }) {
   const formData = practitionerToFormData(practitioner);
 
   return (
@@ -72,17 +65,13 @@ function PractitionerPageLoaded({ practitioner }) {
           px: { xs: 4, sm: 4, md: 4, lg: 4 },
         }}
       >
-        <Typography variant="h3" fontWeight={800} sx={{ mb: 3 }}>
+        <Typography variant="h1" sx={{ mb: 3 }}>
           {practitioner.org}
         </Typography>
 
         <NewPractitionerLayout
           formData={formData}
-          validServices={validServices}
-          validHazards={validHazards}
-          validSectors={validSectors}
-          validCommunitySize={validCommunitySize}
-          validStates={validStates}
+          urlFilters={urlFilters}
         />
       </Container>
       <Footer />
@@ -92,6 +81,12 @@ function PractitionerPageLoaded({ practitioner }) {
 
 function PractitionerPage() {
   const { practitionerId } = useParams();
+  const [searchParams] = useSearchParams();
+  const urlFilters = {
+    activities: searchParams.get('activities')?.split(',').filter(Boolean) || [],
+    hazards: searchParams.get('hazards')?.split(',').filter(Boolean) || [],
+    sectors: searchParams.get('sectors')?.split(',').filter(Boolean) || [],
+  };
 
   const [practitioner, setPractitioner] = useState(null);
 
@@ -100,7 +95,7 @@ function PractitionerPage() {
   }, []);
 
   if (practitioner) {
-    return <PractitionerPageLoaded practitioner={practitioner} />;
+    return <PractitionerPageLoaded practitioner={practitioner} urlFilters={urlFilters} />;
   } else {
     return <FullPageSpinner />;
   }

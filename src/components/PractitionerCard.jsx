@@ -28,8 +28,8 @@ export default function PractitionerCard(props) {
   return (
     <Card
       sx={{
-        width: '420px',
-        height: '414px',
+        width: '380px',
+        minHeight: '380px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start',
@@ -55,18 +55,14 @@ export default function PractitionerCard(props) {
         }}
       >
         <Typography
+          variant="h4"
           sx={{
-            fontWeight: 500,
-            fontSize: '20px',
-            lineHeight: '23px',
-            color: '#101828',
             width: '100%',
             overflow: 'hidden',
             display: '-webkit-box',
             textOverflow: 'ellipsis',
             WebkitLineClamp: 2,
             WebkitBoxOrient: 'vertical',
-            height: '69px',
           }}
         >
           {practitioner.org}
@@ -77,7 +73,8 @@ export default function PractitionerCard(props) {
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'flex-start',
-            p: 1,
+            py: 0.5,
+            px: 1,
             gap: '10px',
             alignSelf: 'stretch',
             flexGrow: 0,
@@ -85,12 +82,7 @@ export default function PractitionerCard(props) {
           }}
         >
           <Typography
-            sx={{
-              fontWeight: 400,
-              fontSize: '16px',
-              lineHeight: '19px',
-              color: 'text.secondary',
-            }}
+           variant="body2" component="div"
           >
             Headquartered In: <strong>{headquarters || '—'}</strong>
           </Typography>
@@ -116,20 +108,14 @@ export default function PractitionerCard(props) {
               alignItems: 'center',
               py: 0.5,
               gap: '10px',
-              height: '31px',
               alignSelf: 'stretch',
               flexGrow: 0,
             }}
           >
             <Typography
-              sx={{
-                fontWeight: 500,
-                fontSize: '20px',
-                lineHeight: '23px',
-                color: '#6C788D',
-              }}
+              variant="h5"
             >
-              Top Services Provided
+              Services Provided
             </Typography>
           </Box>
           <Box
@@ -142,10 +128,8 @@ export default function PractitionerCard(props) {
               px: 1,
               py: 0.5,
               gap: 1,
-              height: '34px',
               alignSelf: 'stretch',
               flexGrow: 0,
-              overflow: 'hidden',
             }}
           >
             {topServices.map((service, index) => (
@@ -153,14 +137,12 @@ export default function PractitionerCard(props) {
                 key={index}
                 label={service}
                 sx={{
-                  height: '26px',
                   bgcolor: 'primary.sectionBg',
                   border: '1px solid #0066CC',
                   borderRadius: '9999px',
                   '& .MuiChip-label': {
                     fontWeight: 400,
                     fontSize: '12px',
-                    lineHeight: '14px',
                     color: 'primary.linkBlue',
                     px: 1.5,
                   },
@@ -227,13 +209,13 @@ export default function PractitionerCard(props) {
               sx={{
                 fontWeight: 400,
                 fontSize: '16px',
-                lineHeight: '19px',
                 color: 'primary.ctaDarkBlue',
+                mb: 0,
               }}
             >
               View Full Profile
             </Typography>
-            <ArrowForwardIcon sx={{ color: 'primary.ctaDarkBlue', fontSize: '24px' }} />
+            <ArrowForwardIcon sx={{ color: 'primary.ctaDarkBlue', fontSize: '1rem' }} />
           </Box>
 
           {onComparisonSelect && (
@@ -247,7 +229,7 @@ export default function PractitionerCard(props) {
                   flexDirection: 'row',
                   justifyContent: 'flex-end',
                   alignItems: 'center',
-                  p: '4px 8px 8px',
+                  p: '8px',
                   width: '110px',
                   height: '40px',
                   bgcolor: isSelectedForComparison ? 'primary.linkBlue' : '#E5E7EB',
@@ -258,15 +240,14 @@ export default function PractitionerCard(props) {
                 }}
               >
                 {isSelectedForComparison ? (
-                  <CheckIcon sx={{ color: '#FFFFFF', fontSize: '24px' }} />
+                  <CheckIcon sx={{ color: '#FFFFFF', fontSize: '1rem' }} />
                 ) : (
-                  <AddIcon sx={{ color: 'primary.linkBlue', fontSize: '24px' }} />
+                  <AddIcon sx={{ color: 'primary.linkBlue', fontSize: '1rem' }} />
                 )}
                 <Typography
                   sx={{
-                    fontWeight: 400,
-                    fontSize: '16px',
-                    lineHeight: '19px',
+                    fontWeight: 'normal',
+                    mb: 0,
                     color: isSelectedForComparison ? '#FFFFFF' : 'primary.linkBlue',
                   }}
                 >

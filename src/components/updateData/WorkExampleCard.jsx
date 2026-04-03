@@ -60,13 +60,8 @@ const WorkExampleCard = props => {
       >
         <Box>
           <Typography
-            sx={{
-                fontWeight: 500,
-              fontSize: '20px',
-              lineHeight: '100%',
-              color: '#101828',
-              mb: 2,
-            }}
+            variant="h4"
+            sx={{ mb: 2 }}
           >
             {title || `Work Example Title ${exampleNumber}`}
           </Typography>
@@ -75,7 +70,6 @@ const WorkExampleCard = props => {
             sx={{
                 fontWeight: 400,
               fontSize: '16px',
-              lineHeight: '24px',
               color: 'text.secondary',
             }}
           >

@@ -47,13 +47,9 @@ export default function HowToApplyPage() {
             }}
           >
             <Typography
+              variant="eyebrow"
               sx={{
-                fontWeight: 500,
-                fontSize: '20px',
-                lineHeight: '23px',
                 textAlign: 'center',
-                color: 'primary.linkBlue',
-                textTransform: 'uppercase',
               }}
             >
               HOW TO APPLY
@@ -70,12 +66,9 @@ export default function HowToApplyPage() {
             }}
           >
             <Typography
+              variant="h1"
               sx={{
-                fontWeight: 700,
-                fontSize: { xs: '32px', md: '48px' },
-                lineHeight: { xs: '40px', md: '56px' },
                 textAlign: 'center',
-                color: 'primary.main',
               }}
             >
               Join the Registry of Adaptation Practitioners
@@ -92,15 +85,7 @@ export default function HowToApplyPage() {
               opacity: 0.9,
             }}
           >
-            <Typography
-              sx={{
-                fontWeight: 400,
-                fontSize: '18px',
-                lineHeight: '21px',
-                textAlign: 'center',
-                color: 'text.secondary',
-              }}
-            >
+            <Typography variant="subtitle1" component="div">
               Help communities adapt to climate change by joining the Registry
               as a vetted service provider
             </Typography>
@@ -113,6 +98,80 @@ export default function HowToApplyPage() {
           sx={{
             display: 'flex',
             flexDirection: 'column',
+            py: 1,
+            gap: 0.5,
+            mb: 3,
+          }}
+        >
+          <Typography
+            variant="h3"
+            sx={{ py: 0.5 }}
+          >
+            Is your organization a good fit for the Registry?
+          </Typography>
+          <Typography component="div" variant="body1">
+            The Registry is designed to connect climate adaptation service
+            providers and communities who need support with adaptation. An
+            adaptation service provider is an organization that focuses on
+            helping communities prepare for the impacts of climate change
+            (note that reducing greenhouse gas emissions is an important
+            component of climate action, but not a focus of this Registry!).
+            Some of the defining characteristics of adaptation service
+            providers who should be included in this Registry include:
+          </Typography>
+
+          <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                mb: 2,
+              }}>
+          {[
+            'Experience assisting communities with planning efforts and projects specifically designed to proactively address local impacts of climate change',
+            'Ability to skillfully incorporate climate change considerations into projects and processes;',
+            'Understanding of climate data and projections, including when and how to utilize them, as well as how to communicate about it to community leaders and residents; and',
+            'Ability to engage whole communities and ensure adaptation projects center equity;',
+            'Willing to be contacted by communities looking for support with adaptation needs;',
+          ].map(item => (
+            <Box
+              key={item}
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                py: .25,
+                px: 2,
+                gap: 2,
+              }}
+            >
+              <FiberManualRecordIcon
+                sx={{ color: 'primary.ctaDarkBlue', fontSize: 12, flexShrink: 0 }}
+              />
+              <Typography component="div" variant="body1">
+                {item}
+              </Typography>
+            </Box>
+          ))}
+          </Box>
+
+          <Box sx={{ py: 1 }}>
+            <Typography component="div" variant="body">
+              All organizations in the Registry, regardless of the type of
+              services that they provide, must demonstrate that they are
+              sought out for the adaptation expertise that they provide. They
+              must also show that the services they offer are intentional
+              about incorporating consideration of climate impacts and
+              proactively addressing them, rather than simple acknowledgement
+              that work focused on other topics or community needs also
+              happens to have adaptation benefits.
+            </Typography>
+          </Box>
+        </Box>
+
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
             p: 3,
             gap: 1,
             bgcolor: 'primary.sectionBg',
@@ -121,120 +180,9 @@ export default function HowToApplyPage() {
             isolation: 'isolate',
           }}
         >
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              pb: 1,
-              gap: 1,
-            }}
-          >
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                py: 1,
-                gap: 0.5,
-              }}
-            >
-              <Typography
-                sx={{
-                  fontWeight: 700,
-                  fontSize: '24px',
-                  lineHeight: '28px',
-                  color: '#101828',
-                  py: 0.5,
-                }}
-              >
-                Is your organization a good fit for the Registry?
-              </Typography>
-              <Typography
-                sx={{
-                  fontWeight: 400,
-                  fontSize: '18px',
-                  lineHeight: '21px',
-                  color: '#101828',
-                  py: 0.5,
-                }}
-              >
-                The Registry is designed to connect climate adaptation service
-                providers and communities who need support with adaptation. An
-                adaptation service provider is an organization that focuses on
-                helping communities prepare for the impacts of climate change
-                (note that reducing greenhouse gas emissions is an important
-                component of climate action, but not a focus of this Registry!).
-                Some of the defining characteristics of adaptation service
-                providers who should be included in this Registry include:
-              </Typography>
-            </Box>
-
-            {[
-              'Experience assisting communities with planning efforts and projects specifically designed to proactively address local impacts of climate change',
-              'Ability to skillfully incorporate climate change considerations into projects and processes;',
-              'Understanding of climate data and projections, including when and how to utilize them, as well as how to communicate about it to community leaders and residents; and',
-              'Ability to engage whole communities and ensure adaptation projects center equity;',
-              'Willingness to be contacted by communities looking for support with adaptation needs;',
-            ].map(item => (
-              <Box
-                key={item}
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  py: 0.5,
-                  px: 1,
-                  gap: 3,
-                }}
-              >
-                <FiberManualRecordIcon
-                  sx={{ color: 'primary.ctaDarkBlue', fontSize: 12, flexShrink: 0 }}
-                />
-                <Typography
-                  sx={{
-                    fontWeight: 400,
-                    fontSize: '16px',
-                    lineHeight: '19px',
-                    color: '#101828',
-                  }}
-                >
-                  {item}
-                </Typography>
-              </Box>
-            ))}
-
-            <Box sx={{ py: 1 }}>
-              <Typography
-                sx={{
-                  fontWeight: 400,
-                  fontSize: '18px',
-                  lineHeight: '21px',
-                  color: '#101828',
-                  py: 0.5,
-                }}
-              >
-                All organizations in the Registry, regardless of the type of
-                services that they provide, must demonstrate that they are
-                sought out for the adaptation expertise that they provide. They
-                must also show that the services they offer are intentional
-                about incorporating consideration of climate impacts and
-                proactively addressing them, rather than simple acknowledgement
-                that work focused on other topics or community needs also
-                happens to have adaptation benefits.
-              </Typography>
-            </Box>
-          </Box>
-
           <Box sx={{ p: 1, gap: 1.5 }}>
             <Box sx={{ py: 1 }}>
-              <Typography
-                sx={{
-                  fontWeight: 400,
-                  fontSize: '18px',
-                  lineHeight: '21px',
-                  color: '#101828',
-                  py: 0.5,
-                }}
-              >
+              <Typography component="div" variant="body1">
                 The Registry is categorized into two groups of adaptation
                 service providers:
               </Typography>
@@ -245,25 +193,12 @@ export default function HowToApplyPage() {
             >
               <Box sx={{ py: 1, gap: 0.5 }}>
                 <Typography
-                  sx={{
-                    fontWeight: 700,
-                    fontSize: '24px',
-                    lineHeight: '28px',
-                    color: '#101828',
-                    py: 0.5,
-                  }}
+                  variant="h4"
+                  sx={{ py: 0.5 }}
                 >
                   Broad service providers
                 </Typography>
-                <Typography
-                  sx={{
-                    fontWeight: 400,
-                    fontSize: '16px',
-                    lineHeight: '19px',
-                    color: 'text.secondary',
-                    py: 0.5,
-                  }}
-                >
+                <Typography component="div" variant="body1">
                   Broad service providers have wide-ranging adaptation
                   expertise, supporting community efforts to undertake
                   cross-sector climate change vulnerability assessments, develop
@@ -274,25 +209,12 @@ export default function HowToApplyPage() {
 
               <Box sx={{ py: 1, gap: 0.5 }}>
                 <Typography
-                  sx={{
-                    fontWeight: 700,
-                    fontSize: '24px',
-                    lineHeight: '28px',
-                    color: '#101828',
-                    py: 0.5,
-                  }}
+                  variant="h4"
+                  sx={{ py: 0.5 }}
                 >
                   Specialists
                 </Typography>
-                <Typography
-                  sx={{
-                    fontWeight: 400,
-                    fontSize: '16px',
-                    lineHeight: '19px',
-                    color: 'text.secondary',
-                    py: 0.5,
-                  }}
-                >
+                <Typography component="div" variant="body1">
                   Specialists are organizations that focus more narrowly on one
                   or more specific climate hazards, topics, or sectors,
                   supporting communities in planning through implementation of
@@ -304,15 +226,7 @@ export default function HowToApplyPage() {
             </Box>
 
             <Box sx={{ pb: 1 }}>
-              <Typography
-                sx={{
-                  fontWeight: 400,
-                  fontSize: '18px',
-                  lineHeight: '21px',
-                  color: '#101828',
-                  py: 0.5,
-                }}
-              >
+              <Typography component="div" variant="body1">
                 Approved practitioners will be categorized as broad service
                 practitioners or specialists based on the best judgement of the
                 review team.
@@ -338,25 +252,12 @@ export default function HowToApplyPage() {
             sx={{ display: 'flex', flexDirection: 'column', py: 1, gap: 0.5 }}
           >
             <Typography
-              sx={{
-                fontWeight: 700,
-                fontSize: '24px',
-                lineHeight: '28px',
-                color: '#101828',
-                py: 0.5,
-              }}
+              variant="h3"
+              sx={{ py: 0.5 }}
             >
               Eligibility Requirements
             </Typography>
-            <Typography
-              sx={{
-                fontWeight: 400,
-                fontSize: '18px',
-                lineHeight: '21px',
-                color: '#101828',
-                py: 0.5,
-              }}
-            >
+            <Typography component="div" variant="body1">
               The Registry is open to all organizations that provide climate
               adaptation and resilience services to communities and free to
               join. To ensure the quality and integrity of the Registry,
@@ -369,27 +270,13 @@ export default function HowToApplyPage() {
               sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
             >
               <CheckCircleOutlineIcon
-                sx={{ color: 'primary.linkBlue', fontSize: 48, flexShrink: 0 }}
+                sx={{ color: 'primary.linkBlue', fontSize: '36px', flexShrink: 0 }}
               />
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <Typography
-                  sx={{
-                    fontWeight: 700,
-                    fontSize: '20px',
-                    lineHeight: '23px',
-                    color: '#101828',
-                  }}
-                >
+                <Typography variant="h4">
                   Applications must be on behalf of an organization
                 </Typography>
-                <Typography
-                  sx={{
-                    fontWeight: 400,
-                    fontSize: '16px',
-                    lineHeight: '19px',
-                    color: '#101828',
-                  }}
-                >
+                <Typography component="div" variant="body1">
                   Applications should be submitted on behalf of nonprofit
                   organizations, governmental entities, academic institutions,
                   consulting firms, or sole proprietorships that offer
@@ -402,27 +289,13 @@ export default function HowToApplyPage() {
               sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
             >
               <CheckCircleOutlineIcon
-                sx={{ color: 'primary.linkBlue', fontSize: 48, flexShrink: 0 }}
+                sx={{ color: 'primary.linkBlue', fontSize: '36px', flexShrink: 0 }}
               />
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <Typography
-                  sx={{
-                    fontWeight: 700,
-                    fontSize: '20px',
-                    lineHeight: '23px',
-                    color: '#101828',
-                  }}
-                >
+                <Typography variant="h4">
                   Demonstrated Experience
                 </Typography>
-                <Typography
-                  sx={{
-                    fontWeight: 400,
-                    fontSize: '16px',
-                    lineHeight: '19px',
-                    color: '#101828',
-                  }}
-                >
+                <Typography component="div" variant="body1">
                   Organizations must have at least three years of professional
                   experience providing adaptation services, and must submit 2-3
                   project examples demonstrating those services and the quality
@@ -435,17 +308,10 @@ export default function HowToApplyPage() {
               sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
             >
               <CheckCircleOutlineIcon
-                sx={{ color: 'primary.linkBlue', fontSize: 48, flexShrink: 0 }}
+                sx={{ color: 'primary.linkBlue', fontSize: '36px', flexShrink: 0 }}
               />
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <Typography
-                  sx={{
-                    fontWeight: 700,
-                    fontSize: '20px',
-                    lineHeight: '23px',
-                    color: '#101828',
-                  }}
-                >
+                <Typography variant="h4">
                   Terms and Conditions
                 </Typography>
                 <Box
@@ -456,26 +322,17 @@ export default function HowToApplyPage() {
                     flexWrap: 'wrap',
                   }}
                 >
-                  <Typography
-                    sx={{
-                      fontWeight: 400,
-                      fontSize: '18px',
-                      lineHeight: '21px',
-                      color: '#101828',
-                    }}
-                  >
+                  <Typography component="div" variant="body1">
                     Applicants must commit to upholding professional standards
                     and the Registry
                   </Typography>
                   <Typography
                     component="a"
+                    variant="body1"
                     href="https://climatesmartcommunity.org/registry/registry-terms-conditions/"
                     target="_blank"
                     rel="noopener noreferrer"
                     sx={{
-                      fontWeight: 400,
-                      fontSize: '16px',
-                      lineHeight: '19px',
                       color: 'primary.linkBlue',
                       textDecoration: 'underline',
                     }}
@@ -505,25 +362,11 @@ export default function HowToApplyPage() {
             sx={{ display: 'flex', flexDirection: 'column', py: 1, gap: 0.5 }}
           >
             <Typography
-              sx={{
-                fontWeight: 700,
-                fontSize: '24px',
-                lineHeight: '28px',
-                color: '#101828',
-                py: 0.5,
-              }}
+              variant="h3"
             >
               Application Process and Timeline
             </Typography>
-            <Typography
-              sx={{
-                fontWeight: 400,
-                fontSize: '18px',
-                lineHeight: '21px',
-                color: '#101828',
-                py: 0.5,
-              }}
-            >
+            <Typography component="div" variant="body1">
               The application process is designed to be straightforward and
               transparent:
             </Typography>
@@ -534,37 +377,21 @@ export default function HowToApplyPage() {
               sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
             >
               <LooksOneOutlinedIcon
-                sx={{ color: 'primary.linkBlue', fontSize: 48, flexShrink: 0 }}
+                sx={{ color: 'primary.linkBlue', fontSize: '36px', flexShrink: 0 }}
               />
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <Typography
-                  sx={{
-                    fontWeight: 700,
-                    fontSize: '20px',
-                    lineHeight: '23px',
-                    color: '#101828',
-                  }}
-                >
+                <Typography variant="h4">
                   Preview the application questions
                 </Typography>
-                <Typography
-                  sx={{
-                    fontWeight: 400,
-                    fontSize: '16px',
-                    lineHeight: '19px',
-                    color: '#101828',
-                  }}
-                >
+                <Typography component="div" variant="body1">
                   Application questions can be downloaded in this{' '}
                   <Typography
                     component="a"
+                    variant="body1"
                     href={applicationDoc}
                     download
                     sx={{
-                      fontWeight: 700,
-                      fontSize: '16px',
-                      lineHeight: '19px',
-                      color: '#101828',
+                      fontWeight: 'bold',
                       textDecoration: 'underline',
                     }}
                   >
@@ -580,39 +407,23 @@ export default function HowToApplyPage() {
               sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
             >
               <LooksTwoOutlinedIcon
-                sx={{ color: 'primary.linkBlue', fontSize: 48, flexShrink: 0 }}
+                sx={{ color: 'primary.linkBlue', fontSize: '36px', flexShrink: 0 }}
               />
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <Typography
-                  sx={{
-                    fontWeight: 700,
-                    fontSize: '20px',
-                    lineHeight: '23px',
-                    color: '#101828',
-                  }}
-                >
+                <Typography variant="h4">
                   Submit the application
                 </Typography>
-                <Typography
-                  sx={{
-                    fontWeight: 400,
-                    fontSize: '16px',
-                    lineHeight: '19px',
-                    color: '#101828',
-                  }}
-                >
+                <Typography component="div" variant="body1">
                   Submit the application through our online form (note that
                   progress is not automatically saved in the application form,
                   so we recommend drafting your answers in this{' '}
                   <Typography
                     component="a"
+                    variant="body1"
                     href={applicationDoc}
                     download
                     sx={{
-                      fontWeight: 700,
-                      fontSize: '16px',
-                      lineHeight: '19px',
-                      color: '#101828',
+                      fontWeight: 'bold',
                       textDecoration: 'underline',
                     }}
                   >
@@ -627,27 +438,13 @@ export default function HowToApplyPage() {
               sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
             >
               <Looks3OutlinedIcon
-                sx={{ color: 'primary.linkBlue', fontSize: 48, flexShrink: 0 }}
+                sx={{ color: 'primary.linkBlue', fontSize: '36px', flexShrink: 0 }}
               />
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <Typography
-                  sx={{
-                    fontWeight: 700,
-                    fontSize: '20px',
-                    lineHeight: '23px',
-                    color: '#101828',
-                  }}
-                >
+                <Typography variant="h4">
                   Review Period
                 </Typography>
-                <Typography
-                  sx={{
-                    fontWeight: 400,
-                    fontSize: '16px',
-                    lineHeight: '19px',
-                    color: '#101828',
-                  }}
-                >
+                <Typography component="div" variant="body1">
                   Applications are reviewed on a rolling basis, and the Registry
                   team will contact applicants with a decision or to request
                   additional information. All applicants will be contacted
@@ -660,27 +457,13 @@ export default function HowToApplyPage() {
               sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
             >
               <Looks4OutlinedIcon
-                sx={{ color: 'primary.linkBlue', fontSize: 48, flexShrink: 0 }}
+                sx={{ color: 'primary.linkBlue', fontSize: '36px', flexShrink: 0 }}
               />
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <Typography
-                  sx={{
-                    fontWeight: 700,
-                    fontSize: '20px',
-                    lineHeight: '23px',
-                    color: '#101828',
-                  }}
-                >
+                <Typography variant="h4">
                   Notification and Listing
                 </Typography>
-                <Typography
-                  sx={{
-                    fontWeight: 400,
-                    fontSize: '16px',
-                    lineHeight: '19px',
-                    color: '#101828',
-                  }}
-                >
+                <Typography component="div" variant="body1">
                   The primary organization contact listed in the application
                   will be notified of the decision within two months of
                   submission. Reviews may take longer if additional information

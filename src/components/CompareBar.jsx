@@ -54,10 +54,8 @@ export default function CompareBar(props) {
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
           <Typography
+            variant="h3"
             sx={{
-              fontWeight: 700,
-              fontSize: '24px',
-              lineHeight: '28px',
               color: 'primary.main',
               whiteSpace: 'nowrap',
             }}
@@ -85,7 +83,6 @@ export default function CompareBar(props) {
                   sx={{
                           fontWeight: 700,
                     fontSize: '24px',
-                    lineHeight: '28px',
                     color: 'primary.main',
                   }}
                 >
@@ -113,7 +110,6 @@ export default function CompareBar(props) {
                 sx={{
                       fontWeight: 700,
                   fontSize: '24px',
-                  lineHeight: '28px',
                   color: 'primary.inputBg',
                 }}
               >
@@ -139,7 +135,6 @@ export default function CompareBar(props) {
             textSx={{
               fontWeight: 400,
               fontSize: '16px',
-              lineHeight: '19px',
               textDecoration: 'underline',
             }}
           />
@@ -150,7 +145,6 @@ export default function CompareBar(props) {
               textTransform: 'none',
               fontWeight: 400,
               fontSize: '16px',
-              lineHeight: '19px',
               textDecoration: 'underline',
               color: 'primary.ctaDarkBlue',
               px: 1.5,

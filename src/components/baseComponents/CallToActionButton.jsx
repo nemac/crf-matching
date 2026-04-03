@@ -12,13 +12,9 @@ const CallToActionButton = props => {
         to={to}
         onClick={onClick}
         sx={{
-          height: '46px',
-          width: 'auto',
           color: '#FFFFFF',
-          pt: '4px',
-          pl: '12px',
-          pb: '4px',
-          pr: '12px',
+          py: 1,
+          px: 6,
           textTransform: 'none',
           backgroundColor: 'primary.ctaDarkBlue',
           '&:hover': {
@@ -27,7 +23,7 @@ const CallToActionButton = props => {
           ...buttonSx,
         }}
       >
-        <Typography sx={textSx}>{text ?? 'To be filled'}</Typography>
+        <Typography sx={{ color: 'inherit', mb: 0, ...textSx }}>{text ?? 'To be filled'}</Typography>
       </Button>
     </>
   );

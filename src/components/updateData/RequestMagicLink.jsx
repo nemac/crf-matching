@@ -56,7 +56,6 @@ export default function RequestMagicLink() {
           mb: 4,
           color: 'text.secondary',
           fontSize: '1rem',
-          lineHeight: 1.6,
         }}
       >
         Enter your organization contact email to receive a secure link to update your information. The link will be
@@ -149,7 +148,7 @@ export default function RequestMagicLink() {
         </Typography>
         <Typography
           variant="body2"
-          sx={{ color: 'text.secondary', lineHeight: 1.6 }}
+          sx={{ color: 'text.secondary' }}
         >
           1. You'll receive an email with a secure link
           <br />

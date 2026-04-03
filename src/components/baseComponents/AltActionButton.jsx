@@ -11,9 +11,8 @@ const AltActionButton = props => {
         onClick={onClick}
         disabled={disabled}
         sx={{
-          width: 230,
-          height: 37,
-          padding: '8px 0px',
+          px: 4,
+          py: 1,
           backgroundColor: '#66CCFF',
           boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.25)',
           borderRadius: '4px',
@@ -31,7 +30,6 @@ const AltActionButton = props => {
           sx={{
             fontWeight: 400,
             fontSize: '18px',
-            lineHeight: '21px',
             color: 'primary.main',
             ...textSx,
           }}

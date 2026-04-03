@@ -25,10 +25,8 @@ export default function IncludedInRegistry() {
         }}
       >
         <Typography
+          variant="h2"
           sx={{
-            fontWeight: 700,
-            fontSize: { xs: '32px', md: '48px' },
-            lineHeight: { xs: '40px', md: '56px' },
             textAlign: 'center',
             color: '#FFFFFF',
           }}
@@ -36,15 +34,7 @@ export default function IncludedInRegistry() {
           Want to be included in the Registry?
         </Typography>
 
-        <Typography
-          sx={{
-            fontWeight: 400,
-            fontSize: '18px',
-            lineHeight: '21px',
-            textAlign: 'center',
-            color: '#FFFFFF',
-          }}
-        >
+        <Typography variant='body1' sx={{ color: '#FFFFFF' }}>
           Be recognized as an expert helping communities build a more resilient
           future!
         </Typography>
@@ -59,14 +49,13 @@ export default function IncludedInRegistry() {
           py: 2,
           fontWeight: 400,
           fontSize: '18px',
-          lineHeight: '21px',
           color: 'primary.ctaDarkBlue',
           textTransform: 'none',
           boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.25)',
           borderRadius: '4px',
         }}
       >
-        Apply to the Registry
+        Fill out an the application
       </TertiaryButton>
     </Box>
   );

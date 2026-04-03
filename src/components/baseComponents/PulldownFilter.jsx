@@ -50,7 +50,6 @@ const PulldownFilter = props => {
               color: '#6C788D',
               fontSize: '16px',
               fontWeight: 400,
-              lineHeight: '19px',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               whiteSpace: 'nowrap',

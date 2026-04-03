@@ -25,7 +25,7 @@ function FooterLink(props) {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: '8px',
+        padding: 1,
         height: 35,
         textDecoration: 'none',
       }}
@@ -34,7 +34,6 @@ function FooterLink(props) {
         sx={{
           fontWeight: 400,
           fontSize: '16px',
-          lineHeight: '19px',
           textDecoration: 'underline',
           color: 'primary.main',
         }}
@@ -68,15 +67,12 @@ function FooterColumn(props) {
           px: 0.25,
           height: 25,
           minHeight: 25,
+          mb: 1,
         }}
       >
         <Typography
-          sx={{
-              fontWeight: 500,
-            fontSize: '20px',
-            lineHeight: '23px',
-            color: 'text.secondary',
-          }}
+          variant="h4"
+          sx={{ color: 'text.secondary' }}
         >
           {title}
         </Typography>
@@ -96,8 +92,8 @@ export default function Footer() {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'flex-start',
-        padding: { xs: '48px 24px', md: '48px 96px' },
+        alignItems: 'flex-center',
+        padding: { xs: '24px 24px', md: '24px 96px' },
         gap: '32px',
         width: '100%',
         bgcolor: '#F0F8FF',
@@ -109,14 +105,12 @@ export default function Footer() {
           flexDirection: 'column',
           alignItems: 'center',
           gap: '32px',
-          alignSelf: 'stretch',
         }}
       >
         <Box
           sx={{
             display: 'flex',
             alignItems: 'center',
-            alignSelf: 'stretch',
           }}
         >
           <Logo />
@@ -127,9 +121,8 @@ export default function Footer() {
             display: 'flex',
             flexDirection: { xs: 'column', md: 'row' },
             alignItems: 'flex-start',
-            padding: '16px',
-            gap: '26px',
-            alignSelf: 'stretch',
+            padding: 2,
+            gap: 2,
           }}
         >
           <FooterColumn title="Registry" links={registryLinks} />
@@ -143,8 +136,7 @@ export default function Footer() {
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          alignSelf: 'stretch',
-          height: 57,
+          alignSelf: 'center',
         }}
       >
         <Box
@@ -153,19 +145,17 @@ export default function Footer() {
             justifyContent: 'center',
             alignItems: 'center',
             padding: '4px 0px',
-            alignSelf: 'stretch',
           }}
         >
           <Typography
             sx={{
-                  fontWeight: 400,
+              fontWeight: 400,
               fontSize: '16px',
-              lineHeight: '19px',
               textAlign: 'center',
               color: 'primary.main',
             }}
           >
-            © 2025 Registry of Adaptation Practitioners. All rights reserved.
+            © 2026 Registry of Adaptation Practitioners. All rights reserved.
           </Typography>
         </Box>
       </Box>

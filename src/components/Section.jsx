@@ -28,10 +28,8 @@ export default function Section({
     <Box key={id} sx={{ mb: 2 }}>
       <Box sx={{ minHeight: { xs: '60px', md: '40px' }, mt: '5px', mb: '5px' }}>
         <Typography
+          variant="h4"
           sx={{
-            fontWeight: 500,
-            fontSize: '20px',
-            lineHeight: '23px',
             color: '#6C788D',
             textAlign: type === 'practitioner' ? 'center' : 'left',
           }}

@@ -48,7 +48,6 @@ function AddPractitionerColumn(props) {
         sx={{
           fontWeight: 700,
           fontSize: '16px',
-          lineHeight: '24px',
           color: '#101828',
           textAlign: 'center',
         }}
@@ -60,7 +59,6 @@ function AddPractitionerColumn(props) {
           sx={{
             fontWeight: 400,
             fontSize: '14px',
-            lineHeight: '20px',
             color: 'text.secondary',
             fontStyle: 'italic',
             textAlign: 'center',
@@ -189,25 +187,10 @@ export default function ComparePractitioners() {
         }}
       >
         <Box sx={{ width: '100%', textAlign: 'center' }}>
-          <Typography
-            sx={{
-              fontWeight: 700,
-              fontSize: '36px',
-              lineHeight: '44px',
-              color: '#101828',
-            }}
-          >
+          <Typography variant="h1">
             Compare Adaptation Practitioners
           </Typography>
-          <Typography
-            sx={{
-              fontWeight: 400,
-              fontSize: '16px',
-              lineHeight: '24px',
-              color: 'text.secondary',
-              mt: 1,
-            }}
-          >
+          <Typography variant="subtitle1" component="div">
             Side-by-side comparison of selected adaptation practitioners
           </Typography>
         </Box>
@@ -283,11 +266,8 @@ export default function ComparePractitioners() {
                           }}
                         >
                           <Typography
+                            variant="h4"
                             sx={{
-                                fontWeight: 500,
-                              fontSize: '20px',
-                              lineHeight: '23px',
-                              color: '#101828',
                               textAlign: 'center',
                               overflow: 'hidden',
                               display: '-webkit-box',
@@ -315,7 +295,6 @@ export default function ComparePractitioners() {
                               sx={{
                                     fontWeight: 500,
                                 fontSize: '16px',
-                                lineHeight: '19px',
                                 color: 'primary.linkBlue',
                               }}
                             >

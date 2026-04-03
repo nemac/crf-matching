@@ -15,7 +15,6 @@ const FilterCheck = props => {
           '& .MuiFormControlLabel-label': {
             fontSize: '16px',
             fontWeight: 400,
-            lineHeight: '19px',
             color: '#6C788D',
           },
           ...textSx,

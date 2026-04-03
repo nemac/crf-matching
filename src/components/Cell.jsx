@@ -15,7 +15,6 @@ export default function Cell({ label, type, key, isSelectable, onRemove }) {
         sx={{
           fontWeight: 400,
           fontSize: '12px',
-          lineHeight: '14px',
           color: 'primary.linkBlue',
         }}
       >

@@ -107,7 +107,7 @@ export default function HomePage() {
     <>
       <NavBar />
       <Container disableGutters maxWidth={false}>
-        <Stack direction="column" spacing={8}>
+        <Stack direction="column" spacing={8} sx={{ bgcolor: '#FFFFFF' }}>
           {/* background image of search bar */}
           <Box
             sx={{
@@ -136,26 +136,13 @@ export default function HomePage() {
                 zIndex: 1,
               }}
             >
-              <Box>
-                {/* main text of search bar */}
+              <Box sx={{ textAlign: 'center' }}>
                 <Typography
-                  sx={{
-                    textAlign: 'center',
-                    color: '#FFFFFF',
-                    fontWeight: 700,
-                    fontSize: 48,
-                  }}
+                  variant="h1Hero"
                 >
                   Registry of Adaptation Practitioners
                 </Typography>
-                <Typography
-                  sx={{
-                    textAlign: 'center',
-                    color: '#FFFFFF',
-                    fontWeight: 400,
-                    fontSize: 18,
-                  }}
-                >
+                <Typography variant="subtitleHero" component="div">
                   Connect with vetted experts to build resilience in your
                   community or organization.
                 </Typography>
@@ -167,6 +154,7 @@ export default function HomePage() {
                     borderRadius: 3,
                     px: 2,
                     py: 1,
+                    mt: 4,
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'center',
@@ -273,7 +261,6 @@ export default function HomePage() {
                     <CallToActionButton
                       buttonSx={{
                         borderRadius: 12,
-                        height: 34,
                       }}
                       onClick={() => {
                         const params = new URLSearchParams();
@@ -294,8 +281,8 @@ export default function HomePage() {
                       }}
                       iconStart=<SearchIcon />
                       textSx={{
-                        fontSize: 13,
-                        fontWeight: 500,
+                        fontSize: 16,
+                        fontWeight: 'normal',
                       }}
                       text="Find Practitioners"
                     />
@@ -305,13 +292,8 @@ export default function HomePage() {
             </Box>
           </Box>
           {/*this is where the search bar ends and the browse all start */}
-          <Box sx={{ textAlign: 'center' }}>
-            <Typography
-              sx={{
-                fontSize: '24px',
-                fontWeight: 500,
-              }}
-            >
+          <Box sx={{ textAlign: 'center', pb: 4 }}>
+            <Typography variant="h4">
               Browse all{' '}
               <Box
                 component="span"
@@ -323,10 +305,10 @@ export default function HomePage() {
               >
                 {totalPractitioners}
               </Box>{' '}
-              practitioners section
+              practitioners
             </Typography>
             {/* Mid below */}
-            <Typography sx={{ p: '10px' }}>
+            <Typography variant="body1" component="div" sx={{ mb: 4 }}>
               A simple, streamlined process to connect you with the expertise
               you need.
             </Typography>
@@ -352,7 +334,7 @@ export default function HomePage() {
                 padding: '24px',
                 gap: '48px',
                 backgroundColor: 'primary.sectionBg',
-                border: '2px solid #E1F5FE',
+                border: '1px solid #E1F5FE',
                 borderRadius: '8px',
                 alignSelf: 'stretch',
                 width: '100%',
@@ -372,40 +354,16 @@ export default function HomePage() {
                     alignItems: 'center',
                     alignSelf: 'stretch',
                     p: 0.5,
+                    mb: 4,
                   }}
                 >
                   <Typography
+                    variant="h3"
                     sx={{
-                        fontWeight: 700,
-                      fontSize: '24px',
-                      lineHeight: '28px',
                       textAlign: 'center',
-                      color: '#101828',
                     }}
                   >
                     How the Registry Works
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    alignSelf: 'stretch',
-                    p: '10px',
-                  }}
-                >
-                  <Typography
-                    sx={{
-                        fontWeight: 400,
-                      fontSize: '18px',
-                      lineHeight: '21px',
-                      textAlign: 'center',
-                      color: 'text.secondary',
-                    }}
-                  >
-                    A simple, streamlined process to connect you with the
-                    expertise you need.
                   </Typography>
                 </Box>
               </Box>
@@ -420,14 +378,14 @@ export default function HomePage() {
                 }}
               >
                 <FeatureCard
-                  icon={<SearchIcon sx={{ color: '#FFFFFF', fontSize: 32 }} />}
+                  icon={<SearchIcon sx={{ color: '#FFFFFF', fontSize: 24 }} />}
                   title="Search and Filter"
                   description="Use our guided search to find practitioners with the right expertise and focus for your needs."
                 />
                 <FeatureCard
                   icon={
                     <PeopleOutlineOutlinedIcon
-                      sx={{ color: '#FFFFFF', fontSize: 32 }}
+                      sx={{ color: '#FFFFFF', fontSize: 24 }}
                     />
                   }
                   title="Review Profiles"
@@ -436,7 +394,7 @@ export default function HomePage() {
                 <FeatureCard
                   icon={
                     <HandshakeOutlinedIcon
-                      sx={{ color: '#FFFFFF', fontSize: 32 }}
+                      sx={{ color: '#FFFFFF', fontSize: 24 }}
                     />
                   }
                   title="Connect & Collaborate"
@@ -463,69 +421,34 @@ export default function HomePage() {
                 mx: 'auto',
               }}
             >
-              <Typography
-                sx={{
-                  fontWeight: 400,
-                  fontSize: 18,
-                  color: 'text.secondary',
-                  p: 4,
-                }}
-              >
+              <Typography component="div" variant="h3" sx={{ mb: 6}}>
                 The Registry includes two categories of practitioners
               </Typography>
               <Box sx={{ minHeight: 156, gap: 24 }}>
-                <Grid container>
+                <Grid container spacing={8}>
                   <Grid size={{ xs: 12, md: 6 }}>
                     <Box sx={{ minHeight: 140 }}>
-                      <Typography
-                        sx={{
-                          fontWeight: 700,
-                          fontSize: 24,
-                        }}
-                      >
+                      <Typography variant="h3">
                         Broad service providers
                       </Typography>
-                      <Typography
-                        sx={{
-                          fontWeight: 400,
-                          fontSize: 16,
-                          color: 'text.secondary',
-                          p: 1,
-                        }}
-                      >
-                        Practitioners that are generalists, supporting
-                        <br />
-                        communities or other groups with adaptation projects
-                        <br />
-                        and programs across a wide range of topics/sectors,
-                        <br />
-                        climate impacts, type of project, etc
+                      <Typography component="div" variant="body1">
+                         Have wide-ranging adaptation expertise, supporting community
+                         efforts to undertake cross-sector climate change vulnerability
+                         assessments, develop adaptation plans, and plan or implement actions
+                         focused on reducing their vulnerability to climate change impacts.
                       </Typography>
                     </Box>
                   </Grid>
                   <Grid size={{ xs: 12, md: 6 }}>
                     <Box>
-                      <Typography
-                        sx={{
-                          fontWeight: 700,
-                          fontSize: 24,
-                        }}
-                      >
+                      <Typography variant="h3">
                         Specialists
                       </Typography>
-                      <Typography
-                        sx={{
-                          fontWeight: 400,
-                          fontSize: 16,
-                          color: 'text.secondary',
-                        }}
-                      >
-                        Practitioners that provide a specific, specialized
-                        skillset
-                        <br />
-                        or service, or who focus on a narrow range of topics or
-                        <br />
-                        sectors (e.g., energy efficiency, insurance systems).
+                      <Typography component="div" variant="body1">
+                        Are organizations that focus more narrowly on one or more specific climate hazards,
+                        topics, or sectors, supporting communities in planning through implementation of
+                        adaptation-focused actions within a specific category (e.g., wildfire resilience,
+                        public health, spatial analysis, ecosystem restoration, insurance systems).
                       </Typography>
                     </Box>
                   </Grid>
@@ -536,29 +459,20 @@ export default function HomePage() {
           {/* End registry includes section, begin how to apply */}
           <Box
             sx={{
-              pt: 8,
+              pt: 4,
               pb: 8,
             }}
           >
             <Typography
+              variant="h4"
               sx={{
                 textAlign: 'center',
-                fontWeight: 500,
-                fontSize: 20,
                 color: 'text.secondary',
               }}
             >
               How to apply
             </Typography>
-            <Typography
-              sx={{
-                p: 2,
-                fontWeight: 400,
-                fontSize: 16,
-                color: 'text.secondary',
-                textAlign: 'center',
-              }}
-            >
+            <Typography component="div" variant="body1" sx={{ textAlign: 'center' }}>
               Be recognized as an expert helping communities build a more
               resilient future!
             </Typography>
@@ -566,6 +480,7 @@ export default function HomePage() {
               sx={{
                 display: 'flex',
                 justifyContent: 'center',
+                mt: 4,
               }}
             >
               <CallToActionButton

@@ -65,13 +65,9 @@ export default function AboutPage() {
             }}
           >
             <Typography
+              variant="eyebrow"
               sx={{
-                fontWeight: 500,
-                fontSize: '20px',
-                lineHeight: '23px',
                 textAlign: 'center',
-                color: 'primary.linkBlue',
-                textTransform: 'uppercase',
               }}
             >
               About the Registry
@@ -88,12 +84,9 @@ export default function AboutPage() {
             }}
           >
             <Typography
+              variant="h1"
               sx={{
-                fontWeight: 700,
-                fontSize: { xs: '32px', md: '48px' },
-                lineHeight: { xs: '40px', md: '56px' },
                 textAlign: 'center',
-                color: 'primary.main',
               }}
             >
               Connecting Communities with Climate Adaptation Experts
@@ -110,15 +103,7 @@ export default function AboutPage() {
               opacity: 0.9,
             }}
           >
-            <Typography
-              sx={{
-                fontWeight: 400,
-                fontSize: '18px',
-                lineHeight: '21px',
-                textAlign: 'center',
-                color: 'text.secondary',
-              }}
-            >
+            <Typography variant="subtitle1" component="div">
               The Registry of Adaptation Practitioners is a curated directory of
               vetted adaptation service providers designed to help communities
               find the professional assistance they need to build resilience to
@@ -154,25 +139,12 @@ export default function AboutPage() {
                 }}
               >
                 <Typography
-                  sx={{
-                    fontWeight: 700,
-                    fontSize: '24px',
-                    lineHeight: '28px',
-                    color: '#101828',
-                    py: 0.5,
-                  }}
+                  variant="h3"
+                  sx={{ py: 0.5 }}
                 >
                   For Communities
                 </Typography>
-                <Typography
-                  sx={{
-                    fontWeight: 400,
-                    fontSize: '16px',
-                    lineHeight: '19px',
-                    color: 'text.secondary',
-                    py: 0.5,
-                  }}
-                >
+                <Typography component="div" variant="body1">
                   The Registry enables communities seeking climate adaptation
                   support services to identify and connect with qualified
                   practitioners whose expertise and focus match their needs, are
@@ -190,25 +162,12 @@ export default function AboutPage() {
                 }}
               >
                 <Typography
-                  sx={{
-                    fontWeight: 700,
-                    fontSize: '24px',
-                    lineHeight: '28px',
-                    color: '#101828',
-                    py: 0.5,
-                  }}
+                  variant="h3"
+                  sx={{ py: 0.5 }}
                 >
                   For Practitioners
                 </Typography>
-                <Typography
-                  sx={{
-                    fontWeight: 400,
-                    fontSize: '16px',
-                    lineHeight: '19px',
-                    color: 'text.secondary',
-                    py: 0.5,
-                  }}
-                >
+                <Typography component="div" variant="body1">
                   The Registry enables practitioner organizations to showcase
                   their expertise, skills, and experience to community leaders
                   who are actively seeking adaptation assistance. Joining the
@@ -227,16 +186,8 @@ export default function AboutPage() {
                   gap: 1,
                 }}
               >
-                <Typography
-                  sx={{
-                    fontWeight: 400,
-                    fontSize: '18px',
-                    lineHeight: '21px',
-                    color: '#101828',
-                    py: 0.5,
-                  }}
-                >
-                  The Registry includes:
+                <Typography component="div" variant="body1">
+                  The Registry is categorized into two groups of adaptation service providers:
                 </Typography>
 
                 <Box
@@ -258,25 +209,12 @@ export default function AboutPage() {
                     }}
                   >
                     <Typography
-                      sx={{
-                        fontWeight: 700,
-                        fontSize: '24px',
-                        lineHeight: '28px',
-                        color: '#101828',
-                        py: 0.5,
-                      }}
+                      variant="h4"
+                      sx={{ py: 0.5 }}
                     >
                       Broad service providers
                     </Typography>
-                    <Typography
-                      sx={{
-                        fontWeight: 400,
-                        fontSize: '16px',
-                        lineHeight: '19px',
-                        color: 'text.secondary',
-                        py: 0.5,
-                      }}
-                    >
+                    <Typography component="div" variant="body1">
                       Broad service providers have wide-ranging adaptation
                       expertise, supporting community efforts to undertake
                       cross-sector climate change vulnerability assessments,
@@ -296,25 +234,12 @@ export default function AboutPage() {
                     }}
                   >
                     <Typography
-                      sx={{
-                        fontWeight: 700,
-                        fontSize: '24px',
-                        lineHeight: '28px',
-                        color: '#101828',
-                        py: 0.5,
-                      }}
+                      variant="h4"
+                      sx={{ py: 0.5 }}
                     >
                       Specialists
                     </Typography>
-                    <Typography
-                      sx={{
-                        fontWeight: 400,
-                        fontSize: '16px',
-                        lineHeight: '19px',
-                        color: 'text.secondary',
-                        py: 0.5,
-                      }}
-                    >
+                    <Typography component="div" variant="body1">
                       Specialists are organizations that focus more narrowly on
                       one or more specific climate hazards, topics, or sectors,
                       supporting communities in planning through implementation
@@ -338,7 +263,6 @@ export default function AboutPage() {
                 bgcolor: '#E1F5FE',
                 border: '1px solid #0066CC',
                 borderRadius: '6px',
-                height: '100%',
               }}
             >
               <Box
@@ -350,25 +274,12 @@ export default function AboutPage() {
                 }}
               >
                 <Typography
-                  sx={{
-                    fontWeight: 700,
-                    fontSize: '24px',
-                    lineHeight: '28px',
-                    color: '#101828',
-                    py: 0.5,
-                  }}
+                  variant="h3"
+                  sx={{ py: 0.5 }}
                 >
                   Application & Review Process
                 </Typography>
-                <Typography
-                  sx={{
-                    fontWeight: 400,
-                    fontSize: '18px',
-                    lineHeight: '21px',
-                    color: '#101828',
-                    py: 0.5,
-                  }}
-                >
+                <Typography component="div" variant="body1">
                   To be accepted into the Registry, an organization&apos;s
                   application is evaluated to ensure that it possesses the depth
                   of expertise and skill necessary to provide effective,
@@ -387,16 +298,9 @@ export default function AboutPage() {
                   }}
                 >
                   <CheckCircleOutlineIcon
-                    sx={{ color: 'primary.linkBlue', fontSize: 20 }}
+                    sx={{ color: 'primary.linkBlue', fontSize: '24px' }}
                   />
-                  <Typography
-                    sx={{
-                      fontWeight: 400,
-                      fontSize: '18px',
-                      lineHeight: '21px',
-                      color: '#101828',
-                    }}
-                  >
+                  <Typography component="div" variant="body1">
                     <strong>Submit Application</strong>: Practitioner
                     organizations complete the online form, detailing their
                     qualifications, experience, and areas of specialization.
@@ -412,16 +316,9 @@ export default function AboutPage() {
                   }}
                 >
                   <CheckCircleOutlineIcon
-                    sx={{ color: 'primary.linkBlue', fontSize: 20 }}
+                    sx={{ color: 'primary.linkBlue', fontSize: '24px' }}
                   />
-                  <Typography
-                    sx={{
-                      fontWeight: 400,
-                      fontSize: '18px',
-                      lineHeight: '21px',
-                      color: '#101828',
-                    }}
-                  >
+                  <Typography component="div" variant="body1">
                     <strong>Expert Review</strong>: Our panel of seasoned
                     adaptation experts assesses each application against
                     criteria for acceptance.
@@ -437,16 +334,9 @@ export default function AboutPage() {
                   }}
                 >
                   <CheckCircleOutlineIcon
-                    sx={{ color: 'primary.linkBlue', fontSize: 20 }}
+                    sx={{ color: 'primary.linkBlue', fontSize: '24px' }}
                   />
-                  <Typography
-                    sx={{
-                      fontWeight: 400,
-                      fontSize: '18px',
-                      lineHeight: '21px',
-                      color: '#101828',
-                    }}
-                  >
+                  <Typography component="div" variant="body1">
                     <strong>Notification and listing</strong>: Applicants are
                     notified of the final decision within two months. Once
                     approved, the organization will be published in the
@@ -488,17 +378,6 @@ export default function AboutPage() {
               width: '100%',
             }}
           >
-            <Typography
-              sx={{
-                fontWeight: 700,
-                fontSize: '24px',
-                lineHeight: '28px',
-                textAlign: 'center',
-                color: 'primary.main',
-              }}
-            >
-              Made Possible By
-            </Typography>
           </Box>
 
           <Box
@@ -506,20 +385,11 @@ export default function AboutPage() {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              px: { xs: 2, sm: 12, md: 40 },
+              px: 4,
               width: '100%',
-              opacity: 0.9,
             }}
           >
-            <Typography
-              sx={{
-                fontWeight: 400,
-                fontSize: '18px',
-                lineHeight: '21px',
-                textAlign: 'center',
-                color: 'text.secondary',
-              }}
-            >
+            <Typography component="div" variant="body1" sx={{ textAlign: 'center' }}>
               The Registry of Adaptation Professionals is made possible by the
               Walton Family Foundation and the Gordon and Betty Moore
               Foundation.
@@ -531,21 +401,11 @@ export default function AboutPage() {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              px: { xs: 2, sm: 8, md: 25 },
+              px: 4,
               width: '100%',
-              opacity: 0.9,
-              pt: { xs: 4, md: 16 },
             }}
           >
-            <Typography
-              sx={{
-                fontWeight: 400,
-                fontSize: '16px',
-                lineHeight: '19px',
-                textAlign: 'center',
-                color: 'text.secondary',
-              }}
-            >
+            <Typography component="div" variant="body1" sx={{ textAlign: 'center' }}>
               The Registry is a collaborative effort by leading organizations in
               the field of climate adaptation.
             </Typography>
@@ -620,16 +480,7 @@ export default function AboutPage() {
                     width: '100%',
                   }}
                 >
-                  <Typography
-                    sx={{
-                      fontWeight: 500,
-                      fontSize: '16px',
-                      lineHeight: '19px',
-                      textAlign: 'center',
-                      color: '#101828',
-                      width: '100%',
-                    }}
-                  >
+                  <Typography component="div" variant="body1" sx={{ fontWeight: 500, textAlign: 'center', width: '100%' }}>
                     {partner.name}
                   </Typography>
                 </Box>
@@ -637,10 +488,6 @@ export default function AboutPage() {
             ))}
           </Box>
         </Box>
-      </Box>
-
-      <Box sx={{ px: { xs: 4, sm: 6, md: 12 }, py: 6, bgcolor: '#FFFFFF' }}>
-        <IncludedInRegistry />
       </Box>
 
       <Box sx={{ px: { xs: 4, sm: 6, md: 12 }, py: 6, bgcolor: '#FFFFFF' }}>

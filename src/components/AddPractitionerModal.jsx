@@ -82,12 +82,8 @@ export default function AddPractitionerModal(props) {
         <Box sx={{ p: 3, pb: 2 }}>
           <Box>
             <Typography
-              sx={{
-                fontWeight: 700,
-                fontSize: '20px',
-                lineHeight: '28px',
-                color: '#101828',
-              }}
+              variant="h4"
+              sx={{ fontWeight: 700 }}
             >
               Registry of Adaptation Practitioners
             </Typography>
@@ -95,7 +91,6 @@ export default function AddPractitionerModal(props) {
               sx={{
                 fontWeight: 400,
                 fontSize: '14px',
-                lineHeight: '20px',
                 color: 'text.secondary',
                 mt: 0.5,
               }}
@@ -170,7 +165,6 @@ export default function AddPractitionerModal(props) {
                   sx={{
                     fontWeight: 700,
                     fontSize: '16px',
-                    lineHeight: '24px',
                     color: '#101828',
                   }}
                 >
@@ -180,7 +174,6 @@ export default function AddPractitionerModal(props) {
                   sx={{
                     fontWeight: 400,
                     fontSize: '14px',
-                    lineHeight: '20px',
                     color: 'text.secondary',
                     mt: 0.5,
                     display: '-webkit-box',

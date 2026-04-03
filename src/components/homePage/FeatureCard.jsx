@@ -18,8 +18,8 @@ export default function FeatureCard(props) {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          width: 52,
-          height: 52,
+          width: 40,
+          height: 40,
           backgroundColor: 'primary.ctaDarkBlue',
           borderRadius: '50%',
         }}
@@ -46,13 +46,8 @@ export default function FeatureCard(props) {
           }}
         >
           <Typography
-            sx={{
-              fontWeight: 500,
-              fontSize: '20px',
-              lineHeight: '23px',
-              textAlign: 'center',
-              color: '#101828',
-            }}
+            variant="h4"
+            sx={{ textAlign: 'center' }}
           >
             {title}
           </Typography>
@@ -71,7 +66,6 @@ export default function FeatureCard(props) {
             sx={{
               fontWeight: 400,
               fontSize: '16px',
-              lineHeight: '19px',
               textAlign: 'center',
               color: 'text.secondary',
             }}

@@ -407,7 +407,6 @@ export default function UpdateData({
                 sx={{
                   fontWeight: 400,
                   fontSize: '14px',
-                  lineHeight: '100%',
                   textTransform: 'none',
                   color: 'primary.linkBlue',
                   mb: 1,
@@ -431,7 +430,6 @@ export default function UpdateData({
                         sx={{
                           fontWeight: 700,
                           fontSize: '10px',
-                          lineHeight: '100%',
                           bgcolor: 'primary.sectionBg',
                           '&:hover': {
                             bgcolor: '#E5E7EB',
@@ -501,7 +499,6 @@ export default function UpdateData({
                 sx={{
                   fontWeight: 400,
                   fontSize: '14px',
-                  lineHeight: '100%',
                   textTransform: 'none',
                   color: 'primary.linkBlue',
                   mb: 1,
@@ -525,7 +522,6 @@ export default function UpdateData({
                         sx={{
                           fontWeight: 700,
                           fontSize: '10px',
-                          lineHeight: '100%',
                           bgcolor: 'primary.sectionBg',
                           '&:hover': {
                             bgcolor: '#E5E7EB',
@@ -570,7 +566,6 @@ export default function UpdateData({
               sx={{
                 fontWeight: 400,
                 fontSize: '14px',
-                lineHeight: '100%',
                 textTransform: 'none',
                 color: 'primary.linkBlue',
                 mb: 1,
@@ -592,7 +587,6 @@ export default function UpdateData({
                       sx={{
                         fontWeight: 700,
                         fontSize: '10px',
-                        lineHeight: '100%',
                         bgcolor: 'primary.sectionBg',
                         '&:hover': {
                           bgcolor: '#E5E7EB',
@@ -637,7 +631,6 @@ export default function UpdateData({
               sx={{
                 fontWeight: 400,
                 fontSize: '14px',
-                lineHeight: '100%',
                 textTransform: 'none',
                 color: 'primary.linkBlue',
                 mb: 1,
@@ -659,7 +652,6 @@ export default function UpdateData({
                       sx={{
                         fontWeight: 700,
                         fontSize: '10px',
-                        lineHeight: '100%',
                         bgcolor: 'primary.sectionBg',
                         '&:hover': {
                           bgcolor: '#E5E7EB',
@@ -704,7 +696,6 @@ export default function UpdateData({
               sx={{
                 fontWeight: 400,
                 fontSize: '14px',
-                lineHeight: '100%',
                 textTransform: 'none',
                 color: 'primary.linkBlue',
                 mb: 1,
@@ -726,7 +717,6 @@ export default function UpdateData({
                       sx={{
                         fontWeight: 700,
                         fontSize: '10px',
-                        lineHeight: '100%',
                         bgcolor: 'primary.sectionBg',
                         '&:hover': {
                           bgcolor: '#E5E7EB',
@@ -776,7 +766,6 @@ export default function UpdateData({
                 sx={{
                   fontWeight: 400,
                   fontSize: '14px',
-                  lineHeight: '100%',
                   textTransform: 'none',
                   color: 'primary.linkBlue',
                   px: 2,
@@ -800,7 +789,6 @@ export default function UpdateData({
                 sx={{
                   fontWeight: 400,
                   fontSize: '14px',
-                  lineHeight: '100%',
                   textTransform: 'none',
                   color: 'primary.linkBlue',
                   px: 2,
@@ -826,7 +814,6 @@ export default function UpdateData({
                       sx={{
                         fontWeight: 700,
                         fontSize: '10px',
-                        lineHeight: '100%',
                         bgcolor: 'primary.sectionBg',
                         '&:hover': {
                           bgcolor: '#E5E7EB',
@@ -876,7 +863,6 @@ export default function UpdateData({
                   sx={{
                     fontWeight: 400,
                     fontSize: '14px',
-                    lineHeight: '100%',
                     textTransform: 'none',
                     color: 'primary.linkBlue',
                     px: 2,
@@ -900,7 +886,6 @@ export default function UpdateData({
                 sx={{
                   fontWeight: 400,
                   fontSize: '14px',
-                  lineHeight: '100%',
                   textTransform: 'none',
                   color: 'primary.linkBlue',
                   px: 2,
@@ -929,7 +914,6 @@ export default function UpdateData({
                         sx={{
                           fontWeight: 700,
                           fontSize: '10px',
-                          lineHeight: '100%',
                           bgcolor: 'primary.sectionBg',
                           '&:hover': {
                             bgcolor: '#E5E7EB',

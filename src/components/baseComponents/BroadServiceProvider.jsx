@@ -5,21 +5,17 @@ const BroadServiceProvider = () => {
     <>
       <Chip
         sx={{
-          width: '210px',
-          height: '51px',
-          pt: '16px',
-          pr: '24px',
-          pb: '16px',
-          pl: '24px',
+          py: 2,
+          px: 2,
           gap: '4px',
-          backgroundColor: '#66CCFF',
+          backgroundColor: '#e6f7ff',
           '& .MuiChip-label': {
             overflow: 'visible',
             textOverflow: 'unset',
             whiteSpace: 'nowrap',
             fontWeight: '700',
             fontSize: 16,
-            color: 'primary.linkBlue',
+            color: '#56657D',
           },
           border: 'rounded',
           borderRadius: '9999px',

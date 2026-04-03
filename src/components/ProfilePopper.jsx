@@ -48,9 +48,7 @@ export default function ProfilePopper({
       >
         {/* title and description */}
         <Typography
-          variant="h5"
-          fontWeight="700"
-          fontSize="24px"
+          variant="h3"
           sx={{
             pb: 2,
             pr: 4,

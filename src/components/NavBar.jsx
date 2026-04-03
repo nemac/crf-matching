@@ -44,7 +44,7 @@ const navItems = [
     resetParams: true,
   },
   {
-    name: 'How to apply',
+    name: 'How to Apply',
     url: '/Howtoapply',
     matches: ['/Howtoapply'],
     resetParams: true,

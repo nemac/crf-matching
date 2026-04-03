@@ -10,14 +10,14 @@ export default function Logo() {
   const logoWidth = isSmallScreen ? 56 : 86;
   const params = window.location.search || '';
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 1,
-      }}
-    >
-      <Link to="/">
+    <Link to="/" style={{ textDecoration: 'none' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 1,
+        }}
+      >
         <img
           src={csciLogo}
           alt="Registry of Adaptation Practitioners Logo"
@@ -27,18 +27,16 @@ export default function Logo() {
             width: `${logoWidth}px`,
           }}
         />
-      </Link>
-      <Typography
-        sx={{
-          fontWeight: 500,
-          fontSize: '20px',
-          lineHeight: '23px',
-          color: 'primary.main',
-          whiteSpace: 'nowrap',
-        }}
-      >
-        Registry of Adaptation Practitioners
-      </Typography>
-    </Box>
+        <Typography
+          variant="h4"
+          sx={{
+            color: 'primary.main',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          Registry of Adaptation Practitioners
+        </Typography>
+      </Box>
+    </Link>
   );
 }

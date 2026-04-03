@@ -120,19 +120,38 @@ export default function SearchRegistry() {
     });
   }, [searchKey]);
 
+  const updateUrlFromFilters = (newSelections) => {
+    const newParams = new URLSearchParams(searchParams);
+    ['activities', 'hazards', 'sectors', 'size'].forEach(key => {
+      if (newSelections[key]?.length > 0) {
+        newParams.set(key, newSelections[key].join(','));
+      } else {
+        newParams.delete(key);
+      }
+    });
+    setSearchParams(newParams);
+    setDisplayCount(9);
+  };
+
   const handleFilterChange = (filterKey, newValues) => {
-    setFilterSelections(prev => ({ ...prev, [filterKey]: newValues }));
+    const newSelections = { ...filterSelections, [filterKey]: newValues };
+    setFilterSelections(newSelections);
+    updateUrlFromFilters(newSelections);
   };
 
   const handleClearFilter = filterKey => {
-    setFilterSelections(prev => ({ ...prev, [filterKey]: [] }));
+    const newSelections = { ...filterSelections, [filterKey]: [] };
+    setFilterSelections(newSelections);
+    updateUrlFromFilters(newSelections);
   };
 
   const handleRemoveFilterValue = (filterKey, value) => {
-    setFilterSelections(prev => ({
-      ...prev,
-      [filterKey]: prev[filterKey].filter(v => v !== value),
-    }));
+    const newSelections = {
+      ...filterSelections,
+      [filterKey]: filterSelections[filterKey].filter(v => v !== value),
+    };
+    setFilterSelections(newSelections);
+    updateUrlFromFilters(newSelections);
   };
 
   const handleFindPractitioners = () => {
@@ -154,7 +173,7 @@ export default function SearchRegistry() {
 
   const getFilterText = (filterKey, label) => {
     const count = filterSelections[filterKey].length;
-    if (count === 0) return `All ${label}`;
+    if (count === 0) return label;
     return `${count} ${label} Selected`;
   };
 
@@ -173,27 +192,13 @@ export default function SearchRegistry() {
   }
 
   return (
-    <>
+    <Box sx={{ bgcolor: '#FFFFFF' }}>
       <NavBar />
       <PageHeader
         title="Registry of Adaptation Practitioners"
         subtitle={
           <>
-            Connect with vetted experts to build resilience in your community or
-            organization.
-            <br />
-            Looking for a specific Practitioner? Search our database of{' '}
-            <Box
-              component="a"
-              href="/AllPractitioners"
-              sx={{
-                color: 'text.secondary',
-                fontWeight: 400,
-                textDecoration: 'underline',
-              }}
-            >
-              Practitioners
-            </Box>
+            Connect with vetted experts to build resilience in your community
           </>
         }
       />
@@ -202,7 +207,6 @@ export default function SearchRegistry() {
           sx={{
             fontWeight: 700,
             fontSize: 16,
-            lineHeight: '19px',
             color: 'primary.main',
             flex: 'none',
             flexGrow: 0,
@@ -275,6 +279,26 @@ export default function SearchRegistry() {
             />
           )}
         />
+        <Box sx={{
+          ml: 4,
+          my: 0.5
+        }}>
+          <Typography component="div" variant="body2">
+            Looking for a specific Practitioner? Search our database of{' '}
+            <Box
+              component="a"
+              href="/AllPractitioners"
+              sx={{
+                color: 'text.secondary',
+                fontSize: '14px',
+                textDecoration: 'underline',
+              }}
+            >
+              Practitioners
+            </Box>
+           </Typography> 
+        </Box>
+
         <Box
           sx={{
             display: 'flex',
@@ -282,6 +306,7 @@ export default function SearchRegistry() {
             alignItems: 'flex-start',
             gap: '12px',
             mt: 3,
+            mb: 4,
             backgroundColor: '#FFFFFF',
             flexWrap: 'wrap',
           }}
@@ -294,7 +319,7 @@ export default function SearchRegistry() {
               padding: '4px',
               gap: '4px',
               width: 280,
-              border: '1px dashed #E5E7EB',
+              border: '1px solid #E5E7EB',
               borderRadius: '8px',
               flexGrow: 1,
             }}
@@ -303,7 +328,6 @@ export default function SearchRegistry() {
               sx={{
                 fontWeight: 700,
                 fontSize: 16,
-                lineHeight: '19px',
                 color: 'primary.main',
                 p: '4px',
               }}
@@ -353,7 +377,7 @@ export default function SearchRegistry() {
               padding: '4px',
               gap: '4px',
               width: 280,
-              border: '1px dashed #E5E7EB',
+              border: '1px solid #E5E7EB',
               borderRadius: '8px',
               flexGrow: 1,
             }}
@@ -362,7 +386,6 @@ export default function SearchRegistry() {
               sx={{
                 fontWeight: 700,
                 fontSize: 16,
-                lineHeight: '19px',
                 color: 'primary.main',
                 p: '4px',
               }}
@@ -412,7 +435,7 @@ export default function SearchRegistry() {
               padding: '4px',
               gap: '4px',
               width: 280,
-              border: '1px dashed #E5E7EB',
+              border: '1px solid #E5E7EB',
               borderRadius: '8px',
               flexGrow: 1,
             }}
@@ -421,7 +444,6 @@ export default function SearchRegistry() {
               sx={{
                 fontWeight: 700,
                 fontSize: 16,
-                lineHeight: '19px',
                 color: 'primary.main',
                 p: '4px',
               }}
@@ -471,7 +493,7 @@ export default function SearchRegistry() {
               padding: '4px',
               gap: '4px',
               width: 280,
-              border: '1px dashed #E5E7EB',
+              border: '1px solid #E5E7EB',
               borderRadius: '8px',
               flexGrow: 1,
             }}
@@ -480,7 +502,6 @@ export default function SearchRegistry() {
               sx={{
                 fontWeight: 700,
                 fontSize: 16,
-                lineHeight: '19px',
                 color: 'primary.main',
                 p: '4px',
               }}
@@ -527,7 +548,7 @@ export default function SearchRegistry() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'flex-start',
-              pt: '32px',
+              alignSelf: 'flex-start',
             }}
           >
             <CallToActionButton
@@ -552,13 +573,14 @@ export default function SearchRegistry() {
         totalPractitioners={totalPractitioners}
         loading={loading}
         community={community}
-        activities={activities}
-        hazards={hazards}
-        sectors={sectors}
+        activities={filterSelections.activities}
+        hazards={filterSelections.hazards}
+        sectors={filterSelections.sectors}
         displayCount={displayCount}
         onLoadMore={() => setDisplayCount(prev => prev + 9)}
+        source="registry"
       />
       <Footer />
-    </>
+    </Box>
   );
 }

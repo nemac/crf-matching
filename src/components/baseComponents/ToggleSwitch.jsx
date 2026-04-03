@@ -40,7 +40,7 @@ export default function ToggleSwitch(props) {
         <Box
           sx={{
             fontSize: '14px',
-            fontWeight: isYes ? 600 : 400,
+            fontWeight: isYes ? 500 : 400,
             color: isYes ? 'primary.linkBlue' : '#9CA3AF',
           }}
         >
@@ -85,7 +85,7 @@ export default function ToggleSwitch(props) {
         <Box
           sx={{
             fontSize: '14px',
-            fontWeight: !isYes ? 600 : 400,
+            fontWeight: !isYes ? 500 : 400,
             color: !isYes ? 'primary.linkBlue' : '#9CA3AF',
           }}
         >

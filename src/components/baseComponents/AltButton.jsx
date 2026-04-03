@@ -6,9 +6,8 @@ const AltButton = () => {
       <Button
         startIcon={<VpnKeyOutlinedIcon />}
         sx={{
-          width: '85px',
-          height: '44px',
-          p: '8px',
+          px: 1,
+          py: 2,
           gap: '4px',
           backgroundColor: '#66CCFF',
           '&:hover': {

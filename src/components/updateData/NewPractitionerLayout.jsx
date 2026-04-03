@@ -24,27 +24,27 @@ const SectionHeader = ({ children, sx = {} }) => {
   );
 };
 
-const MultiSelectionDisplay = ({ selected = [], validOptions }) => {
+const ChipList = ({ items = [], highlighted = [] }) => {
   return (
     <Box sx={{ display: 'flex', gap: '12px', flexWrap: 'wrap', ml: 2, mb: 8 }}>
-      {validOptions.map((item, index) => {
-        const isSelected = selected.includes(item);
+      {items.map((item, index) => {
+        const isHighlighted = highlighted.includes(item);
         return (
           <Chip
             key={index}
-            label={isSelected ? <strong>{item}</strong> : item}
+            label={isHighlighted ? <strong>{item}</strong> : item}
             icon={
-              isSelected ? (
+              isHighlighted ? (
                 <CheckCircleIcon sx={{ color: '#0066CC !important' }} />
               ) : undefined
             }
             sx={{
               borderRadius: '9999px',
               border: '1px solid #0066CC',
-              padding: isSelected ? '5px 12px' : '6px 12px',
-              color: isSelected ? 'primary.linkBlue' : '#000',
-              bgcolor: isSelected ? '#66CCFF' : 'primary.sectionBg',
-              ...(isSelected && {
+              padding: isHighlighted ? '5px 12px' : '6px 12px',
+              color: isHighlighted ? 'primary.linkBlue' : '#000',
+              bgcolor: isHighlighted ? '#66CCFF' : 'primary.sectionBg',
+              ...(isHighlighted && {
                 '& .MuiChip-icon': {
                   marginLeft: '12px',
                   marginRight: '-6px',
@@ -58,19 +58,10 @@ const MultiSelectionDisplay = ({ selected = [], validOptions }) => {
   );
 };
 
-MultiSelectionDisplay.propTypes = {
-  selected: PropTypes.array.isRequired,
-  validOptions: PropTypes.array.isRequired,
-};
-
 const NewPractitionerLayout = props => {
   const {
     formData,
-    validServices,
-    validHazards,
-    validSectors,
-    validCommunitySize,
-    validStates,
+    urlFilters = {},
   } = props;
   return (
     <Box>
@@ -85,30 +76,44 @@ const NewPractitionerLayout = props => {
       <SectionHeader>Organization Contact</SectionHeader>
 
       <Box
-        sx={{ display: 'flex', flexDirection: 'column', gap: 2, ml: 2, mb: 8 }}
+        sx={{ display: 'flex', flexDirection: 'column', ml: 2, mb: 8 }}
       >
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <LanguageIcon sx={{ color: '#666' }} />
-          <Typography sx={{ color: '#666' }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <LanguageIcon sx={{ color: 'text.secondary', fontSize: '1rem' }} />
+          <Typography
+            component="a"
+            variant="body1"
+            href={formData.website || '#'}
+            target="_blank"
+            rel="noopener noreferrer"
+            sx={{ textDecoration: 'underline' }}
+          >
             {formData.website || ''}
           </Typography>
         </Box>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <EmailIcon sx={{ color: '#666' }} />
-          <Typography sx={{ color: '#666' }}>{formData.email || ''}</Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <EmailIcon sx={{ color: 'text.secondary', fontSize: '1rem' }} />
+          <Typography
+            component="a"
+            variant="body1"
+            href={`mailto:${formData.email || ''}`}
+            sx={{ textDecoration: 'underline' }}
+          >
+            {formData.email || ''}
+          </Typography>
         </Box>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <PhoneIcon sx={{ color: '#666' }} />
-          <Typography sx={{ color: '#666' }}>{formData.phone || ''}</Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <PhoneIcon sx={{ color: 'text.secondary', fontSize: '1rem' }} />
+          <Typography component="div" variant="body1">{formData.phone || ''}</Typography>
         </Box>
       </Box>
 
       <SectionHeader>Organization Location</SectionHeader>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, ml: 2, mb: 8 }}>
-        <LocationOnIcon sx={{ color: '#666' }} />
-        <Typography sx={{ color: '#666' }}>
+        <LocationOnIcon sx={{ color: 'text.secondary', fontSize: '1rem' }} />
+        <Typography component="div" variant="body1">
           {formData.city && formData.state
             ? `${formData.city}, ${formData.state}`
             : formData.city || formData.state || ''}
@@ -117,65 +122,47 @@ const NewPractitionerLayout = props => {
 
       <SectionHeader>Organization Description</SectionHeader>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, ml: 2, mb: 8 }}>
-        <Typography sx={{ color: '#666' }}>{formData.info || ''}</Typography>
+        <Typography component="div" variant="body1">{formData.info || ''}</Typography>
       </Box>
 
       <SectionHeader>Community Specializations</SectionHeader>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, ml: 2, mb: 8 }}>
-        <Typography sx={{ color: '#666' }}>
+        <Typography component="div" variant="body1">
           {formData.specificTypesOfCommunities || ''}
         </Typography>
       </Box>
 
       <SectionHeader>Organization Type</SectionHeader>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, ml: 2, mb: 8 }}>
-        <Typography sx={{ color: '#666' }}>
+        <Typography component="div" variant="body1">
           {formData.organizationType || ''}
         </Typography>
       </Box>
 
       <Divider sx={{ mb: 4 }} />
 
-      <SectionHeader>Top Services</SectionHeader>
-      <MultiSelectionDisplay
-        selected={formData.topServicesProvided}
-        validOptions={validServices}
-      />
+      <SectionHeader>Top Services Provided</SectionHeader>
+      <ChipList items={formData.topServicesProvided} highlighted={urlFilters.activities || []} />
       <Divider sx={{ mb: 4 }} />
 
-      <SectionHeader>Services Provided</SectionHeader>
-      <MultiSelectionDisplay
-        selected={formData.activities}
-        validOptions={validServices}
-      />
+      <SectionHeader>All Services Provided</SectionHeader>
+      <ChipList items={formData.activities} highlighted={urlFilters.activities || []} />
       <Divider sx={{ mb: 4 }} />
 
-      <SectionHeader>Hazard Expertise</SectionHeader>
-      <MultiSelectionDisplay
-        selected={formData.hazards}
-        validOptions={validHazards}
-      />
+      <SectionHeader>Climate Hazards Addressed</SectionHeader>
+      <ChipList items={formData.hazards} highlighted={urlFilters.hazards || []} />
       <Divider sx={{ mb: 4 }} />
 
       <SectionHeader>Sector Expertise</SectionHeader>
-      <MultiSelectionDisplay
-        selected={formData.sectors}
-        validOptions={validSectors}
-      />
+      <ChipList items={formData.sectors} highlighted={urlFilters.sectors || []} />
       <Divider sx={{ mb: 4 }} />
 
-      <SectionHeader>Size of Communities We Work With</SectionHeader>
-      <MultiSelectionDisplay
-        selected={formData.communitySize}
-        validOptions={validCommunitySize}
-      />
+      <SectionHeader>Community Size Experience</SectionHeader>
+      <ChipList items={formData.communitySize} />
       <Divider sx={{ mb: 4 }} />
 
-      <SectionHeader>Where We Work</SectionHeader>
-      <MultiSelectionDisplay
-        selected={formData.whereOrganizationWorks}
-        validOptions={validStates}
-      />
+      <SectionHeader>Where Organization Works</SectionHeader>
+      <ChipList items={formData.whereOrganizationWorks} />
 
       {/*TODO: Uncomment when ready for work examples*/}
       {/*<Divider sx={{ mb: 4 }} />*/}
@@ -275,9 +262,5 @@ export default NewPractitionerLayout;
 
 NewPractitionerLayout.propTypes = {
   formData: PropTypes.object.isRequired,
-  validServices: PropTypes.array.isRequired,
-  validHazards: PropTypes.array.isRequired,
-  validSectors: PropTypes.array.isRequired,
-  validCommunitySize: PropTypes.array.isRequired,
-  validStates: PropTypes.array.isRequired,
+  urlFilters: PropTypes.object,
 };

@@ -83,7 +83,7 @@ export default function AllPractitioners() {
   }
 
   return (
-    <>
+    <Box sx={{ bgcolor: '#FFFFFF' }}>
       <NavBar />
       <PageHeader
         title="Registry of Adaptation Practitioners"
@@ -115,11 +115,10 @@ export default function AllPractitioners() {
               sx={{
                 fontWeight: 400,
                 fontSize: '16px',
-                lineHeight: '19px',
                 color: 'primary.main',
               }}
             >
-              Search for a Adaptation Practitioner
+              Search for an Adaptation Practitioner
             </Typography>
           </Box>
           <SearchBar
@@ -147,6 +146,6 @@ export default function AllPractitioners() {
         onClearAll={handleClearSelectedPractitioners}
         onAddFromModal={handleAddFromModal}
       />
-    </>
+    </Box>
   );
 }

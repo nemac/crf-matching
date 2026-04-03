@@ -21,7 +21,6 @@ const HeaderLink = props => {
           whiteSpace: 'nowrap',
           fontWeight: 400,
           fontSize: '16px',
-          lineHeight: '19px',
           color: 'primary.main',
         },
         '&:hover': {

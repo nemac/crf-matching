@@ -239,7 +239,6 @@ const WorkExampleForm = props => {
             color: '#000000',
             fontWeight: 400,
             fontSize: '18px',
-            lineHeight: '100%',
             boxShadow: '0px 1px 2px 0px #00000040',
             textTransform: 'none',
             '&:hover': {

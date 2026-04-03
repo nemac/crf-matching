@@ -11,7 +11,20 @@ export default function RegistryComponent(props) {
     displayCount,
     onLoadMore,
     loading,
+    source = '',
+    activities = [],
+    hazards = [],
+    sectors = [],
   } = props;
+
+  const buildFilters = () => {
+    const params = new URLSearchParams();
+    if (source) params.set('source', source);
+    if (activities.length > 0) params.set('activities', activities.join(','));
+    if (hazards.length > 0) params.set('hazards', hazards.join(','));
+    if (sectors.length > 0) params.set('sectors', sectors.join(','));
+    return params.toString();
+  };
 
   const visiblePractitioners = displayCount
     ? practitioners.slice(0, displayCount)
@@ -37,7 +50,7 @@ export default function RegistryComponent(props) {
   }
 
   return (
-    <>
+    <Box sx={{ bgcolor: 'primary.sectionBg', width: '100%', pt: 2, pb: 4 }}>
       <Container
         maxWidth="xl"
         sx={{
@@ -57,8 +70,8 @@ export default function RegistryComponent(props) {
             }}
           >
             <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-              Showing <strong>{visiblePractitioners.length}</strong> of{' '}
-              {practitioners.length} Adaptation Practitioners
+              Filtered <strong>{practitioners.length}</strong> of{' '}
+              {totalPractitioners} Adaptation Practitioners
             </Typography>
           </Box>
 
@@ -75,7 +88,7 @@ export default function RegistryComponent(props) {
             {visiblePractitioners.map((practitioner, index) => (
               <PractitionerCard
                 key={index}
-                filters=""
+                filters={buildFilters()}
                 practitioner={practitioner}
                 onComparisonSelect={onComparisonSelect}
                 isSelectedForComparison={
@@ -101,7 +114,6 @@ export default function RegistryComponent(props) {
                   color: 'primary.main',
                   fontWeight: 400,
                   fontSize: '18px',
-                  lineHeight: '21px',
                 }}
               >
                 Load more Practitioners
@@ -110,6 +122,6 @@ export default function RegistryComponent(props) {
           )}
         </Box>
       </Container>
-    </>
+    </Box>
   );
 }
