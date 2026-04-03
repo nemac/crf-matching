@@ -425,7 +425,7 @@ export default function HomePage() {
                 <Grid container spacing={8}>
                   <Grid size={{ xs: 12, md: 6 }}>
                     <Box sx={{ minHeight: 140 }}>
-                      <Typography variant="h3">
+                      <Typography variant="h4">
                         Broad service providers
                       </Typography>
                       <Typography component="div" variant="body1">
@@ -438,7 +438,7 @@ export default function HomePage() {
                   </Grid>
                   <Grid size={{ xs: 12, md: 6 }}>
                     <Box>
-                      <Typography variant="h3">
+                      <Typography variant="h4">
                         Specialists
                       </Typography>
                       <Typography component="div" variant="body1">
