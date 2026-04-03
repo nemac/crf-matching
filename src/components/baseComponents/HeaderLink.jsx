@@ -20,8 +20,9 @@ const HeaderLink = props => {
           textOverflow: 'unset',
           whiteSpace: 'nowrap',
           fontWeight: 400,
-          fontSize: '16px',
+          fontSize: { md: '13px', lg: '16px' },
           color: 'primary.main',
+          px: { md: 0.5, lg: 1 },
         },
         '&:hover': {
           backgroundColor: '#F1ECE4',

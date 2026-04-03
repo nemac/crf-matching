@@ -254,7 +254,6 @@ export default function AboutPage() {
                 display: 'flex',
                 flexDirection: 'column',
                 p: 3,
-                gap: 3,
                 bgcolor: '#E1F5FE',
                 border: '1px solid #0066CC',
                 borderRadius: 2,

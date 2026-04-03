@@ -161,7 +161,7 @@ export default function NavBar() {
               flexDirection: 'row',
               alignItems: 'center',
               p: 2,
-              gap: 1.5,
+              gap: { md: 0.5, lg: 1.5 },
             }}
           >
             {navItems.map((item, i) => (

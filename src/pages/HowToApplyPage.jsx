@@ -265,10 +265,10 @@ export default function HowToApplyPage() {
               sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
             >
               <CheckCircleOutlineIcon
-                sx={{ color: 'primary.linkBlue', fontSize: '24px', flexShrink: 0 }}
+                sx={{ color: 'primary.linkBlue', fontSize: '28px', flexShrink: 0 }}
               />
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <Typography variant="h4">
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                <Typography variant="h5">
                   Applications must be on behalf of an organization
                 </Typography>
                 <Typography component="div" variant="body1">
@@ -284,10 +284,10 @@ export default function HowToApplyPage() {
               sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
             >
               <CheckCircleOutlineIcon
-                sx={{ color: 'primary.linkBlue', fontSize: '24px', flexShrink: 0 }}
+                sx={{ color: 'primary.linkBlue', fontSize: '28px', flexShrink: 0 }}
               />
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <Typography variant="h4">
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                <Typography variant="h5">
                   Demonstrated Experience
                 </Typography>
                 <Typography component="div" variant="body1">
@@ -303,10 +303,10 @@ export default function HowToApplyPage() {
               sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
             >
               <CheckCircleOutlineIcon
-                sx={{ color: 'primary.linkBlue', fontSize: '24px', flexShrink: 0 }}
+                sx={{ color: 'primary.linkBlue', fontSize: '28px', flexShrink: 0 }}
               />
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <Typography variant="h4">
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                <Typography variant="h5">
                   Terms and Conditions
                 </Typography>
                 <Box
@@ -347,14 +347,13 @@ export default function HowToApplyPage() {
             display: 'flex',
             flexDirection: 'column',
             p: 3,
-            gap: 3,
             bgcolor: '#E1F5FE',
             border: '1px solid #003366',
             borderRadius: 2,
           }}
         >
           <Box
-            sx={{ display: 'flex', flexDirection: 'column', py: 1, gap: 0.5 }}
+            sx={{ display: 'flex', flexDirection: 'column', py: 1, }}
           >
             <Typography
               variant="h3"
@@ -372,10 +371,10 @@ export default function HowToApplyPage() {
               sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
             >
               <LooksOneOutlinedIcon
-                sx={{ color: 'primary.linkBlue', fontSize: '36px', flexShrink: 0 }}
+                sx={{ color: 'primary.linkBlue', fontSize: '28px', flexShrink: 0 }}
               />
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <Typography variant="h4">
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                <Typography variant="h5">
                   Preview the application questions
                 </Typography>
                 <Typography component="div" variant="body1">
@@ -402,10 +401,10 @@ export default function HowToApplyPage() {
               sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
             >
               <LooksTwoOutlinedIcon
-                sx={{ color: 'primary.linkBlue', fontSize: '36px', flexShrink: 0 }}
+                sx={{ color: 'primary.linkBlue', fontSize: '28px', flexShrink: 0 }}
               />
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <Typography variant="h4">
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                <Typography variant="h5">
                   Submit the application
                 </Typography>
                 <Typography component="div" variant="body1">
@@ -433,10 +432,10 @@ export default function HowToApplyPage() {
               sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
             >
               <Looks3OutlinedIcon
-                sx={{ color: 'primary.linkBlue', fontSize: '36px', flexShrink: 0 }}
+                sx={{ color: 'primary.linkBlue', fontSize: '28px', flexShrink: 0 }}
               />
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <Typography variant="h4">
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                <Typography variant="h5">
                   Review Period
                 </Typography>
                 <Typography component="div" variant="body1">
@@ -452,10 +451,10 @@ export default function HowToApplyPage() {
               sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
             >
               <Looks4OutlinedIcon
-                sx={{ color: 'primary.linkBlue', fontSize: '36px', flexShrink: 0 }}
+                sx={{ color: 'primary.linkBlue', fontSize: '28px', flexShrink: 0 }}
               />
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <Typography variant="h4">
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                <Typography variant="h5">
                   Notification and Listing
                 </Typography>
                 <Typography component="div" variant="body1">
