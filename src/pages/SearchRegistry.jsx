@@ -481,18 +481,19 @@ export default function SearchRegistry() {
           </Box>
         </Box>
         <Box sx={{ ml: 2, mt: 0.5, mb: 1 }}>
-          <Typography component="div" variant="body2">
+          <Typography component="div" variant="body1">
             Looking for a specific Practitioner? Search our database of{' '}
             <Box
               component="a"
               href="/AllPractitioners"
               sx={{
                 color: 'text.secondary',
-                fontSize: '14px',
+                fontSize: '16px',
+                fontWeight: 'bold',
                 textDecoration: 'underline',
               }}
             >
-              Practitioners
+              Adaptation Practitioners
             </Box>
            </Typography>
         </Box>
