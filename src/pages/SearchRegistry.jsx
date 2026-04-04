@@ -168,7 +168,7 @@ export default function SearchRegistry() {
           </>
         }
       />
-      <Box sx={{ mt: 3, px: { xs: 4, sm: 6, md: 12 } }}>
+      <Box sx={{ mt: 3, px: { xs: 4, sm: 6, md: 6 } }}>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', gap: 1, mt: 3, mb: 2 }}>
             <Box
               sx={{
@@ -177,7 +177,8 @@ export default function SearchRegistry() {
                 alignItems: 'flex-start',
                 padding: '4px',
                 gap: 0.5,
-                flex: { xs: '1 1 100%', xl: '1 1 0' },
+                // flex: { xs: '1 1 100%', xl: '1 1 0' },
+                flex:  { xs: '1 1 100%', md: '1 1 149px'},
                 border: '1px solid #E5E7EB',
                 borderRadius: '8px',
               }}
@@ -190,7 +191,7 @@ export default function SearchRegistry() {
                   p: '4px',
                 }}
               >
-                What state is your community in
+                State or Territory
               </Typography>
               <PullDownFilter
                 filterName="state-filter"
@@ -241,8 +242,7 @@ export default function SearchRegistry() {
                   alignItems: 'flex-start',
                   padding: '4px',
                   gap: 0.5,
-                  flex: { xs: '1 1 calc(50% - 8px)', xl: '1 1 0' },
-                  minWidth: 200,
+                  flex:  { xs: '1 1 100%', md: '1 1 140px'},
                   border: '1px solid #E5E7EB',
                   borderRadius: '8px',
                 }}
@@ -299,8 +299,7 @@ export default function SearchRegistry() {
               alignItems: 'flex-start',
               padding: '4px',
               gap: 0.5,
-              flex: { xs: '1 1 calc(50% - 8px)', xl: '1 1 0' },
-              minWidth: 200,
+              flex:  { xs: '1 1 100%', md: '1 1 140px'},
               border: '1px solid #E5E7EB',
               borderRadius: '8px',
             }}
@@ -357,8 +356,7 @@ export default function SearchRegistry() {
               alignItems: 'flex-start',
               padding: '4px',
               gap: 0.5,
-              flex: { xs: '1 1 calc(50% - 8px)', xl: '1 1 0' },
-              minWidth: 200,
+              flex:  { xs: '1 1 100%', md: '1 1 100px'},
               border: '1px solid #E5E7EB',
               borderRadius: '8px',
             }}
@@ -415,8 +413,7 @@ export default function SearchRegistry() {
               alignItems: 'flex-start',
               padding: '4px',
               gap: 0.5,
-              flex: { xs: '1 1 calc(50% - 8px)', xl: '1 1 0' },
-              minWidth: 200,
+              flex:  { xs: '1 1 100%', md: '1 1 150px'},
               border: '1px solid #E5E7EB',
               borderRadius: '8px',
             }}

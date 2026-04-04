@@ -167,7 +167,7 @@ export default function HomePage() {
                 </Typography>
                 <Box
                   sx={{
-                    backgroundColor: '#FFFFFF99',
+                    backgroundColor: '#FFFFFFBF',
                     width: '100%',
                     minHeight: 84,
                     borderRadius: 3,
@@ -190,10 +190,10 @@ export default function HomePage() {
                       flexWrap: 'wrap',
                     }}
                   >
-                    <Box sx={{ width: 300, minWidth: 300, maxWidth: 300 }}>
+                    <Box sx={{ flex: '1 1 226px'  }}>
                       <PullDownFilter
                         filterName="state-filter"
-                        filterText={getFilterText('state', 'What state is your community in')}
+                        filterText={getFilterText('state', 'State or Territory')}
                         availableOptions={['All States and Territories', ...availableOptions.state]}
                         selectedValues={allStatesSelected ? ['All States and Territories', ...filters.state] : filters.state}
                         onChange={e => handleStateFilterChange(e.target.value)}
@@ -233,7 +233,7 @@ export default function HomePage() {
                       { key: 'hazards', filterName: 'Hazards filter', label: 'Hazards' },
                       { key: 'sectors', filterName: 'Sectors filter', label: 'Sectors' },
                     ].map(({ key, filterName, label }) => (
-                      <Box key={key} sx={{ width: 300, minWidth: 300, maxWidth: 300 }}>
+                      <Box key={key} sx={{ flex: '1 1 100px' }}>
                         <PullDownFilter
                           filterName={filterName}
                           filterText={getFilterText(key, label)}
