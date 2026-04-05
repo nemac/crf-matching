@@ -33,7 +33,7 @@ export default function Logo() {
             color: 'primary.main',
             whiteSpace: 'nowrap',
             display: 'block',
-            fontSize: { xs: '14px', sm: '16px', md: '16px', lg: '20px' },
+            fontSize: { xs: '12px', sm: '16px', md: '16px', lg: '20px' },
           }}
         >
           Registry of Adaptation Practitioners
