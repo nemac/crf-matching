@@ -15,7 +15,7 @@ export default function Logo() {
         sx={{
           display: 'flex',
           alignItems: 'center',
-          gap: 1,
+          gap: {  xs: 0.5, sm: 1}
         }}
       >
         <img
@@ -33,7 +33,7 @@ export default function Logo() {
             color: 'primary.main',
             whiteSpace: 'nowrap',
             display: 'block',
-            fontSize: { xs: '16px', md: '16px', lg: '20px' },
+            fontSize: { xs: '14px', md: '16px', lg: '20px' },
           }}
         >
           Registry of Adaptation Practitioners

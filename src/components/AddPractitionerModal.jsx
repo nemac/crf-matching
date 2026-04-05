@@ -68,8 +68,8 @@ export default function AddPractitionerModal(props) {
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          width: 424,
-          maxHeight: '80vh',
+          width: { xs: 320, sm: 400, md: 424 },
+          maxHeight: '90vh',
           bgcolor: '#FFFFFF',
           border: '1px solid #E1F5FE',
           boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
@@ -131,7 +131,7 @@ export default function AddPractitionerModal(props) {
             overflowY: 'auto',
             px: 3,
             pb: 2,
-            minHeight: 300,
+            minHeight: 250,
           }}
         >
           {results.map((practitioner) => (
