@@ -330,7 +330,7 @@ export default function HomePage() {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                padding: 3,
+                padding: {xs: 0, md:3 },
                 backgroundColor: 'primary.sectionBg',
                 border: '1px solid #E1F5FE',
                 borderRadius: 2,
