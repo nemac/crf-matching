@@ -12,12 +12,12 @@ const getSectionData = (
 ) =>
   [
     {
-      header: 'Services',
+      header: 'Services Provided',
       cards: availableOptions?.activities,
       availableSelections: availableOptions?.activities,
     },
     {
-      header: 'Hazards',
+      header: 'Climate Hazards',
       cards: availableOptions?.hazards,
       availableSelections: availableOptions?.hazards,
     },
@@ -27,12 +27,12 @@ const getSectionData = (
       availableSelections: availableOptions?.sectors,
     },
     {
-      header: 'Community Population',
+      header: 'Population Size',
       cards: availableOptions?.size,
       availableSelections: availableOptions?.size,
     },
     {
-      header: 'State/Territory',
+      header: 'State or Territory',
       cards: availableOptions?.state,
       availableSelections: availableOptions?.state,
     },
@@ -68,13 +68,13 @@ export default function CommunityPane(props) {
         border: `0px solid ${theme.palette.primary.white}`,
         pr: 1,
         pl: 1,
-        pt: 0,
+        pt: { xs: 1, sm: 1.5, md:  1.2},
         pb: 1,
       }}
     >
       {showHeader ? (
         <Stack sx={{ width: '100%' }}>
-          <HeaderBox>
+          <HeaderBox> 
             <Typography
               color="primary.main"
               fontWeight="700"

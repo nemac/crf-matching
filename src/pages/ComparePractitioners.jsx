@@ -248,7 +248,7 @@ export default function ComparePractitioners() {
                         key={pract.airtableRecId}
                         sx={{
                           flex: '1 1 0',
-                          minWidth: { xs: 50, md: 175 },
+                          minWidth: { xs: 100, md: 175 },
                           bgcolor: '#FFFFFF',
                           border: '1px solid #F0F8FF',
                         }}
@@ -298,7 +298,7 @@ export default function ComparePractitioners() {
                                 color: 'primary.linkBlue',
                               }}
                             >
-                              View Full Profile
+                              <Box component="span" sx={{ display: { xs: 'none', md: 'inline' } }}>View Full </Box>Profile
                             </Typography>
                             <ArrowForwardIcon
                               sx={{ fontSize: 18, color: 'primary.linkBlue' }}
@@ -306,7 +306,6 @@ export default function ComparePractitioners() {
                           </Box>
 
                           <Button
-                            startIcon={<CloseIcon sx={{ fontSize: 16 }} />}
                             onClick={() =>
                               handleRemovePractitioner(pract.airtableRecId)
                             }
@@ -316,14 +315,14 @@ export default function ComparePractitioners() {
                               alignItems: 'center',
                               padding: '8px 24px',
                               gap: 1,
-                              width: 128,
+                              width: {sm: 20, md: 128} ,
                               height: 35,
                               bgcolor: '#E5E7EB',
                               border: '1px solid #AEAFB3',
                               borderRadius: '8px',
                               textTransform: 'none',
                               color: '#374151',
-                              fontWeight: 500,
+                              fontWeight: 'normal',
                               fontSize: '14px',
                               '&:hover': {
                                 bgcolor: '#D1D5DB',
@@ -331,7 +330,8 @@ export default function ComparePractitioners() {
                               },
                             }}
                           >
-                            Remove
+                            <CloseIcon sx={{ fontSize: 16 }} />
+                            <Box component="span" sx={{ display: { xs: 'none', md: 'inline' } }}>Remove</Box>
                           </Button>
                         </Box>
 

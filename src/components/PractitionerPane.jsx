@@ -203,8 +203,8 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
               bgcolor: 'primary.main',
             },
           }}
-        >
-          <Typography sx={{ display: { xs: 'none', md: 'inherit' }, fontSize: '.875rem' }}>View Full Profile</Typography>
+        >          <Typography component="span" sx={{ fontSize: '.875rem', display: { xs: 'none', md: 'inline' } }}>View Full </Typography><Typography component="span" sx={{ fontSize: '.875rem' }}>Profile</Typography>
+
         </Button>
       </Box>
     </HeaderBox>

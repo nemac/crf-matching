@@ -82,8 +82,11 @@ export default function AddPractitionerModal(props) {
         <Box sx={{ p: 3, pb: 2 }}>
           <Box>
             <Typography
-              variant="h4"
-              sx={{ fontWeight: 700 }}
+              sx={{
+                fontWeight: 700,
+                fontSize: '20px',
+                color: '#101828',
+              }}
             >
               Registry of Adaptation Practitioners
             </Typography>
