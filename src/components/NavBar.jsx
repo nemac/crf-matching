@@ -131,7 +131,7 @@ export default function NavBar() {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            px: { xs: 2, md: 3 },
+            px: { xs: 2, s: 3 },
             minHeight: '67px !important',
             height: '67px',
           }}
@@ -141,7 +141,7 @@ export default function NavBar() {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: {xs: 1, sm:2}, display: { md: 'none' } }}
+            sx={{ mr: {xs: 0, sm:2}, display: { md: 'none' } }}
           >
             <MenuIcon />
           </IconButton>
@@ -151,7 +151,7 @@ export default function NavBar() {
               alignItems: 'center',
               flexShrink: 0,
               flexGrow: { xs: 1, md: 0 },
-              justifyContent: { xs: 'center', md: 'flex-start' },
+              justifyContent: 'flex-start',
             }}
           >
             <Logo />
