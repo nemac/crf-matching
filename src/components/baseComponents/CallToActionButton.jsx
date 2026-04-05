@@ -14,7 +14,7 @@ const CallToActionButton = props => {
         sx={{
           color: '#FFFFFF',
           py: 1,
-          px: 6,
+          px: 3,
           textTransform: 'none',
           backgroundColor: 'primary.ctaDarkBlue',
           '&:hover': {

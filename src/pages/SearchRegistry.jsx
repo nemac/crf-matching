@@ -470,12 +470,11 @@ export default function SearchRegistry() {
               text="Find Practitioners"
               buttonSx={{
                 borderRadius: '99999px',
-                height: 37,
                 whiteSpace: 'nowrap',
               }}
               textSx={{
                 fontSize: 18,
-                fontWeight: 400,
+                fontWeight: 'normal',
               }}
             />
           </Box>
