@@ -74,7 +74,6 @@ export default function NavBar() {
       onClick={handleDrawerToggle}
       sx={{ textAlign: 'center', color: 'primary.main' }}
     >
-      <Logo />
       <Divider />
       <List>
         {navItems.map((item, i) => (
@@ -148,9 +147,11 @@ export default function NavBar() {
           </IconButton>
           <Box
             sx={{
-              display: { xs: 'none', md: 'flex' },
+              display: 'flex',
               alignItems: 'center',
               flexShrink: 0,
+              flexGrow: { xs: 1, md: 0 },
+              justifyContent: { xs: 'center', md: 'flex-start' },
             }}
           >
             <Logo />

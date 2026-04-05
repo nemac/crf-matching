@@ -32,8 +32,8 @@ export default function Logo() {
           sx={{
             color: 'primary.main',
             whiteSpace: 'nowrap',
-            display: { xs: 'none', md: 'block' },
-            fontSize: { md: '16px', lg: '20px' },
+            display: 'block',
+            fontSize: { xs: '16px', md: '16px', lg: '20px' },
           }}
         >
           Registry of Adaptation Practitioners
