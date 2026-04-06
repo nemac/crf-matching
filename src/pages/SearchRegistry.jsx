@@ -113,7 +113,12 @@ export default function SearchRegistry() {
   };
 
   const handleFindPractitioners = () => {
-    updateUrlFromFilters(filterSelections);
+    setLoading(true);
+    setDisplayCount(12);
+    fetchFilteredPractitioners(filters, data => {
+      setPractitioners(data);
+      setLoading(false);
+    });
   };
 
   const allStatesSelected = availableOptions.state.length > 0 && filterSelections.state.length === availableOptions.state.length;
