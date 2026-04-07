@@ -65,9 +65,26 @@ const NewPractitionerLayout = props => {
   } = props;
   return (
     <Box>
-      <Box sx={{ mb: 4, display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+      <Box sx={{ mb: 4, display: 'flex', gap: 2, flexWrap: 'wrap', alignItems: 'center' }}>
         {formData.org_registry_category === 'Specialist' ? (
-          <SpecialistLabel />
+          <>
+            <SpecialistLabel />
+            {formData.org_registry_category_specialist && (
+              <Box
+                sx={{
+                  bgcolor: '#FFFBF5',
+                  border: '1px solid #FFDDBB',
+                  borderRadius: '8px',
+                  px: 1.5,
+                  py: 0.5,
+                }}
+              >
+                <Typography component="div" variant="body1" sx={{ mb: 0 }}>
+                  {formData.org_registry_category_specialist}
+                </Typography>
+              </Box>
+            )}
+          </>
         ) : (
           <BroadServiceProvider />
         )}

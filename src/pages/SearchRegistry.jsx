@@ -201,9 +201,9 @@ export default function SearchRegistry() {
               <PullDownFilter
                 filterName="state-filter"
                 filterText={getFilterText('state', 'States')}
-                availableOptions={['All States and Territories', ...availableOptions.state]}
-                selectedValues={allStatesSelected ? ['All States and Territories', ...filterSelections.state] : filterSelections.state}
-                onChange={e => handleStateFilterChange(e.target.value)}
+                availableOptions={availableOptions.state}
+                selectedValues={filterSelections.state}
+                onChange={e => handleFilterChange('state', e.target.value)}
                 boxSx={{ width: '100%', minWidth: 'unset', maxWidth: 'unset' }}
                 selectSx={registrySelectSx}
               />
@@ -486,7 +486,7 @@ export default function SearchRegistry() {
         </Box>
         <Box sx={{ ml: 2, mt: 0.5, mb: 1 }}>
           <Typography component="div" variant="body1">
-            Looking for a specific Practitioner? Search our database of{' '}
+            Looking for a specific Practitioner? Search for an {' '} 
             <Box
               component="a"
               href="/AllPractitioners"
@@ -497,8 +497,9 @@ export default function SearchRegistry() {
                 textDecoration: 'underline',
               }}
             >
-              Adaptation Practitioners
+              adaptation practitioners
             </Box>
+              {' '} by name
            </Typography>
         </Box>
       </Box>

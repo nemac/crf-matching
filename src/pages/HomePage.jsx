@@ -426,10 +426,12 @@ export default function HomePage() {
                         Broad service providers
                       </Typography>
                       <Typography component="div" variant="body1">
-                         Have wide-ranging adaptation expertise, supporting community
-                         efforts to undertake cross-sector climate change vulnerability
-                         assessments, develop adaptation plans, and plan or implement actions
-                         focused on reducing their vulnerability to climate change impacts.
+                         Broad service providers have wide-ranging adaptation expertise, 
+                         supporting community efforts to undertake cross-sector climate change 
+                         vulnerability assessments, develop adaptation plans, and plan or 
+                         implement actions focused on reducing their vulnerability to 
+                         climate change impacts.
+
                       </Typography>
                     </Box>
                   </Grid>
@@ -439,10 +441,12 @@ export default function HomePage() {
                         Specialists
                       </Typography>
                       <Typography component="div" variant="body1">
-                        Are organizations that focus more narrowly on one or more specific climate hazards,
-                        topics, or sectors, supporting communities in planning through implementation of
-                        adaptation-focused actions within a specific category (e.g., wildfire resilience,
-                        public health, spatial analysis, ecosystem restoration, insurance systems).
+                        Specialists are organizations that focus more narrowly on one or more 
+                        specific climate hazards, topics, or sectors, supporting communities 
+                        in planning through implementation of adaptation-focused actions 
+                        within a specific category (e.g., wildfire resilience, public health, 
+                        spatial analysis, ecosystem restoration, insurance systems).
+
                       </Typography>
                     </Box>
                   </Grid>

@@ -17,7 +17,7 @@ export default function ContactUs() {
         <Typography
           component="a"
           variant="body1"
-          href="mailto:apply@adaptationregistry.org"
+          href="mailto:info@adaptationregistry.org"
           sx={{
             color: 'primary.linkBlue',
             textDecoration: 'none',
@@ -26,7 +26,7 @@ export default function ContactUs() {
             },
           }}
         >
-          apply@adaptationregistry.org
+          info@adaptationregistry.org
         </Typography>
       </Box>
     </Box>

@@ -114,7 +114,7 @@ export default function PractitionerCard(props) {
             <Typography
               variant="h5"
             >
-              Services Provided
+              {isSpecialist ? 'Speciality' : 'Services Provided'}
             </Typography>
           </Box>
           <Box
@@ -129,23 +129,39 @@ export default function PractitionerCard(props) {
               flexGrow: 0,
             }}
           >
-            {topServices.map((service, index) => (
-              <Chip
-                key={index}
-                label={service}
+            {isSpecialist && practitioner.org_registry_category_specialist ? (
+              <Box
                 sx={{
-                  bgcolor: 'primary.sectionBg',
-                  border: '1px solid #0066CC',
-                  borderRadius: '9999px',
-                  '& .MuiChip-label': {
-                    fontWeight: 400,
-                    fontSize: '12px',
-                    color: 'primary.linkBlue',
-                    px: 1.5,
-                  },
+                  bgcolor: '#FFFBF5',
+                  border: '1px solid #FFDDBB',
+                  borderRadius: '8px',
+                  px: 1.5,
+                  py: 0.5,
                 }}
-              />
-            ))}
+              >
+                <Typography sx={{ fontSize: '12px', fontWeight: 400 }}>
+                  {practitioner.org_registry_category_specialist}
+                </Typography>
+              </Box>
+            ) : (
+              topServices.map((service, index) => (
+                <Chip
+                  key={index}
+                  label={service}
+                  sx={{
+                    bgcolor: 'primary.sectionBg',
+                    border: '1px solid #0066CC',
+                    borderRadius: '9999px',
+                    '& .MuiChip-label': {
+                      fontWeight: 400,
+                      fontSize: '12px',
+                      color: 'primary.linkBlue',
+                      px: 1.5,
+                    },
+                  }}
+                />
+            ))
+            )}
           </Box>
         </Box>
       </Box>

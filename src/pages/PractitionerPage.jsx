@@ -20,6 +20,7 @@ function practitionerToFormData(practitioner) {
     info: practitioner.info,
     specificTypesOfCommunities: practitioner.specificTypesOfCommunities,
     organizationType: practitioner.organizationType,
+    org_registry_category_specialist: practitioner.org_registry_category_specialist || '',
     topServicesProvided: practitioner.topServicesProvided || practitioner.org_services_provided_top || [],
     activities: practitioner.activities || [],
     hazards: practitioner.hazards || [],
