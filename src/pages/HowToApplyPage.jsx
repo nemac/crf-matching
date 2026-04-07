@@ -72,7 +72,46 @@ export default function HowToApplyPage() {
             </Typography>
           </Box>
 
-          <Box
+
+        <Box sx={{ 
+                    mb: 8,
+                    p:4,
+                    mx:{ xs: 4, sm: 4, md: 10, lg: 20 },
+                    alignContent: "center",
+                    justifyContent: "center",
+                    textAlign: "center",
+                    backgroundColor: '#E1F5FE',
+                    borderRadius: 2,
+                    border: `1px solid ${theme.palette.primary.midBlue}`,        
+                  }}>
+          <Typography
+            variant="h3"
+            sx={{
+              color: 'primary.main',
+              fontWeight: 'bold',
+              mb: 1,
+            }}
+          >
+            Announcement 
+          </Typography>
+
+          <Box sx={{ width: `100%`, alignContent: 'center', justifyContent: 'center'}}>
+            <Typography component="div" sx={{ py:2, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>
+              Due to an extremely high volume of applicants, the Registry of Adaptation Practitioners is temporarily closed to new applications.
+            </Typography>
+            <Typography component="div" sx={{ py:2, width: '100%', textAlign: 'center'}}>
+                We anticipate reopening the application portal in late March 2026.
+            </Typography>
+            <Typography component="div" sx={{ width: '100%', textAlign: 'center'}}>
+                We appreciate your patience and encourage you to check back at that time.
+            </Typography>
+          </Box>
+        </Box>
+
+
+        <Box sx={{ mb: 8 }}>
+          <Typography
+            variant="h4"
             sx={{
               display: 'flex',
               justifyContent: 'center',
