@@ -194,9 +194,9 @@ export default function HomePage() {
                       <PullDownFilter
                         filterName="state-filter"
                         filterText={getFilterText('state', 'State or Territory')}
-                        availableOptions={['All States and Territories', ...availableOptions.state]}
-                        selectedValues={allStatesSelected ? ['All States and Territories', ...filters.state] : filters.state}
-                        onChange={e => handleStateFilterChange(e.target.value)}
+                        availableOptions={availableOptions.state}
+                        selectedValues={filters.state}
+                        onChange={e => handleFilterChange('state', e.target.value)}
                         boxSx={{ width: '100%', minWidth: 'unset', maxWidth: 'unset' }}
                       />
                       {filters.state.length > 0 && (
@@ -211,20 +211,13 @@ export default function HomePage() {
                           >
                             Clear All
                           </Typography>
-                          {allStatesSelected ? (
-                            <FilterRemoveTwo
-                              text="All States and Territories"
-                              onDelete={() => handleClearFilter('state')}
-                            />
-                          ) : (
-                            filters.state.map(value => (
+                          {filters.state.map(value => (
                               <FilterRemoveTwo
                                 key={value}
                                 text={value}
                                 onDelete={() => handleRemoveFilterValue('state', value)}
                               />
-                            ))
-                          )}
+                            ))}
                         </Box>
                       )}
                     </Box>
