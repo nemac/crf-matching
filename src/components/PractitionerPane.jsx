@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { Typography, Box, styled, IconButton } from '@mui/material';
+import { Typography, Box, Stack, styled, IconButton } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import SchoolIcon from '@mui/icons-material/School';
 import Button from '@mui/material/Button';
@@ -9,7 +9,6 @@ import ProfilePopper from './ProfilePopper';
 import HeaderBox from './HeaderBox';
 import Section from './Section';
 // import ScoreSection from './ScoreSection';
-import Pane from './Pane';
 import theme from '../theme';
 
 const matchVals = (commCats, practCats) => {
@@ -199,26 +198,28 @@ function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setP
             textTransform: 'none',
             borderRadius: 2,
             width: '100%',
-            gap: '12px',
+            gap: 1,
             '&:hover': {
               bgcolor: 'primary.main',
             },
           }}
-        >
-          <Typography sx={{ display: { xs: 'none', md: 'inherit' }, fontSize: '.875rem' }}>View Full Profile</Typography>
+        >          <Typography component="span" sx={{ fontSize: '.875rem', display: { xs: 'none', md: 'inline' } }}>View Full </Typography><Typography component="span" sx={{ fontSize: '.875rem' }}>Profile</Typography>
+
         </Button>
       </Box>
     </HeaderBox>
   );
 }
 
-export default function PractitionerPane({ community, practitioner, poppedPractitioner, setPoppedPractitioner, availableOptions={availableOptions} }) {
+export default function PractitionerPane(props) {
+  const { community, practitioner, poppedPractitioner, setPoppedPractitioner, availableOptions = {}, showHeader = true } = props;
   // Determine if we're on SelfServicePage by checking if community.name is "Self Service"
   const isSelfService = community.name === 'My Community' || community.name.includes(',');
+  const sectionHeaders = ['Services', 'Hazards', 'Sectors', 'Community Population', 'State/Territory'];
   const sections = [
     [availableOptions?.activities, practitioner.activities],
-    [availableOptions?.sectors, practitioner.sectors],
     [availableOptions?.hazards, practitioner.hazards],
+    [availableOptions?.sectors, practitioner.sectors],
     [availableOptions?.size, practitioner.size],
     [availableOptions?.state, practitioner.state],
   ]
@@ -227,6 +228,7 @@ export default function PractitionerPane({ community, practitioner, poppedPracti
       return {
         type: 'practitioner',
         id: `section${index}`,
+        header: sectionHeaders[index],
         cards: matches,
       };
     });
@@ -234,16 +236,26 @@ export default function PractitionerPane({ community, practitioner, poppedPracti
   return (
     <Box
       style={{
-        backgroundColor: theme.palette.primary.lightGray,
+        backgroundColor: showHeader ? theme.palette.primary.lightGray : '#FFFFFF',
       }}
     >
-      <PractitionerHeader
-        practitioner={practitioner}
-        strTrained={practitioner.strTrained}
-        poppedPractitioner={poppedPractitioner}
-        setPoppedPractitioner={setPoppedPractitioner}
-      />
-      <Pane boxShadow={2}>
+      {showHeader && (
+        <PractitionerHeader
+          practitioner={practitioner}
+          strTrained={practitioner.strTrained}
+          poppedPractitioner={poppedPractitioner}
+          setPoppedPractitioner={setPoppedPractitioner}
+        />
+      )}
+      <Stack
+        sx={{
+          pt: 1,
+          pb: 1,
+          border: (t) => `1px solid ${t.palette.primary.borderGray}`,
+          borderRadius: '10px',
+          boxShadow: 2,
+        }}
+      >
         {sections.map((section, index) => (
           <div key={section.id}>
             <Section {...section} />
@@ -261,7 +273,7 @@ export default function PractitionerPane({ community, practitioner, poppedPracti
         {/* <ScoreSection style={{ justifyContent: 'center' }}>
           <Box>{practitioner.matchScore}</Box>
         </ScoreSection> */}
-      </Pane>
+      </Stack>
     </Box>
   );
 }

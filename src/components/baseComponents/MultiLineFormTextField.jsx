@@ -2,7 +2,8 @@ import { Box, TextField, InputAdornment } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import PropTypes from 'prop-types';
 
-export default function MultiLineFormTextField({ label, value, onChange, name, minRows = 3, placeholder }) {
+export default function MultiLineFormTextField(props) {
+  const { label, value, onChange, name, minRows = 3, placeholder } = props;
   return (
     <Box sx={{ minWidth: '240px', maxWidth: '856px', width: '100%' }}>
       <Box
@@ -34,7 +35,7 @@ export default function MultiLineFormTextField({ label, value, onChange, name, m
             >
               <Box
                 sx={{
-                  bgcolor: '#0066CC',
+                  bgcolor: 'primary.linkBlue',
                   color: 'white',
                   borderRadius: '4px',
                   width: '32px',
@@ -49,19 +50,19 @@ export default function MultiLineFormTextField({ label, value, onChange, name, m
             </InputAdornment>
           ),
           sx: {
-            bgcolor: '#F9FAFB',
+            bgcolor: 'primary.sectionBg',
             borderRadius: '4px',
             minHeight: '81px',
             alignItems: 'flex-start',
             '& .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#0066CC',
+              borderColor: 'primary.linkBlue',
               borderWidth: '1px',
             },
             '&:hover .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#0066CC',
+              borderColor: 'primary.linkBlue',
             },
             '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#0066CC',
+              borderColor: 'primary.linkBlue',
               borderWidth: '1px',
             },
             '& textarea': {
@@ -71,7 +72,7 @@ export default function MultiLineFormTextField({ label, value, onChange, name, m
         }}
         sx={{
           '& .MuiInputBase-root': {
-            gap: '12px',
+            gap: 1,
             paddingRight: '8px',
             paddingTop: '4px',
             paddingBottom: '4px',

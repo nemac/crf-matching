@@ -1,0 +1,40 @@
+import Chip from '@mui/material/Chip';
+
+const FilterRemove = () => {
+  const handleDelete = () => {
+    console.info('You clicked the delete icon.');
+  };
+  return (
+    <>
+      <Chip
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          height: '31px',
+          borderRadius: '9999px',
+          pt: '6px',
+          pb: '6px',
+          gap: 1,
+          backgroundColor: '#FFDDBB',
+          '& .MuiChip-label': {
+            fontStyle: 'regular',
+            color: '#2D3F5D',
+            fontWeight: 400,
+            fontSize: 16,
+          },
+          '& .MuiChip-deleteIcon': {
+            color: '#2D3F5D',
+            borderRadius: '9999px',
+            p: '4px',
+            gap: 1,
+          },
+        }}
+        label="Filter Name"
+        onDelete={handleDelete}
+      />
+    </>
+  );
+};
+
+export default FilterRemove;

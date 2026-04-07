@@ -8,15 +8,8 @@ import {
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 
-export default function FormSelect({
-  label,
-  value,
-  onChange,
-  name,
-  options,
-  fullWidth = false,
-  multiple = false,
-}) {
+export default function FormSelect(props) {
+  const { label, value, onChange, name, options, fullWidth = false, multiple = false } = props;
   const [open, setOpen] = useState(false);
 
   const handleChange = (event) => {
@@ -70,18 +63,18 @@ export default function FormSelect({
               : undefined
           }
           sx={{
-            bgcolor: '#F9FAFB',
+            bgcolor: 'primary.sectionBg',
             borderRadius: '4px',
             height: '43px',
             '& .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#0066CC',
+              borderColor: 'primary.linkBlue',
               borderWidth: '1px',
             },
             '&:hover .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#0066CC',
+              borderColor: 'primary.linkBlue',
             },
             '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#0066CC',
+              borderColor: 'primary.linkBlue',
               borderWidth: '1px',
             },
             '& .MuiSelect-select': {
@@ -90,7 +83,7 @@ export default function FormSelect({
               alignItems: 'center',
             },
             paddingRight: '8px',
-            gap: '12px',
+            gap: 1,
           }}
         >
           {options.map(option => (

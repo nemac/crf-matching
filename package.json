@@ -11,15 +11,16 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,json,css,scss,md}\"",
     "format:check": "prettier --check \"src/**/*.{js,jsx,json,css,scss,md}\"",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
-    "@emotion/react": "^11.13.0",
-    "@emotion/styled": "^11.13.0",
-    "@mui/icons-material": "^5.18.0",
-    "@mui/material": "^5.16.6",
-    "@react-buddy/ide-toolbox": "^2.4.0",
-    "@react-buddy/palette-mui": "^5.0.1",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@fontsource/roboto": "^5.2.9",
+    "@mui/icons-material": "^7.3.7",
+    "@mui/material": "^7.3.7",
     "airtable": "^0.12.2",
     "aws-cdk-lib": "^2.232.2",
     "constructs": "^10.4.4",
@@ -42,7 +43,8 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.25",
     "globals": "^15.9.0",
-    "prettier": "^3.7.4",
-    "vite": "^5.4.0"
+    "prettier": "^3.8.1",
+    "vite": "^5.4.0",
+    "vitest": "^4.1.2"
   }
 }

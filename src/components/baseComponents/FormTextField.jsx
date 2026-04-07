@@ -28,7 +28,7 @@ export default function FormTextField(props) {
             <InputAdornment position="end">
               <Box
                 sx={{
-                  bgcolor: '#0066CC',
+                  bgcolor: 'primary.linkBlue',
                   color: 'white',
                   borderRadius: '4px',
                   width: '32px',
@@ -43,18 +43,18 @@ export default function FormTextField(props) {
             </InputAdornment>
           ),
           sx: {
-            bgcolor: '#F9FAFB',
+            bgcolor: 'primary.sectionBg',
             borderRadius: '4px',
             height: '43px',
             '& .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#0066CC',
+              borderColor: 'primary.linkBlue',
               borderWidth: '1px',
             },
             '&:hover .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#0066CC',
+              borderColor: 'primary.linkBlue',
             },
             '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-              borderColor: '#0066CC',
+              borderColor: 'primary.linkBlue',
               borderWidth: '1px',
             },
             '& input': {
@@ -66,7 +66,7 @@ export default function FormTextField(props) {
         }}
         sx={{
           '& .MuiInputBase-root': {
-            gap: '12px',
+            gap: 1,
             paddingRight: '8px',
           },
         }}

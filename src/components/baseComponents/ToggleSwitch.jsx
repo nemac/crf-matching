@@ -1,7 +1,8 @@
 import { Box, Switch } from '@mui/material';
 import PropTypes from 'prop-types';
 
-export default function ToggleSwitch({ label, value, onChange, name }) {
+export default function ToggleSwitch(props) {
+  const { label, value, onChange, name } = props;
   const isYes = value === 'Yes';
 
   const handleToggle = () => {
@@ -33,14 +34,14 @@ export default function ToggleSwitch({ label, value, onChange, name }) {
         sx={{
           display: 'flex',
           alignItems: 'center',
-          gap: '12px',
+          gap: 1,
         }}
       >
         <Box
           sx={{
             fontSize: '14px',
-            fontWeight: isYes ? 600 : 400,
-            color: isYes ? '#0066CC' : '#9CA3AF',
+            fontWeight: isYes ? 500 : 400,
+            color: isYes ? 'primary.linkBlue' : '#9CA3AF',
           }}
         >
           Yes
@@ -58,7 +59,7 @@ export default function ToggleSwitch({ label, value, onChange, name }) {
               transitionDuration: '300ms',
               '&.Mui-checked': {
                 transform: 'translateX(44px)',
-                color: '#0066CC',
+                color: 'primary.linkBlue',
                 '& + .MuiSwitch-track': {
                   backgroundColor: '#66CCFF',
                   opacity: 1,
@@ -66,7 +67,7 @@ export default function ToggleSwitch({ label, value, onChange, name }) {
                 },
               },
               '&:not(.Mui-checked)': {
-                color: '#0066CC',
+                color: 'primary.linkBlue',
               },
             },
             '& .MuiSwitch-thumb': {
@@ -84,8 +85,8 @@ export default function ToggleSwitch({ label, value, onChange, name }) {
         <Box
           sx={{
             fontSize: '14px',
-            fontWeight: !isYes ? 600 : 400,
-            color: !isYes ? '#0066CC' : '#9CA3AF',
+            fontWeight: !isYes ? 500 : 400,
+            color: !isYes ? 'primary.linkBlue' : '#9CA3AF',
           }}
         >
           No

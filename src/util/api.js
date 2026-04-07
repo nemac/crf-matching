@@ -8,6 +8,8 @@ Airtable.configure({
   endpointUrl: 'https://api.airtable.com',
   apiKey: __AIRTABLE_TOKEN__,
 });
+console.log('__AIRTABLE_BASE__', typeof __AIRTABLE_BASE__, __AIRTABLE_BASE__);
+
 const base = Airtable.base(__AIRTABLE_BASE__);
 
 /// configuration ///
@@ -15,7 +17,7 @@ const practitionerViewName = 'RegistryPractitionerAndSpecialistsToolView'; //'Re
 const specialistsViewName = 'RegistrySpecialistToolView'; //'RegistryToolView' // 'Grid view'
 const PractitionerPageViewName = 'RegistryForPractitionerPageToolView'; // 'Grid view'
 
-const normalizeRec = (rec, fieldMap) => {
+export const normalizeRec = (rec, fieldMap) => {
   const result = {};
   for (const [normKey, airKey] of Object.entries(fieldMap)) {
     // For communities, ensure every field is an array
@@ -45,7 +47,7 @@ const communityFieldMap = {
 
 const practFetchFields = Object.values(practitionerFieldMap);
 
-function buildAirtableFilterFormula(
+export function buildAirtableFilterFormula(
   criteriaObject,
   fieldMap,
   operator = 'AND'
@@ -175,17 +177,19 @@ export const fetchFilteredSpecialist = (filters, setPractitioners) => {
 export const fetchFilteredPractitioners = (filters, setPractitioners) => {
   // Helper function to calculate match count
   const fieldsToCheck = ['state', 'activities', 'hazards', 'size', 'sectors'];
-  
-  const calculateMatchCount = (practitioner) => {
+
+  const calculateMatchCount = practitioner => {
     let count = 0;
-    
+
     for (const field of fieldsToCheck) {
       if (filters[field] && filters[field].length > 0) {
         const practitionerValues = practitioner[field];
         const practitionerArray = Array.isArray(practitionerValues)
           ? practitionerValues
-          : (practitionerValues ? [practitionerValues] : []);
-        
+          : practitionerValues
+            ? [practitionerValues]
+            : [];
+
         // Count how many filter values exist in this practitioner's field
         filters[field].forEach(filterValue => {
           if (practitionerArray.includes(filterValue)) {
@@ -194,17 +198,17 @@ export const fetchFilteredPractitioners = (filters, setPractitioners) => {
         });
       }
     }
-    
+
     return count;
   };
 
   // Helper function to sort and randomize practitioners
-  const sortAndRandomize = (practitioners) => {
+  const sortAndRandomize = practitioners => {
     const practitionersWithCounts = practitioners.map(prac => {
       const matchCount = calculateMatchCount(prac);
       return {
         practitioner: { ...prac, matchCount },
-        matchCount
+        matchCount,
       };
     });
 
@@ -250,7 +254,7 @@ export const fetchFilteredPractitioners = (filters, setPractitioners) => {
     if (completedRequests === 2) {
       // Both requests are done, merge and sort by match count descending
       const allPractitioners = [...specialistsData, ...broadData];
-      
+
       // Sort all practitioners by match count descending
       allPractitioners.sort((a, b) => {
         if (b.matchCount !== a.matchCount) {
@@ -259,7 +263,7 @@ export const fetchFilteredPractitioners = (filters, setPractitioners) => {
         // For same match count, randomize
         return Math.random() - 0.5;
       });
-      
+
       setPractitioners(allPractitioners);
     }
   };
@@ -330,8 +334,40 @@ export const fetchFilteredPractitioners = (filters, setPractitioners) => {
       combineAndReturn();
     })
     .catch(err => {
-      console.error('An error occurred while fetching broad service providers:', err);
+      console.error(
+        'An error occurred while fetching broad service providers:',
+        err
+      );
       combineAndReturn();
+    });
+};
+
+export const fetchPractitionersByName = (searchTerm, callback) => {
+  if (!searchTerm || searchTerm.trim().length === 0) {
+    callback([]);
+    return;
+  }
+
+  const filterFormula = `FIND(LOWER("${searchTerm}"), LOWER({org_name}))`;
+
+  base('Organization')
+    .select({
+      view: practitionerViewName,
+      fields: practFetchFields,
+      filterByFormula: filterFormula,
+      maxRecords: 3,
+      sort: [{ field: 'org_name', direction: 'asc' }],
+    })
+    .firstPage((err, records) => {
+      if (err) {
+        console.error(err);
+        callback([]);
+        return;
+      }
+      const results = records
+        .map(rawRec => rawRec.fields)
+        .map(rec => normalizeRec(rec, practitionerFieldMap));
+      callback(results);
     });
 };
 

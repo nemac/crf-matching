@@ -196,7 +196,7 @@ const WorkExampleForm = props => {
           />
         </Box>
       </Box>
-      <Box sx={{ display: 'flex', gap: '16px', ml: 2, mt: 4, mb: 4 }}>
+      <Box sx={{ display: 'flex', gap: 2, ml: 2, mt: 4, mb: 4 }}>
         <Button
           onClick={handleSave}
           disabled={submitting || saved}
@@ -204,7 +204,7 @@ const WorkExampleForm = props => {
             width: '135px',
             borderRadius: '4px',
             padding: '4px 48px',
-            bgcolor: saved ? '#CCCCCC' : '#003366',
+            bgcolor: saved ? '#CCCCCC' : 'primary.ctaDarkBlue',
             color: saved ? '#666666' : '#FFFFFF',
             fontWeight: 400,
             fontSize: '18px',
@@ -237,10 +237,8 @@ const WorkExampleForm = props => {
             padding: '4px',
             bgcolor: '#FFFFFF',
             color: '#000000',
-            fontFamily: 'Roboto',
             fontWeight: 400,
             fontSize: '18px',
-            lineHeight: '100%',
             boxShadow: '0px 1px 2px 0px #00000040',
             textTransform: 'none',
             '&:hover': {

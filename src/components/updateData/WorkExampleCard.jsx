@@ -60,25 +60,17 @@ const WorkExampleCard = props => {
       >
         <Box>
           <Typography
-            sx={{
-              fontFamily: 'Roboto',
-              fontWeight: 500,
-              fontSize: '20px',
-              lineHeight: '100%',
-              color: '#101828',
-              mb: 2,
-            }}
+            variant="h4"
+            sx={{ mb: 2 }}
           >
             {title || `Work Example Title ${exampleNumber}`}
           </Typography>
 
           <Typography
             sx={{
-              fontFamily: 'Roboto',
-              fontWeight: 400,
+                fontWeight: 400,
               fontSize: '16px',
-              lineHeight: '24px',
-              color: '#56657D',
+              color: 'text.secondary',
             }}
           >
             {truncateText(
@@ -98,13 +90,12 @@ const WorkExampleCard = props => {
         >
           <Button
             onClick={handleOpenInNewTab}
-            endIcon={<ArrowForwardIcon sx={{ color: '#003366' }} />}
+            endIcon={<ArrowForwardIcon sx={{ color: 'primary.ctaDarkBlue' }} />}
             sx={{
               textTransform: 'none',
               padding: 0,
-              color: '#003366',
-              fontFamily: 'Roboto',
-              fontWeight: 500,
+              color: 'primary.ctaDarkBlue',
+                fontWeight: 500,
               fontSize: '16px',
               '&:hover': {
                 backgroundColor: 'transparent',

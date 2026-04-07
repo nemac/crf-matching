@@ -4,7 +4,6 @@ import { Box } from "@mui/material";
 import theme from '../../theme';
 
 export default function PractMatchSymbol({ label }) {
-  // label is a boolean
   return (
     <Box sx={{
       justifyContent: 'center',
@@ -14,11 +13,9 @@ export default function PractMatchSymbol({ label }) {
     }}>
       <Box
         sx={{
-          width: {
-            xs: "clamp(20px, 75%, 40px)",
-            md: 25
-          }    
-        }} 
+          width: 28,
+          height: 28,
+        }}
       >
         {
           label

@@ -28,7 +28,7 @@ const validOrganizationSize = [
 ];
 
 const validOrganizationTypes = [
-  'Independent contractor or sole propietor',
+  'Independent contractor or sole proprietor',
   'Non-profit organization',
   'Consultant agency',
   'Local or regional government(s)',
@@ -287,12 +287,12 @@ export default function UpdateData({
         </Grid>
       </Box>
 
-      <SectionHeader>LinkedIN</SectionHeader>
+      <SectionHeader>LinkedIn</SectionHeader>
 
       <Box sx={{ ml: 2, mb: 8 }}>
         <Box sx={{ mb: 4, maxWidth: '350px' }}>
           <FormTextField
-            label="LinkedIN"
+            label="LinkedIn"
             name="linkedIn"
             value={formData.linkedIn}
             onChange={handleChange}
@@ -405,12 +405,10 @@ export default function UpdateData({
               <Button
                 onClick={() => handleClearAll('languageFluencies')}
                 sx={{
-                  fontFamily: 'Roboto',
                   fontWeight: 400,
                   fontSize: '14px',
-                  lineHeight: '100%',
                   textTransform: 'none',
-                  color: '#0066CC',
+                  color: 'primary.linkBlue',
                   mb: 1,
                   px: 2,
                   py: 0.5,
@@ -430,11 +428,9 @@ export default function UpdateData({
                       <IconButton
                         size="small"
                         sx={{
-                          fontFamily: 'Roboto',
                           fontWeight: 700,
                           fontSize: '10px',
-                          lineHeight: '100%',
-                          bgcolor: '#F9FAFB',
+                          bgcolor: 'primary.sectionBg',
                           '&:hover': {
                             bgcolor: '#E5E7EB',
                           },
@@ -447,7 +443,7 @@ export default function UpdateData({
                       height: '33px',
                       borderRadius: '9999px',
                       border: '1px solid #0066CC',
-                      bgcolor: '#F9FAFB',
+                      bgcolor: 'primary.sectionBg',
                     }}
                   />
                 ))}
@@ -501,12 +497,10 @@ export default function UpdateData({
               <Button
                 onClick={() => handleClearAll('topServicesProvided')}
                 sx={{
-                  fontFamily: 'Roboto',
                   fontWeight: 400,
                   fontSize: '14px',
-                  lineHeight: '100%',
                   textTransform: 'none',
-                  color: '#0066CC',
+                  color: 'primary.linkBlue',
                   mb: 1,
                   px: 2,
                   py: 0.5,
@@ -526,11 +520,9 @@ export default function UpdateData({
                       <IconButton
                         size="small"
                         sx={{
-                          fontFamily: 'Roboto',
                           fontWeight: 700,
                           fontSize: '10px',
-                          lineHeight: '100%',
-                          bgcolor: '#F9FAFB',
+                          bgcolor: 'primary.sectionBg',
                           '&:hover': {
                             bgcolor: '#E5E7EB',
                           },
@@ -543,7 +535,7 @@ export default function UpdateData({
                       height: '33px',
                       borderRadius: '9999px',
                       border: '1px solid #0066CC',
-                      bgcolor: '#F9FAFB',
+                      bgcolor: 'primary.sectionBg',
                     }}
                   />
                 ))}
@@ -572,12 +564,10 @@ export default function UpdateData({
             <Button
               onClick={() => handleClearAll('activities')}
               sx={{
-                fontFamily: 'Roboto',
                 fontWeight: 400,
                 fontSize: '14px',
-                lineHeight: '100%',
                 textTransform: 'none',
-                color: '#0066CC',
+                color: 'primary.linkBlue',
                 mb: 1,
                 px: 2,
                 py: 0.5,
@@ -595,11 +585,9 @@ export default function UpdateData({
                     <IconButton
                       size="small"
                       sx={{
-                        fontFamily: 'Roboto',
                         fontWeight: 700,
                         fontSize: '10px',
-                        lineHeight: '100%',
-                        bgcolor: '#F9FAFB',
+                        bgcolor: 'primary.sectionBg',
                         '&:hover': {
                           bgcolor: '#E5E7EB',
                         },
@@ -612,7 +600,7 @@ export default function UpdateData({
                     height: '33px',
                     borderRadius: '9999px',
                     border: '1px solid #0066CC',
-                    bgcolor: '#F9FAFB',
+                    bgcolor: 'primary.sectionBg',
                   }}
                 />
               ))}
@@ -641,12 +629,10 @@ export default function UpdateData({
             <Button
               onClick={() => handleClearAll('hazards')}
               sx={{
-                fontFamily: 'Roboto',
                 fontWeight: 400,
                 fontSize: '14px',
-                lineHeight: '100%',
                 textTransform: 'none',
-                color: '#0066CC',
+                color: 'primary.linkBlue',
                 mb: 1,
                 px: 2,
                 py: 0.5,
@@ -664,11 +650,9 @@ export default function UpdateData({
                     <IconButton
                       size="small"
                       sx={{
-                        fontFamily: 'Roboto',
                         fontWeight: 700,
                         fontSize: '10px',
-                        lineHeight: '100%',
-                        bgcolor: '#F9FAFB',
+                        bgcolor: 'primary.sectionBg',
                         '&:hover': {
                           bgcolor: '#E5E7EB',
                         },
@@ -681,7 +665,7 @@ export default function UpdateData({
                     height: '33px',
                     borderRadius: '9999px',
                     border: '1px solid #0066CC',
-                    bgcolor: '#F9FAFB',
+                    bgcolor: 'primary.sectionBg',
                   }}
                 />
               ))}
@@ -710,12 +694,10 @@ export default function UpdateData({
             <Button
               onClick={() => handleClearAll('sectors')}
               sx={{
-                fontFamily: 'Roboto',
                 fontWeight: 400,
                 fontSize: '14px',
-                lineHeight: '100%',
                 textTransform: 'none',
-                color: '#0066CC',
+                color: 'primary.linkBlue',
                 mb: 1,
                 px: 2,
                 py: 0.5,
@@ -733,11 +715,9 @@ export default function UpdateData({
                     <IconButton
                       size="small"
                       sx={{
-                        fontFamily: 'Roboto',
                         fontWeight: 700,
                         fontSize: '10px',
-                        lineHeight: '100%',
-                        bgcolor: '#F9FAFB',
+                        bgcolor: 'primary.sectionBg',
                         '&:hover': {
                           bgcolor: '#E5E7EB',
                         },
@@ -750,7 +730,7 @@ export default function UpdateData({
                     height: '33px',
                     borderRadius: '9999px',
                     border: '1px solid #0066CC',
-                    bgcolor: '#F9FAFB',
+                    bgcolor: 'primary.sectionBg',
                   }}
                 />
               ))}
@@ -784,12 +764,10 @@ export default function UpdateData({
               <Button
                 onClick={() => handleClearAll('communitySize')}
                 sx={{
-                  fontFamily: 'Roboto',
                   fontWeight: 400,
                   fontSize: '14px',
-                  lineHeight: '100%',
                   textTransform: 'none',
-                  color: '#0066CC',
+                  color: 'primary.linkBlue',
                   px: 2,
                   py: 0.5,
                 }}
@@ -809,12 +787,10 @@ export default function UpdateData({
                   })
                 }
                 sx={{
-                  fontFamily: 'Roboto',
                   fontWeight: 400,
                   fontSize: '14px',
-                  lineHeight: '100%',
                   textTransform: 'none',
-                  color: '#0066CC',
+                  color: 'primary.linkBlue',
                   px: 2,
                   py: 0.5,
                 }}
@@ -836,11 +812,9 @@ export default function UpdateData({
                     <IconButton
                       size="small"
                       sx={{
-                        fontFamily: 'Roboto',
                         fontWeight: 700,
                         fontSize: '10px',
-                        lineHeight: '100%',
-                        bgcolor: '#F9FAFB',
+                        bgcolor: 'primary.sectionBg',
                         '&:hover': {
                           bgcolor: '#E5E7EB',
                         },
@@ -853,7 +827,7 @@ export default function UpdateData({
                     height: '33px',
                     borderRadius: '9999px',
                     border: '1px solid #0066CC',
-                    bgcolor: '#F9FAFB',
+                    bgcolor: 'primary.sectionBg',
                   }}
                 />
               ))}
@@ -887,12 +861,10 @@ export default function UpdateData({
                 <Button
                   onClick={() => handleClearAll('whereOrganizationWorks')}
                   sx={{
-                    fontFamily: 'Roboto',
                     fontWeight: 400,
                     fontSize: '14px',
-                    lineHeight: '100%',
                     textTransform: 'none',
-                    color: '#0066CC',
+                    color: 'primary.linkBlue',
                     px: 2,
                     py: 0.5,
                   }}
@@ -912,12 +884,10 @@ export default function UpdateData({
                   })
                 }
                 sx={{
-                  fontFamily: 'Roboto',
                   fontWeight: 400,
                   fontSize: '14px',
-                  lineHeight: '100%',
                   textTransform: 'none',
-                  color: '#0066CC',
+                  color: 'primary.linkBlue',
                   px: 2,
                   py: 0.5,
                 }}
@@ -942,11 +912,9 @@ export default function UpdateData({
                       <IconButton
                         size="small"
                         sx={{
-                          fontFamily: 'Roboto',
                           fontWeight: 700,
                           fontSize: '10px',
-                          lineHeight: '100%',
-                          bgcolor: '#F9FAFB',
+                          bgcolor: 'primary.sectionBg',
                           '&:hover': {
                             bgcolor: '#E5E7EB',
                           },
@@ -959,7 +927,7 @@ export default function UpdateData({
                       height: '33px',
                       borderRadius: '9999px',
                       border: '1px solid #0066CC',
-                      bgcolor: '#F9FAFB',
+                      bgcolor: 'primary.sectionBg',
                     }}
                   />
                 ))}
@@ -974,7 +942,7 @@ export default function UpdateData({
         onClick={handleSubmit}
         disabled={submitting || success || isDevMode}
         sx={{
-          bgcolor: '#003366',
+          bgcolor: 'primary.ctaDarkBlue',
           color: 'white',
           textTransform: 'none',
           px: 6,

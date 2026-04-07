@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Box, Typography, Button, TextField, Alert, CircularProgress } from '@mui/material';
+import { Box, Typography, Button, Alert, CircularProgress } from '@mui/material';
 import { generateMagicLink } from '../../config/api';
+import FormTextField from '../baseComponents/FormTextField';
 
 export default function RequestMagicLink() {
   const [email, setEmail] = useState('');
@@ -55,7 +56,6 @@ export default function RequestMagicLink() {
           mb: 4,
           color: 'text.secondary',
           fontSize: '1rem',
-          lineHeight: 1.6,
         }}
       >
         Enter your organization contact email to receive a secure link to update your information. The link will be
@@ -84,49 +84,13 @@ export default function RequestMagicLink() {
 
       <form onSubmit={handleSubmit}>
         <Box sx={{ mb: 3 }}>
-          <Box
-            component="label"
-            sx={{
-              display: 'block',
-              mb: 0.5,
-              fontSize: '0.875rem',
-              color: 'text.secondary',
-              fontWeight: 500,
-            }}
-          >
-            Email Address
-          </Box>
-          <TextField
+          <FormTextField
+            label="Email Address"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="organization@example.com"
-            required
+            name="email"
             fullWidth
-            disabled={loading}
-            sx={{
-              '& .MuiOutlinedInput-root': {
-                bgcolor: '#F9FAFB',
-                borderRadius: '4px',
-                height: '43px',
-                '& .MuiOutlinedInput-notchedOutline': {
-                  borderColor: '#0066CC',
-                  borderWidth: '1px',
-                },
-                '&:hover .MuiOutlinedInput-notchedOutline': {
-                  borderColor: '#0066CC',
-                },
-                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                  borderColor: '#0066CC',
-                  borderWidth: '1px',
-                },
-                '& input': {
-                  padding: '4px 12px',
-                  height: '100%',
-                  boxSizing: 'border-box',
-                },
-              },
-            }}
           />
         </Box>
 
@@ -135,7 +99,7 @@ export default function RequestMagicLink() {
           variant="contained"
           disabled={loading || !email}
           sx={{
-            bgcolor: '#003366',
+            bgcolor: 'primary.ctaDarkBlue',
             color: 'white',
             textTransform: 'none',
             px: 6,
@@ -184,7 +148,7 @@ export default function RequestMagicLink() {
         </Typography>
         <Typography
           variant="body2"
-          sx={{ color: 'text.secondary', lineHeight: 1.6 }}
+          sx={{ color: 'text.secondary' }}
         >
           1. You'll receive an email with a secure link
           <br />

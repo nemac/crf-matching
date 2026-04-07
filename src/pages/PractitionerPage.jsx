@@ -1,222 +1,94 @@
 import { useState, useLayoutEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { ThemeProvider } from '@mui/material/styles';
-import { CssBaseline, Stack, Container, Box, Typography, styled } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+import { useParams, useSearchParams } from 'react-router-dom';
+import { Container, Typography } from '@mui/material';
 
-import theme from '../theme';
-import PlaceIcon from '@mui/icons-material/Place';
 import FullPageSpinner from '../components/FullPageSpinner';
-import ContactRow from '../components/ContactRow';
-import SectionHeader from '../components/SectionHeader';
-import MatchSection from '../components/MatchSection';
-// import WorkExamples from '../components/WorkExamples';
-import PractitionerTypeChip from '../components/PractitionerTypeChip';
 import NavBar from '../components/NavBar';
-
-// API
+import Footer from '../components/Footer';
+import NewPractitionerLayout from '../components/updateData/NewPractitionerLayout';
 import { fetchPractitioner } from '../util/api';
 
-const sections = [
-  {
-    title: 'Our top 3 services',
-    objKey: 'org_services_provided_top',
-  },  
-  {
-    title: 'Services Provided',
-    objKey: 'activities',
-  },
-  {
-    title: 'Hazard Expertise',
-    objKey: 'hazards',
-  },
-  {
-    title: 'Sector Expertise',
-    objKey: 'sectors',
-  },
-  {
-    title: 'Size of Communities Where We Work',
-    objKey: 'size',
-  },
-  {
-    title: 'Where We Work',
-    objKey: 'state',
-  },  
-];
-
-const ContactAndTrainingBox = styled(Grid)(({ theme }) => ({
-  borderRadius: theme.spacing(3),
-  padding: theme.spacing(3),
-  margin: theme.spacing(1),
-}));
-
-function PractitionerPageLoaded({ practitioner }) {
-  const currentParams = window.location.search || '';
-  
-  const params = new URLSearchParams(window.location.search);
-  const filters = {
-    activities: [],
-    sectors: [],
-    hazards: [],
-    size: [],
-    state: [],
+function practitionerToFormData(practitioner) {
+  return {
+    org: practitioner.org,
+    org_registry_category: practitioner.org_registry_category,
+    website: practitioner.website,
+    email: practitioner.email,
+    phone: practitioner.phone,
+    city: practitioner.org_city,
+    state: practitioner.org_state,
+    info: practitioner.info,
+    specificTypesOfCommunities: practitioner.specificTypesOfCommunities,
+    organizationType: practitioner.organizationType,
+    org_registry_category_specialist: practitioner.org_registry_category_specialist || '',
+    topServicesProvided: practitioner.topServicesProvided || practitioner.org_services_provided_top || [],
+    activities: practitioner.activities || [],
+    hazards: practitioner.hazards || [],
+    sectors: practitioner.sectors || [],
+    communitySize: practitioner.size || [],
+    whereOrganizationWorks: practitioner.state || [],
+    example1_title: practitioner.example1_title,
+    example1_description: practitioner.example1_description,
+    example1_links: practitioner.example1_links,
+    example1_location: practitioner.example1_location,
+    example1_engagement: practitioner.example1_engagement,
+    example1_equity: practitioner.example1_equity,
+    example1_lead: practitioner.example1_lead,
+    example2_title: practitioner.example2_title,
+    example2_description: practitioner.example2_description,
+    example2_links: practitioner.example2_links,
+    example2_location: practitioner.example2_location,
+    example2_engagement: practitioner.example2_engagement,
+    example2_equity: practitioner.example2_equity,
+    example2_lead: practitioner.example2_lead,
+    example3_title: practitioner.example3_title,
+    example3_description: practitioner.example3_description,
+    example3_links: practitioner.example3_links,
+    example3_location: practitioner.example3_location,
+    example3_engagement: practitioner.example3_engagement,
+    example3_equity: practitioner.example3_equity,
+    example3_lead: practitioner.example3_lead,
   };
-  
-    // Parse each filter type
-  Object.keys(filters).forEach((key) => {
-    const param = params.get(key);
-    if (param) {
-      filters[key] = param.split(',');
-    }
-  });
+}
 
-  const specialty = practitioner.org_registry_category_specialist;
-  const category = practitioner.org_registry_category;
+function PractitionerPageLoaded({ practitioner, urlFilters }) {
+  const formData = practitionerToFormData(practitioner);
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <>
       <NavBar />
-
       <Container
         maxWidth="xl"
-        sx={{ 
+        sx={{
           p: 3,
           pb: 8,
           cursor: 'default',
-          px: { xs: 4, sm: 4, md: 4, lg: 4 },
+          px: { xs: 4, sm: 6, md: 12 },
         }}
       >
-        <PractitionerTypeChip 
-          type={category} 
-          label={category}
-          list={specialty}
-          size={'large'}/>
-
-        <Typography
-          variant="h3"
-          fontWeight={800} 
-          sx={{ mb: 3 }}>
-          {practitioner.org} {specialty}
+        <Typography variant="h1" sx={{ mb: 3 }}>
+          {practitioner.org}
         </Typography>
 
-        {/* Contact & Training Row */}
-        <Grid
-          container
-          spacing={1}
-          gap={1}
-          sx={{ mb: 2 }}
-        >
-          {/* Contact */}
-          <ContactAndTrainingBox
-            xs={12}
-            lg={12}
-            sx={{
-              boxShadow: 3,
-              color: 'primary.main',
-              border: `1px solid ${theme.palette.primary.midBlue}`,
-            }}
-          >
-            <SectionHeader title="Contact"></SectionHeader>
-            <Stack spacing={0.5} sx={{ mt: 1 }}>
-              <ContactRow
-                type="website"
-                practitioner={practitioner}
-              ></ContactRow>
-              <ContactRow
-                type="email"
-                practitioner={practitioner}
-              ></ContactRow>
-              <ContactRow
-                type="phone"
-                practitioner={practitioner}
-              ></ContactRow>
-              <ContactRow
-                type="linkedIn"
-                practitioner={practitioner}
-              ></ContactRow>              
-            </Stack>
-          </ContactAndTrainingBox>
-        </Grid>
-        <Box>
-          <SectionHeader title="Organization Location"></SectionHeader>
-          <Box
-            sx={{
-              pb: 1,
-              mb: 1,
-              alignContent: 'center',
-              justifyContent: 'start',
-              display: 'flex',
-            }}
-          >
-            <PlaceIcon sx={{ mr: 1 }} /> {practitioner.org_city || 'N/A'}, {practitioner.org_state || 'N/A'}
-          </Box>
-        </Box>        
-        <Box>
-          <SectionHeader title="Organization Description"></SectionHeader>
-          <Box
-            sx={{
-              pb: 1,
-              mb: 1,
-            }}
-          >
-            {practitioner.info || 'N/A'}
-          </Box>
-        </Box>      
-        <Box>
-          <SectionHeader title="Community Specializations"></SectionHeader>
-          <Box
-            sx={{
-              pb: 1,
-              mb: 1,
-            }}
-          >
-            {practitioner.specificTypesOfCommunities || 'N/A'}
-          </Box>
-        </Box>
-        <Box>
-          <SectionHeader title="Organization Type"></SectionHeader>
-          <Box
-            sx={{
-              pb: 1,
-              mb: 2,
-            }}
-          >
-            {practitioner.organizationType || 'N/A'}
-          </Box>
-        </Box>
-        {/* <Box>
-          <SectionHeader title="Completed Steps to Resilience Training"></SectionHeader>
-          <Box
-            sx={{
-              pb: 1,
-              mb: 1,
-            }}
-          >
-            {practitioner.strTrained || 'N/A'}
-          </Box>
-        </Box>           */}
-        {sections.map((data, index) => {
-          return (
-            <MatchSection
-              filters={filters}
-              practitioner={practitioner}
-              title={data.title}
-              objKey={data.objKey}
-              key={index}
-            ></MatchSection>
-          );
-        })}
-        {/* <WorkExamples practitioner={practitioner} filters={currentParams}/> */}
-
+        <NewPractitionerLayout
+          formData={formData}
+          urlFilters={urlFilters}
+        />
       </Container>
-    </ThemeProvider>
+      <Footer />
+    </>
   );
 }
 
-/// Practitioner Page ///
 function PractitionerPage() {
   const { practitionerId } = useParams();
+  const [searchParams] = useSearchParams();
+  const urlFilters = {
+    state: searchParams.get('state')?.split(',').filter(Boolean) || [],
+    activities: searchParams.get('activities')?.split(',').filter(Boolean) || [],
+    hazards: searchParams.get('hazards')?.split(',').filter(Boolean) || [],
+    sectors: searchParams.get('sectors')?.split(',').filter(Boolean) || [],
+  };
 
   const [practitioner, setPractitioner] = useState(null);
 
@@ -225,7 +97,7 @@ function PractitionerPage() {
   }, []);
 
   if (practitioner) {
-    return <PractitionerPageLoaded practitioner={practitioner} />;
+    return <PractitionerPageLoaded practitioner={practitioner} urlFilters={urlFilters} />;
   } else {
     return <FullPageSpinner />;
   }

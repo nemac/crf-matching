@@ -1,7 +1,5 @@
 import { Typography, Box, Stack } from '@mui/material';
 import Cell from './Cell';
-import DropDownSelector from './DropDownSelector';
-import theme from '../theme';
 
 export default function Section({
   header = '',
@@ -10,10 +8,9 @@ export default function Section({
   id,
   isSelectable,
   onSelectionChange,
-  availableSelections = [],
 }) {
-  const handleRemove = (itemToRemove) => {
-    const newSelections = cards.filter((item) => item !== itemToRemove);
+  const handleRemove = itemToRemove => {
+    const newSelections = cards.filter(item => item !== itemToRemove);
     onSelectionChange(header.toLowerCase(), newSelections);
   };
 
@@ -28,18 +25,21 @@ export default function Section({
   );
 
   return (
-    <Box
-      key={id}
-      sx={{ mb: 2 }}
-    >
-      <Box sx={{ minHeight: { xs: '60px', md: '40px' }, mt: '5px', mb: '5px' }}>
-        <Typography variant="body1">{header}</Typography>
+    <Box key={id} sx={{ mb: 2 }}>
+      <Box>
+        <Typography
+          sx={{
+            fontWeight: 500,
+            fontSize: '20px',
+            color: '#6C788D',
+            textAlign: type === 'practitioner' ? 'center' : 'left',
+          }}
+        >
+          {header}
+        </Typography>
       </Box>
 
-      <Stack
-        gap={2}
-        useFlexGap={true}
-      >
+      <Stack gap={0} useFlexGap>
         {cells}
       </Stack>
 

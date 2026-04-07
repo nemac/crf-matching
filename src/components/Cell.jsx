@@ -11,58 +11,57 @@ export default function Cell({ label, type, key, isSelectable, onRemove }) {
   let content;
   if (type === 'community') {
     content = (
-      <Box
+      <Typography
         sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          width: '100%',
+          fontWeight: 400,
+          fontSize: '12px',
+          color: 'primary.linkBlue',
         }}
       >
-        <Typography
-          variant="body1"
-          sx={{ textAlign: 'left' }}
-        >
-          {label}
-        </Typography>
-        {/* {isSelectable && (
-          <button
-            onClick={() => onRemove(label)}
-            style={{
-              color: theme.palette.primary.main,
-              border: 'none',
-              background: 'none',
-              fontSize: '18px',
-              cursor: 'pointer',
-              padding: '0 4px',
-            }}
-          >
-            ×
-          </button>
-        )} */}
-      </Box>
+        {label}
+      </Typography>
     );
   } else {
     content = PractMatchSymbol({ label });
   }
+
+  const practitionerCellSx = {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '6px 12px',
+    gap: 1,
+    width: '100%',
+    height: 60,
+    maxHeight: 60,
+    bgcolor: key === hoverRow ? 'primary.cellHoverBg' : '#FFFFFF',
+    borderWidth: '1px 0px',
+    borderStyle: 'solid',
+    borderColor: '#66CCFF',
+  };
+
+  const communityCellSx = {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: '6px 12px',
+    gap: 0.5,
+    height: 60,
+    maxHeight: 60,
+    bgcolor: key === hoverRow ? 'primary.cellHoverBg' : '#FFFFFF',
+    borderWidth: '1px 0px 1px 1px',
+    borderStyle: 'solid',
+    borderColor: '#66CCFF',
+    borderRadius: '9999px 0px 0px 9999px',
+  };
 
   return (
     <Box
       onMouseEnter={(e) => setHoverRow(key)}
       onMouseLeave={(e) => setHoverRow(null)}
       key={key}
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        borderTopRightRadius: 0,
-        borderBottomRightRadius: 0,
-        borderTopLeftRadius: type === 'community' ? theme.spacing(2) : 0,
-        borderBottomLeftRadius: type === 'community' ? theme.spacing(2) : 0,
-        padding: 1,
-        bgcolor: key === hoverRow ? 'primary.cellHoverBg' : 'primary.tan',
-        height: { xs: 120, md: 50 },
-        justifyContent: 'center',
-      }}
+      sx={type === 'practitioner' ? practitionerCellSx : communityCellSx}
     >
       {content}
     </Box>

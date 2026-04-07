@@ -1,98 +1,112 @@
 import { Typography, Box, Stack } from '@mui/material';
 import HeaderBox from './HeaderBox';
-import ScoreSection from './ScoreSection';
-import Pane from './Pane';
+
 import Section from './Section';
 import theme from '../theme';
 
-const getSectionData = (community, isSelectable, availableOptions, onSelectionChange) =>
+const getSectionData = (
+  community,
+  isSelectable,
+  availableOptions,
+  onSelectionChange
+) =>
   [
     {
-      header: 'Activities',
+      header: 'Services Provided',
       cards: availableOptions?.activities,
-      // availableSelections: isSelectable ? availableOptions?.activities || [] : [],
-      availableSelections: availableOptions?.activities // || [],
+      availableSelections: availableOptions?.activities,
+    },
+    {
+      header: 'Climate Hazards',
+      cards: availableOptions?.hazards,
+      availableSelections: availableOptions?.hazards,
     },
     {
       header: 'Sectors',
       cards: availableOptions?.sectors,
-      // availableSelections: isSelectable ? availableOptions?.sectors || [] : [],
-      availableSelections: availableOptions?.sectors // || [],
+      availableSelections: availableOptions?.sectors,
     },
     {
-      header: 'Hazards',
-      cards: availableOptions?.hazards,
-      // availableSelections: isSelectable ? availableOptions?.hazards || [] : [],
-      availableSelections: availableOptions?.hazards // || [],
-    },
-    {
-      header: 'Community Population',
+      header: 'Population Size',
       cards: availableOptions?.size,
-      // availableSelections: isSelectable ? availableOptions?.size || [] : [],
-      availableSelections: availableOptions?.size // || [],
+      availableSelections: availableOptions?.size,
     },
     {
-      header: 'State',
+      header: 'State or Territory',
       cards: availableOptions?.state,
-      // availableSelections: isSelectable ? availableOptions?.state || [] : [],
-      availableSelections: availableOptions?.state // || [],
-    },    
+      availableSelections: availableOptions?.state,
+    },
   ].map((section, index) => ({
     ...section,
     type: 'community',
     id: `section${index}`,
-    isSelectable: isSelectable,
-    onSelectionChange: onSelectionChange,
+    isSelectable,
+    onSelectionChange,
   }));
 
-export default function CommunityPane({
-  community,
-  isSelectable = false,
-  availableOptions = {},
-  onSelectionChange = () => {},
-}) {
-  const sectionData = getSectionData(community, isSelectable, availableOptions, onSelectionChange);
+export default function CommunityPane(props) {
+  const {
+    community,
+    isSelectable = false,
+    availableOptions = {},
+    onSelectionChange = () => {},
+    showHeader = true,
+    headerSpacerHeight = 0,
+  } = props;
+  const sectionData = getSectionData(
+    community,
+    isSelectable,
+    availableOptions,
+    onSelectionChange
+  );
 
   return (
     <Box
       sx={{
-        bgcolor: 'primary.white',
+        bgcolor: 'primary.sectionBg',
         borderRadius: 4,
         border: `0px solid ${theme.palette.primary.white}`,
         pr: 1,
         pl: 1,
-        pt: 0,
+        pt: { xs: 1, sm: 1.5, md:  1.2},
         pb: 1,
       }}
     >
-      <Stack sx={{ width: '100%' }}>
-        <HeaderBox>
-          <Typography
-            color="primary.main"
-            fontWeight="700"
-            align="center"
-            variant="h5"
-            sx={{
-              fontSize: {
-                xs: '1rem',
-                lg: '1.5rem',
-              },
-            }}
-          >
-            {/* {community.name} */}
-          </Typography>
-        </HeaderBox>
-        <Box sx={{ height: '40px', width: '100%' }}></Box>
-      </Stack>
-      <Pane
-        boxShadow={2}
-        sx={{ pl: 1 }}
+      {showHeader ? (
+        <Stack sx={{ width: '100%' }}>
+          <HeaderBox> 
+            <Typography
+              color="primary.main"
+              fontWeight="700"
+              align="center"
+              variant="h5"
+              sx={{
+                fontSize: {
+                  xs: '1rem',
+                  lg: '1.5rem',
+                },
+              }}
+            >
+              {/* {community.name} */}
+            </Typography>
+          </HeaderBox>
+          <Box sx={{ height: '40px', width: '100%' }} />
+        </Stack>
+      ) : headerSpacerHeight > 0 ? (
+        <Box sx={{ height: headerSpacerHeight, width: '100%' }} />
+      ) : null}
+      <Stack
+        sx={{
+          pt: 1,
+          pb: 1,
+          border: `1px solid ${theme.palette.primary.borderGray}`,
+          borderRadius: '10px',
+          boxShadow: 2,
+          pl: 1,
+        }}
       >
-        {sectionData.map((section) => (
-          <Section
-            key={section.id}
-            {...section}
-          />
+        {sectionData.map(section => (
+          <Section key={section.id} {...section} />
         ))}
         {/* <ScoreSection
           sx={{
@@ -104,7 +118,7 @@ export default function CommunityPane({
           <div>Total</div>
           <div>{community.totalCategories}</div>
         </ScoreSection> */}
-      </Pane>
+      </Stack>
     </Box>
   );
 }

@@ -1,125 +1,489 @@
-import { useState } from 'react';
-import { AppBar, Toolbar, Button, Box, Container } from '@mui/material';
-import { Link } from 'react-router-dom';
-import Registry from './Registry.jsx';
-import AboutPage from './AboutPage.jsx';
-import Logo from '../components/Logo.jsx';
-import theme from '../theme.jsx';
-import useMediaQuery from "@mui/material/useMediaQuery";
+import {
+  Box,
+  Container,
+  Grid,
+  Stack,
+  Typography,
+} from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+// import {
+//   Autocomplete,
+//   CircularProgress,
+//   TextField,
+// } from '@mui/material';
+// import LocationOnIcon from '@mui/icons-material/LocationOn';
+import PeopleOutlineOutlinedIcon from '@mui/icons-material/PeopleOutlineOutlined';
+import HandshakeOutlinedIcon from '@mui/icons-material/HandshakeOutlined';
+import FeatureCard from '../components/homePage/FeatureCard.jsx';
+import NavBar from '../components/NavBar.jsx';
+import Footer from '../components/Footer.jsx';
+import {
+  fetchOptionsFromAirtable,
+  fetchTotalPractitionerCount,
+} from '../util/api.js';
+import { useEffect, useState } from 'react';
+import AltActionButton from '../components/baseComponents/AltActionButton.jsx';
+import CallToActionButton from '../components/baseComponents/CallToActionButton.jsx';
+import searchbar_background from '../assets/searchbar_background.png';
+import PullDownFilter from '../components/baseComponents/PulldownFilter.jsx';
+import FilterRemoveTwo from '../components/baseComponents/FilterRemoveTwo.jsx';
+import { useNavigate } from 'react-router-dom';
+// import { searchLocations, getLocationDetails } from '../util/geocoding';
 
 export default function HomePage() {
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("md"));
-  const logoWidth = isSmallScreen ? 125 : 180;
-  const [pageSelect, setPageSelect] = useState('registry');
+  const [totalPractitioners, setTotalPractitioners] = useState(0);
+  // const [selectedLocation, setSelectedLocation] = useState(null);
+  // const [locationOptions, setLocationOptions] = useState([]);
+  // const [locationInputValue, setLocationInputValue] = useState('');
+  // const [locationLoading, setLocationLoading] = useState(false);
+  const [filters, setFilters] = useState({
+    state: [],
+    activities: [],
+    sectors: [],
+    hazards: [],
+  });
+  const [availableOptions, setAvailableOptions] = useState({
+    state: [],
+    activities: [],
+    sectors: [],
+    hazards: [],
+  });
+
+  // const handleLocationInputChange = async (event, newInputValue, reason) => {
+  //   setLocationInputValue(newInputValue);
+  //   if (reason !== 'input') return;
+  //   if (newInputValue.length >= 3) {
+  //     setLocationLoading(true);
+  //     const suggestions = await searchLocations(newInputValue);
+  //     setLocationOptions(
+  //       suggestions.map(s => ({ ...s, fullText: s.text }))
+  //     );
+  //     setLocationLoading(false);
+  //   } else {
+  //     setLocationOptions([]);
+  //   }
+  // };
+
+  // const handleLocationChange = async (event, newValue) => {
+  //   if (newValue?.magicKey) {
+  //     setLocationLoading(true);
+  //     setLocationOptions([]);
+  //     const details = await getLocationDetails(newValue.magicKey);
+  //     if (details) {
+  //       setSelectedLocation(details);
+  //       setLocationInputValue(details.fullText);
+  //     }
+  //     setLocationLoading(false);
+  //   } else {
+  //     setSelectedLocation(null);
+  //   }
+  // };
+
+  useEffect(() => {
+    fetchTotalPractitionerCount(setTotalPractitioners);
+    fetchOptionsFromAirtable(setAvailableOptions);
+  }, []);
+
+  const allStatesSelected = availableOptions.state.length > 0 && filters.state.length === availableOptions.state.length;
+
+  const handleFilterChange = (filterKey, newValues) => {
+    setFilters(prev => ({ ...prev, [filterKey]: newValues }));
+  };
+
+  const handleStateFilterChange = (newValues) => {
+    const hasAllOption = newValues.includes('All States and Territories');
+    if (hasAllOption && !allStatesSelected) {
+      setFilters(prev => ({ ...prev, state: [...availableOptions.state] }));
+    } else if (!hasAllOption && allStatesSelected) {
+      setFilters(prev => ({ ...prev, state: [] }));
+    } else {
+      const filtered = newValues.filter(v => v !== 'All States and Territories');
+      setFilters(prev => ({ ...prev, state: filtered }));
+    }
+  };
+
+  const handleClearFilter = filterKey => {
+    setFilters(prev => ({ ...prev, [filterKey]: [] }));
+  };
+
+  const handleRemoveFilterValue = (filterKey, value) => {
+    setFilters(prev => ({
+      ...prev,
+      [filterKey]: prev[filterKey].filter(v => v !== value),
+    }));
+  };
+
+  const getFilterText = (filterKey, label) => {
+    const count = filters[filterKey].length;
+    if (count === 0) return label;
+    if (filterKey === 'state' && allStatesSelected) return 'All States and Territories';
+    return `${count} ${label} Selected`;
+  };
+
+  const navigate = useNavigate();
+
   return (
     <>
-      <AppBar
-        position="static"
-        sx={{
-          bgcolor: 'primary.white',
-          boxShadow: 1,
-          borderBottom: `1px solid ${theme.palette.primary.borderGray}`,
-        }}
-      >
-      <Container maxWidth="xl"> 
-        <Toolbar sx={{ gap: 3, maxWidth: "xl"}}>
-          {/* Logo */}
+      <NavBar />
+      <Container disableGutters maxWidth={false}>
+        <Stack direction="column" spacing={8} sx={{ bgcolor: '#FFFFFF' }}>
+          {/* background image of search bar */}
           <Box
             sx={{
+              position: 'relative',
+              width: '100%',
+              '&::before': {
+                content: '""',
+                position: 'absolute',
+                inset: 0,
+                backgroundImage: `url(${searchbar_background})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                zIndex: 0,
+              },
               display: 'flex',
-              alignItems: 'center',              
-              width: `${logoWidth}px`,
-              py: 1,
-              pt: 2,
-              pb: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+              minHeight: 394,
             }}
           >
-            <Logo />
+            <Box
+              sx={{
+                width: '95%',
+                minHeight: 250,
+                position: 'relative',
+                zIndex: 1,
+              }}
+            >
+              <Box sx={{ textAlign: 'center' }}>
+                <Typography
+                  variant="h1Hero"
+                >
+                  Registry of Adaptation Practitioners
+                </Typography>
+                <Typography variant="subtitleHero" component="div">
+                  Connect with vetted experts to build resilience in your
+                  community or organization.
+                </Typography>
+                <Box
+                  sx={{
+                    backgroundColor: '#FFFFFFBF',
+                    width: '100%',
+                    minHeight: 84,
+                    borderRadius: 3,
+                    px: 2,
+                    py: 1,
+                    mb: { xs: 4, md: 0 },
+                    mt: 4,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                  }}
+                >
+                  {/* filter fields */}
+                  <Box
+                    sx={{
+                      width: '100%',
+                      display: 'flex',
+                      alignItems: 'flex-start',
+                      gap: 2,
+                      flexWrap: 'wrap',
+                    }}
+                  >
+                    <Box sx={{ flex: '1 1 226px'  }}>
+                      <PullDownFilter
+                        filterName="state-filter"
+                        filterText={getFilterText('state', 'State or Territory')}
+                        availableOptions={availableOptions.state}
+                        selectedValues={filters.state}
+                        onChange={e => handleFilterChange('state', e.target.value)}
+                        boxSx={{ width: '100%', minWidth: 'unset', maxWidth: 'unset' }}
+                      />
+                      {filters.state.length > 0 && (
+                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 0.5, mt: '4px' }}>
+                          <Typography
+                            onClick={() => handleClearFilter('state')}
+                            sx={{
+                              fontSize: 12,
+                              color: 'primary.linkBlue',
+                              cursor: 'pointer',
+                            }}
+                          >
+                            Clear All
+                          </Typography>
+                          {filters.state.map(value => (
+                              <FilterRemoveTwo
+                                key={value}
+                                text={value}
+                                onDelete={() => handleRemoveFilterValue('state', value)}
+                              />
+                            ))}
+                        </Box>
+                      )}
+                    </Box>
+                    {[
+                      { key: 'activities', filterName: 'services filter', label: 'Services' },
+                      { key: 'hazards', filterName: 'Hazards filter', label: 'Hazards' },
+                      { key: 'sectors', filterName: 'Sectors filter', label: 'Sectors' },
+                    ].map(({ key, filterName, label }) => (
+                      <Box key={key} sx={{ flex: '1 1 100px' }}>
+                        <PullDownFilter
+                          filterName={filterName}
+                          filterText={getFilterText(key, label)}
+                          availableOptions={availableOptions[key]}
+                          selectedValues={filters[key]}
+                          onChange={e => handleFilterChange(key, e.target.value)}
+                          boxSx={{ width: '100%', minWidth: 'unset', maxWidth: 'unset' }}
+                        />
+                        {filters[key].length > 0 && (
+                          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 0.5, mt: '4px' }}>
+                            <Typography
+                              onClick={() => handleClearFilter(key)}
+                              sx={{
+                                fontSize: 12,
+                                color: 'primary.linkBlue',
+                                cursor: 'pointer',
+                              }}
+                            >
+                              Clear All
+                            </Typography>
+                            {filters[key].map(value => (
+                              <FilterRemoveTwo
+                                key={value}
+                                text={value}
+                                onDelete={() => handleRemoveFilterValue(key, value)}
+                              />
+                            ))}
+                          </Box>
+                        )}
+                      </Box>
+                    ))}
+                    <CallToActionButton
+                      buttonSx={{
+                        borderRadius: 12,
+                      }}
+                      onClick={() => {
+                        const params = new URLSearchParams();
+                        ['state', 'activities', 'hazards', 'sectors'].forEach(key => {
+                          if (filters[key].length > 0) {
+                            params.set(key, filters[key].join(','));
+                          }
+                        });
+                        navigate(`/Registry?${params.toString()}`);
+                      }}
+                      iconStart={<SearchIcon />}
+                      textSx={{
+                        fontSize: 16,
+                        fontWeight: 'normal',
+                      }}
+                      text="Find Practitioners"
+                    />
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
           </Box>
-
-          {/* Navigation Links */}
+          {/*this is where the search bar ends and the browse all start */}
+          <Box sx={{ textAlign: 'center', pb: 4 }}>
+            <Typography variant="h4">
+              Browse all{' '}
+              <Box
+                component="span"
+                sx={{
+                  fontWeight: 700,
+                  fontSize: '24px',
+                  color: 'primary.ctaDarkBlue',
+                }}
+              >
+                {totalPractitioners}
+              </Box>{' '}
+              practitioners
+            </Typography>
+            {/* Mid below */}
+            <Typography variant="body1" component="div" sx={{ mb: 4 }}>
+              A simple, streamlined process to connect you with the expertise
+              you need.
+            </Typography>
+            {/* Button below should be changed once the main practitioners page is done */}
+            <AltActionButton
+              to="/AllPractitioners"
+              text="Browse All Practitioners"
+            />
+          </Box>
           <Box
             sx={{
               display: 'flex',
               alignItems: 'center',
-              gap: 3,
+              justifyContent: 'center',
+              px: { xs: 2, md: '96px' },
             }}
           >
-            <Button
-              //component={Link}
-              //to="/"
+            <Box
               sx={{
-                color: 'primary.main',
-                textTransform: 'none',
-                fontSize: '1rem',
-                padding: 0,
-                minWidth: 0,
-                textDecoration: pageSelect === 'registry' ? 'underline' : 'none',
-                fontWeight: pageSelect === 'registry' ? 'bold' : 'normal',
-                '&:hover': {
-                  bgcolor: 'transparent',
-                  textDecoration: 'underline',
-                },
-              }}
-              onClick={() => {
-                setPageSelect('registry');
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                padding: {xs: 0, md:3 },
+                backgroundColor: 'primary.sectionBg',
+                border: '1px solid #E1F5FE',
+                borderRadius: 2,
               }}
             >
-              {isSmallScreen ? ( 'Registry' ) : ( 'Registry of Adaptation Practitioners' )}
-            </Button>
-
-            <Button
-              component={Link}
-              to="/about"
-              sx={{
-                color: 'primary.main',
-                textTransform: 'none',
-                fontSize: '1rem',
-                padding: 0,
-                minWidth: 0,
-                textDecoration: pageSelect === 'about' ? 'underline' : 'none',
-                fontWeight: pageSelect === 'about' ? 'bold' : 'normal',
-                '&:hover': {
-                  bgcolor: 'transparent',
-                  textDecoration: 'underline',
-                },
-              }}
-              onClick={() => {
-                setPageSelect('about');
-              }}
-            >
-              About
-            </Button>
-
-            <Button
-              component={Link}
-              to="/about"
-              sx={{
-                color: 'primary.main',
-                textTransform: 'none',
-                fontSize: '1rem',
-                padding: 0,
-                minWidth: 0,
-                textDecoration: pageSelect === 'howtoapply' ? 'underline' : 'none',
-                fontWeight: pageSelect === 'howtoapply' ? 'bold' : 'normal',
-                '&:hover': {
-                  bgcolor: 'transparent',
-                  textDecoration: 'underline',
-                },
-              }}
-              onClick={() => {
-                setPageSelect('howtoapply');
-
-              }}
-            >
-              How to Apply
-            </Button>
-            
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                }}
+              >
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    p: 0.5,
+                    mb: 4,
+                  }}
+                >
+                  <Typography
+                    variant="h3"
+                    sx={{
+                      textAlign: 'center',
+                    }}
+                  >
+                    How the Registry Works
+                  </Typography>
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: { xs: 'column', md: 'row' },
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: 6,
+                  py: 0.5,
+                }}
+              >
+                <FeatureCard
+                  icon={<SearchIcon sx={{ color: '#FFFFFF', fontSize: 24 }} />}
+                  title="Search and Filter"
+                  description="Use our guided search to find practitioners with the right expertise and focus for your needs."
+                />
+                <FeatureCard
+                  icon={
+                    <PeopleOutlineOutlinedIcon
+                      sx={{ color: '#FFFFFF', fontSize: 24 }}
+                    />
+                  }
+                  title="Review Profiles"
+                  description="Explore detailed profiles, including specailizations, community focus and work examples."
+                />
+                <FeatureCard
+                  icon={
+                    <HandshakeOutlinedIcon
+                      sx={{ color: '#FFFFFF', fontSize: 24 }}
+                    />
+                  }
+                  title="Connect & Collaborate"
+                  description="Contact practitioners directly to discuss your project and build a resilient future together."
+                />
+              </Box>
+            </Box>
           </Box>
-        </Toolbar>
-        </Container> 
-      </AppBar>
-      {pageSelect === 'registry' ? <Registry /> : <AboutPage />}
-      </>
+          {/*end how reg works, begin two categories*/}
+          <Box
+            sx={{
+              textAlign: 'center',
+              gap: { xs: 4, md: 12 },
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              px: { xs: 2, md: 26 },
+            }}
+          >
+            <Box
+              sx={{                
+                width: '100%',
+                mx: 'auto',
+              }}
+            >
+              <Typography component="div" variant="h3" sx={{ mb: 6}}>
+                The Registry includes two categories of practitioners
+              </Typography>
+              <Box sx={{ minHeight: 156, gap: 24 }}>
+                <Grid container spacing={8}>
+                  <Grid size={{ xs: 12, md: 6 }}>
+                    <Box sx={{ minHeight: 140 }}>
+                      <Typography variant="h4">
+                        Broad service providers
+                      </Typography>
+                      <Typography component="div" variant="body1">
+                         Broad service providers have wide-ranging adaptation expertise, 
+                         supporting community efforts to undertake cross-sector climate change 
+                         vulnerability assessments, develop adaptation plans, and plan or 
+                         implement actions focused on reducing their vulnerability to 
+                         climate change impacts.
+
+                      </Typography>
+                    </Box>
+                  </Grid>
+                  <Grid size={{ xs: 12, md: 6 }}>
+                    <Box>
+                      <Typography variant="h4">
+                        Specialists
+                      </Typography>
+                      <Typography component="div" variant="body1">
+                        Specialists are organizations that focus more narrowly on one or more 
+                        specific climate hazards, topics, or sectors, supporting communities 
+                        in planning through implementation of adaptation-focused actions 
+                        within a specific category (e.g., wildfire resilience, public health, 
+                        spatial analysis, ecosystem restoration, insurance systems).
+
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Box>
+          </Box>
+          {/* End registry includes section, begin how to apply */}
+          <Box
+            sx={{
+              pt: 4,
+              pb: 8,
+              px: { xs: 2, sm: 4, md: 12 },
+            }}
+          >
+            <Typography
+              variant="h3"
+              sx={{
+                textAlign: 'center',
+                color: 'text.secondary',
+              }}
+            >
+              How to apply
+            </Typography>
+            <Typography component="div" variant="body1" sx={{ textAlign: 'center' }}>
+              Be recognized as an expert helping communities build a more
+              resilient future!
+            </Typography>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                mt: 4,
+              }}
+            >
+              <CallToActionButton
+                to="/Howtoapply"
+                text="Apply to the Registry"
+              />
+            </Box>
+          </Box>
+        </Stack>
+      </Container>
+      <Footer />
+    </>
   );
 }

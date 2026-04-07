@@ -78,7 +78,7 @@ function PractitionerWorkExamplePageLoaded({ practitioner }) {
 
         <Typography
           variant="h3"
-          fontWeight={800} 
+          fontWeight={700}
           sx={{ mb: 3 }}>
           Example of our Work
         </Typography>

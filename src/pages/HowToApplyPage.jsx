@@ -1,257 +1,483 @@
-import { Container, Typography, Box, Button } from '@mui/material';
+import { Typography, Box } from '@mui/material';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import LooksOneOutlinedIcon from '@mui/icons-material/LooksOneOutlined';
+import LooksTwoOutlinedIcon from '@mui/icons-material/LooksTwoOutlined';
+import Looks3OutlinedIcon from '@mui/icons-material/Looks3Outlined';
+import Looks4OutlinedIcon from '@mui/icons-material/Looks4Outlined';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../theme';
 import NavBar from '../components/NavBar';
+import Footer from '../components/Footer';
+import IncludedInRegistry from '../components/IncludedInRegistry.jsx';
+import ContactUs from '../components/ContactUs.jsx';
+import applicationDoc from '../assets/Registry-Application-Questions_Mar2026.docx';
 
 export default function HowToApplyPage() {
   return (
     <ThemeProvider theme={theme}>
       <NavBar />
-      <Container
-        maxWidth="xl"
-        sx={{ 
-          pt: 4,
-          pb: 8,
-          cursor: 'default',
-          px: { xs: 4, sm: 4, md: 4, lg: 3 },
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+          py: 4,
+          px: { xs: 2, sm: 4, md: 12 },
+          bgcolor: '#FFFFFF',
+          borderRight: '1px solid #E5E7EB',
         }}
       >
-        {/* Main Title Section */}
-        <Typography
-          variant="h2"
-          component="h1"
+        <Box
           sx={{
-            color: 'primary.main',
-            fontWeight: 'bold',
-            mb: 4,
-            mt: 4,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            width: '100%',
           }}
         >
-          How to Apply
-        </Typography>
-
-        {/* Registration Section */}
-        <Box sx={{ mb: 1 }}>
-          <Typography
-            variant="h4"
+          <Box
             sx={{
-              color: 'primary.main',
-              fontWeight: 'bold',
-              mb: 1,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '100%',
             }}
           >
-            Want to be included in the Registry? 
-          </Typography>
-
-          <Box sx={{ 
-            width: `100%`,
-            
-          }}>
-
             <Typography
-              variant="body1"
-              paragraph
-            >
-              If your organization provides services in the field of climate resilience and adaptation, 
-              is committed to following best practices, and has a track record of high-quality results,&nbsp;
-              <a
-                href="https://www.surveymonkey.com/r/adaptation-registry"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ color: theme.palette.primary.main, textDecoration: 'underline' }}
-              >
-                submit an application
-              </a>
-              ! We are especially interested in organizations that support entire community adaptation processes, including stakeholder 
-              engagement, vulnerability assessment, adaptation planning, and plan implementation.
-            </Typography>
-          </Box>
-        </Box>
-
-
-        <Box sx={{ 
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'flex-start',
-          width: '100%',
-          mb: 8,
-        }}>
-          <Button
-              variant="contained"
-              href="https://www.surveymonkey.com/r/adaptation-registry"
-              target="_blank"
-              rel="noopener noreferrer"
+              variant="eyebrow"
               sx={{
-                bgcolor: 'primary.main',
-                color: 'primary.white',
-                textTransform: 'none',
-                px: 4,
-                py: 1,
-                borderRadius: 1,
-                '&:hover': {
-                  bgcolor: 'primary.dark',
-                },
+                textAlign: 'center',
               }}
             >
-              Submit an application
-          </Button>
+              HOW TO APPLY
+            </Typography>
+          </Box>
+
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '100%',
+            }}
+          >
+            <Typography
+              variant="h1"
+              sx={{
+                textAlign: 'center',
+              }}
+            >
+              Join the Registry of Adaptation Practitioners
+            </Typography>
+          </Box>
+
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '100%',
+              opacity: 0.9,
+            }}
+          >
+            <Typography variant="subtitle1" component="div">
+              Help communities adapt to climate change by joining the Registry
+              as a vetted service provider
+            </Typography>
+          </Box>
         </Box>
+      </Box>
 
-
-
-        <Box sx={{ 
-                    mb: 8,
-                    p:4,
-                    mx:{ xs: 4, sm: 4, md: 10, lg: 20 },
-                    alignContent: "center",
-                    justifyContent: "center",
-                    textAlign: "center",
-                    backgroundColor: '#E1F5FE',
-                    borderRadius: 2,
-                    border: `1px solid ${theme.palette.primary.midBlue}`,        
-                  }}>
+      <Box sx={{ px: { xs: 2, sm: 4, md: 12 }, py: 4, bgcolor: '#FFFFFF' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            py: 1,
+            gap: 0.5,
+            mb: 3,
+          }}
+        >
           <Typography
             variant="h3"
-            sx={{
-              color: 'primary.main',
-              fontWeight: 'bold',
-              mb: 1,
-            }}
+            sx={{ py: 0.5 }}
           >
-            Announcement 
+            Is your organization a good fit for the Registry?
+          </Typography>
+          <Typography component="div" variant="body1">
+            The Registry is designed to connect climate adaptation service
+            providers and communities who need support with adaptation. An
+            adaptation service provider is an organization that focuses on
+            helping communities prepare for the impacts of climate change
+            (note that reducing greenhouse gas emissions is an important
+            component of climate action, but not a focus of this Registry!).
+            Some of the defining characteristics of adaptation service
+            providers who should be included in this Registry include:
           </Typography>
 
-          <Box sx={{ width: `100%`, alignContent: 'center', justifyContent: 'center'}}>
-            <Typography component="div" sx={{ py:2, fontWeight: 'bold', width: '100%', textAlign: 'center'}}>
-              Due to an extremely high volume of applicants, the Registry of Adaptation Practitioners is temporarily closed to new applications.
-            </Typography>
-            <Typography component="div" sx={{ py:2, width: '100%', textAlign: 'center'}}>
-                We anticipate reopening the application portal in late March 2026.
-            </Typography>
-            <Typography component="div" sx={{ width: '100%', textAlign: 'center'}}>
-                We appreciate your patience and encourage you to check back at that time.
+          <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                mb: 2,
+              }}>
+          {[
+            'Experience assisting communities with planning efforts and projects specifically designed to proactively address local impacts of climate change',
+            'Ability to skillfully incorporate climate change considerations into projects and processes;',
+            'Understanding of climate data and projections, including when and how to utilize them, as well as how to communicate about it to community leaders and residents; and',
+            'Ability to engage whole communities and ensure adaptation projects center equity;',
+            'Willing to be contacted by communities looking for support with adaptation needs;',
+          ].map(item => (
+            <Box
+              key={item}
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                py: .25,
+                px: 2,
+                gap: 2,
+              }}
+            >
+              <FiberManualRecordIcon
+                sx={{ color: 'primary.ctaDarkBlue', fontSize: 12, flexShrink: 0 }}
+              />
+              <Typography component="div" variant="body1">
+                {item}
+              </Typography>
+            </Box>
+          ))}
+          </Box>
+
+          <Box sx={{ py: 1 }}>
+            <Typography component="div" variant="body">
+              All organizations in the Registry, regardless of the type of
+              services that they provide, must demonstrate that they are
+              sought out for the adaptation expertise that they provide. They
+              must also show that the services they offer are intentional
+              about incorporating consideration of climate impacts and
+              proactively addressing them, rather than simple acknowledgement
+              that work focused on other topics or community needs also
+              happens to have adaptation benefits.
             </Typography>
           </Box>
         </Box>
 
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            p: 3,
+            gap: 1,
+            bgcolor: 'primary.sectionBg',
+            border: '1px solid #E1F5FE',
+            borderRadius: 2,
+            isolation: 'isolate',
+          }}
+        >
+          <Box sx={{ p: 1, gap: 1.5 }}>
+            <Box sx={{ py: 1 }}>
+              <Typography component="div" variant="body1">
+                The Registry is categorized into two groups of adaptation
+                service providers:
+              </Typography>
+            </Box>
 
-        <Box sx={{ mb: 8 }}>
-          <Typography
-            variant="h4"
-            sx={{
-              color: 'primary.main',
-              fontWeight: 'bold',
-              mb: 1,
-            }}
+            <Box
+              sx={{ px: 3, display: 'flex', flexDirection: 'column', gap: 1 }}
+            >
+              <Box sx={{ py: 1, gap: 0.5 }}>
+                <Typography
+                  variant="h4"
+                  sx={{ py: 0.5 }}
+                >
+                  Broad service providers
+                </Typography>
+                <Typography component="div" variant="body1">
+                  Broad service providers have wide-ranging adaptation
+                  expertise, supporting community efforts to undertake
+                  cross-sector climate change vulnerability assessments, develop
+                  adaptation plans, and plan or implement actions focused on
+                  reducing their vulnerability to climate change impacts.
+                </Typography>
+              </Box>
+
+              <Box sx={{ py: 1, gap: 0.5 }}>
+                <Typography
+                  variant="h4"
+                  sx={{ py: 0.5 }}
+                >
+                  Specialists
+                </Typography>
+                <Typography component="div" variant="body1">
+                  Specialists are organizations that focus more narrowly on one
+                  or more specific climate hazards, topics, or sectors,
+                  supporting communities in planning through implementation of
+                  adaptation-focused actions within a specific category (e.g.,
+                  wildfire resilience, public health, spatial analysis,
+                  ecosystem restoration, insurance systems).
+                </Typography>
+              </Box>
+            </Box>
+
+            <Box sx={{ pb: 1 }}>
+              <Typography component="div" variant="body1">
+                Approved practitioners will be categorized as broad service
+                practitioners or specialists based on the best judgement of the
+                review team.
+              </Typography>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+
+      <Box sx={{ px: { xs: 2, sm: 4, md: 12 }, py: 4, bgcolor: '#FFFFFF' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            p: 3,
+            bgcolor: 'primary.sectionBg',
+            border: '1px solid #E1F5FE',
+            borderRadius: 2,
+          }}
+        >
+          <Box
+            sx={{ display: 'flex', flexDirection: 'column', py: 1, }}
           >
-            Eligibility Requirements 
-          </Typography>
+            <Typography
+                  variant="h3"
+                  sx={{ py: 0.5 }}
+            >
+              Eligibility Requirements
+            </Typography>
+            <Typography component="div" variant="body1">
+              The Registry is open to all organizations that provide climate
+              adaptation and resilience services to communities and free to
+              join. To ensure the quality and integrity of the Registry,
+              applicant organizations must meet the following criteria:
+            </Typography>
+          </Box>
 
-          <Box sx={{ 
-            width: `100%`,
-            
-          }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+            <Box
+              sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
+            >
+              <CheckCircleOutlineIcon
+                sx={{ color: 'primary.linkBlue', fontSize: '28px', flexShrink: 0 }}
+              />
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                <Typography variant="h5">
+                  Applications must be on behalf of an organization
+                </Typography>
+                <Typography component="div" variant="body1">
+                  Applications should be submitted on behalf of nonprofit
+                  organizations, governmental entities, academic institutions,
+                  consulting firms, or sole proprietorships that offer
+                  adaptation services.
+                </Typography>
+              </Box>
+            </Box>
 
-            <Typography component="ul"  sx={{ mt: 1, mb: 2, ml: 2, mr: 2}}>
-                <li>
-                    Applications should be submitted on behalf of an organization, used here to refer to any nonprofit organization, 
-                    governmental entity, academic institution, consulting firm, or sole proprietorship that offers 
-                    adaptation and/or resilience services. (Please note that a group, division, or chapter of a larger entity 
-                    may apply as a “team” rather than as the whole organization.)
-                </li>
-                <li>
-                  At a minimum, applying organizations must have at least three years of experience in the field or two years 
-                  of experience plus one or more staff members width
-                  &nbsp;
-                  <a 
-                    href='https://climatesmartcommunity.org/hello-world/'
-                    target='_blank'
+            <Box
+              sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
+            >
+              <CheckCircleOutlineIcon
+                sx={{ color: 'primary.linkBlue', fontSize: '28px', flexShrink: 0 }}
+              />
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                <Typography variant="h5">
+                  Demonstrated Experience
+                </Typography>
+                <Typography component="div" variant="body1">
+                  Organizations must have at least three years of professional
+                  experience providing adaptation services, and must submit 2-3
+                  project examples demonstrating those services and the quality
+                  of their work.
+                </Typography>
+              </Box>
+            </Box>
+
+            <Box
+              sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
+            >
+              <CheckCircleOutlineIcon
+                sx={{ color: 'primary.linkBlue', fontSize: '28px', flexShrink: 0 }}
+              />
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                <Typography variant="h5">
+                  Terms and Conditions
+                </Typography>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 0.5,
+                    flexWrap: 'wrap',
+                  }}
+                >
+                  <Typography component="div" variant="body1">
+                    Applicants must commit to upholding professional standards
+                    and the Registry
+                  </Typography>
+                  <Typography
+                    component="a"
+                    variant="body1"
+                    href="https://climatesmartcommunity.org/registry/registry-terms-conditions/"
+                    target="_blank"
                     rel="noopener noreferrer"
-                    style={{ color: theme.palette.primary.main, textDecoration: 'underline' }}>
-                      specialized training
-                  </a>
-                  &nbsp;
-                  (e.g., NOAA’s Steps to Resilience training).
-                </li>
-            </Typography>
+                    sx={{
+                      color: 'primary.linkBlue',
+                      textDecoration: 'underline',
+                    }}
+                  >
+                    Terms and Conditions
+                  </Typography>
+                </Box>
+              </Box>
+            </Box>
           </Box>
         </Box>
+      </Box>
 
-        <Box sx={{ mb: 8 }}>
-          <Typography
-            variant="h4"
-            sx={{
-              color: 'primary.main',
-              fontWeight: 'bold',
-              mb: 1,
-            }}
+      <Box sx={{ px: { xs: 2, sm: 4, md: 12 }, py: 4, bgcolor: '#FFFFFF' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            p: 3,
+            bgcolor: '#E1F5FE',
+            border: '1px solid #003366',
+            borderRadius: 2,
+          }}
+        >
+          <Box
+            sx={{ display: 'flex', flexDirection: 'column', py: 1, }}
           >
-            Application Process & Timeline
-          </Typography>
-
-          <Box sx={{ 
-            width: `100%`,
-            
-          }}>
-
-            <Typography component="ul"  sx={{ mt: 1, mb: 2, ml: 2, mr: 2}}>
-                <li>
-                   Application responses can be drafted in this
-                    &nbsp;
-                    <a 
-                      href='https://climatesmartcommunity.org/wp-content/uploads/2024/12/Adaptation-Registry_Application-Questions_Dec2024.docx'
-                      target='_blank'
-                      rel="noopener noreferrer"
-                      style={{ color: theme.palette.primary.main, textDecoration: 'underline' }}>
-                        downloadable document (Word).
-                    </a>
-                    &nbsp;
-                    Please note that progress is not automatically saved in the online application form, so we recommend working in this document before submitting.
-
-                </li>
-                <li>
-                  recommend working in this document before submitting.
-                  Review: All applications will be reviewed within two months of submission. Any questions 
-                  about the status of a submission or the process can be sent to
-                  &nbsp;
-                  <a 
-                    href='mailto:info@adaptationregistry.org'
-                    style={{ color: theme.palette.primary.main, textDecoration: 'underline' }}>
-                      info@adaptationregistry.org
-                  </a>
-                </li>
+            <Typography
+              variant="h3"
+            >
+              Application Process and Timeline
+            </Typography>
+            <Typography component="div" variant="body1">
+              The application process is designed to be straightforward and
+              transparent:
             </Typography>
           </Box>
-        </Box>
-        
-        <Box sx={{ mb: 1 }}>
-          <Typography variant='description' >
-                Have additional questions about applying to the Registry? Email
-                &nbsp;
-                <a 
-                  href='mailto:info@adaptationregistry.org'
-                  style={{ color: theme.palette.primary.main, textDecoration: 'underline' }}>
-                    info@adaptationregistry.org
-                </a>
-          </Typography>
-        </Box>
 
-        <Box sx={{ mb: 1 }}>
-          <Typography variant='description' >
-                Read the full set of terms and conditions related to the Registry of Adaptation Practitioners
-                &nbsp;
-                <a 
-                  href='https://climatesmartcommunity.org/registry-terms-conditions/'
-                  target='_blank'
-                  rel="noopener noreferrer"
-                  style={{ color: theme.palette.primary.main, textDecoration: 'underline' }}>
-                    here
-                </a>
-                .
-          </Typography>
-        </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+            <Box
+              sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
+            >
+              <LooksOneOutlinedIcon
+                sx={{ color: 'primary.linkBlue', fontSize: '28px', flexShrink: 0 }}
+              />
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                <Typography variant="h5">
+                  Preview the application questions
+                </Typography>
+                <Typography component="div" variant="body1">
+                  Application questions can be downloaded in this{' '}
+                  <Typography
+                    component="a"
+                    variant="body1"
+                    href={applicationDoc}
+                    download
+                    sx={{
+                      fontWeight: 'bold',
+                      textDecoration: 'underline',
+                    }}
+                  >
+                    Word document
+                  </Typography>
+                  , which organizations can use to collect required information
+                  and draft their answers.
+                </Typography>
+              </Box>
+            </Box>
 
-      </Container>
+            <Box
+              sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
+            >
+              <LooksTwoOutlinedIcon
+                sx={{ color: 'primary.linkBlue', fontSize: '28px', flexShrink: 0 }}
+              />
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                <Typography variant="h5">
+                  Submit the application
+                </Typography>
+                <Typography component="div" variant="body1">
+                  Submit the application through our online form (note that
+                  progress is not automatically saved in the application form,
+                  so we recommend drafting your answers in this{' '}
+                  <Typography
+                    component="a"
+                    variant="body1"
+                    href={applicationDoc}
+                    download
+                    sx={{
+                      fontWeight: 'bold',
+                      textDecoration: 'underline',
+                    }}
+                  >
+                    Word document
+                  </Typography>{' '}
+                  before submitting).
+                </Typography>
+              </Box>
+            </Box>
+
+            <Box
+              sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
+            >
+              <Looks3OutlinedIcon
+                sx={{ color: 'primary.linkBlue', fontSize: '28px', flexShrink: 0 }}
+              />
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                <Typography variant="h5">
+                  Review Period
+                </Typography>
+                <Typography component="div" variant="body1">
+                  Applications are reviewed on a rolling basis, and the Registry
+                  team will contact applicants with a decision or to request
+                  additional information. All applicants will be contacted
+                  within two months of submission.
+                </Typography>
+              </Box>
+            </Box>
+
+            <Box
+              sx={{ display: 'flex', alignItems: 'flex-start', p: 1, gap: 3 }}
+            >
+              <Looks4OutlinedIcon
+                sx={{ color: 'primary.linkBlue', fontSize: '28px', flexShrink: 0 }}
+              />
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                <Typography variant="h5">
+                  Notification and Listing
+                </Typography>
+                <Typography component="div" variant="body1">
+                  The primary organization contact listed in the application
+                  will be notified of the decision within two months of
+                  submission. Reviews may take longer if additional information
+                  is required or during busy periods. Approved organizations
+                  will be listed in the Registry shortly thereafter.
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+
+      <Box sx={{ px: { xs: 2, sm: 4, md: 12 }, py: 4, bgcolor: '#FFFFFF' }}>
+        <IncludedInRegistry />
+      </Box>
+
+      <Box sx={{ px: { xs: 2, sm: 4, md: 12 }, py: 4, bgcolor: '#FFFFFF' }}>
+        <ContactUs />
+      </Box>
+      <Footer />
     </ThemeProvider>
   );
 }

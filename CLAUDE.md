@@ -40,6 +40,54 @@ Even in these cases, first attempt to refactor the code to be self-explanatory b
 
 ---
 
+## Props Convention
+
+Always accept `props` as the parameter and destructure inside the function body:
+
+```jsx
+export default function MyComponent(props) {
+  const { foo, bar, baz } = props;
+  // ...
+}
+```
+
+Do NOT destructure in the function signature.
+
 ## Other Guidelines
 
-*Add additional project-specific guidelines here as needed*
+Do not add `fontFamily: 'Roboto'` to sx props — the theme already sets Roboto as the default font globally.
+
+---
+
+## Codebase Audit Findings (March 2026)
+
+### 1. Dead / Unused Code to Remove
+
+**Unused pages (not in router, safe to delete):**
+- `src/pages/OldRegistryIgnore.jsx` — 442 lines, not referenced anywhere
+- `src/pages/PractitionerWorkExamplePage.jsx` — 213 lines, not referenced anywhere
+
+**Unused function & import in `src/util/api.js`:**
+- `sortAndRandomize` function (lines ~206-232) — defined but never called
+- `import { Category } from '@mui/icons-material'` (line 2) — never used
+
+**Unused assets in `src/assets/` (safe to delete):**
+- `CSCI_logo.png`
+- `EcoAdapt_logo.jpg`
+- `EcoAdapt_logo_web.jpg`
+- `Registry_Logo_primary_CMYK.jpg`
+- `Registry_Logo_primary_RGB.jpg`
+- `climate_prac.png`
+
+**Unused base components in `src/components/baseComponents/` (never imported):**
+- `SecondaryButton` — hardcoded text, zero imports
+- `AltButton` — hardcoded text, zero imports
+- `FilterRemove` — hardcoded text, zero imports
+- `HomeDefault` — zero imports
+
+**Commented-out code blocks to remove:**
+- `src/pages/UpdateDataPage.jsx` lines ~34-100 (mock test data)
+- `src/components/Section.jsx` lines ~48-63 (DropDownSelector block)
+- `src/components/CommunityPane.jsx` lines ~111-120 (ScoreSection)
+- `src/components/PractitionerPane.jsx` line ~11 and lines ~262-275 (ScoreSection)
+- `src/util/urlStateManagement.js` line ~49

@@ -1,3 +1,6 @@
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -8,14 +11,15 @@ import ReactGA from 'react-ga4';
 
 import AboutPage from './pages/AboutPage.jsx';
 import PractitionerPage from './pages/PractitionerPage.jsx';
-// import PractitionerWorkExamplePage from './pages/PractitionerWorkExamplePage.jsx';
 import HowToApplyPage from './pages/HowToApplyPage.jsx';
-import Registry from './pages/Registry.jsx';
 import RequestUpdatePage from './pages/RequestUpdatePage.jsx';
 import UpdateDataPage from './pages/UpdateDataPage.jsx';
 import WorkExamplePage from './pages/WorkExamplePage.jsx';
-import { DevSupport } from '@react-buddy/ide-toolbox';
-import { ComponentPreviews, useInitial } from './dev/index.js';
+import AllComponents from './pages/AllComponents.jsx';
+import HomePage from './pages/HomePage.jsx';
+import ComparePractitioners from './pages/ComparePractitioners.jsx';
+import AllPractitioners from './pages/AllPractitioners.jsx';
+import SearchRegistry from './pages/SearchRegistry.jsx';
 
 ReactGA.initialize('G-V5H6STTJJS'); // Replace with your GA Measurement ID
 ReactGA.send('pageview'); // Send initial pageview
@@ -23,21 +27,25 @@ ReactGA.send('pageview'); // Send initial pageview
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Registry />,
+    element: <HomePage />,
   },
   {
     path: '/Registry',
-    element: <Registry />,
+    element: <SearchRegistry />,
   },
   {
     path: '/practitioner/:practitionerId',
     element: <PractitionerPage />,
   },
-  // {
-  // path: '/practitionerworkexamplepage/:practitionerId:workExampleId',
-  // path: '/practitionerworkexamplepage/:practitionerId',
-  // element: <PractitionerWorkExamplePage />,
-  // },
+  {
+    path: '/ComparePractitioners',
+    element: <ComparePractitioners />,
+  },
+
+  {
+    path: '/AllPractitioners',
+    element: <AllPractitioners />,
+  },
   {
     path: '/About',
     element: <AboutPage />,
@@ -58,18 +66,17 @@ const router = createBrowserRouter([
     path: '/work-example',
     element: <WorkExamplePage />,
   },
+  {
+    path: '/all-components',
+    element: <AllComponents />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <DevSupport
-        ComponentPreviews={ComponentPreviews}
-        useInitialHook={useInitial}
-      >
-        <RouterProvider router={router} />
-      </DevSupport>
+      <RouterProvider router={router} />
     </ThemeProvider>
   </React.StrictMode>
 );

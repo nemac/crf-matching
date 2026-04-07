@@ -1,0 +1,39 @@
+import { Chip } from '@mui/material';
+import { Link, useLocation } from 'react-router-dom';
+
+const HeaderLink = props => {
+  const { name, url, matches } = props;
+  const location = useLocation();
+  const currentPath = '/' + (location.pathname.split('/')[1] || '');
+  const isActive = matches
+    ? matches.some(m => currentPath === m || location.pathname.startsWith(m + '/'))
+    : currentPath === url.split('?')[0];
+
+  return (
+    <Chip
+      sx={{
+        backgroundColor: isActive ? '#F1ECE4' : 'transparent',
+        px: isActive ? 0.5 : 0,
+        height: '35px',
+        '& .MuiChip-label': {
+          overflow: 'visible',
+          textOverflow: 'unset',
+          whiteSpace: 'nowrap',
+          fontWeight: 400,
+          fontSize: { md: '13px', lg: '16px' },
+          color: 'primary.main',
+          px: { md: 0.5, lg: 1 },
+        },
+        '&:hover': {
+          backgroundColor: '#F1ECE4',
+        },
+        borderRadius: '99px',
+      }}
+      label={name || 'Default'}
+      component={Link}
+      to={url}
+      clickable
+    />
+  );
+};
+export default HeaderLink;

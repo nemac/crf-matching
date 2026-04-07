@@ -44,7 +44,7 @@ const NewWorkExampleLayout = props => {
       <Box sx={{ ml: 2, mb: 4 }}>
         <Typography
           sx={{
-            color: '#003366',
+            color: 'primary.ctaDarkBlue',
             fontWeight: 500,
           }}
         >
@@ -56,7 +56,7 @@ const NewWorkExampleLayout = props => {
       <Box sx={{ ml: 2, mb: 4 }}>
         <Typography
           sx={{
-            color: '#003366',
+            color: 'primary.ctaDarkBlue',
             fontWeight: 500,
           }}
         >
