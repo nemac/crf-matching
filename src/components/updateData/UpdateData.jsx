@@ -93,7 +93,8 @@ const validLanguages = [
   'No other languages',
 ];
 
-function SectionHeader({ children, sx = {} }) {
+function SectionHeader(props) {
+  const { children, sx = {} } = props;
   return (
     <Typography
       variant="h4"
@@ -113,21 +114,22 @@ SectionHeader.propTypes = {
   sx: PropTypes.object,
 };
 
-export default function UpdateData({
-  formData,
-  handleChange,
-  handleSubmit,
-  submitting,
-  error,
-  success,
-  isDevMode,
-  validServices,
-  validHazards,
-  validSectors,
-  validCommunitySize,
-  validStates,
-  token,
-}) {
+export default function UpdateData(props) {
+  const {
+    formData,
+    handleChange,
+    handleSubmit,
+    submitting,
+    error,
+    success,
+    isDevMode,
+    validServices,
+    validHazards,
+    validSectors,
+    validCommunitySize,
+    validStates,
+    token,
+  } = props;
   const handleClearAll = name => {
     handleChange({
       target: {

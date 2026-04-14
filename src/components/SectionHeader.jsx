@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material';
 
-export default function SectionHeader({ title }) {
+export default function SectionHeader(props) {
+  const { title } = props;
   return (
     <Typography
       variant="h6"

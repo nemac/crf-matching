@@ -9,7 +9,8 @@ import WorkExampleCard from './WorkExampleCard';
 import BroadServiceProvider from '../baseComponents/BroadServiceProvider';
 import SpecialistLabel from '../baseComponents/SpecialistLabel';
 
-const SectionHeader = ({ children, sx = {} }) => {
+const SectionHeader = props => {
+  const { children, sx = {} } = props;
   return (
     <Typography
       variant="h4"
@@ -24,7 +25,8 @@ const SectionHeader = ({ children, sx = {} }) => {
   );
 };
 
-const ChipList = ({ items = [], highlighted = [] }) => {
+const ChipList = props => {
+  const { items = [], highlighted = [] } = props;
   return (
     <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', ml: 2, mb: 8 }}>
       {items.map((item, index) => {

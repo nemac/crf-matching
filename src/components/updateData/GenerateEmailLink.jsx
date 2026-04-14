@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
-export default function GenerateEmailLink({ formData, onLinkGenerated }) {
+export default function GenerateEmailLink(props) {
+  const { formData, onLinkGenerated } = props;
   const generateEmailLink = () => {
     const { firstName, lastName, email, phone, organizationName } = formData;
 

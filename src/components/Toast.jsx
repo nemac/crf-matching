@@ -1,7 +1,8 @@
 import { Snackbar } from '@mui/material';
 import theme from '../theme';
 
-export default function Toast({ open, message, onClose }) {
+export default function Toast(props) {
+  const { open, message, onClose } = props;
   return (
     <Snackbar
       open={open}

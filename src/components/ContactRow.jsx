@@ -18,7 +18,8 @@ import LanguageIcon from '@mui/icons-material/Language';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 
-export default function ContactRow({ type, practitioner }) {
+export default function ContactRow(props) {
+  const { type, practitioner } = props;
 
   if (!practitioner[type]) {
     return (

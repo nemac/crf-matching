@@ -2,7 +2,8 @@ import { Box, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 
-const SectionHeader = ({ children, sx = {} }) => {
+const SectionHeader = props => {
+  const { children, sx = {} } = props;
   return (
     <Typography
       variant="h4"

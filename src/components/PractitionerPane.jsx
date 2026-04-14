@@ -68,7 +68,8 @@ function StrTrainedBadge({ isTrained }) {
   }
 }
 
-function PractitionerHeader({ strTrained, practitioner, poppedPractitioner, setPoppedPractitioner }) {
+function PractitionerHeader(props) {
+  const { strTrained, practitioner, poppedPractitioner, setPoppedPractitioner } = props;
   const headerRef = useRef(null);
   const timeoutRef = useRef(null);
 
