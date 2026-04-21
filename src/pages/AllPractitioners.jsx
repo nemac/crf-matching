@@ -139,6 +139,7 @@ export default function AllPractitioners() {
         totalPractitioners={totalPractitioners}
         selectedForComparison={selectedForComparison}
         onComparisonSelect={handleComparisonSelect}
+        showMatchBadge={false}
       />
       <Footer />
       <CompareBar
