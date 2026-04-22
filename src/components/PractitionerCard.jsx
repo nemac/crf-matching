@@ -124,7 +124,7 @@ export default function PractitionerCard(props) {
             <Typography
               variant="h5"
             >
-              {isSpecialist ? 'Speciality' : 'Services Provided'}
+              {isSpecialist ? 'Speciality' : 'Top Services Provided'}
             </Typography>
           </Box>
           <Box

@@ -162,8 +162,7 @@ export default function HomePage() {
                   Registry of Adaptation Practitioners
                 </Typography>
                 <Typography variant="subtitleHero" component="div">
-                  Connect with vetted experts to build resilience in your
-                  community or organization.
+                  Connect with vetted experts to build resilience in your community
                 </Typography>
                 <Box
                   sx={{
