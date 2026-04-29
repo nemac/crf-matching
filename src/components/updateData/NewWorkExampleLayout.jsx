@@ -27,70 +27,51 @@ const NewWorkExampleLayout = props => {
 
   return (
     <Box sx={{ maxWidth: '1200px' }}>
-      <Typography
-        variant="h2"
-        component="h1"
-        sx={{
-          color: 'primary.main',
-          fontWeight: 'bold',
-          mt: 4,
-          mb: 4,
-        }}
-      >
+      <Typography variant="h1" sx={{ mb: 3 }}>
         {workExampleData.title || 'Example of Our Work Title'}
       </Typography>
 
       <SectionHeader>Practitioner Organization</SectionHeader>
-      <Box sx={{ ml: 2, mb: 4 }}>
-        <Typography
-          sx={{
-            color: 'primary.ctaDarkBlue',
-            fontWeight: 500,
-          }}
-        >
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, ml: 2, mb: 8 }}>
+        <Typography component="div" variant="body1">
           {organizationName || 'Adaptation Practitioner Name'}
         </Typography>
       </Box>
 
       <SectionHeader>Project Title</SectionHeader>
-      <Box sx={{ ml: 2, mb: 4 }}>
-        <Typography
-          sx={{
-            color: 'primary.ctaDarkBlue',
-            fontWeight: 500,
-          }}
-        >
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, ml: 2, mb: 8 }}>
+        <Typography component="div" variant="body1">
           {workExampleData.title || 'Project Name'}
         </Typography>
       </Box>
 
       <SectionHeader>Project Location</SectionHeader>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, ml: 2, mb: 4 }}>
-        <LocationOnIcon sx={{ color: '#666' }} />
-        <Typography sx={{ color: '#666' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, ml: 2, mb: 8 }}>
+        <LocationOnIcon sx={{ color: 'text.secondary', fontSize: '1rem' }} />
+        <Typography component="div" variant="body1">
           {workExampleData.location || 'City, State'}
         </Typography>
       </Box>
 
       <SectionHeader>Project Description</SectionHeader>
-      <Box sx={{ ml: 2, mb: 4 }}>
-        <Typography sx={{ color: '#666' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, ml: 2, mb: 8 }}>
+        <Typography component="div" variant="body1">
+
           {workExampleData.description || 'Description'}
         </Typography>
       </Box>
 
-      <SectionHeader>
-        Approach to Stakeholder Engagement in this Project
-      </SectionHeader>
-      <Box sx={{ ml: 2, mb: 4 }}>
-        <Typography sx={{ color: '#666' }}>
+      <SectionHeader>Approach to Stakeholder Engagement in this Project</SectionHeader>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, ml: 2, mb: 8 }}>
+        <Typography component="div" variant="body1">
+
           {workExampleData.engagement || 'Description'}
         </Typography>
       </Box>
 
       <SectionHeader>Approach to Equity in this Project</SectionHeader>
-      <Box sx={{ ml: 2, mb: 4 }}>
-        <Typography sx={{ color: '#666' }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, ml: 2, mb: 8 }}>
+        <Typography component="div" variant="body1">
           {workExampleData.equity || 'Description'}
         </Typography>
       </Box>
