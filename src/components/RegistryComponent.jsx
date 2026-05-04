@@ -19,6 +19,7 @@ export default function RegistryComponent(props) {
     onLoadMore,
     loading,
     source = '',
+    showMatchBadge = true,
     state = [],
     activities = [],
     hazards = [],
@@ -100,6 +101,7 @@ export default function RegistryComponent(props) {
                 filters={buildFilters()}
                 practitioner={practitioner}
                 onComparisonSelect={onComparisonSelect}
+                showMatchBadge={showMatchBadge}
                 isSelectedForComparison={
                   selectedForComparison
                     ? selectedForComparison.has(practitioner.airtableRecId)

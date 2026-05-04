@@ -4,9 +4,10 @@ import CheckIcon from '@mui/icons-material/Check';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import BroadServiceProvider from './baseComponents/BroadServiceProvider';
 import SpecialistLabel from './baseComponents/SpecialistLabel';
+import MatchScoreBadge from './baseComponents/MatchScoreBadge';
 
 export default function PractitionerCard(props) {
-  const { filters, practitioner, onComparisonSelect, isSelectedForComparison } = props;
+  const { filters, practitioner, onComparisonSelect, isSelectedForComparison, showMatchBadge = true } = props;
   const urlFilters = filters;
   const topServices = (
     practitioner.topServicesProvided ||
@@ -33,14 +34,22 @@ export default function PractitionerCard(props) {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start',
-        p: '20px 12px 8px',
+        p: '28px 12px 8px',
         gap: 1,
         bgcolor: isSelectedForComparison ? '#FFDDBB' : '#FFFFFF',
         boxShadow:
           '0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px -1px rgba(0, 0, 0, 0.1)',
         borderRadius: '10px',
+        position: 'relative',
+        overflow: 'visible',
       }}
     >
+      {showMatchBadge && (
+        <MatchScoreBadge
+          score={practitioner.matchScore ?? 0}
+          sx={{ position: 'absolute', top: -12, right: -8 }}
+        />
+      )}
       <Box
         sx={{
           display: 'flex',
@@ -63,6 +72,7 @@ export default function PractitionerCard(props) {
             textOverflow: 'ellipsis',
             WebkitLineClamp: 2,
             WebkitBoxOrient: 'vertical',
+            textTransform: 'capitalize',
           }}
         >
           {practitioner.org}
@@ -114,7 +124,7 @@ export default function PractitionerCard(props) {
             <Typography
               variant="h5"
             >
-              {isSpecialist ? 'Speciality' : 'Services Provided'}
+              {isSpecialist ? 'Speciality' : 'Top Services Provided'}
             </Typography>
           </Box>
           <Box

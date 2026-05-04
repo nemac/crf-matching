@@ -202,6 +202,43 @@ export const fetchFilteredPractitioners = (filters, setPractitioners) => {
     return count;
   };
 
+  const calculateMatchScore = practitioner => {
+    let earned = 0;
+    let maxPossible = 0;
+
+    const topServicesRaw = practitioner.topServicesProvided;
+    const topServices = Array.isArray(topServicesRaw)
+      ? topServicesRaw
+      : topServicesRaw
+        ? [topServicesRaw]
+        : [];
+
+    for (const field of fieldsToCheck) {
+      if (!filters[field] || filters[field].length === 0) continue;
+      const practitionerValues = practitioner[field];
+      const practitionerArray = Array.isArray(practitionerValues)
+        ? practitionerValues
+        : practitionerValues
+          ? [practitionerValues]
+          : [];
+
+      for (const filterValue of filters[field]) {
+        if (field === 'activities') {
+          maxPossible += 3;
+          if (practitionerArray.includes(filterValue)) {
+            earned += topServices.includes(filterValue) ? 3 : 1;
+          }
+        } else {
+          maxPossible += 1;
+          if (practitionerArray.includes(filterValue)) earned += 1;
+        }
+      }
+    }
+
+    if (maxPossible === 0) return 0;
+    return Math.round((earned / maxPossible) * 100);
+  };
+
   // Helper function to sort and randomize practitioners
   const sortAndRandomize = practitioners => {
     const practitionersWithCounts = practitioners.map(prac => {
@@ -252,15 +289,15 @@ export const fetchFilteredPractitioners = (filters, setPractitioners) => {
   const combineAndReturn = () => {
     completedRequests++;
     if (completedRequests === 2) {
-      // Both requests are done, merge and sort by match count descending
+      // Both requests are done, merge and sort by match score descending
       const allPractitioners = [...specialistsData, ...broadData];
 
-      // Sort all practitioners by match count descending
+      // Sort all practitioners by match score descending
       allPractitioners.sort((a, b) => {
-        if (b.matchCount !== a.matchCount) {
-          return b.matchCount - a.matchCount;
+        if (b.matchScore !== a.matchScore) {
+          return b.matchScore - a.matchScore;
         }
-        // For same match count, randomize
+        // For same match score, randomize
         return Math.random() - 0.5;
       });
 
@@ -291,7 +328,8 @@ export const fetchFilteredPractitioners = (filters, setPractitioners) => {
         const recordCategory = record.fields[categoryFieldKey];
         if (recordCategory === 'Specialist') {
           const matchCount = calculateMatchCount(normalizedRecord);
-          specialists.push({ ...normalizedRecord, matchCount });
+          const matchScore = calculateMatchScore(normalizedRecord);
+          specialists.push({ ...normalizedRecord, matchCount, matchScore });
         }
       });
 
@@ -326,7 +364,8 @@ export const fetchFilteredPractitioners = (filters, setPractitioners) => {
         const recordCategory = record.fields[categoryFieldKey];
         if (recordCategory === 'Broad service provider') {
           const matchCount = calculateMatchCount(normalizedRecord);
-          broadServiceProviders.push({ ...normalizedRecord, matchCount });
+          const matchScore = calculateMatchScore(normalizedRecord);
+          broadServiceProviders.push({ ...normalizedRecord, matchCount, matchScore });
         }
       });
 

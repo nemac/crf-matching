@@ -75,7 +75,7 @@ export const validServices = [
   'Changing policy and law',
   'Communicating and engaging',
   'Financing resilience projects and programs',
-  'Integrating Equity',
+  'Integrating equity',
   'Project implementation',
   'Vulnerability assessment',
 ];
