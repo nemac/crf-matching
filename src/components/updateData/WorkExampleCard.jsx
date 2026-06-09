@@ -45,6 +45,7 @@ const WorkExampleCard = props => {
 
   return (
     <>
+    {title ? (
       <Box
         sx={{
           height: '350px',
@@ -63,7 +64,7 @@ const WorkExampleCard = props => {
             variant="h4"
             sx={{ mb: 2 }}
           >
-            {title || `Work Example Title ${exampleNumber}`}
+            {title || `Work Example Missing`}
           </Typography>
 
           <Typography
@@ -75,7 +76,7 @@ const WorkExampleCard = props => {
           >
             {truncateText(
               description ||
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                'Description missing',
               125
             )}
           </Typography>
@@ -107,6 +108,9 @@ const WorkExampleCard = props => {
           </Button>
         </Box>
       </Box>
+    ) :(
+      <></>
+    )}
     </>
   );
 };
