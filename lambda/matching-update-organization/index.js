@@ -19,6 +19,8 @@ const localEndpoint = process.env.AWS_ENDPOINT_URL
   ? { endpoint: process.env.AWS_ENDPOINT_URL }
   : {};
 
+const AIRTABLE_API_BASE_URL = process.env.AIRTABLE_API_URL || 'https://api.airtable.com';
+
 const dynamoClient = new DynamoDBClient({ region: 'us-east-1', ...localEndpoint });
 const docClient = DynamoDBDocumentClient.from(dynamoClient);
 const secretsClient = new SecretsManagerClient({ region: 'us-east-1', ...localEndpoint });
@@ -75,7 +77,7 @@ async function validateToken(token) {
  * Update organization data in Airtable
  */
 async function updateOrganizationData(recordId, updates, apiKey, baseId) {
-  const url = `https://api.airtable.com/v0/${baseId}/Organization-ForDevWork/${recordId}`;
+  const url = `${AIRTABLE_API_BASE_URL}/v0/${baseId}/Organization-ForDevWork/${recordId}`;
 
   const airtableFields = {};
 

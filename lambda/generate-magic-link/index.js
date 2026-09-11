@@ -20,6 +20,8 @@ const localEndpoint = process.env.AWS_ENDPOINT_URL
   ? { endpoint: process.env.AWS_ENDPOINT_URL }
   : {};
 
+const AIRTABLE_API_BASE_URL = process.env.AIRTABLE_API_URL || 'https://api.airtable.com';
+
 const dynamoClient = new DynamoDBClient({ region: 'us-east-1', ...localEndpoint });
 const docClient = DynamoDBDocumentClient.from(dynamoClient);
 const sesClient = new SESClient({ region: 'us-east-1', ...localEndpoint });
@@ -49,7 +51,7 @@ async function getAirtableCredentials() {
  * Query Airtable to find all organizations by email
  */
 async function findOrganizationsByEmail(email, apiKey, baseId) {
-  const url = `https://api.airtable.com/v0/${baseId}/Organization-ForDevWork`;
+  const url = `${AIRTABLE_API_BASE_URL}/v0/${baseId}/Organization-ForDevWork`;
 
   // Airtable filter formula to find record by email
   const filterFormula = `{org_contact_email} = '${email}'`;
