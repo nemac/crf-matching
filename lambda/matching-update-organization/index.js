@@ -15,9 +15,13 @@ import {
 } from '@aws-sdk/client-secrets-manager';
 import { practitionerFieldMap } from './config.js';
 
-const dynamoClient = new DynamoDBClient({ region: 'us-east-1' });
+const localEndpoint = process.env.AWS_ENDPOINT_URL
+  ? { endpoint: process.env.AWS_ENDPOINT_URL }
+  : {};
+
+const dynamoClient = new DynamoDBClient({ region: 'us-east-1', ...localEndpoint });
 const docClient = DynamoDBDocumentClient.from(dynamoClient);
-const secretsClient = new SecretsManagerClient({ region: 'us-east-1' });
+const secretsClient = new SecretsManagerClient({ region: 'us-east-1', ...localEndpoint });
 
 let cachedSecrets = null;
 
