@@ -30,3 +30,6 @@ cdk.context.json
 
 # Local data exports (may contain real practitioner PII)
 *.csv
+
+# LocalStack persistence state
+.localstack/
