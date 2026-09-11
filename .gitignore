@@ -27,3 +27,6 @@ dist-ssr
 .cdk.staging
 cdk.out
 cdk.context.json
+
+# Local data exports (may contain real practitioner PII)
+*.csv
