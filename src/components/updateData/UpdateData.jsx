@@ -10,6 +10,7 @@ import {
   Divider,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { Link } from 'react-router-dom';
 import FormTextField from '../baseComponents/FormTextField.jsx';
 import FormSelect from '../baseComponents/FormSelect.jsx';
 import ToggleSwitch from '../baseComponents/ToggleSwitch.jsx';
@@ -468,6 +469,24 @@ export default function UpdateData(props) {
 
       <SectionHeader>Terms and conditions</SectionHeader>
       <Box sx={{ ml: 2, mb: 8 }}>
+        <Box sx={{ mb: 2 }}>
+          <Typography component="div" variant="body1">
+            I agree to the Registry{' '}
+            <Typography
+              component={Link}
+              variant="body1"
+              to="/Registry-terms-conditions"
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                color: 'primary.linkBlue',
+                textDecoration: 'underline',
+              }}
+            >
+              Terms and Conditions
+            </Typography>
+          </Typography>
+        </Box>
         <Box sx={{ mb: 4, maxWidth: '350px' }}>
           <ToggleSwitch
             label=""
