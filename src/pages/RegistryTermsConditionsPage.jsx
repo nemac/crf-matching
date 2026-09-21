@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Typography, Box } from '@mui/material';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { ThemeProvider } from '@mui/material/styles';
@@ -29,6 +30,10 @@ const definitions = [
 ];
 
 export default function RegistryTermsConditionsPage() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <NavBar />
