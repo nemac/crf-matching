@@ -27,3 +27,5 @@ dist-ssr
 .cdk.staging
 cdk.out
 cdk.context.json
+
+docs/
