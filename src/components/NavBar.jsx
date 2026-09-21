@@ -45,12 +45,14 @@ const navItems = [
   },
   {
     name: 'How to Apply',
+    shortName: 'Apply',
     url: '/Howtoapply',
     matches: ['/Howtoapply'],
     resetParams: true,
   },
   {
     name: 'Terms & Conditions',
+    shortName: 'Terms',
     url: '/Registry-terms-conditions',
     matches: ['/Registry-terms-conditions'],
     resetParams: true,
@@ -174,6 +176,7 @@ export default function NavBar() {
             {navItems.map((item, i) => (
               <HeaderLink
                 name={item.name}
+                shortName={item.shortName}
                 url={item.resetParams ? item.url : item.url + params}
                 matches={item.matches}
                 key={i}
