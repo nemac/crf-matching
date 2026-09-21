@@ -50,6 +50,12 @@ const navItems = [
     resetParams: true,
   },
   {
+    name: 'Terms & Conditions',
+    url: '/Registry-terms-conditions',
+    matches: ['/Registry-terms-conditions'],
+    resetParams: true,
+  },
+  {
     name: 'About',
     url: '/About',
     matches: ['/About'],
