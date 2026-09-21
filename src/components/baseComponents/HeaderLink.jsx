@@ -1,13 +1,26 @@
-import { Chip } from '@mui/material';
+import { Box, Chip } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
 
 const HeaderLink = props => {
-  const { name, url, matches } = props;
+  const { name, shortName, url, matches } = props;
   const location = useLocation();
   const currentPath = '/' + (location.pathname.split('/')[1] || '');
   const isActive = matches
     ? matches.some(m => currentPath === m || location.pathname.startsWith(m + '/'))
     : currentPath === url.split('?')[0];
+
+  const label = shortName ? (
+    <>
+      <Box component="span" sx={{ display: { xs: 'inline', xl: 'none' } }}>
+        {shortName}
+      </Box>
+      <Box component="span" sx={{ display: { xs: 'none', xl: 'inline' } }}>
+        {name}
+      </Box>
+    </>
+  ) : (
+    name
+  );
 
   return (
     <Chip
@@ -29,7 +42,7 @@ const HeaderLink = props => {
         },
         borderRadius: '99px',
       }}
-      label={name || 'Default'}
+      label={label}
       component={Link}
       to={url}
       clickable
