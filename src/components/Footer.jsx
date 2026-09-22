@@ -12,6 +12,7 @@ const resourceLinks = [
   { name: 'Home', url: '/' },
   { name: 'About', url: '/About' },
   { name: 'How to apply', url: '/Howtoapply' },
+  { name: 'Terms & Conditions', url: '/Registry-terms-conditions' },
 ];
 
 function FooterLink(props) {

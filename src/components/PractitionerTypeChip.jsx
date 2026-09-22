@@ -12,7 +12,8 @@ import { ThemeProvider } from '@mui/material/styles';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import HubIcon from '@mui/icons-material/Hub';
 
-export default function PractitionerTypeChip({ type, label, list, size }) {
+export default function PractitionerTypeChip(props) {
+  const { type, label, list, size } = props;
 
   let icon;
   let aBackgroundColor;

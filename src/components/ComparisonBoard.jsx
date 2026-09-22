@@ -9,15 +9,16 @@ import CommunityPane from './CommunityPane';
 import theme from '../theme';
 import { RowHoverContext, SetHoverRowContext } from './RowHoverContext';
 
-export default function ComparisonBoard({
-  community,
-  practitioners,
-  isSelectable = false,
-  availableOptions = {},
-  onSelectionChange = () => {},
-  displayCount = 3,
-  setDisplayCount = () => {},
-}) {
+export default function ComparisonBoard(props) {
+  const {
+    community,
+    practitioners,
+    isSelectable = false,
+    availableOptions = {},
+    onSelectionChange = () => {},
+    displayCount = 3,
+    setDisplayCount = () => {},
+  } = props;
   const [poppedPractitioner, setPoppedPractitioner] = useState(null);
   const [hoverRow, setHoverRow] = useState(null);
 
