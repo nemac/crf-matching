@@ -3,7 +3,8 @@ import { Box } from "@mui/material";
 
 import theme from '../../theme';
 
-export default function PractMatchSymbol({ label }) {
+export default function PractMatchSymbol(props) {
+  const { label } = props;
   return (
     <Box sx={{
       justifyContent: 'center',

@@ -4,7 +4,8 @@ import { RowHoverContext, SetHoverRowContext } from './RowHoverContext';
 import PractMatchSymbol from './svg/PractMatchSymbol';
 import theme from '../theme';
 
-export default function Cell({ label, type, key, isSelectable, onRemove }) {
+export default function Cell(props) {
+  const { label, type, key, isSelectable, onRemove } = props;
   const hoverRow = useContext(RowHoverContext);
   const setHoverRow = useContext(SetHoverRowContext);
 

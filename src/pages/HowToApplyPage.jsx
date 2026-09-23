@@ -1,4 +1,5 @@
 import { Typography, Box } from '@mui/material';
+import { Link } from 'react-router-dom';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import LooksOneOutlinedIcon from '@mui/icons-material/LooksOneOutlined';
@@ -11,7 +12,7 @@ import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import IncludedInRegistry from '../components/IncludedInRegistry.jsx';
 import ContactUs from '../components/ContactUs.jsx';
-import applicationDoc from '../assets/Registry-Application-Questions_Mar2026.docx';
+import applicationDoc from '../assets/Registry-Application-Questions_Sept2026.docx';
 
 export default function HowToApplyPage() {
   return (
@@ -322,11 +323,9 @@ export default function HowToApplyPage() {
                     and the Registry
                   </Typography>
                   <Typography
-                    component="a"
+                    component={Link}
                     variant="body1"
-                    href="https://climatesmartcommunity.org/registry/registry-terms-conditions/"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    to="/Registry-terms-conditions"
                     sx={{
                       color: 'primary.linkBlue',
                       textDecoration: 'underline',

@@ -33,3 +33,4 @@ cdk.context.json
 
 # LocalStack persistence state
 .localstack/
+docs/

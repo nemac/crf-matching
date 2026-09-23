@@ -1,14 +1,15 @@
 import { Typography, Box, Stack } from '@mui/material';
 import Cell from './Cell';
 
-export default function Section({
-  header = '',
-  type,
-  cards,
-  id,
-  isSelectable,
-  onSelectionChange,
-}) {
+export default function Section(props) {
+  const {
+    header = '',
+    type,
+    cards,
+    id,
+    isSelectable,
+    onSelectionChange,
+  } = props;
   const handleRemove = itemToRemove => {
     const newSelections = cards.filter(item => item !== itemToRemove);
     onSelectionChange(header.toLowerCase(), newSelections);

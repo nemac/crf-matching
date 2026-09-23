@@ -5,14 +5,15 @@ import PersonIcon from '@mui/icons-material/Person';
 import { IconButton, Typography, Box, Stack, Button } from '@mui/material';
 import theme from '../theme';
 
-export default function ProfilePopper({
-  practitioner,
-  poppedPractitioner,
-  setPoppedPractitioner,
-  headerRef,
-  onMouseEnter,
-  onMouseLeave,
-}) {
+export default function ProfilePopper(props) {
+  const {
+    practitioner,
+    poppedPractitioner,
+    setPoppedPractitioner,
+    headerRef,
+    onMouseEnter,
+    onMouseLeave,
+  } = props;
   const open = practitioner === poppedPractitioner;
   const id = open ? `profile-popper-${practitioner.id}` : undefined;
 

@@ -12,6 +12,7 @@ import ReactGA from 'react-ga4';
 import AboutPage from './pages/AboutPage.jsx';
 import PractitionerPage from './pages/PractitionerPage.jsx';
 import HowToApplyPage from './pages/HowToApplyPage.jsx';
+import RegistryTermsConditionsPage from './pages/RegistryTermsConditionsPage.jsx';
 import RequestUpdatePage from './pages/RequestUpdatePage.jsx';
 import UpdateDataPage from './pages/UpdateDataPage.jsx';
 import WorkExamplePage from './pages/WorkExamplePage.jsx';
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
   {
     path: '/Howtoapply',
     element: <HowToApplyPage />,
+  },
+  {
+    path: '/Registry-terms-conditions',
+    element: <RegistryTermsConditionsPage />,
   },
   {
     path: '/request-update',

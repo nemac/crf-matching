@@ -1,6 +1,7 @@
 import { Button } from '@mui/material';
 
-const TertiaryButton = ({ children = 'Action', sx, ...props }) => {
+const TertiaryButton = props => {
+  const { children = 'Action', sx, ...rest } = props;
   return (
     <Button
       sx={{
@@ -13,7 +14,7 @@ const TertiaryButton = ({ children = 'Action', sx, ...props }) => {
         },
         ...sx,
       }}
-      {...props}
+      {...rest}
     >
       {children}
     </Button>
