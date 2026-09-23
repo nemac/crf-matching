@@ -258,7 +258,7 @@ export default function UpdateData(props) {
               <FormTextField
                 label="City"
                 name="city"
-                value={formData.city}
+                value={formData.org_city}
                 onChange={handleChange}
                 fullWidth
               />
@@ -269,24 +269,13 @@ export default function UpdateData(props) {
               <FormSelect
                 label="State"
                 name="state"
-                value={formData.state}
+                value={formData.org_state}
                 onChange={handleChange}
                 options={validStates}
                 fullWidth
               />
             </Box>
           </Grid>
-          {/*<Grid item xs={12} md={4}>*/}
-          {/*  <Box mr={2}>*/}
-          {/*    <FormTextField*/}
-          {/*      label="Country"*/}
-          {/*      name="country"*/}
-          {/*      value={formData.country}*/}
-          {/*      onChange={handleChange}*/}
-          {/*      fullWidth*/}
-          {/*    />*/}
-          {/*  </Box>*/}
-          {/*</Grid>*/}
         </Grid>
       </Box>
 

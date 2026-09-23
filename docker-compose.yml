@@ -1,0 +1,17 @@
+name: localtests
+
+
+services:
+  localstack:
+    image: localstack/localstack:latest
+    container_name: localstack
+    ports:
+      - '4566:4566'
+    environment:
+      - SERVICES=dynamodb,secretsmanager,ses
+      - AWS_DEFAULT_REGION=us-east-1
+      - DEBUG=1
+      - PERSISTENCE=1
+      - LOCALSTACK_AUTH_TOKEN=${LOCALSTACK_AUTH_TOKEN}
+    volumes:
+      - './.localstack:/var/lib/localstack'
