@@ -14,7 +14,7 @@ export const practitionerFieldMap = {
   linkedIn: 'org_linkedin',
   email: 'org_contact_email',
   phone: 'org_contact_phone',
-  strTrained: 'org_str',
+  strTrained: 'org_street',
   info: 'org_description',
   organizationType: 'org_type',
   additionalInformation: 'org_description',
