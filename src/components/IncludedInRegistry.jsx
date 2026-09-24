@@ -1,4 +1,4 @@
-import { Box, Typography, Alert } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import TertiaryButton from './baseComponents/TertiaryButton';
 
 export default function IncludedInRegistry() {
@@ -57,11 +57,6 @@ export default function IncludedInRegistry() {
       >
         Fill out the application
       </TertiaryButton>
-
-      <Alert severity="warning" sx={{ m:1, width: 'fit-content' }}>
-          The registry application will be unavailable for a few days starting Thursday, September 24th, 2026.
-      </Alert>
-
     </Box>
   );
 }
