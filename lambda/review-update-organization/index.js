@@ -397,3 +397,34 @@ function mergeChanges(existingChanges, newChanges) {
 
   return merged;
 }
+
+export const handler = async event => {
+  const headers = {
+    'Access-Control-Allow-Origin': process.env.FRONTEND_URL,
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Content-Type': 'application/json',
+  };
+
+  const body = JSON.parse(event.body || '{}');
+
+  if (body.action === 'generateReviewToken') {
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify({
+        success: true,
+        reviewToken: generateReviewToken(),
+      }),
+    };
+  }
+
+  return {
+    statusCode: 501,
+    headers,
+    body: JSON.stringify({
+      success: false,
+      error: `${body.action} is not implemented yet`,
+    }),
+  };
+};
