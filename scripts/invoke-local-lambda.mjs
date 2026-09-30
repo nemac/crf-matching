@@ -35,7 +35,10 @@ if (target === 'matching-update-organization') {
 }
 
 if (target === 'review-update-organization') {
-  const fakeEvent = { body: JSON.stringify({ action: process.argv[3] }) };
+  const fakeEvent = {
+    httpMethod: 'POST',
+    body: JSON.stringify({ action: process.argv[3] }),
+  };
   const result = await reviewUpdate(fakeEvent);
   console.log(result);
 }
