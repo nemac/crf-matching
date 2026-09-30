@@ -1,404 +1,389 @@
-import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import { validateMagicLinkToken } from './magicLink.js';
 import {
-  DynamoDBDocumentClient,
-  GetCommand,
-  PutCommand,
-  UpdateCommand,
-  QueryCommand,
-} from '@aws-sdk/lib-dynamodb';
-import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses';
+  getReviewByRecordId,
+  getReviewByToken,
+  putFreshReviewRow,
+  mergeReviewRow,
+  setUnderReview,
+  setResolvedStatus,
+  renewReviewToken,
+  generateReviewToken,
+} from './reviewStore.js';
 import {
-  SecretsManagerClient,
-  GetSecretValueCommand,
-} from '@aws-sdk/client-secrets-manager';
-import crypto from 'crypto';
-import { practitionerFieldMap } from './config.js';
+  getAirtableCredentials,
+  fetchDevRecord,
+  mapAirtableRecordToFormFields,
+  mapDevRecordToProductionFields,
+  patchProductionRecord,
+} from './airtable.js';
+import { buildReviewLink, sendReviewNotificationEmail } from './email.js';
 
-const localEndpoint = process.env.AWS_ENDPOINT_URL
-  ? { endpoint: process.env.AWS_ENDPOINT_URL }
-  : {};
+const UNDER_REVIEW_MESSAGE =
+  'The reviewer has begun reviewing your submission and it can no longer be updated. You will be able to make changes once it has been approved or denied.';
 
-const AIRTABLE_API_BASE_URL = process.env.AIRTABLE_API_URL || 'https://api.airtable.com';
+async function handleCreate(body, headers) {
+  const { token, changes } = body;
 
-const dynamoClient = new DynamoDBClient({ region: 'us-east-1', ...localEndpoint });
-const docClient = DynamoDBDocumentClient.from(dynamoClient);
-const sesClient = new SESClient({ region: 'us-east-1', ...localEndpoint });
-const secretsClient = new SecretsManagerClient({ region: 'us-east-1', ...localEndpoint });
-
-let cachedSecrets = null;
-
-async function getAirtableCredentials() {
-  if (cachedSecrets) {
-    return cachedSecrets;
+  if (!token || !changes || typeof changes !== 'object' || Array.isArray(changes)) {
+    return {
+      statusCode: 400,
+      headers,
+      body: JSON.stringify({
+        success: false,
+        error: 'Token and changes are required',
+      }),
+    };
   }
 
-  const command = new GetSecretValueCommand({
-    SecretId: process.env.SECRET_ARN,
-  });
+  const validation = await validateMagicLinkToken(token);
 
-  const response = await secretsClient.send(command);
-  cachedSecrets = JSON.parse(response.SecretString);
-  return cachedSecrets;
-}
-
-async function validateMagicLinkToken(token) {
-  const params = {
-    TableName: process.env.DYNAMODB_TABLE,
-    Key: {
-      token,
-    },
-  };
-
-  const result = await docClient.send(new GetCommand(params));
-
-  if (!result.Item) {
-    return { valid: false, reason: 'Token not found' };
+  if (!validation.valid) {
+    return {
+      statusCode: 401,
+      headers,
+      body: JSON.stringify({
+        success: false,
+        error: validation.reason,
+        expired: validation.reason === 'Token has expired',
+      }),
+    };
   }
 
-  const now = Math.floor(Date.now() / 1000);
-  if (result.Item.ttl < now) {
-    return { valid: false, reason: 'Token has expired' };
+  const { recordId, email } = validation;
+  const existingRow = await getReviewByRecordId(recordId);
+
+  if (existingRow && existingRow.status === 'under review') {
+    return {
+      statusCode: 409,
+      headers,
+      body: JSON.stringify({
+        success: false,
+        underReview: true,
+        error: UNDER_REVIEW_MESSAGE,
+      }),
+    };
   }
 
-  return {
-    valid: true,
-    email: result.Item.email,
-    recordId: result.Item.recordId,
-  };
-}
-
-async function getReviewByRecordId(recordId) {
-  const params = {
-    TableName: process.env.REVIEW_TABLE,
-    Key: {
-      recordId,
-    },
-  };
-
-  const result = await docClient.send(new GetCommand(params));
-  return result.Item || null;
-}
-
-async function getReviewByToken(reviewToken) {
-  const params = {
-    TableName: process.env.REVIEW_TABLE,
-    IndexName: 'reviewToken-index',
-    KeyConditionExpression: 'reviewToken = :reviewToken',
-    ExpressionAttributeValues: {
-      ':reviewToken': reviewToken,
-    },
-  };
-
-  const result = await docClient.send(new QueryCommand(params));
-  return result.Items && result.Items.length > 0 ? result.Items[0] : null;
-}
-
-function normalizeForComparison(value) {
-  if (Array.isArray(value)) {
-    return JSON.stringify(value.map(normalizeForComparison).sort());
+  if (existingRow && existingRow.status === 'pending review') {
+    await mergeReviewRow(existingRow, changes);
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify({ success: true, merged: true }),
+    };
   }
-  if (typeof value === 'string') {
-    return value.trim();
-  }
-  return JSON.stringify(value);
-}
 
-function valuesEqual(a, b) {
-  return normalizeForComparison(a) === normalizeForComparison(b);
-}
+  const { AIRTABLE_API_KEY, AIRTABLE_BASE_ID } = await getAirtableCredentials();
+  const devRecord = await fetchDevRecord(recordId, AIRTABLE_API_KEY, AIRTABLE_BASE_ID);
+  const orgName = devRecord.fields?.org_name || '';
 
-const THIRTY_DAYS_SECONDS = 30 * 24 * 60 * 60;
-
-function generateReviewToken() {
-  return crypto.randomBytes(32).toString('base64url');
-}
-
-async function putFreshReviewRow({ recordId, email, orgName, changes }) {
-  const now = Math.floor(Date.now() / 1000);
-  const reviewToken = generateReviewToken();
-  const reviewTokenExpiresAt = now + THIRTY_DAYS_SECONDS;
-
-  const item = {
-    recordId,
-    reviewToken,
-    reviewTokenExpiresAt,
-    status: 'pending review',
-    email,
-    orgName,
-    changes,
-    createdAt: now,
-    updatedAt: now,
-  };
-
-  await docClient.send(
-    new PutCommand({
-      TableName: process.env.REVIEW_TABLE,
-      Item: item,
-    })
-  );
-
-  return item;
-}
-
-async function mergeReviewRow(existingRow, newChanges) {
-  const now = Math.floor(Date.now() / 1000);
-  const mergedChanges = mergeChanges(existingRow.changes, newChanges);
-  const reviewTokenExpiresAt = now + THIRTY_DAYS_SECONDS;
-
-  await docClient.send(
-    new UpdateCommand({
-      TableName: process.env.REVIEW_TABLE,
-      Key: { recordId: existingRow.recordId },
-      UpdateExpression:
-        'SET changes = :changes, reviewTokenExpiresAt = :reviewTokenExpiresAt, updatedAt = :updatedAt',
-      ExpressionAttributeValues: {
-        ':changes': mergedChanges,
-        ':reviewTokenExpiresAt': reviewTokenExpiresAt,
-        ':updatedAt': now,
-      },
-    })
-  );
-
-  return {
-    ...existingRow,
-    changes: mergedChanges,
-    reviewTokenExpiresAt,
-    updatedAt: now,
-  };
-}
-
-async function setUnderReview(recordId) {
-  const now = Math.floor(Date.now() / 1000);
+  const row = await putFreshReviewRow({ recordId, email, orgName, changes });
 
   try {
-    await docClient.send(
-      new UpdateCommand({
-        TableName: process.env.REVIEW_TABLE,
-        Key: { recordId },
-        UpdateExpression:
-          'SET #status = :underReview, reviewStartedAt = :now, updatedAt = :now',
-        ConditionExpression: '#status = :pending',
-        ExpressionAttributeNames: { '#status': 'status' },
-        ExpressionAttributeValues: {
-          ':underReview': 'under review',
-          ':pending': 'pending review',
-          ':now': now,
-        },
-      })
-    );
+    await sendReviewNotificationEmail({
+      orgName,
+      contactEmail: email,
+      changedFieldCount: Object.keys(changes).length,
+      reviewLink: buildReviewLink(row.reviewToken),
+    });
   } catch (error) {
-    if (error.name !== 'ConditionalCheckFailedException') {
-      throw error;
-    }
+    console.error('Failed to send review notification email:', error);
+    return {
+      statusCode: 502,
+      headers,
+      body: JSON.stringify({
+        success: false,
+        emailSent: false,
+        error: 'Review row saved, but the notification email failed to send',
+      }),
+    };
   }
+
+  return {
+    statusCode: 200,
+    headers,
+    body: JSON.stringify({ success: true }),
+  };
 }
 
-async function setResolvedStatus(recordId, status) {
+async function handleGetReview(event, headers) {
+  const reviewToken = event.queryStringParameters?.token;
+
+  if (!reviewToken) {
+    return {
+      statusCode: 400,
+      headers,
+      body: JSON.stringify({ success: false, error: 'Token is required' }),
+    };
+  }
+
+  const row = await getReviewByToken(reviewToken);
+
+  if (!row) {
+    return {
+      statusCode: 404,
+      headers,
+      body: JSON.stringify({ success: false, error: 'Review not found' }),
+    };
+  }
+
+  if (row.status === 'approved' || row.status === 'denied') {
+    return {
+      statusCode: 410,
+      headers,
+      body: JSON.stringify({
+        success: false,
+        status: row.status,
+        updatedAt: row.updatedAt,
+      }),
+    };
+  }
+
   const now = Math.floor(Date.now() / 1000);
-  const ttl = now + THIRTY_DAYS_SECONDS;
+  if (row.reviewTokenExpiresAt < now) {
+    return {
+      statusCode: 410,
+      headers,
+      body: JSON.stringify({
+        success: false,
+        status: row.status,
+        expired: true,
+        orgName: row.orgName,
+      }),
+    };
+  }
 
-  await docClient.send(
-    new UpdateCommand({
-      TableName: process.env.REVIEW_TABLE,
-      Key: { recordId },
-      UpdateExpression: 'SET #status = :status, updatedAt = :now, #ttl = :ttl',
-      ExpressionAttributeNames: { '#status': 'status', '#ttl': 'ttl' },
-      ExpressionAttributeValues: {
-        ':status': status,
-        ':now': now,
-        ':ttl': ttl,
-      },
-    })
-  );
+  if (row.status === 'pending review') {
+    await setUnderReview(row.recordId);
+  }
 
-  return { status, updatedAt: now, ttl };
+  const { AIRTABLE_API_KEY, AIRTABLE_BASE_ID } = await getAirtableCredentials();
+  const devRecord = await fetchDevRecord(row.recordId, AIRTABLE_API_KEY, AIRTABLE_BASE_ID);
+  const record = mapAirtableRecordToFormFields(devRecord);
+
+  return {
+    statusCode: 200,
+    headers,
+    body: JSON.stringify({
+      success: true,
+      status: 'under review',
+      orgName: row.orgName,
+      email: row.email,
+      changes: row.changes,
+      record,
+    }),
+  };
 }
 
-async function renewReviewToken(recordId) {
-  const now = Math.floor(Date.now() / 1000);
-  const reviewToken = generateReviewToken();
-  const reviewTokenExpiresAt = now + THIRTY_DAYS_SECONDS;
+async function handleRenew(body, headers) {
+  const { token } = body;
 
-  await docClient.send(
-    new UpdateCommand({
-      TableName: process.env.REVIEW_TABLE,
-      Key: { recordId },
-      UpdateExpression:
-        'SET reviewToken = :reviewToken, reviewTokenExpiresAt = :reviewTokenExpiresAt, updatedAt = :now',
-      ExpressionAttributeValues: {
-        ':reviewToken': reviewToken,
-        ':reviewTokenExpiresAt': reviewTokenExpiresAt,
-        ':now': now,
-      },
-    })
-  );
+  if (!token) {
+    return {
+      statusCode: 400,
+      headers,
+      body: JSON.stringify({ success: false, error: 'Token is required' }),
+    };
+  }
 
-  return { reviewToken, reviewTokenExpiresAt, updatedAt: now };
-}
+  const row = await getReviewByToken(token);
 
-async function fetchDevRecord(recordId, apiKey, baseId) {
-  const url = `${AIRTABLE_API_BASE_URL}/v0/${baseId}/Organization-ForDevWork/${recordId}`;
+  if (!row) {
+    return {
+      statusCode: 404,
+      headers,
+      body: JSON.stringify({ success: false, error: 'Review not found' }),
+    };
+  }
 
-  const response = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
+  if (row.status === 'approved' || row.status === 'denied') {
+    return {
+      statusCode: 410,
+      headers,
+      body: JSON.stringify({
+        success: false,
+        status: row.status,
+        updatedAt: row.updatedAt,
+      }),
+    };
+  }
+
+  const { reviewToken } = await renewReviewToken(row.recordId);
+
+  await sendReviewNotificationEmail({
+    orgName: row.orgName,
+    contactEmail: row.email,
+    changedFieldCount: Object.keys(row.changes || {}).length,
+    reviewLink: buildReviewLink(reviewToken),
   });
 
-  if (!response.ok) {
-    const errorData = await response.text();
-    throw new Error(
-      `Airtable API error: ${response.status} ${response.statusText} - ${errorData}`
-    );
-  }
-
-  return response.json();
-}
-
-const FIELD_MAP_OVERRIDES = {
-  org_name: 'org',
-  org_adaptation_staff: 'organizationSize',
-};
-
-function invertFieldMap(fieldMap) {
-  const inverse = {};
-
-  for (const [formField, airtableField] of Object.entries(fieldMap)) {
-    if (!(airtableField in inverse)) {
-      inverse[airtableField] = formField;
-    }
-  }
-
-  return { ...inverse, ...FIELD_MAP_OVERRIDES };
-}
-
-const REVERSE_FIELD_MAP = invertFieldMap(practitionerFieldMap);
-
-function mapAirtableRecordToFormFields(record) {
-  const formFields = {};
-
-  for (const [airtableField, value] of Object.entries(record.fields || {})) {
-    const formField = REVERSE_FIELD_MAP[airtableField];
-    if (formField) {
-      formFields[formField] = value;
-    }
-  }
-
-  return formFields;
-}
-
-function buildReviewLink(reviewToken) {
-  return `${process.env.FRONTEND_URL}/review-update?token=${reviewToken}`;
-}
-
-async function sendReviewNotificationEmail({
-  orgName,
-  contactEmail,
-  changedFieldCount,
-  reviewLink,
-}) {
-  const params = {
-    Source: process.env.SES_SENDER_EMAIL,
-    Destination: {
-      ToAddresses: [process.env.REVIEW_NOTIFICATION_EMAIL],
-    },
-    Message: {
-      Subject: {
-        Data: `Organization update ready for review: ${orgName}`,
-        Charset: 'UTF-8',
-      },
-      Body: {
-        Html: {
-          Data: `
-            <!DOCTYPE html>
-            <html>
-            <head>
-              <style>
-                body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-                .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-                .header { background-color: #003366; color: white; padding: 20px; text-align: center; }
-                .content { padding: 30px 20px; background-color: #f9f9f9; }
-                .button {
-                  display: inline-block;
-                  padding: 12px 30px;
-                  background-color: #0066CC;
-                  color: white !important;
-                  text-decoration: none;
-                  border-radius: 4px;
-                  margin: 20px 0;
-                }
-                .footer { padding: 20px; text-align: center; font-size: 12px; color: #666; }
-              </style>
-            </head>
-            <body>
-              <div class="container">
-                <div class="header">
-                  <h1>Climate Resilience Funders</h1>
-                </div>
-                <div class="content">
-                  <h2>Organization Update Ready for Review</h2>
-                  <p><strong>Organization:</strong> ${orgName}</p>
-                  <p><strong>Contact email:</strong> ${contactEmail}</p>
-                  <p><strong>Fields changed:</strong> ${changedFieldCount}</p>
-                  <p style="text-align: center;">
-                    <a href="${reviewLink}" class="button">Review Update</a>
-                  </p>
-                  <p>Or copy and paste this link into your browser:</p>
-                  <p style="word-break: break-all; background: white; padding: 10px; border: 1px solid #ddd;">
-                    ${reviewLink}
-                  </p>
-                </div>
-                <div class="footer">
-                  <p>Climate Resilience Funders - Adaptation Registry</p>
-                </div>
-              </div>
-            </body>
-            </html>
-          `,
-          Charset: 'UTF-8',
-        },
-        Text: {
-          Data: `
-Organization Update Ready for Review
-
-Organization: ${orgName}
-Contact email: ${contactEmail}
-Fields changed: ${changedFieldCount}
-
-Review the update here:
-${reviewLink}
-
----
-Climate Resilience Funders - Adaptation Registry
-          `,
-          Charset: 'UTF-8',
-        },
-      },
-    },
+  return {
+    statusCode: 200,
+    headers,
+    body: JSON.stringify({ success: true }),
   };
-
-  await sesClient.send(new SendEmailCommand(params));
 }
 
-function mergeChanges(existingChanges, newChanges) {
-  const merged = { ...existingChanges };
+async function handleApprove(body, headers) {
+  const { token } = body;
 
-  for (const [field, diff] of Object.entries(newChanges)) {
-    const before = field in merged ? merged[field].before : diff.before;
-    merged[field] = { before, after: diff.after };
+  if (!token) {
+    return {
+      statusCode: 400,
+      headers,
+      body: JSON.stringify({ success: false, error: 'Token is required' }),
+    };
   }
 
-  for (const field of Object.keys(newChanges)) {
-    if (valuesEqual(merged[field].before, merged[field].after)) {
-      delete merged[field];
+  const row = await getReviewByToken(token);
+
+  if (!row) {
+    return {
+      statusCode: 404,
+      headers,
+      body: JSON.stringify({ success: false, error: 'Review not found' }),
+    };
+  }
+
+  if (row.status === 'approved' || row.status === 'denied') {
+    return {
+      statusCode: 410,
+      headers,
+      body: JSON.stringify({
+        success: false,
+        status: row.status,
+        updatedAt: row.updatedAt,
+      }),
+    };
+  }
+
+  const now = Math.floor(Date.now() / 1000);
+  if (row.reviewTokenExpiresAt < now) {
+    return {
+      statusCode: 410,
+      headers,
+      body: JSON.stringify({
+        success: false,
+        status: row.status,
+        expired: true,
+        orgName: row.orgName,
+      }),
+    };
+  }
+
+  let productionUpdated = false;
+
+  if (process.env.PRODUCTION_TABLE_NAME) {
+    const { AIRTABLE_API_KEY, AIRTABLE_BASE_ID } = await getAirtableCredentials();
+    const devRecord = await fetchDevRecord(row.recordId, AIRTABLE_API_KEY, AIRTABLE_BASE_ID);
+    const prodRecordId = devRecord.fields?.org_production_record?.[0];
+
+    if (!prodRecordId) {
+      return {
+        statusCode: 409,
+        headers,
+        body: JSON.stringify({
+          success: false,
+          error: 'No linked production record for this organization',
+        }),
+      };
     }
+
+    try {
+      await patchProductionRecord(
+        prodRecordId,
+        mapDevRecordToProductionFields(devRecord),
+        AIRTABLE_API_KEY,
+        AIRTABLE_BASE_ID
+      );
+      productionUpdated = true;
+    } catch (error) {
+      console.error('Failed to update production record:', error);
+      return {
+        statusCode: 502,
+        headers,
+        body: JSON.stringify({
+          success: false,
+          error: 'Failed to update production record',
+        }),
+      };
+    }
+  } else {
+    console.log('Production write disabled (PRODUCTION_TABLE_NAME not set)');
   }
 
-  return merged;
+  await setResolvedStatus(row.recordId, 'approved');
+
+  return {
+    statusCode: 200,
+    headers,
+    body: JSON.stringify({
+      success: true,
+      status: 'approved',
+      productionUpdated,
+    }),
+  };
+}
+
+async function handleDeny(body, headers) {
+  const { token } = body;
+
+  if (!token) {
+    return {
+      statusCode: 400,
+      headers,
+      body: JSON.stringify({ success: false, error: 'Token is required' }),
+    };
+  }
+
+  const row = await getReviewByToken(token);
+
+  if (!row) {
+    return {
+      statusCode: 404,
+      headers,
+      body: JSON.stringify({ success: false, error: 'Review not found' }),
+    };
+  }
+
+  if (row.status === 'approved' || row.status === 'denied') {
+    return {
+      statusCode: 410,
+      headers,
+      body: JSON.stringify({
+        success: false,
+        status: row.status,
+        updatedAt: row.updatedAt,
+      }),
+    };
+  }
+
+  const now = Math.floor(Date.now() / 1000);
+  if (row.reviewTokenExpiresAt < now) {
+    return {
+      statusCode: 410,
+      headers,
+      body: JSON.stringify({
+        success: false,
+        status: row.status,
+        expired: true,
+        orgName: row.orgName,
+      }),
+    };
+  }
+
+  await setResolvedStatus(row.recordId, 'denied');
+
+  return {
+    statusCode: 200,
+    headers,
+    body: JSON.stringify({ success: true, status: 'denied' }),
+  };
 }
 
 export const handler = async event => {
+  console.log('Event:', JSON.stringify(event, null, 2));
+
   const headers = {
     'Access-Control-Allow-Origin': process.env.FRONTEND_URL,
     'Access-Control-Allow-Headers': 'Content-Type',
@@ -406,25 +391,73 @@ export const handler = async event => {
     'Content-Type': 'application/json',
   };
 
-  const body = JSON.parse(event.body || '{}');
+  const httpMethod = event.requestContext?.http?.method || event.httpMethod;
 
-  if (body.action === 'generateReviewToken') {
+  if (httpMethod === 'OPTIONS') {
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify({
-        success: true,
-        reviewToken: generateReviewToken(),
-      }),
+      body: '',
     };
   }
 
-  return {
-    statusCode: 501,
-    headers,
-    body: JSON.stringify({
-      success: false,
-      error: `${body.action} is not implemented yet`,
-    }),
-  };
+  try {
+    if (httpMethod === 'GET') {
+      return await handleGetReview(event, headers);
+    }
+
+    if (httpMethod === 'POST') {
+      const body = JSON.parse(event.body || '{}');
+
+      switch (body.action) {
+        case 'create':
+          return await handleCreate(body, headers);
+        case 'renew':
+          return await handleRenew(body, headers);
+        case 'approve':
+          return await handleApprove(body, headers);
+        case 'deny':
+          return await handleDeny(body, headers);
+        case 'generateReviewToken':
+          return {
+            statusCode: 200,
+            headers,
+            body: JSON.stringify({
+              success: true,
+              reviewToken: generateReviewToken(),
+            }),
+          };
+        default:
+          return {
+            statusCode: 400,
+            headers,
+            body: JSON.stringify({
+              success: false,
+              error: 'Invalid or missing action',
+            }),
+          };
+      }
+    }
+
+    return {
+      statusCode: 400,
+      headers,
+      body: JSON.stringify({
+        success: false,
+        error: 'Invalid method',
+      }),
+    };
+  } catch (error) {
+    console.error('Error:', error);
+
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({
+        success: false,
+        error: 'Internal server error',
+        details: error.message,
+      }),
+    };
+  }
 };
