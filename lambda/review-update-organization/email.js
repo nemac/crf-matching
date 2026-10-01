@@ -1,15 +1,29 @@
+/**
+ * Module: Review Notification Email
+ *
+ * Builds the reviewer's link and sends the "update ready for review"
+ * email to the review notification address using SES.
+ */
+
 import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses';
 
+// Initialize AWS clients
 const localEndpoint = process.env.AWS_ENDPOINT_URL
   ? { endpoint: process.env.AWS_ENDPOINT_URL }
   : {};
 
 const sesClient = new SESClient({ region: 'us-east-1', ...localEndpoint });
 
+/**
+ * Build the review page link for a review token
+ */
 export function buildReviewLink(reviewToken) {
   return `${process.env.FRONTEND_URL}/review-update?token=${reviewToken}`;
 }
 
+/**
+ * Send email to the reviewer with a link to the pending update using SES
+ */
 export async function sendReviewNotificationEmail({
   orgName,
   contactEmail,
