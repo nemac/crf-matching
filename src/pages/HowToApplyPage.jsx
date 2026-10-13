@@ -273,10 +273,10 @@ export default function HowToApplyPage() {
                   Applications must be on behalf of an organization
                 </Typography>
                 <Typography component="div" variant="body1">
-                  Applications should be submitted on behalf of nonprofit
-                  organizations, governmental entities, academic institutions,
-                  consulting firms, or sole proprietorships that offer
-                  adaptation services.
+                  Applications should be submitted on behalf of nonprofit organizations, 
+                  governmental entities, academic institutions, consulting firms, or sole 
+                  proprietorships that offer adaptation services. Applicant organizations 
+                  must be based in the United States or Canada.
                 </Typography>
               </Box>
             </Box>
