@@ -51,10 +51,12 @@ jobs:
       - name: Upload to S3
         run: |
           if [ "${{ github.ref }}" = "refs/heads/master" ]; then
-            aws s3 sync dist/ s3://crf-matching
+            BUCKET=s3://crf-matching
           elif [ "${{ github.ref }}" = "refs/heads/develop" ]; then
-            aws s3 sync dist/ s3://crf-matching-dev
+            BUCKET=s3://crf-matching-dev
           fi
+          aws s3 sync dist/ "$BUCKET"
+          aws s3 sync dist/ "$BUCKET" --delete --exclude "assets/*.docx"
 
       - name: Invalidate CloudFront
         run: |
