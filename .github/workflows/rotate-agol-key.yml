@@ -10,6 +10,11 @@ on:
         required: false
         default: false
         type: boolean
+      dry_run:
+        description: 'Only report what would happen; never rotate or redeploy'
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   id-token: write
@@ -20,7 +25,7 @@ jobs:
   check-and-rotate:
     runs-on: ubuntu-latest
     outputs:
-      rotated: ${{ steps.rotate.outputs.rotated }}
+      redeploy_needed: ${{ steps.decide-redeploy.outputs.redeploy_needed }}
 
     steps:
       - name: Keep scheduled workflow enabled
@@ -46,14 +51,19 @@ jobs:
       - name: Fetch current AGOL_API_KEY from SSM
         id: current-key
         run: |
-          CURRENT_KEY=$(aws ssm get-parameter --name "/crf-matching/agol-api-key" --with-decryption --query "Parameter.Value" --output text 2>/dev/null || echo "")
-          if [ -n "$CURRENT_KEY" ]; then
-            echo "::add-mask::$CURRENT_KEY"
+          set -euo pipefail
+          CURRENT_KEY=$(aws ssm get-parameter --name "/crf-matching/agol-api-key" --with-decryption --query "Parameter.Value" --output text)
+          if [ -z "$CURRENT_KEY" ] || [ "$CURRENT_KEY" = "None" ]; then
+            echo "::error::/crf-matching/agol-api-key is empty in SSM"
+            exit 1
           fi
+          echo "::add-mask::$CURRENT_KEY"
           echo "agol_api_key=$CURRENT_KEY" >> "$GITHUB_OUTPUT"
+          LAST_MODIFIED=$(aws ssm get-parameter --name "/crf-matching/agol-api-key" --query "Parameter.LastModifiedDate" --output text)
+          echo "last_modified=$LAST_MODIFIED" >> "$GITHUB_OUTPUT"
 
       - name: Install ArcGIS REST dependencies
-        run: npm install --no-save @esri/arcgis-rest-developer-credentials @esri/arcgis-rest-request
+        run: npm install --no-save @esri/arcgis-rest-developer-credentials@4.11.0 @esri/arcgis-rest-request@4.11.0
 
       - name: Check expiration and rotate AGOL API key if needed
         id: rotate
@@ -62,6 +72,7 @@ jobs:
           AGOL_PASSWORD: ${{ secrets.AGOL_PASSWORD }}
           AGOL_API_KEY: ${{ steps.current-key.outputs.agol_api_key }}
           FORCE_ROTATE: ${{ inputs.force_rotate || 'false' }}
+          DRY_RUN: ${{ inputs.dry_run || 'false' }}
         run: node node-scripts/rotate-agol-key.js
 
       - name: Update AGOL_API_KEY in AWS SSM Parameter Store
@@ -75,9 +86,31 @@ jobs:
             --value "$NEW_API_KEY" \
             --overwrite
 
+      - name: Decide whether to redeploy
+        id: decide-redeploy
+        env:
+          DRY_RUN: ${{ inputs.dry_run || 'false' }}
+          ROTATED: ${{ steps.rotate.outputs.rotated }}
+          KEY_LAST_MODIFIED: ${{ steps.current-key.outputs.last_modified }}
+        run: |
+          set -euo pipefail
+          FOURTEEN_DAYS_SECONDS=$((14 * 24 * 60 * 60))
+          KEY_AGE_SECONDS=$(( $(date +%s) - $(date -d "$KEY_LAST_MODIFIED" +%s) ))
+          if [ "$DRY_RUN" = "true" ]; then
+            REDEPLOY_NEEDED=false
+          elif [ "$ROTATED" = "true" ]; then
+            REDEPLOY_NEEDED=true
+          elif [ "$KEY_AGE_SECONDS" -lt "$FOURTEEN_DAYS_SECONDS" ]; then
+            echo "Key changed in SSM less than 14 days ago. Redeploying again in case the last redeploy failed."
+            REDEPLOY_NEEDED=true
+          else
+            REDEPLOY_NEEDED=false
+          fi
+          echo "redeploy_needed=$REDEPLOY_NEEDED" >> "$GITHUB_OUTPUT"
+
   redeploy:
     needs: check-and-rotate
-    if: needs.check-and-rotate.outputs.rotated == 'true'
+    if: needs.check-and-rotate.outputs.redeploy_needed == 'true'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false

@@ -48,35 +48,18 @@ function getSlotExpirationMs(apiKeyInfo, rawItem, slotNumber) {
   );
 }
 
-function detectActiveSlot(currentApiKey, apiKeyInfo, rawItem) {
-  if (currentApiKey) {
-    try {
-      const detected = String(slotForKey(currentApiKey));
-      if (detected === '1') {
-        return 1;
-      }
-      if (detected === '2') {
-        return 2;
-      }
-    } catch {
-      if (currentApiKey.includes('.AT1_')) {
-        return 1;
-      }
-      if (currentApiKey.includes('.AT2_')) {
-        return 2;
-      }
-    }
-    if (currentApiKey.includes('.AT1_')) {
-      return 1;
-    }
-    if (currentApiKey.includes('.AT2_')) {
-      return 2;
-    }
+function detectActiveSlot(currentApiKey) {
+  const slotFromLibrary = slotForKey(currentApiKey);
+  if (slotFromLibrary === 1 || slotFromLibrary === 2) {
+    return slotFromLibrary;
   }
-
-  const slot1Expiration = getSlotExpirationMs(apiKeyInfo, rawItem, 1) ?? -1;
-  const slot2Expiration = getSlotExpirationMs(apiKeyInfo, rawItem, 2) ?? -1;
-  return slot2Expiration >= slot1Expiration ? 2 : 1;
+  if (currentApiKey.includes('.AT1_')) {
+    return 1;
+  }
+  if (currentApiKey.includes('.AT2_')) {
+    return 2;
+  }
+  return null;
 }
 
 async function fetchRawPortalItem(portalUrl, itemId, token) {
@@ -96,15 +79,28 @@ async function main() {
     AGOL_ITEM_ID: rawItemId,
     AGOL_PORTAL_URL: rawPortalUrl,
     FORCE_ROTATE: rawForceRotate,
+    DRY_RUN: rawDryRun,
   } = process.env;
 
   const currentApiKey = rawCurrentApiKey || '';
   const itemId = rawItemId || DEFAULT_ITEM_ID;
   const portalUrl = rawPortalUrl || DEFAULT_PORTAL_URL;
   const forceRotate = rawForceRotate === 'true';
+  const dryRun = rawDryRun === 'true';
 
   if (!username || !password) {
     console.error('Missing required environment variables: AGOL_USERNAME and/or AGOL_PASSWORD');
+    process.exit(1);
+  }
+
+  if (!currentApiKey) {
+    console.error('Missing required environment variable: AGOL_API_KEY');
+    process.exit(1);
+  }
+
+  const activeSlot = detectActiveSlot(currentApiKey);
+  if (activeSlot === null) {
+    console.error('Could not tell whether AGOL_API_KEY is in slot 1 or slot 2. Refusing to rotate.');
     process.exit(1);
   }
 
@@ -119,7 +115,6 @@ async function main() {
     fetchRawPortalItem(portalUrl, itemId, authentication.token),
   ]);
 
-  const activeSlot = detectActiveSlot(currentApiKey, apiKeyInfo, rawItem);
   const activeSlotExpirationMs = getSlotExpirationMs(apiKeyInfo, rawItem, activeSlot);
   const nowMs = Date.now();
   const remainingMs = activeSlotExpirationMs !== null ? activeSlotExpirationMs - nowMs : -1;
@@ -134,6 +129,15 @@ async function main() {
   }
 
   const targetSlot = activeSlot === 1 ? 2 : 1;
+
+  if (dryRun) {
+    writeStdoutLine(
+      `Dry run: would rotate from slot ${activeSlot} to slot ${targetSlot} (${remainingDays} days remaining). No changes made.`
+    );
+    writeGitHubOutput('rotated', 'false');
+    return;
+  }
+
   const newExpirationDate = new Date(nowMs + NEW_KEY_LIFESPAN_DAYS * 24 * 60 * 60 * 1000);
   const privileges =
     Array.isArray(apiKeyInfo?.privileges) && apiKeyInfo.privileges.length > 0
