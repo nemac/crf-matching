@@ -117,7 +117,11 @@ Do not add `fontFamily: 'Roboto'` to sx props — the theme already sets Roboto 
 - [ ] Standardize `bgcolor` vs `backgroundColor` — use `bgcolor` consistently in sx props
 - [ ] Fix `SearchBar.jsx:9` placeholder typo: `'to be fillllled'`
 
-### 7. Import Consistency
+### 7. Security
+
+- [ ] Remove `AIRTABLE_TOKEN` from the public bundle — `vite.config.js` inlines it and `src/util/api.js` calls `api.airtable.com` from the browser, so anyone can copy the token and query the whole base (every field and table the token can reach, plus writes if it has write scope, and rate-limit abuse that takes the site down). Steps: (1) now, in Airtable, limit the token to `data.records:read` on this one base; (2) serve the public `Organization` and `Options` fields from a Lambda proxy (token in Secrets Manager, like `lambda/`) or a scheduled static JSON export to S3; (3) point `src/util/api.js` at it and drop `__AIRTABLE_TOKEN__` from `vite.config.js` and the workflows; (4) revoke the old token, since it has been public.
+
+### 8. Import Consistency
 
 - [ ] Standardize `.jsx` extension in imports — mixed usage across codebase
 - [ ] Decide: use `baseComponents/index.js` barrel export consistently, or remove it
