@@ -27,7 +27,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::104538610210:role/crf-matching-github-actions-role
-          aws-region: us-east-1  # Adjust this to your S3 bucket's region
+          aws-region: us-east-1
 
       - name: Create .env file
         run: |
