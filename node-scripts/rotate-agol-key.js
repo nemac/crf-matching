@@ -8,6 +8,9 @@ const DEFAULT_PORTAL_URL = 'https://unca.maps.arcgis.com/sharing/rest';
 const RENEWAL_THRESHOLD_DAYS = 30;
 const RENEWAL_THRESHOLD_MS = RENEWAL_THRESHOLD_DAYS * 24 * 60 * 60 * 1000;
 const NEW_KEY_LIFESPAN_DAYS = 364;
+const MINIMUM_SAVED_LIFESPAN_MS = 300 * 24 * 60 * 60 * 1000;
+const EARLIEST_PLAUSIBLE_EXPIRATION_MS = Date.UTC(2020, 0, 1);
+const LATEST_PLAUSIBLE_EXPIRATION_MS = Date.now() + 400 * 24 * 60 * 60 * 1000;
 
 function writeStdoutLine(message) {
   process.stdout.write(`${message}\n`);
@@ -33,9 +36,45 @@ function toTimestampMs(value) {
   return timestamp > 0 ? timestamp : null;
 }
 
+function isPlausibleExpiration(timestamp) {
+  if (timestamp === null) {
+    return false;
+  }
+  return timestamp >= EARLIEST_PLAUSIBLE_EXPIRATION_MS && timestamp <= LATEST_PLAUSIBLE_EXPIRATION_MS;
+}
+
 function getSlotExpirationMs(apiKeyInfo, slotNumber) {
-  const fieldName = `apiToken${slotNumber}ExpirationDate`;
-  return toTimestampMs(apiKeyInfo?.[fieldName]) ?? toTimestampMs(apiKeyInfo?.item?.[fieldName]);
+  const timestamp = toTimestampMs(apiKeyInfo?.item?.[`apiToken${slotNumber}ExpirationDate`]);
+  return isPlausibleExpiration(timestamp) ? timestamp : null;
+}
+
+function describeExpiration(value) {
+  const timestamp = toTimestampMs(value);
+  if (timestamp === null) {
+    return `unreadable (${JSON.stringify(value)})`;
+  }
+  return new Date(timestamp).toISOString();
+}
+
+function logBothSlotExpirations(apiKeyInfo) {
+  for (const slotNumber of [1, 2]) {
+    const fieldName = `apiToken${slotNumber}ExpirationDate`;
+    const itemValue = describeExpiration(apiKeyInfo?.item?.[fieldName]);
+    const appInfoValue = describeExpiration(apiKeyInfo?.[fieldName]);
+    writeStdoutLine(`Slot ${slotNumber} expiration: item says ${itemValue}, app info says ${appInfoValue}`);
+  }
+}
+
+function exitUnlessExpirationSaved(updatedKeyResponse, targetSlot, nowMs, newExpirationDate) {
+  const savedExpirationMs = getSlotExpirationMs(updatedKeyResponse, targetSlot);
+  if (savedExpirationMs !== null && savedExpirationMs - nowMs > MINIMUM_SAVED_LIFESPAN_MS) {
+    return;
+  }
+  const savedValue = describeExpiration(updatedKeyResponse?.item?.[`apiToken${targetSlot}ExpirationDate`]);
+  console.error(
+    `::error::Slot ${targetSlot} expiration reads back as ${savedValue}, not about ${newExpirationDate.toISOString()}. Not saving the new key.`
+  );
+  process.exit(1);
 }
 
 function detectActiveSlot(currentApiKey) {
@@ -87,6 +126,7 @@ async function main() {
   writeStdoutLine(`::add-mask::${authentication.token}`);
 
   const apiKeyInfo = await getApiKey({ itemId, authentication });
+  logBothSlotExpirations(apiKeyInfo);
 
   const activeSlotExpirationMs = getSlotExpirationMs(apiKeyInfo, activeSlot);
   if (activeSlotExpirationMs === null && !forceRotate) {
@@ -139,6 +179,7 @@ async function main() {
   }
 
   writeStdoutLine(`::add-mask::${newApiKey}`);
+  exitUnlessExpirationSaved(updatedKeyResponse, targetSlot, nowMs, newExpirationDate);
   writeStdoutLine(`Successfully generated new API key in slot ${targetSlot}.`);
 
   writeGitHubOutput('rotated', 'true');
