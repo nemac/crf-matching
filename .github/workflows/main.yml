@@ -9,6 +9,9 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    concurrency:
+      group: deploy-${{ github.ref_name }}
+      cancel-in-progress: false
     permissions:
       id-token: write
       contents: read
@@ -16,12 +19,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -37,9 +45,6 @@ jobs:
           echo "AIRTABLE_BASE='${{ secrets.AIRTABLE_BASE }}'" >> .env
           echo "AGOL_API_KEY='$AGOL_API_KEY'" >> .env
 
-      - name: Install dependencies
-        run: npm install
-                  
       - name: Build
         run: npm run build
 

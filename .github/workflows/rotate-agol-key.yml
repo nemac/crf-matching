@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       force_rotate:
-        description: 'Force regenerate the API key even if more than 14 days remain'
+        description: 'Force regenerate the API key even if more than 30 days remain'
         required: false
         default: false
         type: boolean
@@ -19,11 +19,18 @@ on:
 permissions:
   id-token: write
   contents: read
-  actions: write
+
+concurrency:
+  group: rotate-agol-key
+  cancel-in-progress: false
 
 jobs:
   check-and-rotate:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+      actions: write
     outputs:
       redeploy_needed: ${{ steps.decide-redeploy.outputs.redeploy_needed }}
 
@@ -35,12 +42,17 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
+
+      - name: Install ArcGIS REST dependencies
+        run: npm install --no-save --ignore-scripts @esri/arcgis-rest-developer-credentials@4.11.0 @esri/arcgis-rest-request@4.11.0 @esri/arcgis-rest-portal@4.11.0
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -61,9 +73,6 @@ jobs:
           echo "agol_api_key=$CURRENT_KEY" >> "$GITHUB_OUTPUT"
           LAST_MODIFIED=$(aws ssm get-parameter --name "/crf-matching/agol-api-key" --query "Parameter.LastModifiedDate" --output text)
           echo "last_modified=$LAST_MODIFIED" >> "$GITHUB_OUTPUT"
-
-      - name: Install ArcGIS REST dependencies
-        run: npm install --no-save @esri/arcgis-rest-developer-credentials@4.11.0 @esri/arcgis-rest-request@4.11.0
 
       - name: Check expiration and rotate AGOL API key if needed
         id: rotate
@@ -94,14 +103,14 @@ jobs:
           KEY_LAST_MODIFIED: ${{ steps.current-key.outputs.last_modified }}
         run: |
           set -euo pipefail
-          FOURTEEN_DAYS_SECONDS=$((14 * 24 * 60 * 60))
+          RETRY_WINDOW_SECONDS=$((30 * 24 * 60 * 60))
           KEY_AGE_SECONDS=$(( $(date +%s) - $(date -d "$KEY_LAST_MODIFIED" +%s) ))
           if [ "$DRY_RUN" = "true" ]; then
             REDEPLOY_NEEDED=false
           elif [ "$ROTATED" = "true" ]; then
             REDEPLOY_NEEDED=true
-          elif [ "$KEY_AGE_SECONDS" -lt "$FOURTEEN_DAYS_SECONDS" ]; then
-            echo "Key changed in SSM less than 14 days ago. Redeploying again in case the last redeploy failed."
+          elif [ "$KEY_AGE_SECONDS" -lt "$RETRY_WINDOW_SECONDS" ]; then
+            echo "Key changed in SSM less than 30 days ago. Redeploying again in case the last redeploy failed."
             REDEPLOY_NEEDED=true
           else
             REDEPLOY_NEEDED=false
@@ -112,6 +121,9 @@ jobs:
     needs: check-and-rotate
     if: needs.check-and-rotate.outputs.redeploy_needed == 'true'
     runs-on: ubuntu-latest
+    concurrency:
+      group: deploy-${{ matrix.branch }}
+      cancel-in-progress: false
     strategy:
       fail-fast: false
       matrix:
@@ -122,12 +134,16 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ matrix.branch }}
+          persist-credentials: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -142,9 +158,6 @@ jobs:
           echo "AIRTABLE_TOKEN='${{ secrets.AIRTABLE_TOKEN }}'" > .env
           echo "AIRTABLE_BASE='${{ secrets.AIRTABLE_BASE }}'" >> .env
           echo "AGOL_API_KEY='$AGOL_API_KEY'" >> .env
-
-      - name: Install dependencies
-        run: npm install
 
       - name: Build
         run: npm run build

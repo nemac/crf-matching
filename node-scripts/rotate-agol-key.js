@@ -5,11 +5,8 @@ import { getApiKey, slotForKey, updateApiKey } from '@esri/arcgis-rest-developer
 
 const DEFAULT_ITEM_ID = '0b7c5f31507d45c596ab9be036d00808';
 const DEFAULT_PORTAL_URL = 'https://unca.maps.arcgis.com/sharing/rest';
-const DEFAULT_PRIVILEGES = [
-  'portal:apikey:basemapstyles',
-  'premium:user:geocode:temporary',
-];
-const TWO_WEEKS_MS = 14 * 24 * 60 * 60 * 1000;
+const RENEWAL_THRESHOLD_DAYS = 30;
+const RENEWAL_THRESHOLD_MS = RENEWAL_THRESHOLD_DAYS * 24 * 60 * 60 * 1000;
 const NEW_KEY_LIFESPAN_DAYS = 364;
 
 function writeStdoutLine(message) {
@@ -25,50 +22,28 @@ function writeGitHubOutput(key, value) {
 }
 
 function toTimestampMs(value) {
-  if (!value) {
-    return null;
-  }
+  let timestamp = null;
   if (value instanceof Date) {
-    const time = value.getTime();
-    return time > 0 ? time : null;
+    timestamp = value.getTime();
+  } else if (typeof value === 'number') {
+    timestamp = value;
+  } else if (typeof value === 'string' && value.trim() !== '' && Number.isNaN(Number(value))) {
+    timestamp = Date.parse(value);
   }
-  if (typeof value === 'number' && value > 0) {
-    return value;
-  }
-  const parsed = Date.parse(String(value));
-  return Number.isNaN(parsed) || parsed <= 0 ? null : parsed;
+  return timestamp > 0 ? timestamp : null;
 }
 
-function getSlotExpirationMs(apiKeyInfo, rawItem, slotNumber) {
+function getSlotExpirationMs(apiKeyInfo, slotNumber) {
   const fieldName = `apiToken${slotNumber}ExpirationDate`;
-  return (
-    toTimestampMs(apiKeyInfo?.[fieldName]) ??
-    toTimestampMs(apiKeyInfo?.item?.[fieldName]) ??
-    toTimestampMs(rawItem?.[fieldName])
-  );
+  return toTimestampMs(apiKeyInfo?.[fieldName]) ?? toTimestampMs(apiKeyInfo?.item?.[fieldName]);
 }
 
 function detectActiveSlot(currentApiKey) {
-  const slotFromLibrary = slotForKey(currentApiKey);
-  if (slotFromLibrary === 1 || slotFromLibrary === 2) {
-    return slotFromLibrary;
-  }
-  if (currentApiKey.includes('.AT1_')) {
-    return 1;
-  }
-  if (currentApiKey.includes('.AT2_')) {
-    return 2;
+  const slot = slotForKey(currentApiKey);
+  if (slot === 1 || slot === 2) {
+    return slot;
   }
   return null;
-}
-
-async function fetchRawPortalItem(portalUrl, itemId, token) {
-  const params = new URLSearchParams({ f: 'json', token });
-  const response = await fetch(`${portalUrl}/content/items/${itemId}?${params}`);
-  if (!response.ok) {
-    return null;
-  }
-  return response.json();
 }
 
 async function main() {
@@ -109,20 +84,22 @@ async function main() {
     password,
     portal: portalUrl,
   });
+  writeStdoutLine(`::add-mask::${authentication.token}`);
 
-  const [apiKeyInfo, rawItem] = await Promise.all([
-    getApiKey({ itemId, authentication }),
-    fetchRawPortalItem(portalUrl, itemId, authentication.token),
-  ]);
+  const apiKeyInfo = await getApiKey({ itemId, authentication });
 
-  const activeSlotExpirationMs = getSlotExpirationMs(apiKeyInfo, rawItem, activeSlot);
+  const activeSlotExpirationMs = getSlotExpirationMs(apiKeyInfo, activeSlot);
+  if (activeSlotExpirationMs === null && !forceRotate) {
+    console.error(`::error::Could not read the expiration date for slot ${activeSlot}. Refusing to rotate.`);
+    process.exit(1);
+  }
   const nowMs = Date.now();
   const remainingMs = activeSlotExpirationMs !== null ? activeSlotExpirationMs - nowMs : -1;
   const remainingDays = (remainingMs / (24 * 60 * 60 * 1000)).toFixed(1);
 
-  if (!forceRotate && activeSlotExpirationMs !== null && remainingMs > TWO_WEEKS_MS) {
+  if (!forceRotate && remainingMs > RENEWAL_THRESHOLD_MS) {
     writeStdoutLine(
-      `Active API key (slot ${activeSlot}) expires on ${new Date(activeSlotExpirationMs).toISOString()} (${remainingDays} days remaining). Renewal threshold is 14 days. Skipping rotation.`
+      `Active API key (slot ${activeSlot}) expires on ${new Date(activeSlotExpirationMs).toISOString()} (${remainingDays} days remaining). Renewal threshold is ${RENEWAL_THRESHOLD_DAYS} days. Skipping rotation.`
     );
     writeGitHubOutput('rotated', 'false');
     return;
@@ -139,11 +116,6 @@ async function main() {
   }
 
   const newExpirationDate = new Date(nowMs + NEW_KEY_LIFESPAN_DAYS * 24 * 60 * 60 * 1000);
-  const privileges =
-    Array.isArray(apiKeyInfo?.privileges) && apiKeyInfo.privileges.length > 0
-      ? apiKeyInfo.privileges
-      : DEFAULT_PRIVILEGES;
-  const httpReferrers = Array.isArray(apiKeyInfo?.httpReferrers) ? apiKeyInfo.httpReferrers : [];
 
   writeStdoutLine(
     `Rotating AGOL API key from slot ${activeSlot} to slot ${targetSlot} with new expiration ${newExpirationDate.toISOString()}...`
@@ -152,8 +124,6 @@ async function main() {
   const updateOptions = {
     itemId,
     authentication,
-    privileges,
-    httpReferrers,
     ...(targetSlot === 1
       ? { generateToken1: true, apiToken1ExpirationDate: newExpirationDate }
       : { generateToken2: true, apiToken2ExpirationDate: newExpirationDate }),
@@ -178,6 +148,6 @@ async function main() {
 }
 
 main().catch((error) => {
-  console.error('Failed to check or rotate AGOL API key:', error);
+  console.error('Failed to check or rotate AGOL API key:', error?.message ?? String(error));
   process.exit(1);
 });
