@@ -1,0 +1,143 @@
+name: Rotate AGOL API Key
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+    inputs:
+      force_rotate:
+        description: 'Force regenerate the API key even if more than 14 days remain'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  id-token: write
+  contents: read
+  actions: write
+
+jobs:
+  check-and-rotate:
+    runs-on: ubuntu-latest
+    outputs:
+      rotated: ${{ steps.rotate.outputs.rotated }}
+
+    steps:
+      - name: Keep scheduled workflow enabled
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X PUT "/repos/${{ github.repository }}/actions/workflows/rotate-agol-key.yml/enable" || true
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::104538610210:role/crf-matching-github-actions-role
+          aws-region: us-east-1
+
+      - name: Fetch current AGOL_API_KEY from SSM
+        id: current-key
+        run: |
+          CURRENT_KEY=$(aws ssm get-parameter --name "/crf-matching/agol-api-key" --with-decryption --query "Parameter.Value" --output text 2>/dev/null || echo "")
+          if [ -n "$CURRENT_KEY" ]; then
+            echo "::add-mask::$CURRENT_KEY"
+          fi
+          echo "agol_api_key=$CURRENT_KEY" >> "$GITHUB_OUTPUT"
+
+      - name: Install ArcGIS REST dependencies
+        run: npm install --no-save @esri/arcgis-rest-developer-credentials @esri/arcgis-rest-request
+
+      - name: Check expiration and rotate AGOL API key if needed
+        id: rotate
+        env:
+          AGOL_USERNAME: ${{ secrets.AGOL_USERNAME }}
+          AGOL_PASSWORD: ${{ secrets.AGOL_PASSWORD }}
+          AGOL_API_KEY: ${{ steps.current-key.outputs.agol_api_key }}
+          FORCE_ROTATE: ${{ inputs.force_rotate || 'false' }}
+        run: node node-scripts/rotate-agol-key.js
+
+      - name: Update AGOL_API_KEY in AWS SSM Parameter Store
+        if: steps.rotate.outputs.rotated == 'true'
+        env:
+          NEW_API_KEY: ${{ steps.rotate.outputs.new_api_key }}
+        run: |
+          aws ssm put-parameter \
+            --name "/crf-matching/agol-api-key" \
+            --type "SecureString" \
+            --value "$NEW_API_KEY" \
+            --overwrite
+
+  redeploy:
+    needs: check-and-rotate
+    if: needs.check-and-rotate.outputs.rotated == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        branch: [master, develop]
+
+    steps:
+      - name: Checkout ${{ matrix.branch }}
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ matrix.branch }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::104538610210:role/crf-matching-github-actions-role
+          aws-region: us-east-1
+
+      - name: Create .env file
+        run: |
+          AGOL_API_KEY=$(aws ssm get-parameter --name "/crf-matching/agol-api-key" --with-decryption --query "Parameter.Value" --output text)
+          echo "::add-mask::$AGOL_API_KEY"
+          echo "AIRTABLE_TOKEN='${{ secrets.AIRTABLE_TOKEN }}'" > .env
+          echo "AIRTABLE_BASE='${{ secrets.AIRTABLE_BASE }}'" >> .env
+          echo "AGOL_API_KEY='$AGOL_API_KEY'" >> .env
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload to S3
+        run: |
+          if [ "${{ matrix.branch }}" = "master" ]; then
+            aws s3 sync dist/ s3://crf-matching
+          elif [ "${{ matrix.branch }}" = "develop" ]; then
+            aws s3 sync dist/ s3://crf-matching-dev
+          fi
+
+      - name: Invalidate CloudFront
+        run: |
+          if [ "${{ matrix.branch }}" = "master" ]; then
+            aws cloudfront create-invalidation \
+              --distribution-id E6AN64MGEH6XD \
+              --paths "/*"
+            aws cloudfront create-invalidation \
+              --distribution-id E3LE6G8XQS44Y4 \
+              --paths "/*"
+            aws cloudfront create-invalidation \
+              --distribution-id E35676Q3CH6Y85 \
+              --paths "/*"
+          elif [ "${{ matrix.branch }}" = "develop" ]; then
+            aws cloudfront create-invalidation \
+              --distribution-id E2NM5QT3AUD8LF \
+              --paths "/*"
+          fi
