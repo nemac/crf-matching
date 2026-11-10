@@ -9,10 +9,18 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    concurrency:
+      group: deploy-${{ github.ref_name }}
+      cancel-in-progress: false
+    permissions:
+      id-token: write
+      contents: read
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -20,32 +28,35 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
-      - name: Create .env file
-        run: |
-          echo "AIRTABLE_TOKEN='${{ secrets.AIRTABLE_TOKEN }}'" > .env
-          echo "AIRTABLE_BASE='${{ secrets.AIRTABLE_BASE }}'" >> .env
-          echo "AGOL_API_KEY='${{ secrets.AGOL_API_KEY }}'" >> .env
-
       - name: Install dependencies
         run: npm install
-                  
-      - name: Build
-        run: npm run build
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1  # Adjust this to your S3 bucket's region
+          role-to-assume: arn:aws:iam::104538610210:role/crf-matching-github-actions-role
+          aws-region: us-east-1
+
+      - name: Create .env file
+        run: |
+          AGOL_API_KEY=$(aws ssm get-parameter --name "/crf-matching/agol-api-key" --with-decryption --query "Parameter.Value" --output text)
+          echo "::add-mask::$AGOL_API_KEY"
+          echo "AIRTABLE_TOKEN='${{ secrets.AIRTABLE_TOKEN }}'" > .env
+          echo "AIRTABLE_BASE='${{ secrets.AIRTABLE_BASE }}'" >> .env
+          echo "AGOL_API_KEY='$AGOL_API_KEY'" >> .env
+
+      - name: Build
+        run: npm run build
 
       - name: Upload to S3
         run: |
           if [ "${{ github.ref }}" = "refs/heads/master" ]; then
-            aws s3 sync dist/ s3://crf-matching
+            BUCKET=s3://crf-matching
           elif [ "${{ github.ref }}" = "refs/heads/develop" ]; then
-            aws s3 sync dist/ s3://crf-matching-dev
+            BUCKET=s3://crf-matching-dev
           fi
+          aws s3 sync dist/ "$BUCKET"
+          aws s3 sync dist/ "$BUCKET" --delete --exclude "assets/*.docx"
 
       - name: Invalidate CloudFront
         run: |
