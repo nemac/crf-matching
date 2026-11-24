@@ -25,7 +25,7 @@ const partners = [
     url: 'https://geosinstitute.org',
   },
   {
-    name: "UNC Asheville's NEMAC ",
+    name: "UNC Asheville's NEMAC",
     imgSrc: nemac_logo,
     url: 'https://nemac.unca.edu',
   },
